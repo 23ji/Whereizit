@@ -24,6 +24,17 @@
                                 <viewLayoutGuide key="safeArea" id="eFy-Yo-0AU"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
+                            <tabBar contentMode="scaleToFill" itemPositioning="fill" translatesAutoresizingMaskIntoConstraints="NO" id="MS6-Wz-fBd">
+                                <rect key="frame" x="0.0" y="789" width="393" height="63"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="393" id="khn-ss-glm"/>
+                                </constraints>
+                                <items>
+                                    <tabBarItem title="즐겨찾기" image="star.fill" catalog="system" id="0a3-Ml-cuf"/>
+                                    <tabBarItem title="마이 페이지" image="person.fill" catalog="system" id="2L5-Cw-qwU"/>
+                                </items>
+                            </tabBar>
                             <searchBar contentMode="redraw" placeholder="건물명, 지하철역 등 위치 검색" translatesAutoresizingMaskIntoConstraints="NO" id="haD-Zi-fDd">
                                 <rect key="frame" x="15" y="59" width="363" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -54,10 +65,14 @@
                         <constraints>
                             <constraint firstItem="KyU-3L-QKQ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="280" id="1d7-1k-j2r"/>
                             <constraint firstItem="KyU-3L-QKQ" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="620" id="4lS-XT-ogA"/>
+                            <constraint firstItem="MS6-Wz-fBd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="9zx-So-El9"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="haD-Zi-fDd" secondAttribute="trailing" constant="15" id="E1P-le-PzY"/>
                             <constraint firstItem="haD-Zi-fDd" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Fah-Fd-hvK"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="KyU-3L-QKQ" secondAttribute="bottom" constant="50" id="L3M-HQ-9nd"/>
+                            <constraint firstItem="MS6-Wz-fBd" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="N1P-TA-Z4h"/>
+                            <constraint firstItem="MS6-Wz-fBd" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="730" id="PI5-kh-yng"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="KyU-3L-QKQ" secondAttribute="trailing" constant="15" id="PrS-Eg-mfA"/>
+                            <constraint firstAttribute="bottom" secondItem="MS6-Wz-fBd" secondAttribute="bottom" id="dmo-SC-9lO"/>
                             <constraint firstItem="haD-Zi-fDd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="15" id="jpU-Nn-6pj"/>
                         </constraints>
                     </view>
@@ -99,7 +114,9 @@
     </scenes>
     <resources>
         <image name="mappin.and.ellipse" catalog="system" width="110" height="128"/>
+        <image name="person.fill" catalog="system" width="128" height="120"/>
         <image name="plus.circle.fill" catalog="system" width="128" height="123"/>
+        <image name="star.fill" catalog="system" width="128" height="116"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

@@ -7,6 +7,7 @@
 *.xcworkspace
 DerivedData/
 xcuserdata/
+xcshareddata/
 
 # Cocoapods 관련 파일
 Pods/
