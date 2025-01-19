@@ -14,10 +14,11 @@
 		49288AB42D19450C00FF1E50 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 49288AB32D19450C00FF1E50 /* Base */; };
 		49288AB62D19450D00FF1E50 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49288AB52D19450D00FF1E50 /* Assets.xcassets */; };
 		49288AB92D19450D00FF1E50 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 49288AB82D19450D00FF1E50 /* Base */; };
-		4961B4842D38F02000CCDD8C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49288AB22D19450C00FF1E50 /* Main.storyboard */; };
 		4961B4862D38F35500CCDD8C /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4961B4852D38F35500CCDD8C /* ListViewController.swift */; };
 		4961B48B2D3A372A00CCDD8C /* MarkerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4961B48A2D3A372A00CCDD8C /* MarkerManager.swift */; };
 		49C806D02D27CE51002367C1 /* SmokingAreaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C806CF2D27CE51002367C1 /* SmokingAreaData.swift */; };
+		A70F0E482D3CCE1100E780FC /* AddSmokeAreaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70F0E472D3CCE1100E780FC /* AddSmokeAreaViewController.swift */; };
+		A70F0E492D3CCEEA00E780FC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49288AB22D19450C00FF1E50 /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		4961B48A2D3A372A00CCDD8C /* MarkerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerManager.swift; sourceTree = "<group>"; };
 		49C806CF2D27CE51002367C1 /* SmokingAreaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokingAreaData.swift; sourceTree = "<group>"; };
 		9B1FE8882A69C893A52AE7BC /* Pods_SmokeAreaOdi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmokeAreaOdi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A70F0E472D3CCE1100E780FC /* AddSmokeAreaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSmokeAreaViewController.swift; sourceTree = "<group>"; };
 		D93EE64BF9C68B09854EFEB5 /* Pods-SmokeAreaOdi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmokeAreaOdi.release.xcconfig"; path = "Target Support Files/Pods-SmokeAreaOdi/Pods-SmokeAreaOdi.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -81,6 +83,7 @@
 				49C806CF2D27CE51002367C1 /* SmokingAreaData.swift */,
 				4961B4852D38F35500CCDD8C /* ListViewController.swift */,
 				4961B48A2D3A372A00CCDD8C /* MarkerManager.swift */,
+				A70F0E472D3CCE1100E780FC /* AddSmokeAreaViewController.swift */,
 			);
 			path = SmokeAreaOdi;
 			sourceTree = "<group>";
@@ -172,7 +175,7 @@
 				49288AB62D19450D00FF1E50 /* Assets.xcassets in Resources */,
 				49288AB92D19450D00FF1E50 /* Base in Resources */,
 				49288AB42D19450C00FF1E50 /* Base in Resources */,
-				4961B4842D38F02000CCDD8C /* Main.storyboard in Resources */,
+				A70F0E492D3CCEEA00E780FC /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -230,6 +233,7 @@
 				49288AAD2D19450C00FF1E50 /* AppDelegate.swift in Sources */,
 				49288AAF2D19450C00FF1E50 /* SceneDelegate.swift in Sources */,
 				4961B4862D38F35500CCDD8C /* ListViewController.swift in Sources */,
+				A70F0E482D3CCE1100E780FC /* AddSmokeAreaViewController.swift in Sources */,
 				49C806D02D27CE51002367C1 /* SmokingAreaData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -1,7 +1,5 @@
 import UIKit
 import NMapsMap
-import CoreLocation
-
 
 class ViewController: UIViewController {
     // MARK: - Properties
@@ -10,11 +8,10 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var naverMapView: NMFNaverMapView!
     @IBOutlet weak var addMarkerButton: UIButton!
-    @IBOutlet weak var markerPin: UIImageView!
     @IBOutlet weak var searchBar: UISearchBar!
     
     var isChecked = false  // 버튼 상태
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -24,7 +21,9 @@ class ViewController: UIViewController {
         
         // 마커 매니저 초기화
         markerManager = MarkerManager(mapView: naverMapView.mapView)
-        markerPin.isHidden = true
+        
+        // NotificationCenter에서 흡연구역 추가 알림을 받음
+        NotificationCenter.default.addObserver(self, selector: #selector(smokingAreaAdded(_:)), name: .smokingAreaAdded, object: nil)
     }
     
     // MARK: - Setup Methods
@@ -36,7 +35,10 @@ class ViewController: UIViewController {
     }
     
     private func addSmokingAreaMarkers() {
-        for area in smokingAreas {
+        // UserDefaults에서 저장된 데이터 가져오기
+        let areas = smokingAreas
+        
+        for area in areas {
             let marker = NMFMarker()
             marker.position = NMGLatLng(lat: area.latitude, lng: area.longitude)
             marker.captionText = area.name
@@ -51,23 +53,35 @@ class ViewController: UIViewController {
         searchBar.clipsToBounds = true
     }
     
+    // MARK: - NotificationCenter Method
+    @objc private func smokingAreaAdded(_ notification: Notification) {
+        guard let userInfo = notification.userInfo,
+              let newArea = userInfo["area"] as? SmokingArea else { return }
+        
+        // 새로운 마커 추가
+        let marker = NMFMarker()
+        marker.position = NMGLatLng(lat: newArea.latitude, lng: newArea.longitude)
+        marker.captionText = newArea.name
+        marker.mapView = naverMapView.mapView
+    }
     
     @IBAction func addMarkerButtonTapped(_ sender: UIButton) {
-        isChecked.toggle()
-            
-            if isChecked {
-                
-                // 마커 추가 및 핀 이미지 표시
-                markerPin.isHidden = false // 핀 이미지 보이게 설정
-            } else {
-                // 마커 제거 및 핀 이미지 숨김
-                //markerManager?.removeMarker()
-                let center = naverMapView.mapView.cameraPosition.target
-                markerManager?.addMarker(at: center)
-                markerPin.isHidden = true // 핀 이미지 숨기기
-            }
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let addVC = storyboard.instantiateViewController(withIdentifier: "AddSmokeAreaViewController") as? AddSmokeAreaViewController {
+            addVC.modalPresentationStyle = .fullScreen // 화면 전체로 표시 (선택 사항)
+            present(addVC, animated: true, completion: nil)
+        } else {
+            print("AddSmokeAreaViewController를 찾을 수 없음")
         }
+    }
+    
+    @IBAction func showListButtonTapped(_ sender: UIButton) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let listVC = storyboard.instantiateViewController(withIdentifier: "ListViewController") as? ListViewController {
+            listVC.modalPresentationStyle = .fullScreen  // 화면 전체로 표시
+            present(listVC, animated: true, completion: nil)
+        }
+    }
 
-    
-    
+
 }
