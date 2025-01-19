@@ -51,7 +51,7 @@
                                 <rect key="frame" x="10" y="50" width="373" height="56"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4yr-Fk-sGE">
-                                        <rect key="frame" x="0.0" y="15.999999999999998" width="30.666666666666671" height="24.333333333333329"/>
+                                        <rect key="frame" x="0.0" y="15.999999999999998" width="30.666666666666668" height="24.333333333333329"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" image="list.bullet" catalog="system">
@@ -105,30 +105,62 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" restorationIdentifier="SmokingAreaCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="156" translatesAutoresizingMaskIntoConstraints="NO" id="uYE-OZ-aXC">
-                                <rect key="frame" x="0.0" y="346" width="393" height="156"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="uYE-OZ-aXC" id="B42-Oi-AWc">
-                                    <rect key="frame" x="0.0" y="0.0" width="393" height="156"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="W7r-Yi-5Gl">
-                                <rect key="frame" x="76" y="191" width="240" height="128"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" estimatedSectionHeaderHeight="-1" sectionFooterHeight="28" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="W7r-Yi-5Gl">
+                                <rect key="frame" x="16" y="134" width="361" height="579"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SmokingAreaCell" textLabel="bi3-cB-vIH" detailTextLabel="fIA-py-PVa" imageView="ON2-RC-Zmm" rowHeight="156" style="IBUITableViewCellStyleValue1" id="uYE-OZ-aXC">
+                                        <rect key="frame" x="0.0" y="50" width="361" height="156"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="uYE-OZ-aXC" id="B42-Oi-AWc">
+                                            <rect key="frame" x="0.0" y="0.0" width="361" height="156"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bi3-cB-vIH">
+                                                    <rect key="frame" x="113" y="71" width="25" height="14.333333333333334"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fIA-py-PVa">
+                                                    <rect key="frame" x="308.33333333333337" y="71" width="32.666666666666664" height="14.333333333333334"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="marker_Pin" id="ON2-RC-Zmm">
+                                                    <rect key="frame" x="20" y="27" width="78" height="102"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </imageView>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0hG-04-bDU">
+                                <rect key="frame" x="16" y="59" width="39.666666666666742" height="34.333333333333314"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="chevron.backward" catalog="system"/>
+                                <connections>
+                                    <action selector="backButtonTapped:" destination="gTR-g6-fh4" eventType="touchUpInside" id="UXP-x0-tpW"/>
+                                    <action selector="backButtonTapped:" destination="Opl-jf-bf8" eventType="touchUpInside" id="cND-bK-gMr"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="o3O-LA-DKI"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <connections>
+                        <outlet property="backButton" destination="0hG-04-bDU" id="rb2-qs-sIq"/>
                         <outlet property="tableView" destination="W7r-Yi-5Gl" id="o6g-NZ-Epg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SrO-qT-JGm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1135" y="5"/>
+            <point key="canvasLocation" x="1133.5877862595419" y="4.9295774647887329"/>
         </scene>
         <!--Add Smoke Area View Controller-->
         <scene sceneID="TnM-tD-Mep">
@@ -271,11 +303,11 @@
     </scenes>
     <resources>
         <image name="chevron.backward" catalog="system" width="97" height="128"/>
-        <image name="list.bullet" catalog="system" width="128" height="87"/>
+        <image name="list.bullet" catalog="system" width="32" height="32"/>
         <image name="marker_Pin" width="78" height="102"/>
-        <image name="person.fill" catalog="system" width="128" height="120"/>
-        <image name="plus.circle.fill" catalog="system" width="128" height="123"/>
-        <image name="star.fill" catalog="system" width="128" height="116"/>
+        <image name="person.fill" catalog="system" width="32" height="32"/>
+        <image name="plus.circle.fill" catalog="system" width="32" height="32"/>
+        <image name="star.fill" catalog="system" width="32" height="32"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

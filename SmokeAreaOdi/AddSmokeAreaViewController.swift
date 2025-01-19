@@ -44,27 +44,36 @@ class AddSmokeAreaViewController: UIViewController {
     @IBAction func confirmLocationTapped(_ sender: UIButton) {
         let currentCenter = naverMapView.mapView.cameraPosition.target
 
+        // 제목이 비어 있는지 확인
         guard let title = titleTextField.text, !title.isEmpty else {
             showAlert(message: "제목을 입력해주세요.") {
-                // 빈 제목 입력 시 처리
+                // 빈 제목 입력 시 추가 작업이 필요하면 여기 작성
             }
             return
         }
 
-        // 플레이스홀더와 실제 텍스트 구분
+        // 상세 설명이 플레이스홀더와 같은지 확인하고 적절히 처리
         let description = descriptionTextField.text == placeholderText ? "" : descriptionTextField.text
 
-        // 새로운 흡연구역 데이터 생성
-        let newSmokingArea = SmokingArea(name: title, latitude: currentCenter.lat, longitude: currentCenter.lng, description: description ?? "")
+        // 새로운 흡연구역 데이터를 생성
+        let newSmokingArea = SmokingArea(
+            name: title,
+            latitude: currentCenter.lat,
+            longitude: currentCenter.lng,
+            description: description ?? "" // 설명이 nil일 경우 빈 문자열로 처리
+        )
 
-        // 새로운 흡연구역을 SmokingAreaData에 추가
-        var updatedSmokingAreas = smokingAreas
-        updatedSmokingAreas.append(newSmokingArea)
-        smokingAreas = updatedSmokingAreas
+        // SmokingAreaData를 통해 새로운 흡연구역 데이터 저장
+        SmokingAreaData.shared.addSmokingArea(newSmokingArea)
 
-        // NotificationCenter로 데이터 전달
-        NotificationCenter.default.post(name: .smokingAreaAdded, object: nil, userInfo: ["area": newSmokingArea])
+        // NotificationCenter를 통해 다른 뷰 컨트롤러에 알림 전송
+        NotificationCenter.default.post(
+            name: .smokingAreaAdded,
+            object: nil,
+            userInfo: ["area": newSmokingArea]
+        )
 
+        // 성공 메시지를 사용자에게 표시 후 뷰 종료
         showAlert(message: "새로운 흡연구역이 등록되었습니다!") {
             self.dismiss(animated: true, completion: nil)
         }

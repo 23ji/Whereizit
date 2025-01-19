@@ -19,6 +19,8 @@ class ViewController: UIViewController {
         addSmokingAreaMarkers()
         setupView()
         
+        
+        
         // 마커 매니저 초기화
         markerManager = MarkerManager(mapView: naverMapView.mapView)
         
@@ -35,9 +37,8 @@ class ViewController: UIViewController {
     }
     
     private func addSmokingAreaMarkers() {
-        // UserDefaults에서 저장된 데이터 가져오기
-        let areas = smokingAreas
-        
+        let areas = SmokingAreaData.shared.smokingAreas
+
         for area in areas {
             let marker = NMFMarker()
             marker.position = NMGLatLng(lat: area.latitude, lng: area.longitude)
@@ -45,7 +46,6 @@ class ViewController: UIViewController {
             marker.mapView = naverMapView.mapView
         }
     }
-    
     private func setupView(){
         // 흰색 테두리 없애기
         searchBar.searchTextField.borderStyle = .none
@@ -57,7 +57,10 @@ class ViewController: UIViewController {
     @objc private func smokingAreaAdded(_ notification: Notification) {
         guard let userInfo = notification.userInfo,
               let newArea = userInfo["area"] as? SmokingArea else { return }
-        
+
+        // SmokingAreaData에 새로운 데이터 추가
+        SmokingAreaData.shared.addSmokingArea(newArea)
+
         // 새로운 마커 추가
         let marker = NMFMarker()
         marker.position = NMGLatLng(lat: newArea.latitude, lng: newArea.longitude)
