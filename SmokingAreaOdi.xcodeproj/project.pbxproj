@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3CE5F1DB482DA640E4233C6C /* Pods_SmokeAreaOdi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B1FE8882A69C893A52AE7BC /* Pods_SmokeAreaOdi.framework */; };
+		4910C52E2D3F692F006AB7E5 /* Pods_SmokingAreaOdi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B1FE8882A69C893A52AE7BC /* Pods_SmokingAreaOdi.framework */; };
+		4910C5312D3F8059006AB7E5 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 4910C5302D3F8059006AB7E5 /* FirebaseAnalytics */; };
+		4910C5332D3F8589006AB7E5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4910C5322D3F8589006AB7E5 /* GoogleService-Info.plist */; };
 		49288AAD2D19450C00FF1E50 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49288AAC2D19450C00FF1E50 /* AppDelegate.swift */; };
 		49288AAF2D19450C00FF1E50 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49288AAE2D19450C00FF1E50 /* SceneDelegate.swift */; };
 		49288AB12D19450C00FF1E50 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49288AB02D19450C00FF1E50 /* ViewController.swift */; };
@@ -22,8 +24,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		367736BE6AAECCF421598737 /* Pods-SmokeAreaOdi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmokeAreaOdi.debug.xcconfig"; path = "Target Support Files/Pods-SmokeAreaOdi/Pods-SmokeAreaOdi.debug.xcconfig"; sourceTree = "<group>"; };
-		49288AA92D19450C00FF1E50 /* SmokeAreaOdi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmokeAreaOdi.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		367736BE6AAECCF421598737 /* Pods-SmokingAreaOdi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmokingAreaOdi.debug.xcconfig"; path = "Target Support Files/Pods-SmokingAreaOdi/Pods-SmokingAreaOdi.debug.xcconfig"; sourceTree = "<group>"; };
+		4910C5322D3F8589006AB7E5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		49288AA92D19450C00FF1E50 /* SmokingAreaOdi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmokingAreaOdi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		49288AAC2D19450C00FF1E50 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		49288AAE2D19450C00FF1E50 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		49288AB02D19450C00FF1E50 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -34,9 +37,9 @@
 		4961B4852D38F35500CCDD8C /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		4961B48A2D3A372A00CCDD8C /* MarkerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerManager.swift; sourceTree = "<group>"; };
 		49C806CF2D27CE51002367C1 /* SmokingAreaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokingAreaData.swift; sourceTree = "<group>"; };
-		9B1FE8882A69C893A52AE7BC /* Pods_SmokeAreaOdi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmokeAreaOdi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9B1FE8882A69C893A52AE7BC /* Pods_SmokingAreaOdi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmokingAreaOdi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A70F0E472D3CCE1100E780FC /* AddSmokeAreaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSmokeAreaViewController.swift; sourceTree = "<group>"; };
-		D93EE64BF9C68B09854EFEB5 /* Pods-SmokeAreaOdi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmokeAreaOdi.release.xcconfig"; path = "Target Support Files/Pods-SmokeAreaOdi/Pods-SmokeAreaOdi.release.xcconfig"; sourceTree = "<group>"; };
+		D93EE64BF9C68B09854EFEB5 /* Pods-SmokingAreaOdi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmokingAreaOdi.release.xcconfig"; path = "Target Support Files/Pods-SmokingAreaOdi/Pods-SmokingAreaOdi.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,7 +47,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3CE5F1DB482DA640E4233C6C /* Pods_SmokeAreaOdi.framework in Frameworks */,
+				4910C5312D3F8059006AB7E5 /* FirebaseAnalytics in Frameworks */,
+				4910C52E2D3F692F006AB7E5 /* Pods_SmokingAreaOdi.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -54,7 +58,7 @@
 		49288AA02D19450C00FF1E50 = {
 			isa = PBXGroup;
 			children = (
-				49288AAB2D19450C00FF1E50 /* SmokeAreaOdi */,
+				49288AAB2D19450C00FF1E50 /* SmokingAreaOdi */,
 				49288AAA2D19450C00FF1E50 /* Products */,
 				B978E0BD119D6BE3785F1B06 /* Pods */,
 				8C4801CCC98548A471D9B79F /* Frameworks */,
@@ -65,12 +69,12 @@
 		49288AAA2D19450C00FF1E50 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				49288AA92D19450C00FF1E50 /* SmokeAreaOdi.app */,
+				49288AA92D19450C00FF1E50 /* SmokingAreaOdi.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		49288AAB2D19450C00FF1E50 /* SmokeAreaOdi */ = {
+		49288AAB2D19450C00FF1E50 /* SmokingAreaOdi */ = {
 			isa = PBXGroup;
 			children = (
 				49288AAC2D19450C00FF1E50 /* AppDelegate.swift */,
@@ -79,13 +83,14 @@
 				49288AB22D19450C00FF1E50 /* Main.storyboard */,
 				49288AB52D19450D00FF1E50 /* Assets.xcassets */,
 				49288AB72D19450D00FF1E50 /* LaunchScreen.storyboard */,
+				4910C5322D3F8589006AB7E5 /* GoogleService-Info.plist */,
 				49288ABA2D19450D00FF1E50 /* Info.plist */,
 				49C806CF2D27CE51002367C1 /* SmokingAreaData.swift */,
 				4961B4852D38F35500CCDD8C /* ListViewController.swift */,
 				4961B48A2D3A372A00CCDD8C /* MarkerManager.swift */,
 				A70F0E472D3CCE1100E780FC /* AddSmokeAreaViewController.swift */,
 			);
-			path = SmokeAreaOdi;
+			path = SmokingAreaOdi;
 			sourceTree = "<group>";
 		};
 		4961B4892D3A2DD500CCDD8C /* Recovered References */ = {
@@ -98,7 +103,7 @@
 		8C4801CCC98548A471D9B79F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				9B1FE8882A69C893A52AE7BC /* Pods_SmokeAreaOdi.framework */,
+				9B1FE8882A69C893A52AE7BC /* Pods_SmokingAreaOdi.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -106,8 +111,8 @@
 		B978E0BD119D6BE3785F1B06 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				367736BE6AAECCF421598737 /* Pods-SmokeAreaOdi.debug.xcconfig */,
-				D93EE64BF9C68B09854EFEB5 /* Pods-SmokeAreaOdi.release.xcconfig */,
+				367736BE6AAECCF421598737 /* Pods-SmokingAreaOdi.debug.xcconfig */,
+				D93EE64BF9C68B09854EFEB5 /* Pods-SmokingAreaOdi.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -115,9 +120,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		49288AA82D19450C00FF1E50 /* SmokeAreaOdi */ = {
+		49288AA82D19450C00FF1E50 /* SmokingAreaOdi */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 49288ABD2D19450D00FF1E50 /* Build configuration list for PBXNativeTarget "SmokeAreaOdi" */;
+			buildConfigurationList = 49288ABD2D19450D00FF1E50 /* Build configuration list for PBXNativeTarget "SmokingAreaOdi" */;
 			buildPhases = (
 				7A81F5DCCA502C1D858FF1C1 /* [CP] Check Pods Manifest.lock */,
 				49288AA52D19450C00FF1E50 /* Sources */,
@@ -129,9 +134,12 @@
 			);
 			dependencies = (
 			);
-			name = SmokeAreaOdi;
+			name = SmokingAreaOdi;
+			packageProductDependencies = (
+				4910C5302D3F8059006AB7E5 /* FirebaseAnalytics */,
+			);
 			productName = SmokeAreaOdi;
-			productReference = 49288AA92D19450C00FF1E50 /* SmokeAreaOdi.app */;
+			productReference = 49288AA92D19450C00FF1E50 /* SmokingAreaOdi.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -149,7 +157,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 49288AA42D19450C00FF1E50 /* Build configuration list for PBXProject "SmokeAreaOdi" */;
+			buildConfigurationList = 49288AA42D19450C00FF1E50 /* Build configuration list for PBXProject "SmokingAreaOdi" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -158,11 +166,14 @@
 				Base,
 			);
 			mainGroup = 49288AA02D19450C00FF1E50;
+			packageReferences = (
+				4910C52F2D3F8059006AB7E5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = 49288AAA2D19450C00FF1E50 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				49288AA82D19450C00FF1E50 /* SmokeAreaOdi */,
+				49288AA82D19450C00FF1E50 /* SmokingAreaOdi */,
 			);
 		};
 /* End PBXProject section */
@@ -174,6 +185,7 @@
 			files = (
 				49288AB62D19450D00FF1E50 /* Assets.xcassets in Resources */,
 				49288AB92D19450D00FF1E50 /* Base in Resources */,
+				4910C5332D3F8589006AB7E5 /* GoogleService-Info.plist in Resources */,
 				49288AB42D19450C00FF1E50 /* Base in Resources */,
 				A70F0E492D3CCEEA00E780FC /* Main.storyboard in Resources */,
 			);
@@ -197,7 +209,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-SmokeAreaOdi-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-SmokingAreaOdi-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -210,15 +222,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SmokeAreaOdi/Pods-SmokeAreaOdi-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-SmokingAreaOdi/Pods-SmokingAreaOdi-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SmokeAreaOdi/Pods-SmokeAreaOdi-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-SmokingAreaOdi/Pods-SmokingAreaOdi-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SmokeAreaOdi/Pods-SmokeAreaOdi-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SmokingAreaOdi/Pods-SmokingAreaOdi-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -381,14 +393,14 @@
 		};
 		49288ABE2D19450D00FF1E50 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 367736BE6AAECCF421598737 /* Pods-SmokeAreaOdi.debug.xcconfig */;
+			baseConfigurationReference = 367736BE6AAECCF421598737 /* Pods-SmokingAreaOdi.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = SmokeAreaOdi/Info.plist;
+				INFOPLIST_FILE = SmokingAreaOdi/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -401,7 +413,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = G32.SmokeAreaOdi;
+				PRODUCT_BUNDLE_IDENTIFIER = G32.SmokingAreaOdi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -415,14 +427,14 @@
 		};
 		49288ABF2D19450D00FF1E50 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D93EE64BF9C68B09854EFEB5 /* Pods-SmokeAreaOdi.release.xcconfig */;
+			baseConfigurationReference = D93EE64BF9C68B09854EFEB5 /* Pods-SmokingAreaOdi.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = SmokeAreaOdi/Info.plist;
+				INFOPLIST_FILE = SmokingAreaOdi/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -435,7 +447,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = G32.SmokeAreaOdi;
+				PRODUCT_BUNDLE_IDENTIFIER = G32.SmokingAreaOdi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -450,7 +462,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		49288AA42D19450C00FF1E50 /* Build configuration list for PBXProject "SmokeAreaOdi" */ = {
+		49288AA42D19450C00FF1E50 /* Build configuration list for PBXProject "SmokingAreaOdi" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				49288ABB2D19450D00FF1E50 /* Debug */,
@@ -459,7 +471,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		49288ABD2D19450D00FF1E50 /* Build configuration list for PBXNativeTarget "SmokeAreaOdi" */ = {
+		49288ABD2D19450D00FF1E50 /* Build configuration list for PBXNativeTarget "SmokingAreaOdi" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				49288ABE2D19450D00FF1E50 /* Debug */,
@@ -469,6 +481,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4910C52F2D3F8059006AB7E5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.7.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4910C5302D3F8059006AB7E5 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4910C52F2D3F8059006AB7E5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 49288AA12D19450C00FF1E50 /* Project object */;
 }
