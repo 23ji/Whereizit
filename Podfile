@@ -8,9 +8,4 @@ target 'SmokingAreaOdi' do
   pod 'NMapsGeometry'
   # Pods for SmokingAreaOdi
 
-pod 'FirebaseCore'
-pod 'FirebaseFirestore'
-pod 'FirebaseAuth'
-
-
 end
