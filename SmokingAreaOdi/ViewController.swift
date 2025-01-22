@@ -1,5 +1,55 @@
 import UIKit
 import NMapsMap
+import FirebaseFirestore
+
+extension ViewController {
+    func fetchSmokingAreasFromFirestore() {
+        let db = Firestore.firestore()
+        
+        db.collection("smokingAreas").getDocuments { snapshot, error in
+            if let error = error {
+                print("Firestore 데이터 가져오기 실패: \(error.localizedDescription)")
+                return
+            }
+            
+            guard let documents = snapshot?.documents else {
+                print("가져온 데이터가 비어 있음")
+                return
+            }
+            
+            for document in documents {
+                let data = document.data()
+                guard
+                    let name = data["name"] as? String,
+                    let latitude = data["latitude"] as? Double,
+                    let longitude = data["longitude"] as? Double,
+                    let description = data["description"] as? String
+                else {
+                    print("데이터 파싱 실패: \(data)")
+                    continue
+                }
+                
+                let smokingArea = SmokingArea(
+                    name: name,
+                    latitude: latitude,
+                    longitude: longitude,
+                    description: description
+                )
+                
+                // SmokingAreaData에 추가
+                SmokingAreaData.shared.addSmokingArea(smokingArea)
+                
+                // 지도에 마커 추가
+                let marker = NMFMarker()
+                marker.position = NMGLatLng(lat: latitude, lng: longitude)
+                marker.captionText = name
+                marker.mapView = self.naverMapView.mapView
+            }
+        }
+    }
+}
+
+
 
 class ViewController: UIViewController {
     // MARK: - Properties
@@ -11,6 +61,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     
     var isChecked = false  // 버튼 상태
+    let firestoreTest = FirestoreTest()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,7 +70,10 @@ class ViewController: UIViewController {
         addSmokingAreaMarkers()
         setupView()
         
-        
+        // Firestore 데이터 가져오기
+        fetchSmokingAreasFromFirestore()
+//        firestoreTest.addTestData()
+//        firestoreTest.fetchTestData()
         
         // 마커 매니저 초기화
         markerManager = MarkerManager(mapView: naverMapView.mapView)

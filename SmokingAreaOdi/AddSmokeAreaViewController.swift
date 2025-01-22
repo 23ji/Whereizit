@@ -1,5 +1,6 @@
 import UIKit
 import NMapsMap
+import FirebaseFirestore
 
 extension Notification.Name {
     static let smokingAreaAdded = Notification.Name("smokingAreaAdded")
@@ -14,6 +15,7 @@ class AddSmokeAreaViewController: UIViewController {
     @IBOutlet weak var descriptionTextField: UITextField!   // 상세 설명을 위한 텍스트 필드
     
     private let placeholderText = "상세 설명을 입력해주세요."
+    private let firestore = Firestore.firestore() // Firestore 인스턴스 추가
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,27 +57,25 @@ class AddSmokeAreaViewController: UIViewController {
         // 상세 설명이 플레이스홀더와 같은지 확인하고 적절히 처리
         let description = descriptionTextField.text == placeholderText ? "" : descriptionTextField.text
 
-        // 새로운 흡연구역 데이터를 생성
-        let newSmokingArea = SmokingArea(
-            name: title,
-            latitude: currentCenter.lat,
-            longitude: currentCenter.lng,
-            description: description ?? "" // 설명이 nil일 경우 빈 문자열로 처리
-        )
-
-        // SmokingAreaData를 통해 새로운 흡연구역 데이터 저장
-        SmokingAreaData.shared.addSmokingArea(newSmokingArea)
-
-        // NotificationCenter를 통해 다른 뷰 컨트롤러에 알림 전송
-        NotificationCenter.default.post(
-            name: .smokingAreaAdded,
-            object: nil,
-            userInfo: ["area": newSmokingArea]
-        )
-
-        // 성공 메시지를 사용자에게 표시 후 뷰 종료
-        showAlert(message: "새로운 흡연구역이 등록되었습니다!") {
-            self.dismiss(animated: true, completion: nil)
+        // Firestore에 데이터 추가
+        let smokingAreaData: [String: Any] = [
+            "name": title,
+            "latitude": currentCenter.lat,
+            "longitude": currentCenter.lng,
+            "description": description ?? "", // 설명이 nil일 경우 빈 문자열로 처리
+            "timestamp": Timestamp(date: Date()) // 데이터 추가 시간
+        ]
+        
+        firestore.collection("smokingAreas").addDocument(data: smokingAreaData) { error in
+            if let error = error {
+                print("Firestore 저장 실패: \(error.localizedDescription)")
+                self.showAlert(message: "데이터 저장에 실패했습니다.") {}
+            } else {
+                print("Firestore 저장 성공")
+                self.showAlert(message: "새로운 흡연구역이 등록되었습니다!") {
+                    self.dismiss(animated: true, completion: nil)
+                }
+            }
         }
     }
 
