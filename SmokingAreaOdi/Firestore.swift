@@ -49,22 +49,36 @@ extension ViewController {
                 let marker = NMFMarker()
                 marker.position = NMGLatLng(lat: latitude, lng: longitude)
                 marker.captionText = name
+                
+                // 커스텀 마커 이미지 설정
+                if let customImage = UIImage(named: "marker_Pin") {
+                    marker.iconImage = NMFOverlayImage(image: customImage)
+                }
+                
                 marker.mapView = self.naverMapView.mapView
             }
         }
     }
+
     // MARK: - Notification 처리
-        @objc func smokingAreaAdded(_ notification: Notification) {
-            guard let userInfo = notification.userInfo,
-                  let newArea = userInfo["area"] as? SmokingArea else { return }
+    @objc func smokingAreaAdded(_ notification: Notification) {
+        guard let userInfo = notification.userInfo,
+              let newArea = userInfo["area"] as? SmokingArea else { return }
 
-            // SmokingAreaData에 추가
-            SmokingAreaData.shared.addSmokingArea(newArea)
+        // SmokingAreaData에 추가
+        SmokingAreaData.shared.addSmokingArea(newArea)
 
-            // 마커 추가
-            let marker = NMFMarker()
-            marker.position = NMGLatLng(lat: newArea.latitude, lng: newArea.longitude)
-            marker.captionText = newArea.name
-            marker.mapView = naverMapView.mapView
+        // 마커 추가
+        let marker = NMFMarker()
+        marker.position = NMGLatLng(lat: newArea.latitude, lng: newArea.longitude)
+        marker.captionText = newArea.name
+        
+        // 커스텀 마커 이미지 설정
+        if let customImage = UIImage(named: "marker_Pin") {
+            marker.iconImage = NMFOverlayImage(image: customImage)
+            
         }
+
+        marker.mapView = naverMapView.mapView
+    }
 }
