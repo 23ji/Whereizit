@@ -7,5 +7,4 @@ target 'SmokingAreaOdi' do
   pod 'NMapsMap'
   pod 'NMapsGeometry'
   # Pods for SmokingAreaOdi
-
 end

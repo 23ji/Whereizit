@@ -6,8 +6,8 @@ extension Notification.Name {
     static let smokingAreaAdded = Notification.Name("smokingAreaAdded")
 }
 
-class AddSmokeAreaViewController: UIViewController {
-
+class AddSmokeAreaViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+    
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var naverMapView: NMFNaverMapView!
@@ -16,11 +16,22 @@ class AddSmokeAreaViewController: UIViewController {
     
     private let placeholderText = "상세 설명을 입력해주세요."
     private let firestore = Firestore.firestore() // Firestore 인스턴스 추가
-
+    
+    var selectedImage: UIImage? // 촬영한 사진 저장
+    
+    // 키보드의 높이
+    private var keyboardHeight: CGFloat = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNaverMapView()
         setupUI()
+        setupKeyboardNotifications()  // 키보드 알림 설정
+    }
+
+    deinit {
+        // 메모리 해제를 위해 알림 등록 해제
+        NotificationCenter.default.removeObserver(self)
     }
 
     private func setupNaverMapView() {
@@ -37,6 +48,26 @@ class AddSmokeAreaViewController: UIViewController {
 
         // descriptionTextField의 플레이스홀더 설정
         descriptionTextField.placeholder = placeholderText
+    }
+    
+    // MARK: - Keyboard Notifications
+    func setupKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+
+    @objc func keyboardWillShow(_ notification: Notification) {
+        if let userInfo = notification.userInfo,
+           let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+            keyboardHeight = keyboardFrame.height
+            // 키보드가 올라오면 화면을 위로 이동
+            self.view.frame.origin.y = -keyboardHeight
+        }
+    }
+    
+    @objc func keyboardWillHide(_ notification: Notification) {
+        // 키보드가 내려가면 화면을 원래 위치로 되돌린다
+        self.view.frame.origin.y = 0
     }
 
     @IBAction func backButtonTapped(_ sender: UIButton) {
@@ -77,6 +108,11 @@ class AddSmokeAreaViewController: UIViewController {
                 }
             }
         }
+        
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.sourceType = .camera
+        imagePickerController.delegate = self
+        present(imagePickerController, animated: true, completion: nil)
     }
 
     private func showAlert(message: String, completion: @escaping () -> Void) {

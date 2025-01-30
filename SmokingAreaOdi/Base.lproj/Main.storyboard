@@ -13,7 +13,7 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="SmokeAreaOdi" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="SmokingAreaOdi" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -37,11 +37,12 @@
                             </tabBar>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KyU-3L-QKQ">
                                 <rect key="frame" x="280" y="679" width="98" height="89"/>
-                                <color key="tintColor" systemColor="systemYellowColor"/>
+                                <color key="tintColor" red="0.41568624970000001" green="0.75686275960000005" blue="0.33725491169999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain">
                                     <imageReference key="image" image="plus.circle.fill" catalog="system" symbolScale="large"/>
                                     <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="50" weight="heavy"/>
+                                    <color key="baseForegroundColor" red="0.41568624970000001" green="0.75686275960000005" blue="0.33725491169999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="addMarkerButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eDV-UG-1Zx"/>
@@ -100,7 +101,7 @@
         <!--List View Controller-->
         <scene sceneID="0J6-7g-Tgy">
             <objects>
-                <viewController storyboardIdentifier="ListViewController" id="gTR-g6-fh4" customClass="ListViewController" customModule="SmokeAreaOdi" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ListViewController" id="gTR-g6-fh4" customClass="ListViewController" customModule="SmokingAreaOdi" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Y8S-7Q-hAu">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -117,7 +118,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bi3-cB-vIH">
-                                                    <rect key="frame" x="113" y="71" width="25" height="14.333333333333334"/>
+                                                    <rect key="frame" x="85" y="71" width="25" height="14.333333333333334"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
                                                     <nil key="textColor"/>
@@ -131,7 +132,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="marker_Pin" id="ON2-RC-Zmm">
-                                                    <rect key="frame" x="20" y="27" width="78" height="102"/>
+                                                    <rect key="frame" x="20" y="46" width="50" height="64"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </imageView>
                                             </subviews>
@@ -165,7 +166,7 @@
         <!--Add Smoke Area View Controller-->
         <scene sceneID="TnM-tD-Mep">
             <objects>
-                <viewController storyboardIdentifier="AddSmokeAreaViewController" id="Opl-jf-bf8" customClass="AddSmokeAreaViewController" customModule="SmokeAreaOdi" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddSmokeAreaViewController" id="Opl-jf-bf8" customClass="AddSmokeAreaViewController" customModule="SmokingAreaOdi" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="PUk-iO-d7s">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -206,7 +207,7 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="z0T-SW-tap">
                                         <rect key="frame" x="10" y="0.0" width="363" height="35"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="제목" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nNX-lL-mWE">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="이름" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nNX-lL-mWE">
                                                 <rect key="frame" x="0.0" y="0.0" width="85" height="35"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="85" id="8Jj-tf-k8y"/>
@@ -298,21 +299,18 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6LU-8f-TJt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2789" y="5"/>
+            <point key="canvasLocation" x="2788.5496183206105" y="4.9295774647887329"/>
         </scene>
     </scenes>
     <resources>
         <image name="chevron.backward" catalog="system" width="97" height="128"/>
-        <image name="list.bullet" catalog="system" width="32" height="32"/>
-        <image name="marker_Pin" width="78" height="102"/>
-        <image name="person.fill" catalog="system" width="32" height="32"/>
-        <image name="plus.circle.fill" catalog="system" width="32" height="32"/>
-        <image name="star.fill" catalog="system" width="32" height="32"/>
+        <image name="list.bullet" catalog="system" width="128" height="87"/>
+        <image name="marker_Pin" width="50" height="64"/>
+        <image name="person.fill" catalog="system" width="128" height="120"/>
+        <image name="plus.circle.fill" catalog="system" width="128" height="123"/>
+        <image name="star.fill" catalog="system" width="128" height="116"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemYellowColor">
-            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

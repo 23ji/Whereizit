@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4910C52E2D3F692F006AB7E5 /* Pods_SmokingAreaOdi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B1FE8882A69C893A52AE7BC /* Pods_SmokingAreaOdi.framework */; };
 		4910C5372D408775006AB7E5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4910C5362D408775006AB7E5 /* GoogleService-Info.plist */; };
 		4910C53A2D408812006AB7E5 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 4910C5392D408812006AB7E5 /* FirebaseAnalytics */; };
 		4910C53C2D408812006AB7E5 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 4910C53B2D408812006AB7E5 /* FirebaseDatabase */; };
@@ -22,13 +21,15 @@
 		49288AB92D19450D00FF1E50 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 49288AB82D19450D00FF1E50 /* Base */; };
 		4961B4862D38F35500CCDD8C /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4961B4852D38F35500CCDD8C /* ListViewController.swift */; };
 		4961B48B2D3A372A00CCDD8C /* MarkerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4961B48A2D3A372A00CCDD8C /* MarkerManager.swift */; };
+		499C3C8B2D4B63C300B96903 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 499C3C8A2D4B63C300B96903 /* FirebaseStorage */; };
 		49C806D02D27CE51002367C1 /* SmokingAreaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C806CF2D27CE51002367C1 /* SmokingAreaData.swift */; };
+		67D5D9679690E770383FCAEE /* Pods_SmokingAreaOdi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71E8D5BE6D6F3B97EE6F1699 /* Pods_SmokingAreaOdi.framework */; };
 		A70F0E482D3CCE1100E780FC /* AddSmokeAreaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70F0E472D3CCE1100E780FC /* AddSmokeAreaViewController.swift */; };
 		A70F0E492D3CCEEA00E780FC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49288AB22D19450C00FF1E50 /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		367736BE6AAECCF421598737 /* Pods-SmokingAreaOdi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmokingAreaOdi.debug.xcconfig"; path = "Target Support Files/Pods-SmokingAreaOdi/Pods-SmokingAreaOdi.debug.xcconfig"; sourceTree = "<group>"; };
+		190F680593069EDBD3596FF9 /* Pods-SmokingAreaOdi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmokingAreaOdi.debug.xcconfig"; path = "Target Support Files/Pods-SmokingAreaOdi/Pods-SmokingAreaOdi.debug.xcconfig"; sourceTree = "<group>"; };
 		4910C5362D408775006AB7E5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4910C5412D408CEE006AB7E5 /* Firestore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Firestore.swift; sourceTree = "<group>"; };
 		4910C5432D408D72006AB7E5 /* SmokingArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokingArea.swift; sourceTree = "<group>"; };
@@ -43,9 +44,9 @@
 		4961B4852D38F35500CCDD8C /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		4961B48A2D3A372A00CCDD8C /* MarkerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerManager.swift; sourceTree = "<group>"; };
 		49C806CF2D27CE51002367C1 /* SmokingAreaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokingAreaData.swift; sourceTree = "<group>"; };
-		9B1FE8882A69C893A52AE7BC /* Pods_SmokingAreaOdi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmokingAreaOdi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		71E8D5BE6D6F3B97EE6F1699 /* Pods_SmokingAreaOdi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmokingAreaOdi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A70F0E472D3CCE1100E780FC /* AddSmokeAreaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSmokeAreaViewController.swift; sourceTree = "<group>"; };
-		D93EE64BF9C68B09854EFEB5 /* Pods-SmokingAreaOdi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmokingAreaOdi.release.xcconfig"; path = "Target Support Files/Pods-SmokingAreaOdi/Pods-SmokingAreaOdi.release.xcconfig"; sourceTree = "<group>"; };
+		D7BBE7C3A2BCED333CE2D897 /* Pods-SmokingAreaOdi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmokingAreaOdi.release.xcconfig"; path = "Target Support Files/Pods-SmokingAreaOdi/Pods-SmokingAreaOdi.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,7 +57,8 @@
 				4910C53C2D408812006AB7E5 /* FirebaseDatabase in Frameworks */,
 				4910C53E2D408812006AB7E5 /* FirebaseFirestore in Frameworks */,
 				4910C53A2D408812006AB7E5 /* FirebaseAnalytics in Frameworks */,
-				4910C52E2D3F692F006AB7E5 /* Pods_SmokingAreaOdi.framework in Frameworks */,
+				499C3C8B2D4B63C300B96903 /* FirebaseStorage in Frameworks */,
+				67D5D9679690E770383FCAEE /* Pods_SmokingAreaOdi.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -69,8 +71,8 @@
 				49288AAB2D19450C00FF1E50 /* SmokingAreaOdi */,
 				49288AAA2D19450C00FF1E50 /* Products */,
 				B978E0BD119D6BE3785F1B06 /* Pods */,
-				8C4801CCC98548A471D9B79F /* Frameworks */,
 				4961B4892D3A2DD500CCDD8C /* Recovered References */,
+				C6320CCAA5A88F0BADA6F25C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -110,21 +112,21 @@
 			name = "Recovered References";
 			sourceTree = "<group>";
 		};
-		8C4801CCC98548A471D9B79F /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				9B1FE8882A69C893A52AE7BC /* Pods_SmokingAreaOdi.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		B978E0BD119D6BE3785F1B06 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				367736BE6AAECCF421598737 /* Pods-SmokingAreaOdi.debug.xcconfig */,
-				D93EE64BF9C68B09854EFEB5 /* Pods-SmokingAreaOdi.release.xcconfig */,
+				190F680593069EDBD3596FF9 /* Pods-SmokingAreaOdi.debug.xcconfig */,
+				D7BBE7C3A2BCED333CE2D897 /* Pods-SmokingAreaOdi.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		C6320CCAA5A88F0BADA6F25C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				71E8D5BE6D6F3B97EE6F1699 /* Pods_SmokingAreaOdi.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -134,11 +136,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 49288ABD2D19450D00FF1E50 /* Build configuration list for PBXNativeTarget "SmokingAreaOdi" */;
 			buildPhases = (
-				7A81F5DCCA502C1D858FF1C1 /* [CP] Check Pods Manifest.lock */,
+				C47140FBA7681DB97F9E5BFE /* [CP] Check Pods Manifest.lock */,
 				49288AA52D19450C00FF1E50 /* Sources */,
 				49288AA62D19450C00FF1E50 /* Frameworks */,
 				49288AA72D19450C00FF1E50 /* Resources */,
-				851A15414B6330B5B68464A9 /* [CP] Embed Pods Frameworks */,
+				C1852EECAC176F9BDB92D371 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -149,6 +151,7 @@
 				4910C5392D408812006AB7E5 /* FirebaseAnalytics */,
 				4910C53B2D408812006AB7E5 /* FirebaseDatabase */,
 				4910C53D2D408812006AB7E5 /* FirebaseFirestore */,
+				499C3C8A2D4B63C300B96903 /* FirebaseStorage */,
 			);
 			productName = SmokeAreaOdi;
 			productReference = 49288AA92D19450C00FF1E50 /* SmokingAreaOdi.app */;
@@ -206,7 +209,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		7A81F5DCCA502C1D858FF1C1 /* [CP] Check Pods Manifest.lock */ = {
+		C1852EECAC176F9BDB92D371 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SmokingAreaOdi/Pods-SmokingAreaOdi-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SmokingAreaOdi/Pods-SmokingAreaOdi-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SmokingAreaOdi/Pods-SmokingAreaOdi-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C47140FBA7681DB97F9E5BFE /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -226,23 +246,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		851A15414B6330B5B68464A9 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SmokingAreaOdi/Pods-SmokingAreaOdi-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SmokingAreaOdi/Pods-SmokingAreaOdi-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SmokingAreaOdi/Pods-SmokingAreaOdi-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -338,7 +341,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -395,7 +398,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -407,12 +410,13 @@
 		};
 		49288ABE2D19450D00FF1E50 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 367736BE6AAECCF421598737 /* Pods-SmokingAreaOdi.debug.xcconfig */;
+			baseConfigurationReference = 190F680593069EDBD3596FF9 /* Pods-SmokingAreaOdi.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Z4QCD3KW2W;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SmokingAreaOdi/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
@@ -441,12 +445,13 @@
 		};
 		49288ABF2D19450D00FF1E50 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D93EE64BF9C68B09854EFEB5 /* Pods-SmokingAreaOdi.release.xcconfig */;
+			baseConfigurationReference = D7BBE7C3A2BCED333CE2D897 /* Pods-SmokingAreaOdi.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Z4QCD3KW2W;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SmokingAreaOdi/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
@@ -522,6 +527,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4910C5382D408812006AB7E5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
+		};
+		499C3C8A2D4B63C300B96903 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4910C5382D408812006AB7E5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
