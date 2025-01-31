@@ -19,6 +19,7 @@
 		49288AB42D19450C00FF1E50 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 49288AB32D19450C00FF1E50 /* Base */; };
 		49288AB62D19450D00FF1E50 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49288AB52D19450D00FF1E50 /* Assets.xcassets */; };
 		49288AB92D19450D00FF1E50 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 49288AB82D19450D00FF1E50 /* Base */; };
+		495000E82D4CB2270057ECEC /* AddSmokingAreaDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 495000E72D4CB2270057ECEC /* AddSmokingAreaDataViewController.swift */; };
 		4961B4862D38F35500CCDD8C /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4961B4852D38F35500CCDD8C /* ListViewController.swift */; };
 		4961B48B2D3A372A00CCDD8C /* MarkerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4961B48A2D3A372A00CCDD8C /* MarkerManager.swift */; };
 		499C3C8B2D4B63C300B96903 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 499C3C8A2D4B63C300B96903 /* FirebaseStorage */; };
@@ -41,6 +42,7 @@
 		49288AB52D19450D00FF1E50 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		49288AB82D19450D00FF1E50 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		49288ABA2D19450D00FF1E50 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		495000E72D4CB2270057ECEC /* AddSmokingAreaDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSmokingAreaDataViewController.swift; sourceTree = "<group>"; };
 		4961B4852D38F35500CCDD8C /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		4961B48A2D3A372A00CCDD8C /* MarkerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerManager.swift; sourceTree = "<group>"; };
 		49C806CF2D27CE51002367C1 /* SmokingAreaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokingAreaData.swift; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 				4910C5362D408775006AB7E5 /* GoogleService-Info.plist */,
 				4910C5412D408CEE006AB7E5 /* Firestore.swift */,
 				4910C5432D408D72006AB7E5 /* SmokingArea.swift */,
+				495000E72D4CB2270057ECEC /* AddSmokingAreaDataViewController.swift */,
 			);
 			path = SmokingAreaOdi;
 			sourceTree = "<group>";
@@ -259,6 +262,7 @@
 				4961B48B2D3A372A00CCDD8C /* MarkerManager.swift in Sources */,
 				49288AAD2D19450C00FF1E50 /* AppDelegate.swift in Sources */,
 				4910C5442D408D72006AB7E5 /* SmokingArea.swift in Sources */,
+				495000E82D4CB2270057ECEC /* AddSmokingAreaDataViewController.swift in Sources */,
 				49288AAF2D19450C00FF1E50 /* SceneDelegate.swift in Sources */,
 				4961B4862D38F35500CCDD8C /* ListViewController.swift in Sources */,
 				A70F0E482D3CCE1100E780FC /* AddSmokeAreaViewController.swift in Sources */,

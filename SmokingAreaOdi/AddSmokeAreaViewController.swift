@@ -75,44 +75,50 @@ class AddSmokeAreaViewController: UIViewController, UIImagePickerControllerDeleg
     }
 
     @IBAction func confirmLocationTapped(_ sender: UIButton) {
-        let currentCenter = naverMapView.mapView.cameraPosition.target
-
-        // 제목이 비어 있는지 확인
-        guard let title = titleTextField.text, !title.isEmpty else {
-            showAlert(message: "제목을 입력해주세요.") {
-                // 빈 제목 입력 시 추가 작업이 필요하면 여기 작성
+        guard let smokingVC = storyboard?.instantiateViewController(withIdentifier: "AddSADataVC") as? AddSmokingAreaDataViewController else {
+                print("SmokingArea 뷰컨 생성 실패")
+                return
             }
-            return
-        }
-
-        // 상세 설명이 플레이스홀더와 같은지 확인하고 적절히 처리
-        let description = descriptionTextField.text == placeholderText ? "" : descriptionTextField.text
-
-        // Firestore에 데이터 추가
-        let smokingAreaData: [String: Any] = [
-            "name": title,
-            "latitude": currentCenter.lat,
-            "longitude": currentCenter.lng,
-            "description": description ?? "", // 설명이 nil일 경우 빈 문자열로 처리
-            "timestamp": Timestamp(date: Date()) // 데이터 추가 시간
-        ]
+            smokingVC.modalPresentationStyle = .fullScreen
+            self.present(smokingVC, animated: true, completion: nil)
+//        let currentCenter = naverMapView.mapView.cameraPosition.target
+//
+//        // 제목이 비어 있는지 확인
+//        guard let title = titleTextField.text, !title.isEmpty else {
+//            showAlert(message: "제목을 입력해주세요.") {
+//                // 빈 제목 입력 시 추가 작업이 필요하면 여기 작성
+//            }
+//            return
+//        }
+//
+//        // 상세 설명이 플레이스홀더와 같은지 확인하고 적절히 처리
+//        let description = descriptionTextField.text == placeholderText ? "" : descriptionTextField.text
+//
+//        // Firestore에 데이터 추가
+//        let smokingAreaData: [String: Any] = [
+//            "name": title,
+//            "latitude": currentCenter.lat,
+//            "longitude": currentCenter.lng,
+//            "description": description ?? "", // 설명이 nil일 경우 빈 문자열로 처리
+//            "timestamp": Timestamp(date: Date()) // 데이터 추가 시간
+//        ]
         
-        firestore.collection("smokingAreas").addDocument(data: smokingAreaData) { error in
-            if let error = error {
-                print("Firestore 저장 실패: \(error.localizedDescription)")
-                self.showAlert(message: "데이터 저장에 실패했습니다.") {}
-            } else {
-                print("Firestore 저장 성공")
-                self.showAlert(message: "새로운 흡연구역이 등록되었습니다!") {
-                    self.dismiss(animated: true, completion: nil)
-                }
-            }
-        }
+//        firestore.collection("smokingAreas").addDocument(data: smokingAreaData) { error in
+//            if let error = error {
+//                print("Firestore 저장 실패: \(error.localizedDescription)")
+//                self.showAlert(message: "데이터 저장에 실패했습니다.") {}
+//            } else {
+//                print("Firestore 저장 성공")
+//                self.showAlert(message: "새로운 흡연구역이 등록되었습니다!") {
+//                    self.dismiss(animated: true, completion: nil)
+//                }
+//            }
+//        }
         
-        let imagePickerController = UIImagePickerController()
-        imagePickerController.sourceType = .camera
-        imagePickerController.delegate = self
-        present(imagePickerController, animated: true, completion: nil)
+//        let imagePickerController = UIImagePickerController()
+//        imagePickerController.sourceType = .camera
+//        imagePickerController.delegate = self
+//        present(imagePickerController, animated: true, completion: nil)
     }
 
     private func showAlert(message: String, completion: @escaping () -> Void) {
