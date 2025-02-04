@@ -26,7 +26,7 @@ class AddSmokeAreaViewController: UIViewController, UIImagePickerControllerDeleg
         super.viewDidLoad()
         setupNaverMapView()
         setupUI()
-        setupKeyboardNotifications()  // 키보드 알림 설정
+        //setupKeyboardNotifications()  // 키보드 알림 설정
     }
 
     deinit {
@@ -47,28 +47,28 @@ class AddSmokeAreaViewController: UIViewController, UIImagePickerControllerDeleg
         searchBar.clipsToBounds = true
 
         // descriptionTextField의 플레이스홀더 설정
-        descriptionTextField.placeholder = placeholderText
+//        descriptionTextField.placeholder = placeholderText
     }
     
-    // MARK: - Keyboard Notifications
-    func setupKeyboardNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-
-    @objc func keyboardWillShow(_ notification: Notification) {
-        if let userInfo = notification.userInfo,
-           let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
-            keyboardHeight = keyboardFrame.height
-            // 키보드가 올라오면 화면을 위로 이동
-            self.view.frame.origin.y = -keyboardHeight
-        }
-    }
+//    // MARK: - Keyboard Notifications
+//    func setupKeyboardNotifications() {
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+//    }
+//
+//    @objc func keyboardWillShow(_ notification: Notification) {
+//        if let userInfo = notification.userInfo,
+//           let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+//            keyboardHeight = keyboardFrame.height
+//            // 키보드가 올라오면 화면을 위로 이동
+//            self.view.frame.origin.y = -keyboardHeight
+//        }
+//    }
     
-    @objc func keyboardWillHide(_ notification: Notification) {
-        // 키보드가 내려가면 화면을 원래 위치로 되돌린다
-        self.view.frame.origin.y = 0
-    }
+//    @objc func keyboardWillHide(_ notification: Notification) {
+//        // 키보드가 내려가면 화면을 원래 위치로 되돌린다
+//        self.view.frame.origin.y = 0
+//    }
 
     @IBAction func backButtonTapped(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
@@ -81,7 +81,7 @@ class AddSmokeAreaViewController: UIViewController, UIImagePickerControllerDeleg
             }
             smokingVC.modalPresentationStyle = .fullScreen
             self.present(smokingVC, animated: true, completion: nil)
-//        let currentCenter = naverMapView.mapView.cameraPosition.target
+        let currentCenter = naverMapView.mapView.cameraPosition.target
 //
 //        // 제목이 비어 있는지 확인
 //        guard let title = titleTextField.text, !title.isEmpty else {
@@ -95,13 +95,13 @@ class AddSmokeAreaViewController: UIViewController, UIImagePickerControllerDeleg
 //        let description = descriptionTextField.text == placeholderText ? "" : descriptionTextField.text
 //
 //        // Firestore에 데이터 추가
-//        let smokingAreaData: [String: Any] = [
-//            "name": title,
-//            "latitude": currentCenter.lat,
-//            "longitude": currentCenter.lng,
-//            "description": description ?? "", // 설명이 nil일 경우 빈 문자열로 처리
-//            "timestamp": Timestamp(date: Date()) // 데이터 추가 시간
-//        ]
+        let smokingAreaData: [String: Any] = [
+            //"name": title,
+            "latitude": currentCenter.lat,
+            "longitude": currentCenter.lng,
+            //"description": description ?? "", // 설명이 nil일 경우 빈 문자열로 처리
+            "timestamp": Timestamp(date: Date()) // 데이터 추가 시간
+        ]
         
 //        firestore.collection("smokingAreas").addDocument(data: smokingAreaData) { error in
 //            if let error = error {
@@ -121,11 +121,11 @@ class AddSmokeAreaViewController: UIViewController, UIImagePickerControllerDeleg
 //        present(imagePickerController, animated: true, completion: nil)
     }
 
-    private func showAlert(message: String, completion: @escaping () -> Void) {
-        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
-            completion()
-        }))
-        present(alert, animated: true, completion: nil)
-    }
+//    private func showAlert(message: String, completion: @escaping () -> Void) {
+//        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+//        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
+//            completion()
+//        }))
+//        present(alert, animated: true, completion: nil)
+//    }
 }

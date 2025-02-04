@@ -25,13 +25,9 @@ class AddSmokingAreaDataViewController: UIViewController, UIImagePickerControlle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        // Do any additional setup after loading the view.
     }
     
     private func setupUI() {
-//        searchBar.searchTextField.borderStyle = .none
-//        searchBar.layer.cornerRadius = 15
-//        searchBar.clipsToBounds = true
 
         // descriptionTextField의 플레이스홀더 설정
         descriptionTextField.placeholder = placeholderText
