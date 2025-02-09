@@ -19,7 +19,7 @@ class ViewController: UIViewController {
         fetchSmokingAreasFromFirestore() // Firestore 데이터 가져오기
         
         // 마커 매니저 초기화
-        markerManager = MarkerManager(mapView: naverMapView.mapView)
+        //markerManager = MarkerManager(mapView: naverMapView.mapView)
         
         // NotificationCenter에서 흡연구역 추가 알림 받기
         NotificationCenter.default.addObserver(self, selector: #selector(smokingAreaAdded(_:)), name: .smokingAreaAdded, object: nil)

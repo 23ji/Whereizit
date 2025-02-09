@@ -91,19 +91,14 @@
 			children = (
 				49288AAC2D19450C00FF1E50 /* AppDelegate.swift */,
 				49288AAE2D19450C00FF1E50 /* SceneDelegate.swift */,
-				49288AB02D19450C00FF1E50 /* ViewController.swift */,
-				49288AB22D19450C00FF1E50 /* Main.storyboard */,
+				A774711D2D58D8ED006F2F0D /* Model */,
+				A774711E2D58D913006F2F0D /* View */,
+				A774711F2D58D917006F2F0D /* Controller */,
+				A77471202D58D93E006F2F0D /* Service */,
 				49288AB52D19450D00FF1E50 /* Assets.xcassets */,
 				49288AB72D19450D00FF1E50 /* LaunchScreen.storyboard */,
 				49288ABA2D19450D00FF1E50 /* Info.plist */,
-				49C806CF2D27CE51002367C1 /* SmokingAreaData.swift */,
-				4961B4852D38F35500CCDD8C /* ListViewController.swift */,
-				4961B48A2D3A372A00CCDD8C /* MarkerManager.swift */,
-				A70F0E472D3CCE1100E780FC /* AddSmokeAreaViewController.swift */,
 				A76232662D5229D800A0F323 /* GoogleService-Info.plist */,
-				4910C5412D408CEE006AB7E5 /* Firestore.swift */,
-				4910C5432D408D72006AB7E5 /* SmokingArea.swift */,
-				495000E72D4CB2270057ECEC /* AddSmokingAreaDataViewController.swift */,
 			);
 			path = SmokingAreaOdi;
 			sourceTree = "<group>";
@@ -113,6 +108,43 @@
 			children = (
 			);
 			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		A774711D2D58D8ED006F2F0D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4961B48A2D3A372A00CCDD8C /* MarkerManager.swift */,
+				4910C5432D408D72006AB7E5 /* SmokingArea.swift */,
+				49C806CF2D27CE51002367C1 /* SmokingAreaData.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		A774711E2D58D913006F2F0D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				49288AB22D19450C00FF1E50 /* Main.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A774711F2D58D917006F2F0D /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				49288AB02D19450C00FF1E50 /* ViewController.swift */,
+				4961B4852D38F35500CCDD8C /* ListViewController.swift */,
+				A70F0E472D3CCE1100E780FC /* AddSmokeAreaViewController.swift */,
+				495000E72D4CB2270057ECEC /* AddSmokingAreaDataViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		A77471202D58D93E006F2F0D /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				4910C5412D408CEE006AB7E5 /* Firestore.swift */,
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 		B978E0BD119D6BE3785F1B06 /* Pods */ = {
