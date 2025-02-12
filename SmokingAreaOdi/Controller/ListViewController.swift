@@ -9,8 +9,11 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        //tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 200  // 예상 높이를 설정
         tableView.dataSource = self
         tableView.delegate = self
+        
     
         loadSmokingAreas()
 
@@ -39,6 +42,9 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let area = smokingAreas[indexPath.row]
         cell.textLabel?.text = area.name
         cell.detailTextLabel?.text = area.description
+        if area.description == nil || area.description.isEmpty == true {
+            cell.detailTextLabel?.text = " " // 텍스트가 없으면 공백을 넣어주면 셀 높이가 비슷해짐
+        }
         return cell
     }
     

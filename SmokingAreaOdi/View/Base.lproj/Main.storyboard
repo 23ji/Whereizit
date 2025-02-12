@@ -113,7 +113,7 @@
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SmokingAreaCell" textLabel="bi3-cB-vIH" detailTextLabel="fIA-py-PVa" imageView="ON2-RC-Zmm" rowHeight="156" style="IBUITableViewCellStyleSubtitle" id="uYE-OZ-aXC">
                                         <rect key="frame" x="0.0" y="50" width="361" height="156"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="uYE-OZ-aXC" id="B42-Oi-AWc">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="SmokingAreaCell" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="uYE-OZ-aXC" id="B42-Oi-AWc">
                                             <rect key="frame" x="0.0" y="0.0" width="361" height="156"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
@@ -137,16 +137,11 @@
                                                 </imageView>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="SmokinAreaImage" destination="ON2-RC-Zmm" id="JhD-pT-QtF"/>
-                                            <outlet property="SmokingAreaDescription" destination="fIA-py-PVa" id="VQF-w0-9cM"/>
-                                            <outlet property="SmokingAreaName" destination="bi3-cB-vIH" id="mXo-sa-SsA"/>
-                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0hG-04-bDU">
-                                <rect key="frame" x="16" y="59" width="39.666666666666742" height="34.333333333333314"/>
+                                <rect key="frame" x="16" y="59" width="39.666666666666657" height="34.333333333333343"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="chevron.backward" catalog="system"/>
