@@ -1,6 +1,7 @@
 import UIKit
 
 class ListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var backButton: UIButton!
     
@@ -10,9 +11,6 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
-
-        // 셀 등록 (스토리보드에서 셀 설정이 안 되었을 경우 대비)
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "SmokingAreaCell")
 
         loadSmokingAreas()
 
