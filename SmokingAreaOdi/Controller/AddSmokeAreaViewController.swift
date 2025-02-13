@@ -46,9 +46,6 @@ class AddSmokeAreaViewController: UIViewController, UIImagePickerControllerDeleg
         searchBar.searchTextField.borderStyle = .none
         searchBar.layer.cornerRadius = 15
         searchBar.clipsToBounds = true
-
-        // descriptionTextField의 플레이스홀더 설정
-//        descriptionTextField.placeholder = placeholderText
     }
     
 //    // MARK: - Keyboard Notifications

@@ -88,8 +88,8 @@ class AddSmokingAreaDataViewController: UIViewController, UIImagePickerControlle
                 self.showAlert(message: "새로운 흡연구역이 등록되었습니다!") {
                     self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
                               
-                              // NotificationCenter로 ViewController에게 데이터 새로고침 요청
-                              NotificationCenter.default.post(name: .smokingAreaAdded, object: nil)
+                    // NotificationCenter로 ViewController에게 데이터 새로고침 요청
+                    NotificationCenter.default.post(name: .smokingAreaAdded, object: nil)
                 }
             }
         }
