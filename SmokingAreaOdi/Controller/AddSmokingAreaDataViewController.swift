@@ -86,15 +86,10 @@ class AddSmokingAreaDataViewController: UIViewController, UIImagePickerControlle
             } else {
                 print("Firestore 저장 성공")
                 self.showAlert(message: "새로운 흡연구역이 등록되었습니다!") {
-                    if let navigationController = self.navigationController {
-                        // 네비게이션 컨트롤러가 있으면 첫 번째 화면으로 돌아감
-                        navigationController.popToRootViewController(animated: true)
-                    } else {
-                        print("Firestore 저장 성공")
-                        self.showAlert(message: "새로운 흡연구역이 등록되었습니다!") {
-                            let viewController = self.storyboard?.instantiateViewController(withIdentifier: "VC") as? ViewController
-                        }
-                    }
+                    self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+                              
+                              // NotificationCenter로 ViewController에게 데이터 새로고침 요청
+                              NotificationCenter.default.post(name: .smokingAreaAdded, object: nil)
                 }
             }
         }

@@ -177,7 +177,7 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" fixedFrame="YES" image="marker_Pin" translatesAutoresizingMaskIntoConstraints="NO" id="M1H-2m-A1P">
-                                <rect key="frame" x="172" y="386" width="48" height="63"/>
+                                <rect key="frame" x="172" y="379" width="48" height="63"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="8Rh-Zf-oCQ">
