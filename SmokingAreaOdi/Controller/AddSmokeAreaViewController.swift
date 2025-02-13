@@ -18,6 +18,7 @@ class AddSmokeAreaViewController: UIViewController, UIImagePickerControllerDeleg
     private let firestore = Firestore.firestore() // Firestore 인스턴스 추가
     
     var selectedImage: UIImage? // 촬영한 사진 저장
+    var marker: NMFMarker?
     
     // 키보드의 높이
     private var keyboardHeight: CGFloat = 0

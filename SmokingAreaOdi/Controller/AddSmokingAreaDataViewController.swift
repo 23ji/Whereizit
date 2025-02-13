@@ -20,6 +20,8 @@ class AddSmokingAreaDataViewController: UIViewController, UIImagePickerControlle
 
     private let firestore = Firestore.firestore() // Firestore 인스턴스 추가
     private let placeholderText = "상세 설명을 입력해주세요."
+    private var marker: NMFMarker!
+
     
     var latitude: Double?
     var longitude: Double?
@@ -34,15 +36,20 @@ class AddSmokingAreaDataViewController: UIViewController, UIImagePickerControlle
 
         // descriptionTextField의 플레이스홀더 설정
         descriptionTextField.placeholder = placeholderText
-        guard let lat = latitude, let lng = longitude else { return }
-
     }
     
     private func setupNaverMapView() {
-        let initialLocation = NMGLatLng(lat: latitude!, lng: longitude!)
-        let cameraUpdate = NMFCameraUpdate(scrollTo: initialLocation)
-        naverMapView.mapView.moveCamera(cameraUpdate)
-        naverMapView.showLocationButton = true
+        // 전달받은 좌표로 지도 이동 & 마커 표시
+        if let lat = latitude, let lng = longitude {
+            let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: lat, lng: lng))
+            naverMapView.mapView.moveCamera(cameraUpdate)
+            
+            // 마커 생성 및 사용자 이미지 설정
+            marker = NMFMarker()
+            marker.position = NMGLatLng(lat: lat, lng: lng)
+            marker.iconImage = NMFOverlayImage(name: "marker_Pin")
+            marker.mapView = naverMapView.mapView
+        }
     }
     
     @IBAction func backButtonTapped(_ sender: UIButton) {

@@ -177,7 +177,7 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" fixedFrame="YES" image="marker_Pin" translatesAutoresizingMaskIntoConstraints="NO" id="M1H-2m-A1P">
-                                <rect key="frame" x="172" y="394" width="48" height="63"/>
+                                <rect key="frame" x="172" y="386" width="48" height="63"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="8Rh-Zf-oCQ">
@@ -330,9 +330,6 @@
                                 <viewLayoutGuide key="safeArea" id="xIu-al-dDd"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="marker_Pin" translatesAutoresizingMaskIntoConstraints="NO" id="WSy-Pm-uKu">
-                                <rect key="frame" x="171.66666666666666" y="210" width="50" height="64"/>
-                            </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="3wq-hu-q19">
                                 <rect key="frame" x="10" y="418" width="373" height="275"/>
                                 <subviews>
@@ -405,7 +402,6 @@
                         <viewLayoutGuide key="safeArea" id="XgQ-dk-WCU"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="WSy-Pm-uKu" firstAttribute="centerX" secondItem="NtZ-EM-EKr" secondAttribute="centerX" id="0FK-4x-TNJ"/>
                             <constraint firstItem="3wq-hu-q19" firstAttribute="leading" secondItem="XgQ-dk-WCU" secondAttribute="leading" constant="10" id="31G-ke-NXd"/>
                             <constraint firstItem="YnU-vi-zZg" firstAttribute="leading" secondItem="XgQ-dk-WCU" secondAttribute="leading" id="8t1-xi-CEo"/>
                             <constraint firstItem="XgQ-dk-WCU" firstAttribute="trailing" secondItem="dBu-G3-sMc" secondAttribute="trailing" constant="100" id="FHD-tZ-wLe"/>
@@ -419,7 +415,6 @@
                             <constraint firstItem="4pO-Sk-6lI" firstAttribute="leading" secondItem="XgQ-dk-WCU" secondAttribute="leading" constant="16" id="gLG-LB-cPr"/>
                             <constraint firstItem="dBu-G3-sMc" firstAttribute="leading" secondItem="XgQ-dk-WCU" secondAttribute="leading" constant="100" id="iz8-rn-bK9"/>
                             <constraint firstItem="4pO-Sk-6lI" firstAttribute="top" secondItem="XgQ-dk-WCU" secondAttribute="top" id="j7a-Ai-fg5"/>
-                            <constraint firstItem="WSy-Pm-uKu" firstAttribute="top" secondItem="YnU-vi-zZg" secondAttribute="bottom" constant="-178" id="lAF-oC-vxd"/>
                             <constraint firstItem="dBu-G3-sMc" firstAttribute="top" secondItem="3wq-hu-q19" secondAttribute="bottom" constant="30" id="pCr-rH-klL"/>
                             <constraint firstItem="XgQ-dk-WCU" firstAttribute="bottom" secondItem="4pO-Sk-6lI" secondAttribute="bottom" constant="724.66999999999996" id="zk7-hb-CrJ"/>
                         </constraints>
