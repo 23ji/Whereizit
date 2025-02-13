@@ -20,17 +20,29 @@ class AddSmokingAreaDataViewController: UIViewController, UIImagePickerControlle
 
     private let firestore = Firestore.firestore() // Firestore 인스턴스 추가
     private let placeholderText = "상세 설명을 입력해주세요."
-
+    
+    var latitude: Double?
+    var longitude: Double?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        setupNaverMapView()
     }
     
     private func setupUI() {
 
         // descriptionTextField의 플레이스홀더 설정
         descriptionTextField.placeholder = placeholderText
+        guard let lat = latitude, let lng = longitude else { return }
+
+    }
+    
+    private func setupNaverMapView() {
+        let initialLocation = NMGLatLng(lat: latitude!, lng: longitude!)
+        let cameraUpdate = NMFCameraUpdate(scrollTo: initialLocation)
+        naverMapView.mapView.moveCamera(cameraUpdate)
+        naverMapView.showLocationButton = true
     }
     
     @IBAction func backButtonTapped(_ sender: UIButton) {
