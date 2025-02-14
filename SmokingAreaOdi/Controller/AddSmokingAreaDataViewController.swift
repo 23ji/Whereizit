@@ -69,6 +69,12 @@ class AddSmokingAreaDataViewController: UIViewController, UIImagePickerControlle
             return
         }
         
+        // NaN 값 방지
+            guard !currentCenter.lat.isNaN, !currentCenter.lng.isNaN else {
+                showAlert(message: "유효하지 않은 위치 값입니다.") { }
+                return
+            }
+        
         // 상세 설명이 플레이스홀더와 같은지 확인하고 적절히 처리
         let description = descriptionTextField.text == placeholderText ? "" : descriptionTextField.text
         
