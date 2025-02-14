@@ -39,17 +39,19 @@ class AddSmokingAreaDataViewController: UIViewController, UIImagePickerControlle
     }
     
     private func setupNaverMapView() {
-        // 전달받은 좌표로 지도 이동 & 마커 표시
-        if let lat = latitude, let lng = longitude {
+        guard let lat = latitude, let lng = longitude,
+                  !lat.isNaN, !lng.isNaN else {
+                print("🚨 오류: 위도 또는 경도 값이 올바르지 않습니다. lat: \(latitude ?? 0), lng: \(longitude ?? 0)")
+                return
+            }
+
             let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: lat, lng: lng))
             naverMapView.mapView.moveCamera(cameraUpdate)
             
-            // 마커 생성 및 사용자 이미지 설정
             marker = NMFMarker()
             marker.position = NMGLatLng(lat: lat, lng: lng)
             marker.iconImage = NMFOverlayImage(name: "marker_Pin")
             marker.mapView = naverMapView.mapView
-        }
     }
     
     @IBAction func backButtonTapped(_ sender: UIButton) {

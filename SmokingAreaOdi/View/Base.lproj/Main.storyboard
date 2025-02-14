@@ -172,7 +172,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RX0-73-XTt" customClass="NMFNaverMapView">
-                                <rect key="frame" x="0.0" y="203" width="393" height="475"/>
+                                <rect key="frame" x="0.0" y="203" width="393" height="549"/>
                                 <viewLayoutGuide key="safeArea" id="kBz-GO-VNd"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
@@ -201,57 +201,12 @@
                                     </searchBar>
                                 </subviews>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="bottom" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="L4b-xc-5KJ">
-                                <rect key="frame" x="10" y="688" width="373" height="80"/>
-                                <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="z0T-SW-tap">
-                                        <rect key="frame" x="10" y="0.0" width="363" height="35"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="이름" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nNX-lL-mWE">
-                                                <rect key="frame" x="0.0" y="0.0" width="85" height="35"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="85" id="8Jj-tf-k8y"/>
-                                                    <constraint firstAttribute="height" constant="35" id="HuH-r0-8ZC"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" usesAttributedText="YES" borderStyle="roundedRect" placeholder="예) 역삼역 3번 출구" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="V4w-dC-zi0">
-                                                <rect key="frame" x="100" y="0.0" width="263" height="35"/>
-                                                <attributedString key="attributedText"/>
-                                                <textInputTraits key="textInputTraits"/>
-                                            </textField>
-                                        </subviews>
-                                    </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="kVq-fe-haZ">
-                                        <rect key="frame" x="10" y="45" width="363" height="35"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="상세 설명" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FfN-Rr-3I1">
-                                                <rect key="frame" x="0.0" y="0.0" width="85" height="35"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="85" id="i9Y-QD-1ch"/>
-                                                    <constraint firstAttribute="height" constant="35" id="rlg-NV-TpL"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="예) 3번 출구 나와서 오른쪽" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UFD-Vr-O3u">
-                                                <rect key="frame" x="100" y="0.0" width="263" height="34"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
-                                            </textField>
-                                        </subviews>
-                                    </stackView>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="z0T-SW-tap" firstAttribute="leading" secondItem="L4b-xc-5KJ" secondAttribute="leading" constant="10" id="PMu-11-EC8"/>
-                                    <constraint firstItem="kVq-fe-haZ" firstAttribute="leading" secondItem="L4b-xc-5KJ" secondAttribute="leading" constant="10" id="bBt-aO-eBV"/>
-                                </constraints>
-                            </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RXv-S1-JRa">
-                                <rect key="frame" x="100" y="783" width="193" height="35"/>
+                                <rect key="frame" x="100" y="782" width="193" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="Lmv-eN-V2W"/>
+                                    <constraint firstAttribute="width" constant="200" id="v1z-mm-g2k"/>
+                                </constraints>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="이 위치에 추가"/>
                                 <connections>
@@ -270,32 +225,28 @@
                         <viewLayoutGuide key="safeArea" id="T1k-1a-Vbv"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="RXv-S1-JRa" firstAttribute="top" secondItem="L4b-xc-5KJ" secondAttribute="bottom" constant="15" id="2ME-9x-1mA"/>
+                            <constraint firstAttribute="bottom" secondItem="RXv-S1-JRa" secondAttribute="bottom" constant="30" id="1Kf-Jc-zvl"/>
+                            <constraint firstItem="RX0-73-XTt" firstAttribute="leading" secondItem="T1k-1a-Vbv" secondAttribute="leading" id="3TO-j4-E6q"/>
+                            <constraint firstItem="RXv-S1-JRa" firstAttribute="top" secondItem="RX0-73-XTt" secondAttribute="bottom" constant="30" id="6gk-fN-QNu"/>
                             <constraint firstItem="8Rh-Zf-oCQ" firstAttribute="leading" secondItem="T1k-1a-Vbv" secondAttribute="leading" constant="15" id="7O7-OO-0hU"/>
                             <constraint firstItem="T1k-1a-Vbv" firstAttribute="trailing" secondItem="8Rh-Zf-oCQ" secondAttribute="trailing" constant="15" id="CNw-1a-LLv"/>
                             <constraint firstItem="T1k-1a-Vbv" firstAttribute="trailing" secondItem="UsU-2M-aZj" secondAttribute="trailing" constant="337.32999999999998" id="DKP-DI-HMo"/>
-                            <constraint firstItem="T1k-1a-Vbv" firstAttribute="trailing" secondItem="RXv-S1-JRa" secondAttribute="trailing" constant="100" id="OUT-O1-BVl"/>
+                            <constraint firstItem="T1k-1a-Vbv" firstAttribute="trailing" secondItem="RXv-S1-JRa" secondAttribute="trailing" constant="100" id="Jsb-jP-ILL"/>
                             <constraint firstItem="RX0-73-XTt" firstAttribute="leading" secondItem="T1k-1a-Vbv" secondAttribute="leading" id="Ozt-VN-hBa"/>
                             <constraint firstItem="8Rh-Zf-oCQ" firstAttribute="top" secondItem="UsU-2M-aZj" secondAttribute="bottom" constant="15.67" id="TjK-0v-fjD"/>
-                            <constraint firstItem="T1k-1a-Vbv" firstAttribute="trailing" secondItem="L4b-xc-5KJ" secondAttribute="trailing" constant="10" id="UmM-HX-20v"/>
-                            <constraint firstItem="RX0-73-XTt" firstAttribute="top" secondItem="8Rh-Zf-oCQ" secondAttribute="bottom" constant="10" id="WFL-Rv-cBy"/>
-                            <constraint firstItem="T1k-1a-Vbv" firstAttribute="bottom" secondItem="RXv-S1-JRa" secondAttribute="bottom" id="WtG-Dm-uhj"/>
+                            <constraint firstItem="RX0-73-XTt" firstAttribute="top" secondItem="8Rh-Zf-oCQ" secondAttribute="bottom" constant="10" id="bhf-0n-fO9"/>
                             <constraint firstItem="UsU-2M-aZj" firstAttribute="leading" secondItem="T1k-1a-Vbv" secondAttribute="leading" constant="16" id="cja-5q-JXz"/>
                             <constraint firstItem="UsU-2M-aZj" firstAttribute="top" secondItem="T1k-1a-Vbv" secondAttribute="top" id="dcp-U3-hN1"/>
                             <constraint firstItem="8Rh-Zf-oCQ" firstAttribute="top" secondItem="T1k-1a-Vbv" secondAttribute="top" constant="50" id="gVa-bs-SS4"/>
-                            <constraint firstItem="L4b-xc-5KJ" firstAttribute="leading" secondItem="T1k-1a-Vbv" secondAttribute="leading" constant="10" id="gZr-PC-tbC"/>
-                            <constraint firstItem="RXv-S1-JRa" firstAttribute="leading" secondItem="T1k-1a-Vbv" secondAttribute="leading" constant="100" id="iYG-il-G8n"/>
+                            <constraint firstItem="RX0-73-XTt" firstAttribute="trailing" secondItem="T1k-1a-Vbv" secondAttribute="trailing" id="hHT-4H-7eK"/>
                             <constraint firstItem="RX0-73-XTt" firstAttribute="trailing" secondItem="T1k-1a-Vbv" secondAttribute="trailing" id="lz6-De-3hi"/>
-                            <constraint firstItem="T1k-1a-Vbv" firstAttribute="bottom" secondItem="L4b-xc-5KJ" secondAttribute="bottom" constant="50" id="nMs-o7-EM6"/>
-                            <constraint firstItem="L4b-xc-5KJ" firstAttribute="top" secondItem="RX0-73-XTt" secondAttribute="bottom" constant="10" id="q1y-i3-Dh1"/>
+                            <constraint firstItem="RXv-S1-JRa" firstAttribute="leading" secondItem="T1k-1a-Vbv" secondAttribute="leading" constant="100" id="sgz-bP-hiY"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="backButton" destination="UsU-2M-aZj" id="smj-E6-Fi8"/>
-                        <outlet property="descriptionTextField" destination="UFD-Vr-O3u" id="rPt-0d-oc1"/>
                         <outlet property="naverMapView" destination="RX0-73-XTt" id="6NU-ag-rbt"/>
                         <outlet property="searchBar" destination="NIL-qV-But" id="nyq-oz-OO5"/>
-                        <outlet property="titleTextField" destination="V4w-dC-zi0" id="oxE-N0-CZy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6LU-8f-TJt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -390,9 +341,13 @@
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dBu-G3-sMc">
-                                <rect key="frame" x="100" y="723" width="193" height="65"/>
+                                <rect key="frame" x="100" y="723" width="193" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="gyw-uU-Met"/>
+                                    <constraint firstAttribute="height" constant="40" id="xmg-C9-Slq"/>
+                                </constraints>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="추가하기"/>
+                                <buttonConfiguration key="configuration" style="filled" title="흡연구역 추가하기"/>
                                 <connections>
                                     <action selector="confirmLocationTapped:" destination="Opl-jf-bf8" eventType="touchUpInside" id="PTw-Zh-2Dx"/>
                                     <action selector="confirmLocationTapped:" destination="VVG-DR-bRO" eventType="touchUpInside" id="gAF-t1-b23"/>
@@ -408,14 +363,13 @@
                             <constraint firstItem="XgQ-dk-WCU" firstAttribute="trailing" secondItem="4pO-Sk-6lI" secondAttribute="trailing" constant="337.32999999999998" id="J4z-7U-Y7m"/>
                             <constraint firstItem="XgQ-dk-WCU" firstAttribute="trailing" secondItem="3wq-hu-q19" secondAttribute="trailing" constant="10" id="NGp-SQ-InH"/>
                             <constraint firstItem="XgQ-dk-WCU" firstAttribute="bottom" secondItem="YnU-vi-zZg" secondAttribute="bottom" constant="430" id="Ocq-F4-4tU"/>
-                            <constraint firstItem="XgQ-dk-WCU" firstAttribute="bottom" secondItem="dBu-G3-sMc" secondAttribute="bottom" constant="30" id="SvB-hQ-CLt"/>
                             <constraint firstItem="3wq-hu-q19" firstAttribute="top" secondItem="YnU-vi-zZg" secondAttribute="bottom" constant="30" id="T2T-m4-4hv"/>
+                            <constraint firstItem="dBu-G3-sMc" firstAttribute="top" secondItem="3wq-hu-q19" secondAttribute="bottom" constant="30" id="Udg-eY-8MD"/>
                             <constraint firstItem="YnU-vi-zZg" firstAttribute="trailing" secondItem="XgQ-dk-WCU" secondAttribute="trailing" id="W5q-L4-MgB"/>
                             <constraint firstItem="YnU-vi-zZg" firstAttribute="top" secondItem="XgQ-dk-WCU" secondAttribute="top" constant="50" id="aGo-zi-ImW"/>
                             <constraint firstItem="4pO-Sk-6lI" firstAttribute="leading" secondItem="XgQ-dk-WCU" secondAttribute="leading" constant="16" id="gLG-LB-cPr"/>
                             <constraint firstItem="dBu-G3-sMc" firstAttribute="leading" secondItem="XgQ-dk-WCU" secondAttribute="leading" constant="100" id="iz8-rn-bK9"/>
                             <constraint firstItem="4pO-Sk-6lI" firstAttribute="top" secondItem="XgQ-dk-WCU" secondAttribute="top" id="j7a-Ai-fg5"/>
-                            <constraint firstItem="dBu-G3-sMc" firstAttribute="top" secondItem="3wq-hu-q19" secondAttribute="bottom" constant="30" id="pCr-rH-klL"/>
                             <constraint firstItem="XgQ-dk-WCU" firstAttribute="bottom" secondItem="4pO-Sk-6lI" secondAttribute="bottom" constant="724.66999999999996" id="zk7-hb-CrJ"/>
                         </constraints>
                     </view>
@@ -435,9 +389,9 @@
         <image name="chevron.backward" catalog="system" width="97" height="128"/>
         <image name="list.bullet" catalog="system" width="128" height="87"/>
         <image name="marker_Pin" width="50" height="64"/>
-        <image name="person.fill" catalog="system" width="128" height="120"/>
+        <image name="person.fill" catalog="system" width="32" height="32"/>
         <image name="plusButton" width="50" height="50"/>
-        <image name="star.fill" catalog="system" width="128" height="116"/>
+        <image name="star.fill" catalog="system" width="32" height="32"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
