@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="7oH-5K-gaJ">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Home-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController storyboardIdentifier="VC" id="BYZ-38-t0r" customClass="ViewController" customModule="SmokingAreaOdi" customModuleProvider="target" sceneMemberID="viewController">
@@ -18,14 +18,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nda-cK-Y7j" customClass="NMFNaverMapView">
-                                <rect key="frame" x="0.0" y="0.0" width="393" height="758"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nda-cK-Y7j" customClass="NMFNaverMapView">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="769"/>
                                 <viewLayoutGuide key="safeArea" id="eFy-Yo-0AU"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KyU-3L-QKQ">
-                                <rect key="frame" x="300" y="659" width="83" height="89"/>
+                                <rect key="frame" x="300" y="678" width="83" height="64"/>
                                 <color key="tintColor" red="0.41568624970000001" green="0.75686275960000005" blue="0.33725491169999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain">
@@ -37,18 +36,6 @@
                                     <action selector="addMarkerButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eDV-UG-1Zx"/>
                                 </connections>
                             </button>
-                            <tabBar contentMode="scaleToFill" itemPositioning="fill" translatesAutoresizingMaskIntoConstraints="NO" id="MS6-Wz-fBd">
-                                <rect key="frame" x="0.0" y="758" width="393" height="60"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="W07-Uk-wZA"/>
-                                    <constraint firstAttribute="width" constant="393" id="khn-ss-glm"/>
-                                </constraints>
-                                <items>
-                                    <tabBarItem title="즐겨찾기" image="star.fill" catalog="system" id="0a3-Ml-cuf"/>
-                                    <tabBarItem title="마이 페이지" image="person.fill" catalog="system" id="2L5-Cw-qwU"/>
-                                </items>
-                            </tabBar>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="CaP-UW-8Ls">
                                 <rect key="frame" x="10" y="50" width="373" height="56"/>
                                 <subviews>
@@ -76,18 +63,19 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="MS6-Wz-fBd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="9zx-So-El9"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="MS6-Wz-fBd" secondAttribute="bottom" id="GF5-6k-c4p"/>
-                            <constraint firstItem="MS6-Wz-fBd" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="N1P-TA-Z4h"/>
-                            <constraint firstItem="MS6-Wz-fBd" firstAttribute="top" secondItem="KyU-3L-QKQ" secondAttribute="bottom" constant="10" id="Ovd-oT-6Sj"/>
+                            <constraint firstItem="Nda-cK-Y7j" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="1EF-CN-Oc5"/>
+                            <constraint firstAttribute="bottom" secondItem="Nda-cK-Y7j" secondAttribute="bottom" constant="83" id="1m1-mf-KfR"/>
+                            <constraint firstItem="Nda-cK-Y7j" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="4Ix-1q-fSa"/>
+                            <constraint firstItem="Nda-cK-Y7j" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="FFc-lI-Dxv"/>
                             <constraint firstItem="CaP-UW-8Ls" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="Pu2-KB-HdH"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="KyU-3L-QKQ" secondAttribute="trailing" constant="10" id="TIM-w8-ICy"/>
-                            <constraint firstItem="KyU-3L-QKQ" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="600" id="hJX-gt-isN"/>
-                            <constraint firstItem="CaP-UW-8Ls" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="50" id="iKS-YQ-2Xr"/>
+                            <constraint firstAttribute="bottom" secondItem="KyU-3L-QKQ" secondAttribute="bottom" constant="110" id="Xm6-6C-P4w"/>
                             <constraint firstAttribute="trailing" secondItem="CaP-UW-8Ls" secondAttribute="trailing" constant="10" id="pFq-14-WHp"/>
+                            <constraint firstItem="CaP-UW-8Ls" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="50" id="wuV-1S-u2B"/>
                             <constraint firstItem="KyU-3L-QKQ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="300" id="yow-NS-YFi"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Home" id="kaN-cv-Ch9"/>
                     <connections>
                         <outlet property="addMarkerButton" destination="KyU-3L-QKQ" id="IzN-GD-2Ps"/>
                         <outlet property="naverMapView" destination="Nda-cK-Y7j" id="ag1-a9-ubL"/>
@@ -96,7 +84,23 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1970.2290076335878" y="4.9295774647887329"/>
+            <point key="canvasLocation" x="4750.3816793893129" y="4.9295774647887329"/>
+        </scene>
+        <!--내 계정-->
+        <scene sceneID="f1g-BA-MD2">
+            <objects>
+                <viewController id="Yit-t0-IT0" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="cQb-wa-6pA">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="FfZ-C6-hPf"/>
+                        <color key="backgroundColor" systemColor="systemGreenColor"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="내 계정" image="person.crop.circle" catalog="system" id="5uZ-fg-SOj"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="B1u-8k-kkP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4750" y="1356"/>
         </scene>
         <!--List View Controller-->
         <scene sceneID="0J6-7g-Tgy">
@@ -161,7 +165,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SrO-qT-JGm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1133.5877862595419" y="4.9295774647887329"/>
+            <point key="canvasLocation" x="5569" y="698"/>
         </scene>
         <!--Add Smoke Area View Controller-->
         <scene sceneID="TnM-tD-Mep">
@@ -251,7 +255,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6LU-8f-TJt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2788.5496183206105" y="4.9295774647887329"/>
+            <point key="canvasLocation" x="5568.7022900763359" y="4.9295774647887329"/>
         </scene>
         <!--Add Smoking Area Data View Controller-->
         <scene sceneID="TFv-Ja-xJU">
@@ -382,18 +386,58 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d7P-xg-Vux" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3507.6335877862593" y="4.9295774647887329"/>
+            <point key="canvasLocation" x="6287.7862595419847" y="4.9295774647887329"/>
+        </scene>
+        <!--즐겨찾기-->
+        <scene sceneID="vj4-2p-R0G">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="QuY-FQ-ZCi" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="즐겨찾기" image="star" catalog="system" id="QEA-rl-fPH"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Vnf-kj-8Ch">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <navigationBarAppearance key="scrollEdgeAppearance"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="ki3-jF-k41"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BwK-xz-irm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3823.6641221374043" y="4.9295774647887329"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="d0Z-Ho-JUH">
+            <objects>
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="7oH-5K-gaJ" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="sjR-hc-YUP">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="QuY-FQ-ZCi" kind="relationship" relationship="viewControllers" id="Fhh-s3-B7h"/>
+                        <segue destination="Yit-t0-IT0" kind="relationship" relationship="viewControllers" id="pKI-Wv-gZt"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="e9e-79-Qf8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2896.9465648854962" y="4.9295774647887329"/>
         </scene>
     </scenes>
     <resources>
         <image name="chevron.backward" catalog="system" width="97" height="128"/>
         <image name="list.bullet" catalog="system" width="128" height="87"/>
         <image name="marker_Pin" width="50" height="64"/>
-        <image name="person.fill" catalog="system" width="32" height="32"/>
+        <image name="person.crop.circle" catalog="system" width="128" height="123"/>
         <image name="plusButton" width="50" height="50"/>
-        <image name="star.fill" catalog="system" width="32" height="32"/>
+        <image name="star" catalog="system" width="128" height="116"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
