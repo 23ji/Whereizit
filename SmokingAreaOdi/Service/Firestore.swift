@@ -1,24 +1,29 @@
-// Firestore.swift
-
 import Foundation
 import FirebaseFirestore
-import NMapsMap
 
-extension ViewController {
+class FirestoreManager {
+    static let shared = FirestoreManager()
+
+    private init() {}
+
     // MARK: - Firestore 데이터 가져오기
-    func fetchSmokingAreasFromFirestore() {
+    func fetchSmokingAreas(completion: @escaping ([SmokingArea]) -> Void) {
         let db = Firestore.firestore()
         
-        db.collection("smokingAreas").addSnapshotListener { snapshot, error in
+        db.collection("smokingAreas").getDocuments { snapshot, error in
             if let error = error {
-                print("Firestore 데이터 가져오기 실패: \(error.localizedDescription)")
+                print("❌ Firestore 데이터 가져오기 실패: \(error.localizedDescription)")
+                completion([])
                 return
             }
             
             guard let documents = snapshot?.documents else {
-                print("가져온 데이터가 비어 있음")
+                print("⚠️ 가져온 데이터가 비어 있음")
+                completion([])
                 return
             }
+            
+            var smokingAreas: [SmokingArea] = []
             
             for document in documents {
                 let data = document.data()
@@ -28,7 +33,7 @@ extension ViewController {
                     let longitude = data["longitude"] as? Double,
                     let description = data["description"] as? String
                 else {
-                    print("데이터 파싱 실패: \(data)")
+                    print("❌ 데이터 파싱 실패: \(data)")
                     continue
                 }
                 
@@ -39,22 +44,10 @@ extension ViewController {
                     description: description
                 )
                 
-                // 중복 추가 방지
-                if SmokingAreaData.shared.smokingAreas.contains(where: { $0.name == name && $0.latitude == latitude && $0.longitude == longitude }) {
-                    continue
-                }
-                
-                // SmokingAreaData에 추가
-                SmokingAreaData.shared.addSmokingArea(smokingArea)
-                
-                // Notification을 사용해 MarkerManager에 마커 추가 요청
-                NotificationCenter.default.post(name: .newSmokingAreaAdded, object: nil, userInfo: ["area": smokingArea])
+                smokingAreas.append(smokingArea)
             }
+            
+            completion(smokingAreas)
         }
     }
-}
-
-// MARK: - Notification Name 정의
-extension Notification.Name {
-    static let newSmokingAreaAdded = Notification.Name("newSmokingAreaAdded")
 }

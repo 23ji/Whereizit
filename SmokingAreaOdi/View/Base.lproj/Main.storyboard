@@ -77,9 +77,10 @@
                     </view>
                     <navigationItem key="navigationItem" title="Home" id="kaN-cv-Ch9"/>
                     <connections>
-                        <outlet property="addMarkerButton" destination="KyU-3L-QKQ" id="IzN-GD-2Ps"/>
+                        <outlet property="addMarkerButton" destination="KyU-3L-QKQ" id="Plq-1m-KiU"/>
                         <outlet property="naverMapView" destination="Nda-cK-Y7j" id="ag1-a9-ubL"/>
-                        <outlet property="searchBar" destination="haD-Zi-fDd" id="pVE-JS-VKk"/>
+                        <outlet property="searchBar" destination="haD-Zi-fDd" id="Poh-aN-VSv"/>
+                        <outlet property="showListButton" destination="4yr-Fk-sGE" id="oN1-5e-4vC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -413,6 +414,7 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="7oH-5K-gaJ" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="sjR-hc-YUP">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
@@ -437,7 +439,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGreenColor">
-            <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

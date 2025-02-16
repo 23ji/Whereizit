@@ -1,29 +1,20 @@
-// ViewController.swift
-
 import UIKit
 import NMapsMap
-import FirebaseFirestore
 
 class ViewController: UIViewController {
     // MARK: - Properties
-    let locationManager = CLLocationManager()
     let markerManager = MarkerManager()
-    
+
     @IBOutlet weak var naverMapView: NMFNaverMapView!
     @IBOutlet weak var addMarkerButton: UIButton!
     @IBOutlet weak var searchBar: UISearchBar!
-        
+    @IBOutlet weak var showListButton: UIButton!
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNaverMapView()
-        setupView()
-        
-        // Firestore에서 데이터 가져오기
-        fetchSmokingAreasFromFirestore()
-        
-        // NotificationCenter를 통해 마커 추가
-        NotificationCenter.default.addObserver(self, selector: #selector(handleNewSmokingArea(_:)), name: .newSmokingAreaAdded, object: nil)
+        loadMarkers()
     }
     
     // MARK: - Setup Methods
@@ -34,20 +25,13 @@ class ViewController: UIViewController {
         naverMapView.showLocationButton = true
     }
     
-    private func setupView() {
-        searchBar.searchTextField.borderStyle = .none
-        searchBar.layer.cornerRadius = 15
-        searchBar.clipsToBounds = true
+    // MARK: - Firestore 데이터 불러와서 마커 추가
+    private func loadMarkers() {
+        FirestoreManager.shared.fetchSmokingAreas { [weak self] smokingAreas in
+            guard let self = self else { return }
+            self.markerManager.addMarkers(for: smokingAreas, to: self.naverMapView.mapView)
+        }
     }
-    
-    // MARK: - Notification 처리 (마커 추가)
-    @objc private func handleNewSmokingArea(_ notification: Notification) {
-        guard let userInfo = notification.userInfo,
-              let newArea = userInfo["area"] as? SmokingArea else { return }
-        
-        markerManager.addMarker(for: newArea, to: naverMapView.mapView)
-    }
-
     
     // MARK: - Actions
     @IBAction func addMarkerButtonTapped(_ sender: UIButton) {
