@@ -1,3 +1,5 @@
+// ViewController.swift
+
 import UIKit
 import NMapsMap
 import FirebaseFirestore
@@ -5,7 +7,7 @@ import FirebaseFirestore
 class ViewController: UIViewController {
     // MARK: - Properties
     let locationManager = CLLocationManager()
-    var markerManager: MarkerManager?  // 마커 매니저
+    let markerManager = MarkerManager()
     
     @IBOutlet weak var naverMapView: NMFNaverMapView!
     @IBOutlet weak var addMarkerButton: UIButton!
@@ -16,18 +18,16 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         setupNaverMapView()
         setupView()
-        fetchSmokingAreasFromFirestore() // Firestore 데이터 가져오기
         
-        // 마커 매니저 초기화
-        //markerManager = MarkerManager(mapView: naverMapView.mapView)
+        // Firestore에서 데이터 가져오기
+        fetchSmokingAreasFromFirestore()
         
-        // NotificationCenter에서 흡연구역 추가 알림 받기
-        NotificationCenter.default.addObserver(self, selector: #selector(smokingAreaAdded(_:)), name: .smokingAreaAdded, object: nil)
+        // NotificationCenter를 통해 마커 추가
+        NotificationCenter.default.addObserver(self, selector: #selector(handleNewSmokingArea(_:)), name: .newSmokingAreaAdded, object: nil)
     }
     
     // MARK: - Setup Methods
     private func setupNaverMapView() {
-        // 초기 위치 역삼역으로 지정
         let initialLocation = NMGLatLng(lat: 37.500920152198, lng: 127.03618231961)
         let cameraUpdate = NMFCameraUpdate(scrollTo: initialLocation)
         naverMapView.mapView.moveCamera(cameraUpdate)
@@ -39,6 +39,15 @@ class ViewController: UIViewController {
         searchBar.layer.cornerRadius = 15
         searchBar.clipsToBounds = true
     }
+    
+    // MARK: - Notification 처리 (마커 추가)
+    @objc private func handleNewSmokingArea(_ notification: Notification) {
+        guard let userInfo = notification.userInfo,
+              let newArea = userInfo["area"] as? SmokingArea else { return }
+        
+        markerManager.addMarker(for: newArea, to: naverMapView.mapView)
+    }
+
     
     // MARK: - Actions
     @IBAction func addMarkerButtonTapped(_ sender: UIButton) {
@@ -60,6 +69,4 @@ class ViewController: UIViewController {
             print("ListViewController를 찾을 수 없음")
         }
     }
-    
-    
 }
