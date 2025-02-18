@@ -17,6 +17,12 @@ class ViewController: UIViewController {
         setupNaverMapView()
         loadMarkers()
         popUpVC = PopUpViewController(parentView: self.view) // PopUpViewController 초기화
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadMarkers), name: .smokingAreaAdded, object: nil)
+    }
+    
+    @objc private func reloadMarkers() {
+        print("✅ 새로운 흡연구역이 추가되어 마커를 새로 불러옵니다.")
+        loadMarkers()
     }
     
     // MARK: - Setup Methods
@@ -34,6 +40,7 @@ class ViewController: UIViewController {
             
             self.markerManager.addMarkers(for: smokingAreas, to: self.naverMapView.mapView, viewController: self)
         }
+        
     }
 
     // MARK: - 팝업 정보 표시
@@ -62,3 +69,5 @@ class ViewController: UIViewController {
         }
     }
 }
+
+
