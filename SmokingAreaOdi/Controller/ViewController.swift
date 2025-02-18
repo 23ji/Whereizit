@@ -4,6 +4,7 @@ import NMapsMap
 class ViewController: UIViewController {
     // MARK: - Properties
     let markerManager = MarkerManager()
+    var PopUpViewController: PopUpViewController? // PopUpViewController를 변수로 선언
 
     @IBOutlet weak var naverMapView: NMFNaverMapView!
     @IBOutlet weak var addMarkerButton: UIButton!
@@ -29,7 +30,14 @@ class ViewController: UIViewController {
     private func loadMarkers() {
         FirestoreManager.shared.fetchSmokingAreas { [weak self] smokingAreas in
             guard let self = self else { return }
-            self.markerManager.addMarkers(for: smokingAreas, to: self.naverMapView.mapView)
+            
+            // PopUpViewController를 화면에 띄운 후, 마커를 추가
+//            self.PopUpViewController = self.storyboard?.instantiateViewController(withIdentifier: "PopUpViewController") as? PopUpViewController
+//            if let PopUpViewController = self.PopUpViewController {
+//                self.present(PopUpViewController, animated: true, completion: nil)
+//            }
+            
+            self.markerManager.addMarkers(for: smokingAreas, to: self.naverMapView.mapView, viewController: self)
         }
     }
     
