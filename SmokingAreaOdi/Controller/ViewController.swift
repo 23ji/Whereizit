@@ -4,7 +4,7 @@ import NMapsMap
 class ViewController: UIViewController {
     // MARK: - Properties
     let markerManager = MarkerManager()
-    var PopUpViewController: PopUpViewController? // PopUpViewController를 변수로 선언
+    var popUpVC: PopUpViewController?
 
     @IBOutlet weak var naverMapView: NMFNaverMapView!
     @IBOutlet weak var addMarkerButton: UIButton!
@@ -16,6 +16,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         setupNaverMapView()
         loadMarkers()
+        popUpVC = PopUpViewController(parentView: self.view) // PopUpViewController 초기화
     }
     
     // MARK: - Setup Methods
@@ -25,22 +26,21 @@ class ViewController: UIViewController {
         naverMapView.mapView.moveCamera(cameraUpdate)
         naverMapView.showLocationButton = true
     }
-    
+
     // MARK: - Firestore 데이터 불러와서 마커 추가
     private func loadMarkers() {
         FirestoreManager.shared.fetchSmokingAreas { [weak self] smokingAreas in
             guard let self = self else { return }
             
-            // PopUpViewController를 화면에 띄운 후, 마커를 추가
-//            self.PopUpViewController = self.storyboard?.instantiateViewController(withIdentifier: "PopUpViewController") as? PopUpViewController
-//            if let PopUpViewController = self.PopUpViewController {
-//                self.present(PopUpViewController, animated: true, completion: nil)
-//            }
-            
             self.markerManager.addMarkers(for: smokingAreas, to: self.naverMapView.mapView, viewController: self)
         }
     }
-    
+
+    // MARK: - 팝업 정보 표시
+    func showPopUpInfo(for smokingArea: SmokingArea) {
+        popUpVC?.showInfo(for: smokingArea) // PopUpViewController에서 정보 표시
+    }
+
     // MARK: - Actions
     @IBAction func addMarkerButtonTapped(_ sender: UIButton) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)

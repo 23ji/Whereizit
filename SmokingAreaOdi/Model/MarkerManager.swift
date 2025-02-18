@@ -1,11 +1,10 @@
-import UIKit
 import NMapsMap
 
 class MarkerManager {
     private var markers: [NMFMarker] = []
 
     // MARK: - 마커 추가
-    func addMarkers(for smokingAreas: [SmokingArea], to mapView: NMFMapView, viewController: UIViewController) {
+    func addMarkers(for smokingAreas: [SmokingArea], to mapView: NMFMapView, viewController: ViewController) {
         for smokingArea in smokingAreas {
             let marker = NMFMarker()
             marker.position = NMGLatLng(lat: smokingArea.latitude, lng: smokingArea.longitude)
@@ -20,19 +19,11 @@ class MarkerManager {
             
             // 마커 터치 이벤트 설정
             marker.touchHandler = { [weak viewController] (overlay) in
-                if overlay is NMFMarker {
+                if overlay is NMFMarker, let viewController = viewController {
                     print("✅ 마커 터치 이벤트 발생: \(smokingArea.name)")
                     
-                    // PopUpViewController에서 알림창 띄우기
-                    if let viewController = viewController, viewController.view.window != nil {
-                        DispatchQueue.main.async {
-                            let alert = UIAlertController(title: "흡연 구역", message: "\(smokingArea.name)", preferredStyle: .alert)
-                            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-                            viewController.present(alert, animated: true, completion: nil)
-                        }
-                    } else {
-                        print("⚠️ 알림창을 띄울 수 없음: ViewController가 화면에 표시되지 않음")
-                    }
+                    // PopUp 정보 표시
+                    viewController.showPopUpInfo(for: smokingArea)
                     
                     return true // 이벤트 소비 (false면 이벤트 전파)
                 }
