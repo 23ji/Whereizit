@@ -21,7 +21,7 @@ class MarkerManager {
             marker.touchHandler = { (overlay) in
                 if overlay is NMFMarker {
                     print("✅ 마커 터치 이벤트 발생: \(smokingArea.name)")
-                    return true // 이벤트 소비
+                    return true // 이벤트 소비 (false면 이벤트 전파)
                 }
                 return false
             }
