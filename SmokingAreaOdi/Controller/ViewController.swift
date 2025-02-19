@@ -4,7 +4,7 @@ import NMapsMap
 class ViewController: UIViewController {
     // MARK: - Properties
     let markerManager = MarkerManager()
-    var popUpVC: PopUpViewController?
+    var popUpVC: PopUpView?
 
     @IBOutlet weak var naverMapView: NMFNaverMapView!
     @IBOutlet weak var addMarkerButton: UIButton!
@@ -16,7 +16,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         setupNaverMapView()
         loadMarkers()
-        popUpVC = PopUpViewController(parentView: self.view) // PopUpViewController 초기화
+        popUpVC = PopUpView(parentView: self.view) // PopUpView 초기화
         NotificationCenter.default.addObserver(self, selector: #selector(reloadMarkers), name: .smokingAreaAdded, object: nil)
     }
     
@@ -45,7 +45,7 @@ class ViewController: UIViewController {
 
     // MARK: - 팝업 정보 표시
     func showPopUpInfo(for smokingArea: SmokingArea) {
-        popUpVC?.showInfo(for: smokingArea) // PopUpViewController에서 정보 표시
+        popUpVC?.showInfo(for: smokingArea) // PopUpView에서 정보 표시
     }
 
     // MARK: - Actions

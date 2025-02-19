@@ -1,6 +1,6 @@
 import UIKit
 
-class PopUpViewController {
+class PopUpView {
     var infoView: UIView!
     var infoLabel: UILabel!
     var closeButton: UIButton!
@@ -16,7 +16,7 @@ class PopUpViewController {
         infoView = UIView()
         infoView.backgroundColor = .white
         infoView.layer.cornerRadius = 20
-        infoView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner] // 상단 모서리 둥글게
+        infoView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner, .layerMinXMaxYCorner, .layerMaxXMaxYCorner] // 모든 모서리 둥글게
         infoView.layer.shadowColor = UIColor.black.cgColor
         infoView.layer.shadowOpacity = 0.2
         infoView.layer.shadowRadius = 10
@@ -48,7 +48,7 @@ class PopUpViewController {
         
         // ✅ 애니메이션으로 슬라이드 업
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut) {
-            self.infoView.frame.origin.y = self.parentView.frame.height - self.infoView.frame.height - 20
+            self.infoView.frame.origin.y = self.parentView.frame.height - self.infoView.frame.height - 100
         }
     }
 

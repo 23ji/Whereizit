@@ -28,7 +28,7 @@
 		A70F0E482D3CCE1100E780FC /* AddSmokeAreaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70F0E472D3CCE1100E780FC /* AddSmokeAreaViewController.swift */; };
 		A70F0E492D3CCEEA00E780FC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49288AB22D19450C00FF1E50 /* Main.storyboard */; };
 		A76232672D5229D800A0F323 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A76232662D5229D800A0F323 /* GoogleService-Info.plist */; };
-		A7E312782D64917C00B0D796 /* PopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7E312772D64917C00B0D796 /* PopUpViewController.swift */; };
+		A7E312782D64917C00B0D796 /* PopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7E312772D64917C00B0D796 /* PopUpView.swift */; };
 		A7FAC1D82D62276D005104E7 /* MarkerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7FAC1D72D62276D005104E7 /* MarkerManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -51,7 +51,7 @@
 		71E8D5BE6D6F3B97EE6F1699 /* Pods_SmokingAreaOdi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmokingAreaOdi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A70F0E472D3CCE1100E780FC /* AddSmokeAreaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSmokeAreaViewController.swift; sourceTree = "<group>"; };
 		A76232662D5229D800A0F323 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		A7E312772D64917C00B0D796 /* PopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpViewController.swift; sourceTree = "<group>"; };
+		A7E312772D64917C00B0D796 /* PopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpView.swift; sourceTree = "<group>"; };
 		A7FAC1D72D62276D005104E7 /* MarkerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerManager.swift; sourceTree = "<group>"; };
 		D7BBE7C3A2BCED333CE2D897 /* Pods-SmokingAreaOdi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmokingAreaOdi.release.xcconfig"; path = "Target Support Files/Pods-SmokingAreaOdi/Pods-SmokingAreaOdi.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -122,7 +122,7 @@
 				4910C5432D408D72006AB7E5 /* SmokingArea.swift */,
 				49C806CF2D27CE51002367C1 /* SmokingAreaData.swift */,
 				A7FAC1D72D62276D005104E7 /* MarkerManager.swift */,
-				A7E312772D64917C00B0D796 /* PopUpViewController.swift */,
+				A7E312772D64917C00B0D796 /* PopUpView.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -306,7 +306,7 @@
 				495000E82D4CB2270057ECEC /* AddSmokingAreaDataViewController.swift in Sources */,
 				49288AAF2D19450C00FF1E50 /* SceneDelegate.swift in Sources */,
 				4961B4862D38F35500CCDD8C /* ListViewController.swift in Sources */,
-				A7E312782D64917C00B0D796 /* PopUpViewController.swift in Sources */,
+				A7E312782D64917C00B0D796 /* PopUpView.swift in Sources */,
 				A7FAC1D82D62276D005104E7 /* MarkerManager.swift in Sources */,
 				A70F0E482D3CCE1100E780FC /* AddSmokeAreaViewController.swift in Sources */,
 				4910C5422D408CEE006AB7E5 /* Firestore.swift in Sources */,
