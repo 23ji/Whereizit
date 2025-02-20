@@ -20,8 +20,8 @@
 		49288AB92D19450D00FF1E50 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 49288AB82D19450D00FF1E50 /* Base */; };
 		495000E82D4CB2270057ECEC /* AddSmokingAreaDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 495000E72D4CB2270057ECEC /* AddSmokingAreaDataViewController.swift */; };
 		4950011A2D5C809E0057ECEC /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 495001192D5C809E0057ECEC /* FirebaseAuth */; };
-		4950011C2D5DDAD50057ECEC /* AddSmokingAreaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4950011B2D5DDAD50057ECEC /* AddSmokingAreaView.swift */; };
 		4961B4862D38F35500CCDD8C /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4961B4852D38F35500CCDD8C /* ListViewController.swift */; };
+		497F90CC2D671225007F76B4 /* SetUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497F90CB2D671225007F76B4 /* SetUI.swift */; };
 		499C3C8B2D4B63C300B96903 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 499C3C8A2D4B63C300B96903 /* FirebaseStorage */; };
 		49C806D02D27CE51002367C1 /* SmokingAreaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C806CF2D27CE51002367C1 /* SmokingAreaData.swift */; };
 		67D5D9679690E770383FCAEE /* Pods_SmokingAreaOdi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71E8D5BE6D6F3B97EE6F1699 /* Pods_SmokingAreaOdi.framework */; };
@@ -45,8 +45,8 @@
 		49288AB82D19450D00FF1E50 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		49288ABA2D19450D00FF1E50 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		495000E72D4CB2270057ECEC /* AddSmokingAreaDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSmokingAreaDataViewController.swift; sourceTree = "<group>"; };
-		4950011B2D5DDAD50057ECEC /* AddSmokingAreaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSmokingAreaView.swift; sourceTree = "<group>"; };
 		4961B4852D38F35500CCDD8C /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
+		497F90CB2D671225007F76B4 /* SetUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetUI.swift; sourceTree = "<group>"; };
 		49C806CF2D27CE51002367C1 /* SmokingAreaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokingAreaData.swift; sourceTree = "<group>"; };
 		71E8D5BE6D6F3B97EE6F1699 /* Pods_SmokingAreaOdi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmokingAreaOdi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A70F0E472D3CCE1100E780FC /* AddSmokeAreaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSmokeAreaViewController.swift; sourceTree = "<group>"; };
@@ -122,7 +122,6 @@
 				4910C5432D408D72006AB7E5 /* SmokingArea.swift */,
 				49C806CF2D27CE51002367C1 /* SmokingAreaData.swift */,
 				A7FAC1D72D62276D005104E7 /* MarkerManager.swift */,
-				A7E312772D64917C00B0D796 /* PopUpView.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -131,7 +130,8 @@
 			isa = PBXGroup;
 			children = (
 				49288AB22D19450C00FF1E50 /* Main.storyboard */,
-				4950011B2D5DDAD50057ECEC /* AddSmokingAreaView.swift */,
+				A7E312772D64917C00B0D796 /* PopUpView.swift */,
+				497F90CB2D671225007F76B4 /* SetUI.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -299,7 +299,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4950011C2D5DDAD50057ECEC /* AddSmokingAreaView.swift in Sources */,
+				497F90CC2D671225007F76B4 /* SetUI.swift in Sources */,
 				49288AB12D19450C00FF1E50 /* ViewController.swift in Sources */,
 				49288AAD2D19450C00FF1E50 /* AppDelegate.swift in Sources */,
 				4910C5442D408D72006AB7E5 /* SmokingArea.swift in Sources */,
