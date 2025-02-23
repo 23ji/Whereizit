@@ -5,6 +5,7 @@ class PopUpView {
     var infoLabel: UILabel!
     var closeButton: UIButton!
     var parentView: UIView!
+    var infoImage: UIImage!
     
     init(parentView: UIView) {
         self.parentView = parentView
@@ -34,6 +35,8 @@ class PopUpView {
         infoLabel.textAlignment = .left
         infoView.addSubview(infoLabel)
         
+        infoImage = UIImage()
+        
         // ✅ 닫기 버튼 설정
         closeButton = UIButton(type: .system)
         closeButton.frame = CGRect(x: infoView.frame.width - 60, y: 10, width: 50, height: 30)
@@ -43,7 +46,7 @@ class PopUpView {
     }
 
     func showInfo(for smokingArea: SmokingArea) {
-        infoLabel.text = "🚬 구역 이름: \(smokingArea.name)\n📍 위치 정보: \(smokingArea.description)"
+        infoLabel.text = "🚬 구역 이름: \(smokingArea.name)\n\n📍 위치 정보: \(smokingArea.description)"
         infoLabel.textAlignment = .left
         
         // ✅ 애니메이션으로 슬라이드 업
