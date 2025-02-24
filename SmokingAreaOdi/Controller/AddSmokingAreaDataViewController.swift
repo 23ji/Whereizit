@@ -21,7 +21,6 @@ class AddSmokingAreaDataViewController: UIViewController, UIImagePickerControlle
     private let firestore = Firestore.firestore() // Firestore 인스턴스 추가
     private let placeholderText = "상세 설명을 입력해주세요."
     private var marker: NMFMarker!
-
     
     var latitude: Double?
     var longitude: Double?
@@ -33,7 +32,6 @@ class AddSmokingAreaDataViewController: UIViewController, UIImagePickerControlle
     }
     
     private func setupUI() {
-
         // descriptionTextField의 플레이스홀더 설정
         descriptionTextField.placeholder = placeholderText
     }
@@ -94,6 +92,7 @@ class AddSmokingAreaDataViewController: UIViewController, UIImagePickerControlle
             } else {
                 print("Firestore 저장 성공")
                 self.showAlert(message: "새로운 흡연구역이 등록되었습니다!") {
+                    //루트 화면으로 이동
                     self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
                               
                     // NotificationCenter로 ViewController에게 데이터 새로고침 요청
@@ -116,5 +115,3 @@ class AddSmokingAreaDataViewController: UIViewController, UIImagePickerControlle
         present(alert, animated: true, completion: nil)
     }
 }
-
-

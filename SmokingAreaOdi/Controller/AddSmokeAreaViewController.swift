@@ -20,14 +20,10 @@ class AddSmokeAreaViewController: UIViewController, UIImagePickerControllerDeleg
     var selectedImage: UIImage? // 촬영한 사진 저장
     var marker: NMFMarker?
     
-    // 키보드의 높이
-    private var keyboardHeight: CGFloat = 0
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNaverMapView()
         setupUI()
-        //setupKeyboardNotifications()  // 키보드 알림 설정
     }
 
     deinit {
@@ -47,26 +43,6 @@ class AddSmokeAreaViewController: UIViewController, UIImagePickerControllerDeleg
         searchBar.layer.cornerRadius = 15
         searchBar.clipsToBounds = true
     }
-    
-//    // MARK: - Keyboard Notifications
-//    func setupKeyboardNotifications() {
-//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-//    }
-//
-//    @objc func keyboardWillShow(_ notification: Notification) {
-//        if let userInfo = notification.userInfo,
-//           let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
-//            keyboardHeight = keyboardFrame.height
-//            // 키보드가 올라오면 화면을 위로 이동
-//            self.view.frame.origin.y = -keyboardHeight
-//        }
-//    }
-    
-//    @objc func keyboardWillHide(_ notification: Notification) {
-//        // 키보드가 내려가면 화면을 원래 위치로 되돌린다
-//        self.view.frame.origin.y = 0
-//    }
 
     @IBAction func backButtonTapped(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
