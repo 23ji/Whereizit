@@ -10,6 +10,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var addMarkerButton: UIButton!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var showListButton: UIButton!
+    @IBOutlet weak var topStackView: UIStackView!
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -18,6 +19,7 @@ class ViewController: UIViewController {
         loadMarkers()
         popUpVC = PopUpView(parentView: self.view) // PopUpView 초기화
         NotificationCenter.default.addObserver(self, selector: #selector(reloadMarkers), name: .smokingAreaAdded, object: nil)
+        setUp()
     }
     
     @objc private func reloadMarkers() {
@@ -40,6 +42,12 @@ class ViewController: UIViewController {
             
             self.markerManager.addMarkers(for: smokingAreas, to: self.naverMapView.mapView, viewController: self)
         }
+        
+    }
+    
+    private func setUp() {
+        topStackView.layer.cornerRadius = 10
+        topStackView.clipsToBounds = true
         
     }
 

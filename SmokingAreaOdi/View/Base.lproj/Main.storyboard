@@ -7,6 +7,7 @@
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="UIMenu" message="Requires Xcode 11 or later." minToolsVersion="11.0" requiredIntegratedClassName="UICommandDiff"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -58,6 +59,7 @@
                                         </connections>
                                     </searchBar>
                                 </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -81,6 +83,7 @@
                         <outlet property="naverMapView" destination="Nda-cK-Y7j" id="ag1-a9-ubL"/>
                         <outlet property="searchBar" destination="haD-Zi-fDd" id="Poh-aN-VSv"/>
                         <outlet property="showListButton" destination="4yr-Fk-sGE" id="oN1-5e-4vC"/>
+                        <outlet property="topStackView" destination="CaP-UW-8Ls" id="czx-93-PV1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -287,7 +290,7 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="3wq-hu-q19">
-                                <rect key="frame" x="10" y="418" width="373" height="275"/>
+                                <rect key="frame" x="10" y="418" width="373" height="306"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="이름" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eAa-v3-y06">
                                         <rect key="frame" x="0.0" y="0.0" width="373" height="35"/>
@@ -335,18 +338,29 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="예) 3번 출구 나와서 오른쪽" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="La1-Sl-aJf">
-                                        <rect key="frame" x="0.0" y="235" width="373" height="40"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="ZSy-C8-Kr3"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="e1k-oG-TGd">
+                                        <rect key="frame" x="0.0" y="235" width="373" height="32"/>
+                                        <segments>
+                                            <segment title="실외"/>
+                                            <segment title="실내"/>
+                                        </segments>
+                                    </segmentedControl>
+                                    <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZEu-EG-EK9">
+                                        <rect key="frame" x="0.0" y="276" width="373" height="30"/>
+                                        <menu key="menu" id="XSA-Jk-0N8">
+                                            <children>
+                                                <command title="실외" id="Fte-pv-9s5"/>
+                                                <command title="실내" id="uRq-YM-GFR"/>
+                                                <command title="카페" id="XhZ-rw-d4v"/>
+                                                <command title="술집" id="guC-Up-pO1"/>
+                                            </children>
+                                        </menu>
+                                        <state key="normal" title="흡연구역 타입 (선택)"/>
+                                    </button>
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dBu-G3-sMc">
-                                <rect key="frame" x="100" y="723" width="193" height="40"/>
+                                <rect key="frame" x="100" y="754" width="193" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="200" id="gyw-uU-Met"/>
                                     <constraint firstAttribute="height" constant="40" id="xmg-C9-Slq"/>
