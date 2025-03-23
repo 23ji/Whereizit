@@ -347,11 +347,11 @@
                                     </segmentedControl>
                                     <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZEu-EG-EK9">
                                         <rect key="frame" x="0.0" y="276" width="373" height="30"/>
-                                        <menu key="menu" id="XSA-Jk-0N8">
+                                        <menu key="menu" title="AreaType" id="XSA-Jk-0N8">
                                             <children>
-                                                <command title="실외" id="Fte-pv-9s5"/>
-                                                <command title="실내" id="uRq-YM-GFR"/>
-                                                <command title="카페" id="XhZ-rw-d4v"/>
+                                                <command title="흡연 구역" id="Fte-pv-9s5" userLabel="흡연 구역"/>
+                                                <command title="카페" id="uRq-YM-GFR" userLabel="카페"/>
+                                                <command title="식당" id="XhZ-rw-d4v" userLabel="식당"/>
                                                 <command title="술집" id="guC-Up-pO1"/>
                                             </children>
                                         </menu>

@@ -10,12 +10,12 @@ class MarkerManager {
         }
         markers.removeAll()
         
-        for smokingArea in smokingAreas {
+        for smokingArea in smokingAreas { //forEach
             let marker = NMFMarker()
             marker.position = NMGLatLng(lat: smokingArea.latitude, lng: smokingArea.longitude)
             marker.captionText = smokingArea.name
             
-            if let customImage = UIImage(named: "marker_Pin") {
+            if let customImage = UIImage(named: "marker_Pin") { //Constants
                 marker.iconImage = NMFOverlayImage(image: customImage)
             }
             

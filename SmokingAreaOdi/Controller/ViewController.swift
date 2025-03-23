@@ -1,9 +1,11 @@
-import UIKit
 import NMapsMap
+import UIKit
 
-class ViewController: UIViewController {
+final class ViewController: UIViewController {
+  
     // MARK: - Properties
-    let markerManager = MarkerManager()
+  
+    let markerManager = MarkerManager() //의존,,
     var popUpVC: PopUpView?
 
     @IBOutlet weak var naverMapView: NMFNaverMapView!
@@ -12,11 +14,13 @@ class ViewController: UIViewController {
     @IBOutlet weak var showListButton: UIButton!
     @IBOutlet weak var topStackView: UIStackView!
     
+  
     // MARK: - Lifecycle
+  
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupNaverMapView()
-        loadMarkers()
+      self.setupNaverMapView() //코드 리뷰에 용이하도록 self 사용
+      self.loadMarkers()
         popUpVC = PopUpView(parentView: self.view) // PopUpView 초기화
         NotificationCenter.default.addObserver(self, selector: #selector(reloadMarkers), name: .smokingAreaAdded, object: nil)
         setUp()
@@ -27,7 +31,9 @@ class ViewController: UIViewController {
         loadMarkers()
     }
     
+  
     // MARK: - Setup Methods
+  
     private func setupNaverMapView() {
         let initialLocation = NMGLatLng(lat: 37.500920152198, lng: 127.03618231961)
         let cameraUpdate = NMFCameraUpdate(scrollTo: initialLocation)
@@ -35,7 +41,9 @@ class ViewController: UIViewController {
         naverMapView.showLocationButton = true
     }
 
+  
     // MARK: - Firestore 데이터 불러와서 마커 추가
+  
     private func loadMarkers() {
         FirestoreManager.shared.fetchSmokingAreas { [weak self] smokingAreas in
             guard let self = self else { return }
@@ -50,12 +58,14 @@ class ViewController: UIViewController {
         topStackView.clipsToBounds = true
         
     }
+  
 
     // MARK: - 팝업 정보 표시
     func showPopUpInfo(for smokingArea: SmokingArea) {
         popUpVC?.showInfo(for: smokingArea) // PopUpView에서 정보 표시
     }
 
+  
     // MARK: - Actions
     @IBAction func addMarkerButtonTapped(_ sender: UIButton) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
