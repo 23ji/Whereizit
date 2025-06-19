@@ -68,13 +68,15 @@ final class ViewController: UIViewController {
   
     // MARK: - Actions
     @IBAction func addMarkerButtonTapped(_ sender: UIButton) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        if let addVC = storyboard.instantiateViewController(withIdentifier: "AddSmokeAreaViewController") as? AddSmokeAreaViewController {
-            addVC.modalPresentationStyle = .fullScreen
-            present(addVC, animated: true, completion: nil)
-        } else {
-            print("AddSmokeAreaViewController를 찾을 수 없음")
-        }
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//        if let addVC = storyboard.instantiateViewController(withIdentifier: "AddSmokeAreaViewController") as? AddSmokeAreaViewController {
+//            addVC.modalPresentationStyle = .fullScreen
+//            present(addVC, animated: true, completion: nil)
+//        } else {
+//            print("AddSmokeAreaViewController를 찾을 수 없음")
+//        }
+      
+    // performSegue(withIdentifier: "homeToAdd", sender: nil)
     }
     
     @IBAction func showListButtonTapped(_ sender: UIButton) {
