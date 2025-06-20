@@ -35,7 +35,7 @@
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="addMarkerButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eDV-UG-1Zx"/>
-                                    <segue destination="Opl-jf-bf8" kind="show" identifier="homeToAdd" id="47q-Ce-2rw"/>
+                                    <segue destination="Opl-jf-bf8" kind="show" id="C0N-IF-w1H"/>
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="CaP-UW-8Ls">
@@ -175,7 +175,7 @@
         <!--Add Smoke Area View Controller-->
         <scene sceneID="TnM-tD-Mep">
             <objects>
-                <viewController storyboardIdentifier="AddSmokeAreaViewController" id="Opl-jf-bf8" customClass="AddSmokeAreaViewController" customModule="SmokingAreaOdi" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddSmokeAreaVC" id="Opl-jf-bf8" customClass="AddSmokeAreaViewController" customModule="SmokingAreaOdi" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="PUk-iO-d7s">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -210,7 +210,7 @@
                                     </searchBar>
                                 </subviews>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RXv-S1-JRa">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RXv-S1-JRa">
                                 <rect key="frame" x="100" y="782" width="193" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="Lmv-eN-V2W"/>
@@ -222,14 +222,6 @@
                                     <action selector="confirmLocationTapped:" destination="Opl-jf-bf8" eventType="touchUpInside" id="0Kc-7C-no7"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UsU-2M-aZj">
-                                <rect key="frame" x="15.999999999999996" y="117.99999999999999" width="39.666666666666657" height="34.333333333333329"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" image="chevron.backward" catalog="system"/>
-                                <connections>
-                                    <action selector="backButtonTapped:" destination="Opl-jf-bf8" eventType="touchUpInside" id="05J-ax-KFO"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="T1k-1a-Vbv"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -239,13 +231,9 @@
                             <constraint firstItem="RXv-S1-JRa" firstAttribute="top" secondItem="RX0-73-XTt" secondAttribute="bottom" constant="30" id="6gk-fN-QNu"/>
                             <constraint firstItem="8Rh-Zf-oCQ" firstAttribute="leading" secondItem="T1k-1a-Vbv" secondAttribute="leading" constant="15" id="7O7-OO-0hU"/>
                             <constraint firstItem="T1k-1a-Vbv" firstAttribute="trailing" secondItem="8Rh-Zf-oCQ" secondAttribute="trailing" constant="15" id="CNw-1a-LLv"/>
-                            <constraint firstItem="T1k-1a-Vbv" firstAttribute="trailing" secondItem="UsU-2M-aZj" secondAttribute="trailing" constant="337.32999999999998" id="DKP-DI-HMo"/>
                             <constraint firstItem="T1k-1a-Vbv" firstAttribute="trailing" secondItem="RXv-S1-JRa" secondAttribute="trailing" constant="100" id="Jsb-jP-ILL"/>
                             <constraint firstItem="RX0-73-XTt" firstAttribute="leading" secondItem="T1k-1a-Vbv" secondAttribute="leading" id="Ozt-VN-hBa"/>
-                            <constraint firstItem="8Rh-Zf-oCQ" firstAttribute="top" secondItem="UsU-2M-aZj" secondAttribute="bottom" constant="15.67" id="TjK-0v-fjD"/>
                             <constraint firstItem="RX0-73-XTt" firstAttribute="top" secondItem="8Rh-Zf-oCQ" secondAttribute="bottom" constant="10" id="bhf-0n-fO9"/>
-                            <constraint firstItem="UsU-2M-aZj" firstAttribute="leading" secondItem="T1k-1a-Vbv" secondAttribute="leading" constant="16" id="cja-5q-JXz"/>
-                            <constraint firstItem="UsU-2M-aZj" firstAttribute="top" secondItem="T1k-1a-Vbv" secondAttribute="top" id="dcp-U3-hN1"/>
                             <constraint firstItem="8Rh-Zf-oCQ" firstAttribute="top" secondItem="T1k-1a-Vbv" secondAttribute="top" constant="50" id="gVa-bs-SS4"/>
                             <constraint firstItem="RX0-73-XTt" firstAttribute="trailing" secondItem="T1k-1a-Vbv" secondAttribute="trailing" id="hHT-4H-7eK"/>
                             <constraint firstItem="RX0-73-XTt" firstAttribute="trailing" secondItem="T1k-1a-Vbv" secondAttribute="trailing" id="lz6-De-3hi"/>
@@ -254,7 +242,6 @@
                     </view>
                     <navigationItem key="navigationItem" id="2Z5-hw-sUi"/>
                     <connections>
-                        <outlet property="backButton" destination="UsU-2M-aZj" id="smj-E6-Fi8"/>
                         <outlet property="naverMapView" destination="RX0-73-XTt" id="6NU-ag-rbt"/>
                         <outlet property="searchBar" destination="NIL-qV-But" id="nyq-oz-OO5"/>
                     </connections>
@@ -267,7 +254,7 @@
         <scene sceneID="TFv-Ja-xJU">
             <objects>
                 <viewController storyboardIdentifier="AddSADataVC" id="VVG-DR-bRO" customClass="AddSmokingAreaDataViewController" customModule="SmokingAreaOdi" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" ambiguous="YES" id="NtZ-EM-EKr">
+                    <view key="view" contentMode="scaleToFill" id="NtZ-EM-EKr">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -278,7 +265,7 @@
                                 <viewLayoutGuide key="frameLayoutGuide" id="dC6-WD-ur3"/>
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4pO-Sk-6lI">
-                                <rect key="frame" x="15.999999999999996" y="117.99999999999999" width="46.666666666666657" height="34.333333333333329"/>
+                                <rect key="frame" x="15.999999999999996" y="117.99999999999999" width="39.666666666666657" height="34.333333333333329"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="chevron.backward" catalog="system"/>
                                 <connections>
@@ -286,16 +273,16 @@
                                     <action selector="backButtonTapped:" destination="Opl-jf-bf8" eventType="touchUpInside" id="QIV-Uj-be5"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YnU-vi-zZg" customClass="NMFNaverMapView">
-                                <rect key="frame" x="0.0" y="109" width="400" height="279"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YnU-vi-zZg" customClass="NMFNaverMapView">
+                                <rect key="frame" x="0.0" y="168" width="393" height="186"/>
                                 <viewLayoutGuide key="safeArea" id="xIu-al-dDd"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
-                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="3wq-hu-q19">
-                                <rect key="frame" x="10" y="418" width="380" height="306"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="3wq-hu-q19">
+                                <rect key="frame" x="10" y="384" width="373" height="306"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="이름" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eAa-v3-y06">
-                                        <rect key="frame" x="0.0" y="0.0" width="380" height="35"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="373" height="35"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="85" id="dCD-q7-vMa"/>
                                             <constraint firstAttribute="height" constant="35" id="nsu-qH-XPe"/>
@@ -305,7 +292,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" usesAttributedText="YES" borderStyle="roundedRect" placeholder="예) 역삼역 3번 출구" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="z7x-mB-BbY">
-                                        <rect key="frame" x="0.0" y="45" width="380" height="40"/>
+                                        <rect key="frame" x="0.0" y="45" width="373" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="Uoc-2N-HUy"/>
                                         </constraints>
@@ -313,7 +300,7 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="상세 설명" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="olN-Pk-CZF">
-                                        <rect key="frame" x="0.0" y="95" width="380" height="35"/>
+                                        <rect key="frame" x="0.0" y="95" width="373" height="35"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="85" id="DX4-Jx-FsG"/>
                                             <constraint firstAttribute="height" constant="35" id="WEn-jc-Ila"/>
@@ -323,7 +310,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="예) 3번 출구 나와서 오른쪽 10m" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lU5-v1-6fd">
-                                        <rect key="frame" x="0.0" y="140" width="380" height="40"/>
+                                        <rect key="frame" x="0.0" y="140" width="373" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="xTV-Hb-Wca"/>
                                         </constraints>
@@ -331,7 +318,7 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="흡연구역 타입 (선택)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sOO-hi-ucg">
-                                        <rect key="frame" x="0.0" y="190" width="380" height="35"/>
+                                        <rect key="frame" x="0.0" y="190" width="373" height="35"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="35" id="6aE-0b-cra"/>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="85" id="OZ3-al-nVz"/>
@@ -341,14 +328,14 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="e1k-oG-TGd">
-                                        <rect key="frame" x="0.0" y="235" width="380" height="32"/>
+                                        <rect key="frame" x="0.0" y="235" width="373" height="32"/>
                                         <segments>
                                             <segment title="실외"/>
                                             <segment title="실내"/>
                                         </segments>
                                     </segmentedControl>
                                     <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZEu-EG-EK9">
-                                        <rect key="frame" x="0.0" y="276" width="380" height="30"/>
+                                        <rect key="frame" x="0.0" y="276" width="373" height="30"/>
                                         <menu key="menu" title="AreaType" id="XSA-Jk-0N8">
                                             <children>
                                                 <command title="흡연 구역" id="Fte-pv-9s5" userLabel="흡연 구역"/>
@@ -361,8 +348,8 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dBu-G3-sMc">
-                                <rect key="frame" x="100" y="754" width="200" height="40"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dBu-G3-sMc">
+                                <rect key="frame" x="100" y="720" width="193" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="200" id="gyw-uU-Met"/>
                                     <constraint firstAttribute="height" constant="40" id="xmg-C9-Slq"/>

@@ -76,7 +76,7 @@ final class ViewController: UIViewController {
 //            print("AddSmokeAreaViewController를 찾을 수 없음")
 //        }
       
-    // performSegue(withIdentifier: "homeToAdd", sender: nil)
+    //performSegue(withIdentifier: "homeToAdd", sender: nil)
     }
     
     @IBAction func showListButtonTapped(_ sender: UIButton) {
