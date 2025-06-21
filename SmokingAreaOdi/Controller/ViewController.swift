@@ -31,8 +31,8 @@ final class ViewController: UIViewController {
   }
   
   private func setUp() {
-    topStackView.layer.cornerRadius = 10
-    topStackView.clipsToBounds = true
+    //topStackView.layer.cornerRadius = 10
+    //topStackView.clipsToBounds = true
     
   }
 }

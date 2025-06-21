@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Yr2-o8-WOq">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nda-cK-Y7j" customClass="NMFNaverMapView">
-                                <rect key="frame" x="0.0" y="0.0" width="393" height="769"/>
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                                 <viewLayoutGuide key="safeArea" id="eFy-Yo-0AU"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
@@ -33,61 +33,49 @@
                                     <color key="baseForegroundColor" red="0.41568624970000001" green="0.75686275960000005" blue="0.33725491169999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </buttonConfiguration>
                             </button>
-                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="CaP-UW-8Ls">
-                                <rect key="frame" x="10" y="50" width="373" height="56"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4yr-Fk-sGE">
-                                        <rect key="frame" x="0.0" y="15.666666666666673" width="30.666666666666668" height="24.666666666666671"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                        <state key="normal" image="list.bullet" catalog="system">
-                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="25"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="showListButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="o32-3h-zb9"/>
-                                        </connections>
-                                    </button>
-                                    <searchBar contentMode="redraw" placeholder="건물명, 지하철역 등 위치 검색" translatesAutoresizingMaskIntoConstraints="NO" id="haD-Zi-fDd">
-                                        <rect key="frame" x="30.666666666666657" y="0.0" width="342.33333333333337" height="56"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="BYZ-38-t0r" id="3to-1p-4th"/>
-                                        </connections>
-                                    </searchBar>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="Nda-cK-Y7j" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="1EF-CN-Oc5"/>
-                            <constraint firstAttribute="bottom" secondItem="Nda-cK-Y7j" secondAttribute="bottom" constant="83" id="1m1-mf-KfR"/>
+                            <constraint firstAttribute="bottom" secondItem="Nda-cK-Y7j" secondAttribute="bottom" id="1m1-mf-KfR"/>
                             <constraint firstItem="Nda-cK-Y7j" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="4Ix-1q-fSa"/>
                             <constraint firstItem="Nda-cK-Y7j" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="FFc-lI-Dxv"/>
-                            <constraint firstItem="CaP-UW-8Ls" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="Pu2-KB-HdH"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="KyU-3L-QKQ" secondAttribute="trailing" constant="10" id="TIM-w8-ICy"/>
                             <constraint firstAttribute="bottom" secondItem="KyU-3L-QKQ" secondAttribute="bottom" constant="110" id="Xm6-6C-P4w"/>
-                            <constraint firstAttribute="trailing" secondItem="CaP-UW-8Ls" secondAttribute="trailing" constant="10" id="pFq-14-WHp"/>
-                            <constraint firstItem="CaP-UW-8Ls" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="50" id="wuV-1S-u2B"/>
                             <constraint firstItem="KyU-3L-QKQ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="300" id="yow-NS-YFi"/>
                         </constraints>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Home" image="house" catalog="system" id="mqn-7R-ROA"/>
                     <navigationItem key="navigationItem" title="Home" id="kaN-cv-Ch9"/>
                     <connections>
                         <outlet property="naverMapView" destination="Nda-cK-Y7j" id="ag1-a9-ubL"/>
-                        <outlet property="searchBar" destination="haD-Zi-fDd" id="Poh-aN-VSv"/>
-                        <outlet property="showListButton" destination="4yr-Fk-sGE" id="oN1-5e-4vC"/>
-                        <outlet property="topStackView" destination="CaP-UW-8Ls" id="czx-93-PV1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4750.3816793893129" y="4.9295774647887329"/>
+            <point key="canvasLocation" x="6603.8167938931292" y="4.9295774647887329"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="gCV-4U-Htj">
+            <objects>
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="Yr2-o8-WOq" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="aN2-45-IIF">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="ED3-6z-vmL"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SGg-QQ-lzT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5677.0992366412211" y="4.9295774647887329"/>
         </scene>
     </scenes>
     <resources>
-        <image name="list.bullet" catalog="system" width="128" height="87"/>
+        <image name="house" catalog="system" width="128" height="104"/>
         <image name="plusButton" width="50" height="50"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
