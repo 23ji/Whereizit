@@ -12,30 +12,29 @@
 		4910C53E2D408812006AB7E5 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 4910C53D2D408812006AB7E5 /* FirebaseFirestore */; };
 		49288AAD2D19450C00FF1E50 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49288AAC2D19450C00FF1E50 /* AppDelegate.swift */; };
 		49288AAF2D19450C00FF1E50 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49288AAE2D19450C00FF1E50 /* SceneDelegate.swift */; };
-		49288AB12D19450C00FF1E50 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49288AB02D19450C00FF1E50 /* ViewController.swift */; };
 		49288AB42D19450C00FF1E50 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 49288AB32D19450C00FF1E50 /* Base */; };
 		49288AB62D19450D00FF1E50 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49288AB52D19450D00FF1E50 /* Assets.xcassets */; };
 		49288AB92D19450D00FF1E50 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 49288AB82D19450D00FF1E50 /* Base */; };
 		4950011A2D5C809E0057ECEC /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 495001192D5C809E0057ECEC /* FirebaseAuth */; };
 		499C3C8B2D4B63C300B96903 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 499C3C8A2D4B63C300B96903 /* FirebaseStorage */; };
-		67D5D9679690E770383FCAEE /* Pods_SmokingAreaOdi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71E8D5BE6D6F3B97EE6F1699 /* Pods_SmokingAreaOdi.framework */; };
 		A70F0E492D3CCEEA00E780FC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49288AB22D19450C00FF1E50 /* Main.storyboard */; };
 		A76232672D5229D800A0F323 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A76232662D5229D800A0F323 /* GoogleService-Info.plist */; };
+		A77C88BF2E2528A8002D725E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77C88BE2E2528A8002D725E /* ViewController.swift */; };
+		A77C88C22E252941002D725E /* NMapsMap in Frameworks */ = {isa = PBXBuildFile; productRef = A77C88C12E252941002D725E /* NMapsMap */; };
+		A7F0A9242E2524FF00F05A24 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = A7F0A9232E2524FF00F05A24 /* FirebaseCore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		190F680593069EDBD3596FF9 /* Pods-SmokingAreaOdi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmokingAreaOdi.debug.xcconfig"; path = "Target Support Files/Pods-SmokingAreaOdi/Pods-SmokingAreaOdi.debug.xcconfig"; sourceTree = "<group>"; };
 		49288AA92D19450C00FF1E50 /* SmokingAreaOdi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmokingAreaOdi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		49288AAC2D19450C00FF1E50 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		49288AAE2D19450C00FF1E50 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		49288AB02D19450C00FF1E50 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		49288AB32D19450C00FF1E50 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		49288AB52D19450D00FF1E50 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		49288AB82D19450D00FF1E50 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		49288ABA2D19450D00FF1E50 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		71E8D5BE6D6F3B97EE6F1699 /* Pods_SmokingAreaOdi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmokingAreaOdi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A76232662D5229D800A0F323 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		D7BBE7C3A2BCED333CE2D897 /* Pods-SmokingAreaOdi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmokingAreaOdi.release.xcconfig"; path = "Target Support Files/Pods-SmokingAreaOdi/Pods-SmokingAreaOdi.release.xcconfig"; sourceTree = "<group>"; };
+		A77C88BE2E2528A8002D725E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,9 +45,10 @@
 				4910C53C2D408812006AB7E5 /* FirebaseDatabase in Frameworks */,
 				4950011A2D5C809E0057ECEC /* FirebaseAuth in Frameworks */,
 				4910C53E2D408812006AB7E5 /* FirebaseFirestore in Frameworks */,
+				A77C88C22E252941002D725E /* NMapsMap in Frameworks */,
+				A7F0A9242E2524FF00F05A24 /* FirebaseCore in Frameworks */,
 				4910C53A2D408812006AB7E5 /* FirebaseAnalytics in Frameworks */,
 				499C3C8B2D4B63C300B96903 /* FirebaseStorage in Frameworks */,
-				67D5D9679690E770383FCAEE /* Pods_SmokingAreaOdi.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -60,7 +60,6 @@
 			children = (
 				49288AAB2D19450C00FF1E50 /* SmokingAreaOdi */,
 				49288AAA2D19450C00FF1E50 /* Products */,
-				B978E0BD119D6BE3785F1B06 /* Pods */,
 				4961B4892D3A2DD500CCDD8C /* Recovered References */,
 				C6320CCAA5A88F0BADA6F25C /* Frameworks */,
 			);
@@ -116,7 +115,7 @@
 		A774711F2D58D917006F2F0D /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				49288AB02D19450C00FF1E50 /* ViewController.swift */,
+				A77C88BE2E2528A8002D725E /* ViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -126,15 +125,6 @@
 			children = (
 			);
 			path = Service;
-			sourceTree = "<group>";
-		};
-		B978E0BD119D6BE3785F1B06 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				190F680593069EDBD3596FF9 /* Pods-SmokingAreaOdi.debug.xcconfig */,
-				D7BBE7C3A2BCED333CE2D897 /* Pods-SmokingAreaOdi.release.xcconfig */,
-			);
-			path = Pods;
 			sourceTree = "<group>";
 		};
 		C6320CCAA5A88F0BADA6F25C /* Frameworks */ = {
@@ -152,11 +142,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 49288ABD2D19450D00FF1E50 /* Build configuration list for PBXNativeTarget "SmokingAreaOdi" */;
 			buildPhases = (
-				C47140FBA7681DB97F9E5BFE /* [CP] Check Pods Manifest.lock */,
 				49288AA52D19450C00FF1E50 /* Sources */,
 				49288AA62D19450C00FF1E50 /* Frameworks */,
 				49288AA72D19450C00FF1E50 /* Resources */,
-				C1852EECAC176F9BDB92D371 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -169,6 +157,8 @@
 				4910C53D2D408812006AB7E5 /* FirebaseFirestore */,
 				499C3C8A2D4B63C300B96903 /* FirebaseStorage */,
 				495001192D5C809E0057ECEC /* FirebaseAuth */,
+				A7F0A9232E2524FF00F05A24 /* FirebaseCore */,
+				A77C88C12E252941002D725E /* NMapsMap */,
 			);
 			productName = SmokeAreaOdi;
 			productReference = 49288AA92D19450C00FF1E50 /* SmokingAreaOdi.app */;
@@ -200,6 +190,7 @@
 			mainGroup = 49288AA02D19450C00FF1E50;
 			packageReferences = (
 				4910C5382D408812006AB7E5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				A77C88C02E252941002D725E /* XCRemoteSwiftPackageReference "SPM-NMapsMap" */,
 			);
 			productRefGroup = 49288AAA2D19450C00FF1E50 /* Products */;
 			projectDirPath = "";
@@ -225,58 +216,12 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		C1852EECAC176F9BDB92D371 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SmokingAreaOdi/Pods-SmokingAreaOdi-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SmokingAreaOdi/Pods-SmokingAreaOdi-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SmokingAreaOdi/Pods-SmokingAreaOdi-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C47140FBA7681DB97F9E5BFE /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-SmokingAreaOdi-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		49288AA52D19450C00FF1E50 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49288AB12D19450C00FF1E50 /* ViewController.swift in Sources */,
+				A77C88BF2E2528A8002D725E /* ViewController.swift in Sources */,
 				49288AAD2D19450C00FF1E50 /* AppDelegate.swift in Sources */,
 				49288AAF2D19450C00FF1E50 /* SceneDelegate.swift in Sources */,
 			);
@@ -425,7 +370,6 @@
 		};
 		49288ABE2D19450D00FF1E50 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 190F680593069EDBD3596FF9 /* Pods-SmokingAreaOdi.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -460,7 +404,6 @@
 		};
 		49288ABF2D19450D00FF1E50 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D7BBE7C3A2BCED333CE2D897 /* Pods-SmokingAreaOdi.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -525,6 +468,14 @@
 				minimumVersion = 11.7.0;
 			};
 		};
+		A77C88C02E252941002D725E /* XCRemoteSwiftPackageReference "SPM-NMapsMap" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/navermaps/SPM-NMapsMap";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.22.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -551,6 +502,15 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4910C5382D408812006AB7E5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseStorage;
+		};
+		A77C88C12E252941002D725E /* NMapsMap */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A77C88C02E252941002D725E /* XCRemoteSwiftPackageReference "SPM-NMapsMap" */;
+			productName = NMapsMap;
+		};
+		A7F0A9232E2524FF00F05A24 /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FirebaseCore;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
