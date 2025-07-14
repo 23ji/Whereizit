@@ -4,44 +4,24 @@
 //
 //  Created by 이상지 on 7/14/25.
 //
-import NMapsMap
+// SmokingAreaOdi/Controller/ViewController.swift
+
 import UIKit
 
 final class ViewController: UIViewController {
-
-// MARK: - Properties
-
-@IBOutlet weak var addMarkerButton: UIButton!
-@IBOutlet weak var searchBar: UISearchBar!
-@IBOutlet weak var showListButton: UIButton!
-@IBOutlet weak var topStackView: UIStackView!
-
-
-// MARK: - Lifecycle
-
-override func viewDidLoad() {
-super.viewDidLoad()
-let mapView = NMFMapView(frame: view.frame)
-view.addSubview(mapView)
-//self.setupNaverMapView() //코드 리뷰에 용이하도록 self 사용
-//self.setUp()
+    
+  private let mainView = MainView()
+  
+  override func loadView() {
+    view = mainView
+  }
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    mainView.addButton.addTarget(self, action: #selector(didTapAddButton), for: .touchUpInside)
+  }
+  
+  @objc private func didTapAddButton() {
+    print("버튼 눌림")
+  }
 }
-
-
-// MARK: - Setup Methods
-
-private func setupNaverMapView() {
-//    let initialLocation = NMGLatLng(lat: 37.500920152198, lng: 127.03618231961)
-//    let cameraUpdate = NMFCameraUpdate(scrollTo: initialLocation)
-//    naverMapView.mapView.moveCamera(cameraUpdate)
-//    naverMapView.showLocationButton = true
-}
-
-private func setUp() {
-//topStackView.layer.cornerRadius = 10
-//topStackView.clipsToBounds = true
-
-}
-}
-
-
