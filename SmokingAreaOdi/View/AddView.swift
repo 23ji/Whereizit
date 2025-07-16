@@ -42,7 +42,7 @@ final class AddView: UIView {
     
     NSLayoutConstraint.activate([
       markerCoordinate.centerXAnchor.constraint(equalTo: self.mapView.centerXAnchor),
-      markerCoordinate.centerYAnchor.constraint(equalTo: self.mapView.centerYAnchor)
+      markerCoordinate.bottomAnchor.constraint(equalTo: self.mapView.centerYAnchor)
     ])
   }
 }

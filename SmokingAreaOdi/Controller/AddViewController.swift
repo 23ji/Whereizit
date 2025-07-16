@@ -24,5 +24,8 @@ class AddViewController: UIViewController, NMFMapViewCameraDelegate {
     
     //카메라 델리게이트 등록해야함
     addView.mapView.addCameraDelegate(delegate: self)
+    // 마커 기본 속성(특히 첫 위치 지정해줘야 나타남)
+      marker.position = addView.mapView.cameraPosition.target // 카메라 중앙에 마커 첫 위치 지정
+      marker.mapView = addView.mapView //지도에 올리기
   }
 }
