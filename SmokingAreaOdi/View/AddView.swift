@@ -17,6 +17,7 @@ final class AddView: UIView {
     override init(frame: CGRect) {
       super.init(frame: frame)
       setupUI()              // UI 구성 메서드 호출
+      setMarker()
     }
     
     
@@ -26,10 +27,22 @@ final class AddView: UIView {
     }
     
     private func setupUI() {
-      
       //지도
       mapView.frame = bounds
       mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight] //크기 자동 조절
       addSubview(mapView)
     }
+  
+  func setMarker() {
+    let markerCoordinate = UIImageView(image: UIImage(named: "marker_Pin"))
+    
+    markerCoordinate.translatesAutoresizingMaskIntoConstraints = false
+    
+    mapView.addSubview(markerCoordinate)
+    
+    NSLayoutConstraint.activate([
+      markerCoordinate.centerXAnchor.constraint(equalTo: self.mapView.centerXAnchor),
+      markerCoordinate.centerYAnchor.constraint(equalTo: self.mapView.centerYAnchor)
+    ])
+  }
 }
