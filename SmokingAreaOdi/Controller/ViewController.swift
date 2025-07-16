@@ -19,6 +19,7 @@ final class ViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     mainView.addButton.addTarget(self, action: #selector(didTapAddButton), for: .touchUpInside)
+    self.navigationItem.title = "Home"
   }
   
   @objc private func didTapAddButton() {
