@@ -23,5 +23,7 @@ final class ViewController: UIViewController {
   
   @objc private func didTapAddButton() {
     print("버튼 눌림")
+    let addVC = AddViewController()
+    navigationController?.pushViewController(addVC, animated: true)
   }
 }
