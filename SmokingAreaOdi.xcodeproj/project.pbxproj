@@ -24,6 +24,8 @@
 		A77C88C42E252F4B002D725E /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77C88C32E252F4B002D725E /* MainView.swift */; };
 		A7990CBA2E288AF000B3D3CE /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = A7990CB92E288AF000B3D3CE /* FirebaseAuth */; };
 		A7990CBC2E288AF000B3D3CE /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = A7990CBB2E288AF000B3D3CE /* FirebaseCore */; };
+		A7990CBE2E288E5200B3D3CE /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7990CBD2E288E5100B3D3CE /* DetailViewController.swift */; };
+		A7990CC02E288F1D00B3D3CE /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7990CBF2E288F1D00B3D3CE /* DetailView.swift */; };
 		A7F0A9242E2524FF00F05A24 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = A7F0A9232E2524FF00F05A24 /* FirebaseCore */; };
 /* End PBXBuildFile section */
 
@@ -40,6 +42,8 @@
 		A76232662D5229D800A0F323 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A77C88BE2E2528A8002D725E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		A77C88C32E252F4B002D725E /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		A7990CBD2E288E5100B3D3CE /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		A7990CBF2E288F1D00B3D3CE /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +120,7 @@
 			children = (
 				A77C88C32E252F4B002D725E /* MainView.swift */,
 				49E629612E27814100751E26 /* AddView.swift */,
+				A7990CBF2E288F1D00B3D3CE /* DetailView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -125,6 +130,7 @@
 			children = (
 				A77C88BE2E2528A8002D725E /* ViewController.swift */,
 				49E6295F2E27756C00751E26 /* AddViewController.swift */,
+				A7990CBD2E288E5100B3D3CE /* DetailViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -231,11 +237,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				49E629602E27756C00751E26 /* AddViewController.swift in Sources */,
+				A7990CC02E288F1D00B3D3CE /* DetailView.swift in Sources */,
 				A77C88BF2E2528A8002D725E /* ViewController.swift in Sources */,
 				49E629622E27814100751E26 /* AddView.swift in Sources */,
 				A77C88C42E252F4B002D725E /* MainView.swift in Sources */,
 				49288AAD2D19450C00FF1E50 /* AppDelegate.swift in Sources */,
 				49288AAF2D19450C00FF1E50 /* SceneDelegate.swift in Sources */,
+				A7990CBE2E288E5200B3D3CE /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
