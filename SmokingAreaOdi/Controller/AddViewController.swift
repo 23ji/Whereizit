@@ -34,5 +34,12 @@ class AddViewController: UIViewController, NMFMapViewCameraDelegate {
   @objc private func didTapNextButton() {
     let detailVC = DetailViewController()
     navigationController?.pushViewController(detailVC, animated: true)
+    
+    detailVC.lat = marker.position.lat
+    detailVC.lng = marker.position.lng
+  }
+  
+  func getMarkerCoordinate() {
+    
   }
 }
