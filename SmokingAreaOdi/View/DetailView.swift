@@ -106,27 +106,32 @@ final class DetailView: UIView {
   }
   
   func addContent() {
-    var lastView: UIView? = nil
-      
-    for i in 1...20 {
-      let label = UILabel()
-      label.text = "테스트 라벨 \(i)"
-      label.font = .systemFont(ofSize: 16)
-      label.translatesAutoresizingMaskIntoConstraints = false
-      contentView.addSubview(label)
-      
-      NSLayoutConstraint.activate([
-        label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-        label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-        label.topAnchor.constraint(equalTo: lastView?.bottomAnchor ?? contentView.topAnchor, constant: 20)
-      ])
-      
-      lastView = label
-    }
-      if let last = lastView {
-        last.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20).isActive = true
-      }
+    let nameLabel = UILabel()
+    nameLabel.text = "이름 (필수)"
+    nameLabel.font = .boldSystemFont(ofSize: 16)
     
+    let nameTextField = UITextField()
+    nameTextField.borderStyle = .roundedRect
+    nameTextField.placeholder = "흡연구역 이름 입력"
+    
+    contentView.addSubview(nameLabel)
+    contentView.addSubview(nameTextField)
+    
+    nameLabel.translatesAutoresizingMaskIntoConstraints = false
+    nameTextField.translatesAutoresizingMaskIntoConstraints = false
+    
+    NSLayoutConstraint.activate([
+      nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
+      nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+      nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+      
+      nameTextField.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8),
+      nameTextField.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
+      nameTextField.trailingAnchor.constraint(equalTo: nameLabel.trailingAnchor),
+      nameTextField.heightAnchor.constraint(equalToConstant: 40)
+    ])
+    
+    nameTextField.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20).isActive = true
+
   }
-  
 }
