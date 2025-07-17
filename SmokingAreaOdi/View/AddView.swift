@@ -43,8 +43,6 @@ final class AddView: UIView {
         nextButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -48)
       ])
 
-      
-      let config = UIImage.SymbolConfiguration(pointSize: 24, weight: .bold)
       //이렇게 하면 안됨
       //nextButton.titleLabel?.text = "다음"
       //nextButton.titleLabel?.textColor = .white

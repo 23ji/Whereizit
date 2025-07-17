@@ -10,7 +10,7 @@ import UIKit
 final class DetailView: UIView {
   let mapView = NMFMapView()
   let addButton = UIButton()
-
+  
   
   // 초기화 메서드 (코드로 UI 작성 시 필수)
   override init(frame: CGRect) {
@@ -27,45 +27,28 @@ final class DetailView: UIView {
   
   private func setupUI() {
     //지도
-    mapView.frame = bounds
-    //mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight] //크기 자동 조절
+    self.addSubview(mapView)
+
     mapView.translatesAutoresizingMaskIntoConstraints = false
     
     NSLayoutConstraint.activate([
-      mapView.topAnchor.constraint(equalTo: mapView.topAnchor),
-      mapView.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: 100)
-      //mapView.widthAnchor.constraint(equalToConstant: self.widthAnchor)
+      mapView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+      mapView.leadingAnchor.constraint(equalTo: leadingAnchor),
+      mapView.trailingAnchor.constraint(equalTo: trailingAnchor),
+      mapView.heightAnchor.constraint(equalToConstant: 200) // 원하는 높이 고정
     ])
-    addSubview(mapView)
-    
-    addSubview(addButton)
-    addButton.translatesAutoresizingMaskIntoConstraints = false //AutoLayout 위해
-    
-    let config = UIImage.SymbolConfiguration(pointSize: 24, weight: .bold)
-    let plusImage = UIImage(systemName: "plus", withConfiguration: config)
-    addButton.setImage(plusImage, for: .normal)
-    addButton.tintColor = .white
-    addButton.backgroundColor = .systemGreen
-    addButton.layer.cornerRadius = 28 // 지름 56이라 28이면 완전 원 됨
-    addButton.clipsToBounds = true
-    
-    //그림자 효과
-    addButton.layer.shadowColor = UIColor.black.cgColor
-    addButton.layer.shadowOpacity = 0.3
-    addButton.layer.shadowOffset = CGSize(width: 0, height: 3)
-    addButton.layer.shadowRadius = 4
   }
-
-func setMarker() {
-  let markerCoordinate = UIImageView(image: UIImage(named: "marker_Pin"))
   
-  markerCoordinate.translatesAutoresizingMaskIntoConstraints = false
-  
-  mapView.addSubview(markerCoordinate)
-  
-  NSLayoutConstraint.activate([
-    markerCoordinate.centerXAnchor.constraint(equalTo: self.mapView.centerXAnchor),
-    markerCoordinate.bottomAnchor.constraint(equalTo: self.mapView.centerYAnchor)
-  ])
-}
+  func setMarker() {
+    let markerCoordinate = UIImageView(image: UIImage(named: "marker_Pin"))
+    
+    mapView.addSubview(markerCoordinate)
+    
+    markerCoordinate.translatesAutoresizingMaskIntoConstraints = false
+    
+    NSLayoutConstraint.activate([
+      markerCoordinate.centerXAnchor.constraint(equalTo: self.mapView.centerXAnchor),
+      markerCoordinate.bottomAnchor.constraint(equalTo: self.mapView.centerYAnchor)
+    ])
+  }
 }
