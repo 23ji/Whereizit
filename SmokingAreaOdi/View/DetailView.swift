@@ -28,7 +28,14 @@ final class DetailView: UIView {
   private func setupUI() {
     //지도
     mapView.frame = bounds
-    mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight] //크기 자동 조절
+    //mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight] //크기 자동 조절
+    mapView.translatesAutoresizingMaskIntoConstraints = false
+    
+    NSLayoutConstraint.activate([
+      mapView.topAnchor.constraint(equalTo: mapView.topAnchor),
+      mapView.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: 100)
+      //mapView.widthAnchor.constraint(equalToConstant: self.widthAnchor)
+    ])
     addSubview(mapView)
     
     addSubview(addButton)

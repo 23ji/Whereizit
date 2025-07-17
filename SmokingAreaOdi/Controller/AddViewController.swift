@@ -35,11 +35,11 @@ class AddViewController: UIViewController, NMFMapViewCameraDelegate {
     let detailVC = DetailViewController()
     navigationController?.pushViewController(detailVC, animated: true)
     
-    detailVC.lat = marker.position.lat
-    detailVC.lng = marker.position.lng
-  }
-  
-  func getMarkerCoordinate() {
+    detailVC.checkLat = marker.position.lat
+    detailVC.checkLng = marker.position.lng
     
+    let center = addView.mapView.cameraPosition.target
+    detailVC.lat = center.lat
+    detailVC.lng = center.lng
   }
 }
