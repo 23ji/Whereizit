@@ -81,6 +81,8 @@ final class DetailView: UIView {
     
     self.backgroundColor = .white
     
+    // 스크롤
+    
     scrollView.translatesAutoresizingMaskIntoConstraints = false
     
     NSLayoutConstraint.activate([
@@ -89,6 +91,8 @@ final class DetailView: UIView {
       scrollView.trailingAnchor.constraint(equalTo: trailingAnchor),
       scrollView.leadingAnchor.constraint(equalTo: leadingAnchor)
     ])
+    
+    //콘텐츠
     
     scrollView.addSubview(contentView)
     
@@ -106,6 +110,10 @@ final class DetailView: UIView {
   }
   
   func addContent() {
+    
+    // 이름
+    // 이름 텍스트 필드
+    
     let nameLabel = UILabel()
     nameLabel.text = "이름 (필수)"
     nameLabel.font = .boldSystemFont(ofSize: 16)
@@ -133,5 +141,35 @@ final class DetailView: UIView {
     
     nameTextField.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20).isActive = true
 
+    
+    // 장소 설명
+    // 장소 설명 텍스트 필드
+    
+    let descriptionLabel = UILabel()
+    descriptionLabel.text = "장소 설명 (필수)"
+    descriptionLabel.font = .boldSystemFont(ofSize: 16)
+    
+    let descriptionTextField = UITextField()
+    descriptionTextField.borderStyle = .roundedRect
+    descriptionTextField.placeholder = "장소에 대한 설명 입력"
+    
+    contentView.addSubview(descriptionLabel)
+    contentView.addSubview(descriptionTextField)
+    
+    descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
+    descriptionTextField.translatesAutoresizingMaskIntoConstraints = false
+    
+    NSLayoutConstraint.activate([
+      descriptionLabel.topAnchor.constraint(equalTo: nameTextField.topAnchor, constant: 20),
+      descriptionLabel.leadingAnchor.constraint(equalTo: nameTextField.leadingAnchor, constant: 20),
+      descriptionLabel.trailingAnchor.constraint(equalTo: nameTextField.trailingAnchor, constant: -20),
+      
+      descriptionTextField.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 8),
+      descriptionTextField.leadingAnchor.constraint(equalTo: descriptionLabel.leadingAnchor),
+      descriptionTextField.trailingAnchor.constraint(equalTo: nameLabel.trailingAnchor),
+      descriptionTextField.heightAnchor.constraint(equalToConstant: 40)
+    ])
+    
+    descriptionTextField.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20).isActive = true
   }
 }
