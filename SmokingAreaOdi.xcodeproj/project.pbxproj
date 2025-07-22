@@ -20,6 +20,7 @@
 		49E629622E27814100751E26 /* AddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E629612E27814100751E26 /* AddView.swift */; };
 		49E629652E2F866000751E26 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 49E629642E2F866000751E26 /* SnapKit */; };
 		49E629682E2F86C200751E26 /* FlexLayout in Frameworks */ = {isa = PBXBuildFile; productRef = 49E629672E2F86C200751E26 /* FlexLayout */; };
+		49E6296B2E2F86FE00751E26 /* PinLayout in Frameworks */ = {isa = PBXBuildFile; productRef = 49E6296A2E2F86FE00751E26 /* PinLayout */; };
 		A76232672D5229D800A0F323 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A76232662D5229D800A0F323 /* GoogleService-Info.plist */; };
 		A77C88BF2E2528A8002D725E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77C88BE2E2528A8002D725E /* ViewController.swift */; };
 		A77C88C22E252941002D725E /* NMapsMap in Frameworks */ = {isa = PBXBuildFile; productRef = A77C88C12E252941002D725E /* NMapsMap */; };
@@ -59,6 +60,7 @@
 				A77C88C22E252941002D725E /* NMapsMap in Frameworks */,
 				A7F0A9242E2524FF00F05A24 /* FirebaseCore in Frameworks */,
 				4910C53A2D408812006AB7E5 /* FirebaseAnalytics in Frameworks */,
+				49E6296B2E2F86FE00751E26 /* PinLayout in Frameworks */,
 				499C3C8B2D4B63C300B96903 /* FirebaseStorage in Frameworks */,
 				A7990CBC2E288AF000B3D3CE /* FirebaseCore in Frameworks */,
 				A7990CBA2E288AF000B3D3CE /* FirebaseAuth in Frameworks */,
@@ -182,6 +184,7 @@
 				A7990CBB2E288AF000B3D3CE /* FirebaseCore */,
 				49E629642E2F866000751E26 /* SnapKit */,
 				49E629672E2F86C200751E26 /* FlexLayout */,
+				49E6296A2E2F86FE00751E26 /* PinLayout */,
 			);
 			productName = SmokeAreaOdi;
 			productReference = 49288AA92D19450C00FF1E50 /* SmokingAreaOdi.app */;
@@ -216,6 +219,7 @@
 				A77C88C02E252941002D725E /* XCRemoteSwiftPackageReference "SPM-NMapsMap" */,
 				49E629632E2F866000751E26 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				49E629662E2F86C200751E26 /* XCRemoteSwiftPackageReference "FlexLayout" */,
+				49E629692E2F86FE00751E26 /* XCRemoteSwiftPackageReference "PinLayout" */,
 			);
 			productRefGroup = 49288AAA2D19450C00FF1E50 /* Products */;
 			projectDirPath = "";
@@ -504,6 +508,14 @@
 				minimumVersion = 2.2.1;
 			};
 		};
+		49E629692E2F86FE00751E26 /* XCRemoteSwiftPackageReference "PinLayout" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/layoutBox/PinLayout.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.10.5;
+			};
+		};
 		A77C88C02E252941002D725E /* XCRemoteSwiftPackageReference "SPM-NMapsMap" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/navermaps/SPM-NMapsMap";
@@ -548,6 +560,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 49E629662E2F86C200751E26 /* XCRemoteSwiftPackageReference "FlexLayout" */;
 			productName = FlexLayout;
+		};
+		49E6296A2E2F86FE00751E26 /* PinLayout */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 49E629692E2F86FE00751E26 /* XCRemoteSwiftPackageReference "PinLayout" */;
+			productName = PinLayout;
 		};
 		A77C88C12E252941002D725E /* NMapsMap */ = {
 			isa = XCSwiftPackageProductDependency;
