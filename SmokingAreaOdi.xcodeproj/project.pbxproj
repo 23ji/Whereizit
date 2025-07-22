@@ -18,6 +18,7 @@
 		499C3C8B2D4B63C300B96903 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 499C3C8A2D4B63C300B96903 /* FirebaseStorage */; };
 		49E629602E27756C00751E26 /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E6295F2E27756C00751E26 /* AddViewController.swift */; };
 		49E629622E27814100751E26 /* AddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E629612E27814100751E26 /* AddView.swift */; };
+		49E629652E2F866000751E26 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 49E629642E2F866000751E26 /* SnapKit */; };
 		A76232672D5229D800A0F323 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A76232662D5229D800A0F323 /* GoogleService-Info.plist */; };
 		A77C88BF2E2528A8002D725E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77C88BE2E2528A8002D725E /* ViewController.swift */; };
 		A77C88C22E252941002D725E /* NMapsMap in Frameworks */ = {isa = PBXBuildFile; productRef = A77C88C12E252941002D725E /* NMapsMap */; };
@@ -60,6 +61,7 @@
 				499C3C8B2D4B63C300B96903 /* FirebaseStorage in Frameworks */,
 				A7990CBC2E288AF000B3D3CE /* FirebaseCore in Frameworks */,
 				A7990CBA2E288AF000B3D3CE /* FirebaseAuth in Frameworks */,
+				49E629652E2F866000751E26 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -176,6 +178,7 @@
 				A77C88C12E252941002D725E /* NMapsMap */,
 				A7990CB92E288AF000B3D3CE /* FirebaseAuth */,
 				A7990CBB2E288AF000B3D3CE /* FirebaseCore */,
+				49E629642E2F866000751E26 /* SnapKit */,
 			);
 			productName = SmokeAreaOdi;
 			productReference = 49288AA92D19450C00FF1E50 /* SmokingAreaOdi.app */;
@@ -208,6 +211,7 @@
 			packageReferences = (
 				4910C5382D408812006AB7E5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				A77C88C02E252941002D725E /* XCRemoteSwiftPackageReference "SPM-NMapsMap" */,
+				49E629632E2F866000751E26 /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			productRefGroup = 49288AAA2D19450C00FF1E50 /* Products */;
 			projectDirPath = "";
@@ -480,6 +484,14 @@
 				minimumVersion = 11.7.0;
 			};
 		};
+		49E629632E2F866000751E26 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
 		A77C88C02E252941002D725E /* XCRemoteSwiftPackageReference "SPM-NMapsMap" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/navermaps/SPM-NMapsMap";
@@ -514,6 +526,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4910C5382D408812006AB7E5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseStorage;
+		};
+		49E629642E2F866000751E26 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 49E629632E2F866000751E26 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
 		};
 		A77C88C12E252941002D725E /* NMapsMap */ = {
 			isa = XCSwiftPackageProductDependency;
