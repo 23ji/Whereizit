@@ -7,6 +7,9 @@
 import UIKit
 import NMapsMap
 
+import SnapKit
+
+
 final class MainView: UIView {
   let mapView = NMFMapView()
   let addButton = UIButton()
