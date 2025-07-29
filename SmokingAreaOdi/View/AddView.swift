@@ -7,6 +7,8 @@
 import NMapsMap
 import UIKit
 
+import PinLayout
+
 
 final class AddView: UIView {
     let mapView = NMFMapView()
@@ -28,9 +30,10 @@ final class AddView: UIView {
     
     private func setupUI() {
       //지도
-      mapView.frame = bounds
-      mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight] //크기 자동 조절
+      mapView.pin.all()
       self.addSubview(mapView)
+      
+      
       
       // next 버튼
       self.addSubview(nextButton)
@@ -42,10 +45,6 @@ final class AddView: UIView {
         nextButton.centerXAnchor.constraint(equalTo: centerXAnchor),
         nextButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -48)
       ])
-
-      //이렇게 하면 안됨
-      //nextButton.titleLabel?.text = "다음"
-      //nextButton.titleLabel?.textColor = .white
       
       nextButton.setTitle("다음", for: .normal) // 타이틀 설정
       nextButton.setTitleColor(.white, for: .normal) // 텍스트 색상 설정
