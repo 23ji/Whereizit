@@ -13,14 +13,17 @@ import PinLayout
 final class AddView: UIView {
   let mapView = NMFMapView()
   let nextButton = UIButton()
+  let markerCoordinate = UIImageView(image: UIImage(named: "marker_Pin"))
   
   
   // 초기화 메서드 (코드로 UI 작성 시 필수)
   override init(frame: CGRect) {
     super.init(frame: frame)
     addSubview(mapView)
+    addSubview(nextButton)
+    addSubview(markerCoordinate)
     setupUI()              // UI 구성 메서드 호출
-    setMarker()
+    //setMarker()
   }
   
   
@@ -31,27 +34,26 @@ final class AddView: UIView {
   
   override func layoutSubviews() {
     super.layoutSubviews()
-    self.mapView.pin.all()
+    
+    self.mapView.pin
+      .all()
+    
+    self.nextButton.pin
+      .horizontally(100)
+      .height(56)
+      .bottom(safeAreaInsets.bottom + 24)
+    
+    
+    let markerSize = markerCoordinate.image?.size ?? CGSize(width: 40, height: 40)
+    
+    self.markerCoordinate.pin
+      .size(markerSize)
+      .center()
+      .marginTop(-markerSize.height / 2)
   }
   
   
   private func setupUI() {
-    //지도
-//    mapView.pin.all()
-//    self.addSubview(mapView)
-    
-    
-    // next 버튼
-    self.addSubview(nextButton)
-    nextButton.translatesAutoresizingMaskIntoConstraints = false //AutoLayout 위해
-    
-    NSLayoutConstraint.activate([
-      nextButton.widthAnchor.constraint(equalToConstant: 100),
-      nextButton.heightAnchor.constraint(equalToConstant: 56),
-      nextButton.centerXAnchor.constraint(equalTo: centerXAnchor),
-      nextButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -48)
-    ])
-    
     nextButton.setTitle("다음", for: .normal) // 타이틀 설정
     nextButton.setTitleColor(.white, for: .normal) // 텍스트 색상 설정
     nextButton.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .bold)
@@ -65,18 +67,5 @@ final class AddView: UIView {
     nextButton.layer.shadowOpacity = 0.3
     nextButton.layer.shadowOffset = CGSize(width: 0, height: 3)
     nextButton.layer.shadowRadius = 4
-  }
-  
-  func setMarker() {
-    let markerCoordinate = UIImageView(image: UIImage(named: "marker_Pin"))
-    
-    markerCoordinate.translatesAutoresizingMaskIntoConstraints = false
-    
-    mapView.addSubview(markerCoordinate)
-    
-    NSLayoutConstraint.activate([
-      markerCoordinate.centerXAnchor.constraint(equalTo: self.mapView.centerXAnchor),
-      markerCoordinate.bottomAnchor.constraint(equalTo: self.mapView.centerYAnchor)
-    ])
   }
 }
