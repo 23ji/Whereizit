@@ -39,7 +39,7 @@ final class AddView: UIView {
       .all()
     
     self.nextButton.pin
-      .width(200)
+      .horizontally(100)
       .height(56)
       .bottom(safeAreaInsets.bottom + 24)
     
