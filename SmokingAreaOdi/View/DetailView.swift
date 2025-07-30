@@ -7,6 +7,8 @@
 import NMapsMap
 import UIKit
 
+import FlexLayout
+
 final class DetailView: UIView {
   
   // MARK: - properties
