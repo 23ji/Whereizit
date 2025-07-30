@@ -8,170 +8,42 @@ import NMapsMap
 import UIKit
 
 import FlexLayout
+import PinLayout   // 💡 FlexLayout 쓸 땐 PinLayout도 필요함
+import Then        // 💡 선택사항 (지금은 사용 안함)
 
 final class DetailView: UIView {
   
-  // MARK: - properties
-  
+  // MARK: - Properties
   
   private let mapView = NMFMapView()
-  private let addButton = UIButton()
-  private let scrollView = UIScrollView()
-  private let contentView = UIView()
+  private let rootFlexContainer = UIView()  // 💡 FlexLayout 루트 컨테이너로 사용할 뷰
   
-  private let smokingAreaName = UILabel()
+  // MARK: - Init
   
-  
-  // MARK: -
-  
-  
-  // 초기화 메서드 (코드로 UI 작성 시 필수)
   override init(frame: CGRect) {
     super.init(frame: frame)
-    setupUI()              // UI 구성 메서드 호출
-    setMarker()
+    
+    // 1. 루트 Flex 컨테이너를 서브뷰로 추가
+    addSubview(rootFlexContainer)
+    
+    // 2. FlexLayout으로 mapView 구성
+    rootFlexContainer.flex.define { flex in
+      flex.addItem(mapView).height(400)  // 💡 지도뷰 높이를 200 고정
+    }
   }
   
-  
-  // storyboard 사용할 계획 없기 때문에 fatalError 처리
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
   
-  
-  // MARK: - UI
-  
-  
-  private func setupUI() {
-    //지도
-    self.addSubview(mapView)
-
-    mapView.translatesAutoresizingMaskIntoConstraints = false
+  // 3. 레이아웃 적용
+  override func layoutSubviews() {
+    super.layoutSubviews()
     
-    NSLayoutConstraint.activate([
-      mapView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-      mapView.leadingAnchor.constraint(equalTo: leadingAnchor),
-      mapView.trailingAnchor.constraint(equalTo: trailingAnchor),
-      mapView.heightAnchor.constraint(equalToConstant: 200) // 원하는 높이 고정
-    ])
+    // 💡 rootFlexContainer가 부모(self)에 꽉 차도록 배치
+    rootFlexContainer.pin.all()
     
-    setupScroll()
-    addContent()
-  }
-  
-  // MARK: - Marker
-
-  
-  func setMarker() {
-    let markerCoordinate = UIImageView(image: UIImage(named: "marker_Pin"))
-    
-    mapView.addSubview(markerCoordinate)
-    
-    markerCoordinate.translatesAutoresizingMaskIntoConstraints = false
-    
-    NSLayoutConstraint.activate([
-      markerCoordinate.centerXAnchor.constraint(equalTo: self.mapView.centerXAnchor),
-      markerCoordinate.bottomAnchor.constraint(equalTo: self.mapView.centerYAnchor)
-    ])
-  }
-  
-  
-  // MARK: - Scroll
-  
-  func setupScroll() {
-    self.addSubview(scrollView)
-    
-    self.backgroundColor = .white
-    
-    // 스크롤
-    
-    scrollView.translatesAutoresizingMaskIntoConstraints = false
-    
-    NSLayoutConstraint.activate([
-      scrollView.topAnchor.constraint(equalTo: mapView.bottomAnchor),
-      scrollView.bottomAnchor.constraint(equalTo: bottomAnchor),
-      scrollView.trailingAnchor.constraint(equalTo: trailingAnchor),
-      scrollView.leadingAnchor.constraint(equalTo: leadingAnchor)
-    ])
-    
-    //콘텐츠
-    
-    scrollView.addSubview(contentView)
-    
-    contentView.translatesAutoresizingMaskIntoConstraints = false
-    
-    contentView.backgroundColor = .red
-    
-    NSLayoutConstraint.activate([
-      contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-      contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-      contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-      contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-      contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
-    ])
-  }
-  
-  func addContent() {
-    
-    // 이름
-    // 이름 텍스트 필드
-    
-    let nameLabel = UILabel()
-    nameLabel.text = "이름 (필수)"
-    nameLabel.font = .boldSystemFont(ofSize: 16)
-    
-    let nameTextField = UITextField()
-    nameTextField.borderStyle = .roundedRect
-    nameTextField.placeholder = "흡연구역 이름 입력"
-    
-    contentView.addSubview(nameLabel)
-    contentView.addSubview(nameTextField)
-    
-    nameLabel.translatesAutoresizingMaskIntoConstraints = false
-    nameTextField.translatesAutoresizingMaskIntoConstraints = false
-    
-    NSLayoutConstraint.activate([
-      nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
-      nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-      nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-      
-      nameTextField.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8),
-      nameTextField.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
-      nameTextField.trailingAnchor.constraint(equalTo: nameLabel.trailingAnchor),
-      nameTextField.heightAnchor.constraint(equalToConstant: 40)
-    ])
-    
-    nameTextField.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20).isActive = true
-
-    
-    // 장소 설명
-    // 장소 설명 텍스트 필드
-    
-    let descriptionLabel = UILabel()
-    descriptionLabel.text = "장소 설명 (필수)"
-    descriptionLabel.font = .boldSystemFont(ofSize: 16)
-    
-    let descriptionTextField = UITextField()
-    descriptionTextField.borderStyle = .roundedRect
-    descriptionTextField.placeholder = "장소에 대한 설명 입력"
-    
-    contentView.addSubview(descriptionLabel)
-    contentView.addSubview(descriptionTextField)
-    
-    descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
-    descriptionTextField.translatesAutoresizingMaskIntoConstraints = false
-    
-    NSLayoutConstraint.activate([
-      descriptionLabel.topAnchor.constraint(equalTo: nameTextField.topAnchor, constant: 20),
-      descriptionLabel.leadingAnchor.constraint(equalTo: nameTextField.leadingAnchor, constant: 20),
-      descriptionLabel.trailingAnchor.constraint(equalTo: nameTextField.trailingAnchor, constant: -20),
-      
-      descriptionTextField.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 8),
-      descriptionTextField.leadingAnchor.constraint(equalTo: descriptionLabel.leadingAnchor),
-      descriptionTextField.trailingAnchor.constraint(equalTo: nameLabel.trailingAnchor),
-      descriptionTextField.heightAnchor.constraint(equalToConstant: 40)
-    ])
-    
-    descriptionTextField.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20).isActive = true
+    // 💡 Flex 레이아웃 적용
+    rootFlexContainer.flex.layout()
   }
 }

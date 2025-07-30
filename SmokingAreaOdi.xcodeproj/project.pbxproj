@@ -16,6 +16,7 @@
 		49E629652E2F866000751E26 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 49E629642E2F866000751E26 /* SnapKit */; };
 		49E629682E2F86C200751E26 /* FlexLayout in Frameworks */ = {isa = PBXBuildFile; productRef = 49E629672E2F86C200751E26 /* FlexLayout */; };
 		49E6296B2E2F86FE00751E26 /* PinLayout in Frameworks */ = {isa = PBXBuildFile; productRef = 49E6296A2E2F86FE00751E26 /* PinLayout */; };
+		A75196ED2E3A42D700CE5F1F /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = A75196EC2E3A42D700CE5F1F /* Then */; };
 		A76232672D5229D800A0F323 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A76232662D5229D800A0F323 /* GoogleService-Info.plist */; };
 		A77C88BF2E2528A8002D725E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77C88BE2E2528A8002D725E /* ViewController.swift */; };
 		A77C88C22E252941002D725E /* NMapsMap in Frameworks */ = {isa = PBXBuildFile; productRef = A77C88C12E252941002D725E /* NMapsMap */; };
@@ -46,6 +47,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A75196ED2E3A42D700CE5F1F /* Then in Frameworks */,
 				A77C88C22E252941002D725E /* NMapsMap in Frameworks */,
 				49E6296B2E2F86FE00751E26 /* PinLayout in Frameworks */,
 				49E629682E2F86C200751E26 /* FlexLayout in Frameworks */,
@@ -161,6 +163,7 @@
 				49E629642E2F866000751E26 /* SnapKit */,
 				49E629672E2F86C200751E26 /* FlexLayout */,
 				49E6296A2E2F86FE00751E26 /* PinLayout */,
+				A75196EC2E3A42D700CE5F1F /* Then */,
 			);
 			productName = SmokeAreaOdi;
 			productReference = 49288AA92D19450C00FF1E50 /* SmokingAreaOdi.app */;
@@ -195,6 +198,7 @@
 				49E629632E2F866000751E26 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				49E629662E2F86C200751E26 /* XCRemoteSwiftPackageReference "FlexLayout" */,
 				49E629692E2F86FE00751E26 /* XCRemoteSwiftPackageReference "PinLayout" */,
+				A75196EB2E3A42D700CE5F1F /* XCRemoteSwiftPackageReference "Then" */,
 			);
 			productRefGroup = 49288AAA2D19450C00FF1E50 /* Products */;
 			projectDirPath = "";
@@ -483,6 +487,14 @@
 				minimumVersion = 1.10.5;
 			};
 		};
+		A75196EB2E3A42D700CE5F1F /* XCRemoteSwiftPackageReference "Then" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/devxoul/Then.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
 		A77C88C02E252941002D725E /* XCRemoteSwiftPackageReference "SPM-NMapsMap" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/navermaps/SPM-NMapsMap";
@@ -508,6 +520,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 49E629692E2F86FE00751E26 /* XCRemoteSwiftPackageReference "PinLayout" */;
 			productName = PinLayout;
+		};
+		A75196EC2E3A42D700CE5F1F /* Then */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A75196EB2E3A42D700CE5F1F /* XCRemoteSwiftPackageReference "Then" */;
+			productName = Then;
 		};
 		A77C88C12E252941002D725E /* NMapsMap */ = {
 			isa = XCSwiftPackageProductDependency;
