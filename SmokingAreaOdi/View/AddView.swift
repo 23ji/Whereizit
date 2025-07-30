@@ -39,7 +39,7 @@ final class AddView: UIView {
       .all()
     
     self.nextButton.pin
-      .horizontally(100)
+      .width(200)
       .height(56)
       .bottom(safeAreaInsets.bottom + 24)
     
@@ -49,7 +49,7 @@ final class AddView: UIView {
     self.markerCoordinate.pin
       .size(markerSize)
       .center()
-      .marginTop(-markerSize.height / 2)
+      .marginTop(-markerSize.height / 2) //이미지의 높이 절반을 위로 올려 이미지의 하단이 정중앙에 오도록
   }
   
   
