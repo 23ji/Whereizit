@@ -13,31 +13,54 @@ import Then
 
 final class DetailView: UIView {
   
-  // MARK: - Properties
-  
-  private let mapView = NMFMapView()
   private let rootFlexContainer = UIView()
+  private let mapView = NMFMapView()
+  private let nameLabel = UILabel()
+  private let nameTextField = UITextField()
+  private let descriptionLabel = UILabel()
+  private let descriptionTextField = UITextField()
   
   override init(frame: CGRect) {
     super.init(frame: frame)
     addSubview(rootFlexContainer)
-    rootFlexContainer.flex.direction(.column).define { flex in
-      flex.addItem(mapView).height(300)
-    }
+    rootFlexContainer.backgroundColor = .white
+    
+    setupInputs()
+    setupLayout()
   }
   
-  // storyboard 사용할 계획 없기 때문에 fatalError 처리
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
   
   override func layoutSubviews() {
     super.layoutSubviews()
-
-    // rootFlexContainer 크기 지정 (전체 화면에 맞춤)
     rootFlexContainer.pin.all()
-
-    // FlexLayout으로 하위 뷰들 배치
     rootFlexContainer.flex.layout()
+  }
+  
+  private func setupInputs() {
+    nameLabel.text = "흡연구역 이름"
+    nameLabel.font = .systemFont(ofSize: 16, weight: .bold)
+    
+    nameTextField.placeholder = "강남역 11번 출구"
+    nameTextField.borderStyle = .roundedRect
+    
+    descriptionLabel.text = "흡연구역 설명"
+    descriptionLabel.font = .systemFont(ofSize: 16, weight: .bold)
+    
+    descriptionTextField.placeholder = "우측으로 5m"
+    descriptionTextField.borderStyle = .roundedRect
+  }
+  
+  private func setupLayout() {
+    rootFlexContainer.flex.direction(.column).define { flex in
+      flex.addItem(mapView).height(300)
+      flex.addItem(nameLabel).height(50).marginHorizontal(20)
+      flex.addItem(nameTextField).height(40).marginHorizontal(20)
+      flex.addItem(descriptionLabel).height(50).marginHorizontal(20)
+      flex.addItem(descriptionTextField).height(40).marginHorizontal(20)
+
+    }
   }
 }
