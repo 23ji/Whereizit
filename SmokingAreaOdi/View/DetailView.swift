@@ -12,7 +12,11 @@ import PinLayout
 import Then
 
 final class DetailView: UIView {
-  
+
+  private enum Metric {
+    static let horizontalMargin: CGFloat = 20
+  }
+
   private let rootFlexContainer = UIView()
   private let mapView = NMFMapView()
   private let nameLabel = UILabel()
@@ -22,11 +26,10 @@ final class DetailView: UIView {
   
   override init(frame: CGRect) {
     super.init(frame: frame)
-    addSubview(rootFlexContainer)
-    rootFlexContainer.backgroundColor = .white
-    
-    setupInputs()
-    setupLayout()
+    self.backgroundColor = .white
+    self.defineFlexContainer()
+
+    self.setupInputs() // then
   }
   
   required init?(coder: NSCoder) {
@@ -35,8 +38,8 @@ final class DetailView: UIView {
   
   override func layoutSubviews() {
     super.layoutSubviews()
-    rootFlexContainer.pin.all()
-    rootFlexContainer.flex.layout()
+    
+    self.flex.layout()
   }
   
   private func setupInputs() {
@@ -52,15 +55,18 @@ final class DetailView: UIView {
     descriptionTextField.placeholder = "우측으로 5m"
     descriptionTextField.borderStyle = .roundedRect
   }
-  
-  private func setupLayout() {
-    rootFlexContainer.flex.direction(.column).define { flex in
-      flex.addItem(mapView).height(300)
-      flex.addItem(nameLabel).height(50).marginHorizontal(20)
-      flex.addItem(nameTextField).height(40).marginHorizontal(20)
-      flex.addItem(descriptionLabel).height(50).marginHorizontal(20)
-      flex.addItem(descriptionTextField).height(40).marginHorizontal(20)
 
-    }
+  private func defineFlexContainer() {
+    self.flex.addItem()
+      .direction(.column)
+      .alignItems(.stretch)
+      .marginHorizontal(Metric.horizontalMargin)
+      .define {
+        $0.addItem(self.mapView).height(300)
+        $0.addItem(self.nameLabel).height(50)
+        $0.addItem(self.nameTextField).height(40)
+        $0.addItem(self.descriptionLabel).height(50)
+        $0.addItem(self.descriptionTextField).height(40)
+      }
   }
 }

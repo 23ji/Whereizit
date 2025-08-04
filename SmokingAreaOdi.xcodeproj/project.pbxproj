@@ -11,7 +11,7 @@
 		49288AAF2D19450C00FF1E50 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49288AAE2D19450C00FF1E50 /* SceneDelegate.swift */; };
 		49288AB62D19450D00FF1E50 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49288AB52D19450D00FF1E50 /* Assets.xcassets */; };
 		49288AB92D19450D00FF1E50 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 49288AB82D19450D00FF1E50 /* Base */; };
-		49E629602E27756C00751E26 /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E6295F2E27756C00751E26 /* AddViewController.swift */; };
+		49E629602E27756C00751E26 /* MarkerPositionSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E6295F2E27756C00751E26 /* MarkerPositionSelectorViewController.swift */; };
 		49E629622E27814100751E26 /* AddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E629612E27814100751E26 /* AddView.swift */; };
 		49E629652E2F866000751E26 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 49E629642E2F866000751E26 /* SnapKit */; };
 		49E629682E2F86C200751E26 /* FlexLayout in Frameworks */ = {isa = PBXBuildFile; productRef = 49E629672E2F86C200751E26 /* FlexLayout */; };
@@ -20,8 +20,7 @@
 		A76232672D5229D800A0F323 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A76232662D5229D800A0F323 /* GoogleService-Info.plist */; };
 		A77C88BF2E2528A8002D725E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77C88BE2E2528A8002D725E /* ViewController.swift */; };
 		A77C88C22E252941002D725E /* NMapsMap in Frameworks */ = {isa = PBXBuildFile; productRef = A77C88C12E252941002D725E /* NMapsMap */; };
-		A77C88C42E252F4B002D725E /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77C88C32E252F4B002D725E /* MainView.swift */; };
-		A7990CBE2E288E5200B3D3CE /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7990CBD2E288E5100B3D3CE /* DetailViewController.swift */; };
+		A7990CBE2E288E5200B3D3CE /* MarkerInfoInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7990CBD2E288E5100B3D3CE /* MarkerInfoInputViewController.swift */; };
 		A7990CC02E288F1D00B3D3CE /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7990CBF2E288F1D00B3D3CE /* DetailView.swift */; };
 /* End PBXBuildFile section */
 
@@ -32,13 +31,12 @@
 		49288AB52D19450D00FF1E50 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		49288AB82D19450D00FF1E50 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		49288ABA2D19450D00FF1E50 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		49E6295F2E27756C00751E26 /* AddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
+		49E6295F2E27756C00751E26 /* MarkerPositionSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerPositionSelectorViewController.swift; sourceTree = "<group>"; };
 		49E629612E27814100751E26 /* AddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddView.swift; sourceTree = "<group>"; };
 		71E8D5BE6D6F3B97EE6F1699 /* Pods_SmokingAreaOdi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmokingAreaOdi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A76232662D5229D800A0F323 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A77C88BE2E2528A8002D725E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		A77C88C32E252F4B002D725E /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
-		A7990CBD2E288E5100B3D3CE /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		A7990CBD2E288E5100B3D3CE /* MarkerInfoInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerInfoInputViewController.swift; sourceTree = "<group>"; };
 		A7990CBF2E288F1D00B3D3CE /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -110,7 +108,6 @@
 		A774711E2D58D913006F2F0D /* View */ = {
 			isa = PBXGroup;
 			children = (
-				A77C88C32E252F4B002D725E /* MainView.swift */,
 				49E629612E27814100751E26 /* AddView.swift */,
 				A7990CBF2E288F1D00B3D3CE /* DetailView.swift */,
 			);
@@ -121,8 +118,8 @@
 			isa = PBXGroup;
 			children = (
 				A77C88BE2E2528A8002D725E /* ViewController.swift */,
-				49E6295F2E27756C00751E26 /* AddViewController.swift */,
-				A7990CBD2E288E5100B3D3CE /* DetailViewController.swift */,
+				49E6295F2E27756C00751E26 /* MarkerPositionSelectorViewController.swift */,
+				A7990CBD2E288E5100B3D3CE /* MarkerInfoInputViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -227,14 +224,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49E629602E27756C00751E26 /* AddViewController.swift in Sources */,
+				49E629602E27756C00751E26 /* MarkerPositionSelectorViewController.swift in Sources */,
 				A7990CC02E288F1D00B3D3CE /* DetailView.swift in Sources */,
 				A77C88BF2E2528A8002D725E /* ViewController.swift in Sources */,
 				49E629622E27814100751E26 /* AddView.swift in Sources */,
-				A77C88C42E252F4B002D725E /* MainView.swift in Sources */,
 				49288AAD2D19450C00FF1E50 /* AppDelegate.swift in Sources */,
 				49288AAF2D19450C00FF1E50 /* SceneDelegate.swift in Sources */,
-				A7990CBE2E288E5200B3D3CE /* DetailViewController.swift in Sources */,
+				A7990CBE2E288E5200B3D3CE /* MarkerInfoInputViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,5 +1,5 @@
 //
-//  AddViewController.swift
+//  MarkerPositionSelectorViewController.swift
 //  SmokingAreaOdi
 //
 //  Created by 이상지 on 7/16/25.
@@ -9,7 +9,7 @@ import NMapsMap
 import UIKit
 
 
-class AddViewController: UIViewController, NMFMapViewCameraDelegate {
+class MarkerPositionSelectorViewController: UIViewController, NMFMapViewCameraDelegate {
   
   private let addView = AddView()
   let marker = NMFMarker()
@@ -32,7 +32,7 @@ class AddViewController: UIViewController, NMFMapViewCameraDelegate {
   }
   
   @objc private func didTapNextButton() {
-    let detailVC = DetailViewController()
+    let detailVC = MarkerInfoInputViewController()
     navigationController?.pushViewController(detailVC, animated: true)
     
     let center = addView.mapView.cameraPosition.target

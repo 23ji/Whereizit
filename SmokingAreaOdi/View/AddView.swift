@@ -9,19 +9,18 @@ import UIKit
 
 import PinLayout
 
-
 final class AddView: UIView {
   let mapView = NMFMapView()
   let nextButton = UIButton()
-  let markerCoordinate = UIImageView(image: UIImage(named: "marker_Pin"))
-  
+  let markerCoordinateImageView = UIImageView(image: UIImage(named: "marker_Pin"))
+
   
   // 초기화 메서드 (코드로 UI 작성 시 필수)
   override init(frame: CGRect) {
     super.init(frame: frame)
     addSubview(mapView)
     addSubview(nextButton)
-    addSubview(markerCoordinate)
+    addSubview(markerCoordinateImageView)
     setupUI()              // UI 구성 메서드 호출
     //setMarker()
   }
@@ -34,22 +33,17 @@ final class AddView: UIView {
   
   override func layoutSubviews() {
     super.layoutSubviews()
-    
-    self.mapView.pin
-      .all()
+    self.mapView.pin.all()
     
     self.nextButton.pin
       .horizontally(100)
       .height(56)
       .bottom(safeAreaInsets.bottom + 24)
-    
-    
-    let markerSize = markerCoordinate.image?.size ?? CGSize(width: 40, height: 40)
-    
-    self.markerCoordinate.pin
-      .size(markerSize)
+
+    self.markerCoordinateImageView.pin
+      .size(40)
       .center()
-      .marginTop(-markerSize.height / 2) //이미지의 높이 절반을 위로 올려 이미지의 하단이 정중앙에 오도록
+      .marginTop(-40 / 2) // 마커의 높이 절반을 위로 올려 마커 하단 포인트가 화면 중앙에 배치되도록 설정
   }
   
   
