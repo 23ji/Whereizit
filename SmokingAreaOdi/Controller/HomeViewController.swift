@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  HomeViewController.swift
 //  SmokingAreaOdi
 //
 //  Created by 이상지 on 7/14/25.
@@ -25,7 +25,7 @@ import UIKit
 // class 작성
 
 
-final class ViewController: UIViewController { // 리네이밍
+final class HomwViewController: UIViewController { // 리네이밍
 
   // MARK: Constant
 
