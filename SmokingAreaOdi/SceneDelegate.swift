@@ -19,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     let window = UIWindow(windowScene: windowScene)
     
     // 첫화면
-    let rootVC = ViewController()
+    let rootVC = HomeViewController()
     
     //루트
     let navController = UINavigationController(rootViewController: rootVC)

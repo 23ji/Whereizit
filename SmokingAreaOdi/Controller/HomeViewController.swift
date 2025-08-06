@@ -25,7 +25,7 @@ import UIKit
 // class 작성
 
 
-final class HomwViewController: UIViewController { // 리네이밍
+final class HomeViewController: UIViewController { // 리네이밍
 
   // MARK: Constant
 
@@ -90,7 +90,7 @@ final class HomwViewController: UIViewController { // 리네이밍
   }
 
   @objc private func didTapAddButton() {
-    let addVC = AddViewController()
-    self.navigationController?.pushViewController(addVC, animated: true)
+    let makerPositionSeletorVC = MarkerPositionSelectorViewController()
+    self.navigationController?.pushViewController(makerPositionSeletorVC, animated: true)
   }
 }
