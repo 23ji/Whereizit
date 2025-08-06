@@ -39,25 +39,19 @@ final class HomeViewController: UIViewController { // 리네이밍
   // MARK: UI
 
   private let mapView = NMFMapView() // 현재 위치로 초기 로케이션 세팅
-  private let addButton = UIButton().then {
-    $0.tintColor = .white
-    $0.backgroundColor = .systemGreen
-    $0.layer.cornerRadius = Metric.addButtonSize / 2
-    $0.clipsToBounds = true
-    $0.layer.shadowColor = UIColor.black.cgColor
-    $0.layer.shadowOpacity = 0.3
-    $0.layer.shadowOffset = CGSize(width: 0, height: 3)
-    $0.layer.shadowRadius = 4
+  private let addButton = UIImageView(image: UIImage(named: "plusButton")).then {
+    $0.isUserInteractionEnabled = true // 터치 가능하게 꼭 켜야함
   }
-  
+
   override func viewDidLoad() {
     super.viewDidLoad()
     self.navigationItem.title = "Home"
-
+    
     self.addSubviews()
     self.makeConstraints()
-
-    self.configureAddButton()
+    
+    let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapAddButton))
+    addButton.addGestureRecognizer(tapGesture)
   }
 
 
@@ -80,14 +74,6 @@ final class HomeViewController: UIViewController { // 리네이밍
 
 
   // MARK: Configure
-
-  private func configureAddButton() {
-    let configuration = UIImage.SymbolConfiguration(pointSize: 24, weight: .bold)
-    let plusImage = UIImage(systemName: "plus", withConfiguration: configuration)
-    self.addButton.setImage(plusImage, for: .normal)
-
-    self.addButton.addTarget(self, action: #selector(didTapAddButton), for: .touchUpInside)
-  }
 
   @objc private func didTapAddButton() {
     let makerPositionSeletorVC = MarkerPositionSelectorViewController()
