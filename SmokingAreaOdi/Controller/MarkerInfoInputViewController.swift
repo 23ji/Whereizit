@@ -7,6 +7,7 @@
 import FirebaseCore
 import FirebaseFirestore
 import FlexLayout
+import IQKeyboardManagerSwift
 import NMapsMap
 
 import UIKit
