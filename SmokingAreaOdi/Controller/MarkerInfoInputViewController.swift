@@ -37,11 +37,12 @@ class MarkerInfoInputViewController: UIViewController {
   private let descriptionLabel = UILabel()
   private let descriptionTextView = UITextView()
   private let areaEnvironmentLabel = UILabel()
-  
+  //환경 선택지들 넣기
   private let areaTypeLabel = UILabel()
-  
+  //유형 선택지들 넣기
   private let areaFacilityLabel = UILabel()
-
+  //시설 선택지들 넣기
+  
   
   // MARK: Properties
   
