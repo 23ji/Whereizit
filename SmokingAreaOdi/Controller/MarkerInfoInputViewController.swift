@@ -15,6 +15,7 @@ import UIKit
 class MarkerInfoInputViewController: UIViewController {
   
   let db = Firestore.firestore()
+  
   // MARK: Constant
   
   private enum Metric {
@@ -34,6 +35,12 @@ class MarkerInfoInputViewController: UIViewController {
   private let nameTextField = UITextField()
   private let descriptionLabel = UILabel()
   private let descriptionTextView = UITextView()
+  private let areaEnvironmentLabel = UILabel()
+  
+  private let areaTypeLabel = UILabel()
+  
+  private let areaFacilityLabel = UILabel()
+
   
   // MARK: Properties
   
@@ -80,8 +87,17 @@ class MarkerInfoInputViewController: UIViewController {
     self.descriptionTextView.layer.borderWidth = 0.5
     self.descriptionTextView.layer.borderColor = UIColor.systemGray4.cgColor
     self.descriptionTextView.layer.cornerRadius = 5
-    self.descriptionTextView.textContainerInset = UIEdgeInsets(top: 8, left: 5, bottom: 8, right: 5)
+    self.descriptionTextView.textContainerInset = UIEdgeInsets(top: 10, left: 3, bottom: 10, right: 3)
     self.descriptionTextView.font = UIFont(name: nameTextField.font!.fontName, size: Metric.textfontSize)
+  
+    self.areaEnvironmentLabel.text = "환경"
+    self.areaEnvironmentLabel.font = .systemFont(ofSize: Metric.labelFontSize, weight: .bold)
+    
+    self.areaTypeLabel.text = "유형"
+    self.areaTypeLabel.font = .systemFont(ofSize: Metric.labelFontSize, weight: .bold)
+    
+    self.areaFacilityLabel.text = "시설"
+    self.areaFacilityLabel.font = .systemFont(ofSize: Metric.labelFontSize, weight: .bold)
   }
   
   // MARK: Layout
@@ -100,9 +116,12 @@ class MarkerInfoInputViewController: UIViewController {
       .marginHorizontal(Metric.horizontalMargin)
       .define {
         $0.addItem(self.nameLabel).height(Metric.labelHeight)
-        $0.addItem(self.nameTextField).height(Metric.textFieldHeight)
+        $0.addItem(self.nameTextField).height(Metric.textFieldHeight).marginBottom(10)
         $0.addItem(self.descriptionLabel).height(Metric.labelHeight)
-        $0.addItem(self.descriptionTextView).height(Metric.textViewHeight)
+        $0.addItem(self.descriptionTextView).height(Metric.textViewHeight).marginBottom(10)
+        $0.addItem(self.areaEnvironmentLabel).height(Metric.labelHeight)
+        $0.addItem(self.areaTypeLabel).height(Metric.labelHeight)
+        $0.addItem(self.areaFacilityLabel).height(Metric.labelHeight)
       }
   }
   
