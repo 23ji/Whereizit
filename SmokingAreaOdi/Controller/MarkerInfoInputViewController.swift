@@ -13,7 +13,7 @@ import UIKit
 
 
 class MarkerInfoInputViewController: UIViewController {
-
+  
   let db = Firestore.firestore()
   // MARK: Constant
   
@@ -21,7 +21,9 @@ class MarkerInfoInputViewController: UIViewController {
     static let mapHeight: CGFloat = 300
     static let labelFontSize: CGFloat = 16
     static let labelHeight: CGFloat = 50
+    static let textfontSize: CGFloat = 16
     static let textFieldHeight: CGFloat = 40
+    static let textViewHeight: CGFloat = 80
     static let horizontalMargin: CGFloat = 20
   }
   
@@ -31,7 +33,7 @@ class MarkerInfoInputViewController: UIViewController {
   private let nameLabel = UILabel()
   private let nameTextField = UITextField()
   private let descriptionLabel = UILabel()
-  private let descriptionTextField = UITextField()
+  private let descriptionTextView = UITextView()
   
   // MARK: Properties
   
@@ -66,12 +68,20 @@ class MarkerInfoInputViewController: UIViewController {
     
     self.nameTextField.placeholder = "강남역 11번 출구"
     self.nameTextField.borderStyle = .roundedRect
+    self.nameTextField.font = UIFont(name: nameTextField.font!.fontName, size: Metric.textfontSize)
     
     self.descriptionLabel.text = "흡연구역 설명"
     self.descriptionLabel.font = .systemFont(ofSize: Metric.labelFontSize, weight: .bold)
-  
-    self.descriptionTextField.placeholder = "우측으로 5m"
-    self.descriptionTextField.borderStyle = .roundedRect
+    
+    //Custom PlaceHolder
+    self.descriptionTextView.delegate = self
+    self.descriptionTextView.text = "우측으로 5m"
+    self.descriptionTextView.textColor = .systemGray3
+    self.descriptionTextView.layer.borderWidth = 0.5
+    self.descriptionTextView.layer.borderColor = UIColor.systemGray4.cgColor
+    self.descriptionTextView.layer.cornerRadius = 5
+    self.descriptionTextView.textContainerInset = UIEdgeInsets(top: 8, left: 5, bottom: 8, right: 5)
+    self.descriptionTextView.font = UIFont(name: nameTextField.font!.fontName, size: Metric.textfontSize)
   }
   
   // MARK: Layout
@@ -92,27 +102,44 @@ class MarkerInfoInputViewController: UIViewController {
         $0.addItem(self.nameLabel).height(Metric.labelHeight)
         $0.addItem(self.nameTextField).height(Metric.textFieldHeight)
         $0.addItem(self.descriptionLabel).height(Metric.labelHeight)
-        $0.addItem(self.descriptionTextField).height(Metric.textFieldHeight)
+        $0.addItem(self.descriptionTextView).height(Metric.textViewHeight)
       }
   }
   
   /*
    // MARK: Layout
-
+   
    private func defineFlexContainer() {
-     self.view.flex.direction(.column).define {
-       $0.addItem(self.mapView).height(Metric.mapHeight)
-
-       $0.addItem().direction(.column)
-         .alignItems(.stretch)
-         .marginHorizontal(Metric.horizontalMargin)
-         .define {
-           $0.addItem(self.nameLabel).height(Metric.labelHeight)
-           $0.addItem(self.nameTextField).height(Metric.textFieldHeight)
-           $0.addItem(self.descriptionLabel).height(Metric.labelHeight)
-           $0.addItem(self.descriptionTextField).height(Metric.textFieldHeight)
-         }
-     }
+   self.view.flex.direction(.column).define {
+   $0.addItem(self.mapView).height(Metric.mapHeight)
+   
+   $0.addItem().direction(.column)
+   .alignItems(.stretch)
+   .marginHorizontal(Metric.horizontalMargin)
+   .define {
+   $0.addItem(self.nameLabel).height(Metric.labelHeight)
+   $0.addItem(self.nameTextField).height(Metric.textFieldHeight)
+   $0.addItem(self.descriptionLabel).height(Metric.labelHeight)
+   $0.addItem(self.descriptionTextField).height(Metric.textFieldHeight)
    }
-*/
+   }
+   }
+   */
+}
+
+
+//descriptionTextView에 PlaceHolder 효과
+extension MarkerInfoInputViewController: UITextViewDelegate {
+  func textViewDidBeginEditing(_ textView: UITextView) {
+    guard self.descriptionTextView.textColor == .systemGray3 else { return }
+    self.descriptionTextView.text = nil
+    self.descriptionTextView.textColor = .label
+  }
+  
+  func textViewDidEndEditing(_ textView: UITextView) {
+    if(self.descriptionTextView.text == ""){
+      self.descriptionTextView.text = "우측으로 5m"
+      self.descriptionTextView.textColor = .systemGray3
+    }
+  }
 }
