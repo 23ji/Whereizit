@@ -4,6 +4,8 @@
 //
 //  Created by 이상지 on 7/17/25.
 //
+import FirebaseCore
+import FirebaseFirestore
 import FlexLayout
 import NMapsMap
 
@@ -11,7 +13,8 @@ import UIKit
 
 
 class MarkerInfoInputViewController: UIViewController {
-  
+
+  let db = Firestore.firestore()
   // MARK: Constant
   
   private enum Metric {

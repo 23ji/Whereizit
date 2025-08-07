@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		49168A702E448E77002C5F69 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 49168A6F2E448E77002C5F69 /* FirebaseAuth */; };
+		49168A722E448E77002C5F69 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 49168A712E448E77002C5F69 /* FirebaseCore */; };
+		49168A742E448E77002C5F69 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 49168A732E448E77002C5F69 /* FirebaseFirestore */; };
 		49288AAD2D19450C00FF1E50 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49288AAC2D19450C00FF1E50 /* AppDelegate.swift */; };
 		49288AAF2D19450C00FF1E50 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49288AAE2D19450C00FF1E50 /* SceneDelegate.swift */; };
 		49288AB62D19450D00FF1E50 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49288AB52D19450D00FF1E50 /* Assets.xcassets */; };
@@ -42,8 +45,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				A75196ED2E3A42D700CE5F1F /* Then in Frameworks */,
+				49168A702E448E77002C5F69 /* FirebaseAuth in Frameworks */,
 				A77C88C22E252941002D725E /* NMapsMap in Frameworks */,
 				49E6296B2E2F86FE00751E26 /* PinLayout in Frameworks */,
+				49168A722E448E77002C5F69 /* FirebaseCore in Frameworks */,
+				49168A742E448E77002C5F69 /* FirebaseFirestore in Frameworks */,
 				49E629682E2F86C200751E26 /* FlexLayout in Frameworks */,
 				49E629652E2F866000751E26 /* SnapKit in Frameworks */,
 			);
@@ -155,6 +161,9 @@
 				49E629672E2F86C200751E26 /* FlexLayout */,
 				49E6296A2E2F86FE00751E26 /* PinLayout */,
 				A75196EC2E3A42D700CE5F1F /* Then */,
+				49168A6F2E448E77002C5F69 /* FirebaseAuth */,
+				49168A712E448E77002C5F69 /* FirebaseCore */,
+				49168A732E448E77002C5F69 /* FirebaseFirestore */,
 			);
 			productName = SmokeAreaOdi;
 			productReference = 49288AA92D19450C00FF1E50 /* SmokingAreaOdi.app */;
@@ -190,6 +199,7 @@
 				49E629662E2F86C200751E26 /* XCRemoteSwiftPackageReference "FlexLayout" */,
 				49E629692E2F86FE00751E26 /* XCRemoteSwiftPackageReference "PinLayout" */,
 				A75196EB2E3A42D700CE5F1F /* XCRemoteSwiftPackageReference "Then" */,
+				49168A6E2E448E77002C5F69 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 49288AAA2D19450C00FF1E50 /* Products */;
 			projectDirPath = "";
@@ -451,6 +461,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		49168A6E2E448E77002C5F69 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.1.0;
+			};
+		};
 		49E629632E2F866000751E26 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -494,6 +512,21 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		49168A6F2E448E77002C5F69 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 49168A6E2E448E77002C5F69 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		49168A712E448E77002C5F69 /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 49168A6E2E448E77002C5F69 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		49168A732E448E77002C5F69 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 49168A6E2E448E77002C5F69 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
 		49E629642E2F866000751E26 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 49E629632E2F866000751E26 /* XCRemoteSwiftPackageReference "SnapKit" */;

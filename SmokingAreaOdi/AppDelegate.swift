@@ -4,6 +4,8 @@
 //
 //  Created by 이상지 on 12/23/24.
 //
+import FirebaseCore
+import FirebaseFirestore
 
 import UIKit
 
@@ -14,7 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        return true
+      FirebaseApp.configure()
+      return true
     }
 
     // MARK: UISceneSession Lifecycle
