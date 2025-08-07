@@ -18,7 +18,6 @@ final class DetailView: UIView {
   }
 
   private let rootFlexContainer = UIView()
-  private let mapView = NMFMapView()
   private let nameLabel = UILabel()
   private let nameTextField = UITextField()
   private let descriptionLabel = UILabel()
@@ -62,7 +61,7 @@ final class DetailView: UIView {
       .alignItems(.stretch)
       .marginHorizontal(Metric.horizontalMargin)
       .define {
-        $0.addItem(self.mapView).height(300)
+        //$0.addItem(self.mapView).height(300)
         $0.addItem(self.nameLabel).height(50)
         $0.addItem(self.nameTextField).height(40)
         $0.addItem(self.descriptionLabel).height(50)
