@@ -20,31 +20,39 @@ class MarkerInfoInputViewController: UIViewController {
   // MARK: Constant
   
   private enum Metric {
-    static let mapHeight: CGFloat = 300
+    static let mapHeight: CGFloat = 200
     static let labelFontSize: CGFloat = 16
     static let labelHeight: CGFloat = 50
     static let textfontSize: CGFloat = 16
     static let textFieldHeight: CGFloat = 40
     static let textViewHeight: CGFloat = 80
     static let horizontalMargin: CGFloat = 20
+    static let margin: CGFloat = 10
   }
   
   // MARK: UI
   
   private let scrollView = UIScrollView() //스크롤 관련 코드 표시
   private let contentView = UIView() //
+  
   private let mapView = NMFMapView()
+  
   private let nameLabel = UILabel()
   private let nameTextField = UITextField()
+  
   private let descriptionLabel = UILabel()
   private let descriptionTextView = UITextView()
-  private let areaEnvironmentLabel = UILabel()
-  //환경 선택지들 넣기
-  private let areaTypeLabel = UILabel()
-  //유형 선택지들 넣기
-  private let areaFacilityLabel = UILabel()
-  //시설 선택지들 넣기
   
+  private let areaEnvironmentLabel = UILabel()
+  private let areaTypeLabel = UILabel()
+  private let areaFacilityLabel = UILabel()
+  
+  private let tagData: [String: [String]] = [
+    "환경": ["실내", "실외", "밀폐형", "개방형"],
+    "유형": ["카페", "술집", "피시방", "식당"],
+    "시설": ["재떨이", "의자", "별도 전자담배 구역"]
+  ]
+  private var selectedTags: Set<String> = []
   
   // MARK: Properties
   
@@ -56,7 +64,7 @@ class MarkerInfoInputViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     self.view.addSubview(scrollView)//
-    scrollView.addSubview(contentView)//
+    self.scrollView.addSubview(contentView)//
     print("내 마커 - 위도 : \(String(describing: lat)) 경도 : \(String(describing: lng))")
     self.setUI()
     self.setupInputs()
@@ -65,11 +73,10 @@ class MarkerInfoInputViewController: UIViewController {
   
   override func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
-    scrollView.frame = view.bounds//
-    contentView.pin.all()//
+    scrollView.pin.all()//
+    contentView.pin.top().horizontally()
     contentView.flex.layout(mode: .adjustHeight)//
     scrollView.contentSize = contentView.frame.size//
-    //self.view.flex.layout(mode: .fitContainer)
   }
   
   // MARK: UI Setup
@@ -113,6 +120,32 @@ class MarkerInfoInputViewController: UIViewController {
   // MARK: Layout
   
   private func defineFlexContainer() {
+    self.contentView.flex.direction(.column).define { flex in
+      flex.addItem(mapView).height(Metric.mapHeight)
+      
+      flex.addItem().direction(.column).paddingHorizontal(Metric.horizontalMargin).define { inner in
+        inner.addItem(self.nameLabel).height(Metric.labelHeight)
+        inner.addItem(self.nameTextField).height(Metric.textFieldHeight).marginBottom(10)
+        
+        inner.addItem(self.descriptionLabel).height(Metric.labelHeight)
+        inner.addItem(self.descriptionTextView).height(Metric.textViewHeight).marginBottom(10)
+        
+        for (category, tags) in tagData {
+          let label = UILabel()
+          label.text = category
+          label.font = .boldSystemFont(ofSize: Metric.labelFontSize)
+          inner.addItem(label).marginTop(Metric.margin).marginBottom(Metric.margin)
+          
+          inner.addItem().direction(.row).wrap(.wrap).define { tagFlex in
+            for tag in tags {
+              let button = makeTagButton(title: tag)
+              tagFlex.addItem(button).marginRight(Metric.margin).marginBottom(Metric.margin)
+            }
+          }
+        }
+      }
+    }
+    /*
     self.contentView.flex.addItem()//
       .direction(.column)
       .alignItems(.stretch)
@@ -133,6 +166,7 @@ class MarkerInfoInputViewController: UIViewController {
         $0.addItem(self.areaTypeLabel).height(Metric.labelHeight)
         $0.addItem(self.areaFacilityLabel).height(Metric.labelHeight)
       }
+     */
   }
   
   /*
@@ -154,6 +188,36 @@ class MarkerInfoInputViewController: UIViewController {
    }
    }
    */
+  private func makeTagButton(title: String) -> UIButton {
+      let button = UIButton(type: .system)
+      button.setTitle(title, for: .normal)
+      button.titleLabel?.font = .systemFont(ofSize: 14)
+      button.contentEdgeInsets = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
+      button.layer.cornerRadius = 16
+      button.layer.borderWidth = 1
+      button.layer.borderColor = UIColor.systemGray4.cgColor
+      button.backgroundColor = .systemGray6
+      button.setTitleColor(.label, for: .normal)
+      
+      button.addAction(UIAction { [weak self] _ in
+        self?.toggleTagSelection(tag: title, button: button)
+      }, for: .touchUpInside)
+      
+      return button
+    }
+    
+    private func toggleTagSelection(tag: String, button: UIButton) {
+      if selectedTags.contains(tag) {
+        selectedTags.remove(tag)
+        button.backgroundColor = .systemGray6
+        button.setTitleColor(.label, for: .normal)
+      } else {
+        selectedTags.insert(tag)
+        button.backgroundColor = .systemBlue
+        button.setTitleColor(.white, for: .normal)
+      }
+      print("선택된 태그: \(selectedTags)")
+    }
 }
 
 
