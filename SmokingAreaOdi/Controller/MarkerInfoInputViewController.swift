@@ -31,6 +31,8 @@ class MarkerInfoInputViewController: UIViewController {
   
   // MARK: UI
   
+  private let scrollView = UIScrollView() //스크롤 관련 코드 표시
+  private let contentView = UIView() //
   private let mapView = NMFMapView()
   private let nameLabel = UILabel()
   private let nameTextField = UITextField()
@@ -53,6 +55,8 @@ class MarkerInfoInputViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    self.view.addSubview(scrollView)//
+    scrollView.addSubview(contentView)//
     print("내 마커 - 위도 : \(String(describing: lat)) 경도 : \(String(describing: lng))")
     self.setUI()
     self.setupInputs()
@@ -61,7 +65,11 @@ class MarkerInfoInputViewController: UIViewController {
   
   override func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
-    self.view.flex.layout(mode: .fitContainer)
+    scrollView.frame = view.bounds//
+    contentView.pin.all()//
+    contentView.flex.layout(mode: .adjustHeight)//
+    scrollView.contentSize = contentView.frame.size//
+    //self.view.flex.layout(mode: .fitContainer)
   }
   
   // MARK: UI Setup
@@ -105,14 +113,14 @@ class MarkerInfoInputViewController: UIViewController {
   // MARK: Layout
   
   private func defineFlexContainer() {
-    self.view.flex.addItem()
+    self.contentView.flex.addItem()//
       .direction(.column)
       .alignItems(.stretch)
       .define {
         $0.addItem(self.mapView).height(Metric.mapHeight)
       }
     
-    self.view.flex.addItem()
+    self.contentView.flex.addItem()//
       .direction(.column)
       .alignItems(.stretch)
       .marginHorizontal(Metric.horizontalMargin)
