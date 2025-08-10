@@ -2,14 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>사용자의 위치를 받습니다.</string>
 	<key>NMFClientId</key>
 	<string>blwsp39dnd</string>
 	<key>IDEPreferLogStreaming</key>
 	<string>YES</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>앱 사용 중 사용자의 위치를 받습니다.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>사용자의 위치를 받습니다.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
