@@ -15,7 +15,6 @@ class MarkerPositionSelectorViewController: UIViewController, NMFMapViewCameraDe
   // MARK: Constant
   
   private enum Metric {
-    //static let addButtonSize: CGFloat = 56
     static let nextButtonWidth: CGFloat = 100
     static let nextButtonHeight: CGFloat = 56
     static let nextButtonBottom: CGFloat = 40
@@ -100,7 +99,7 @@ class MarkerPositionSelectorViewController: UIViewController, NMFMapViewCameraDe
     navigationController?.pushViewController(markerInfoInputVC, animated: true)
     
     let center = self.mapView.cameraPosition.target
-    markerInfoInputVC.lat = center.lat
-    markerInfoInputVC.lng = center.lng
+    markerInfoInputVC.areaLat = center.lat
+    markerInfoInputVC.areaLng = center.lng
   }
 }
