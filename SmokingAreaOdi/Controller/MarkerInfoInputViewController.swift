@@ -67,7 +67,7 @@ final class MarkerInfoInputViewController: UIViewController {
     $0.backgroundColor = .systemBlue
     $0.setTitleColor(.white, for: .normal)
     $0.layer.cornerRadius = 8
-    $0.addTarget(self, action: #selector(saveData), for: .touchUpInside)
+    $0.addTarget(MarkerInfoInputViewController.self, action: #selector(saveData), for: .touchUpInside)
   }
   
   
