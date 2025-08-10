@@ -7,6 +7,9 @@
 import NMapsMap
 import PinLayout
 
+import RxCocoa
+import RxSwift
+
 import UIKit
 
 
@@ -27,6 +30,7 @@ class MarkerPositionSelectorViewController: UIViewController, NMFMapViewCameraDe
   private let nextButton = UIButton()
   private let markerCoordinateImageView = UIImageView(image: UIImage(named: "marker_Pin"))
   
+  private var disposeBag = DisposeBag()
   
   override func viewDidLoad() {
     super.viewDidLoad()
