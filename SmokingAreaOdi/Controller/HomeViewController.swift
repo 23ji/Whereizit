@@ -25,12 +25,10 @@ final class HomeViewController: UIViewController, CLLocationManagerDelegate, NMF
   
   // MARK: UI
   
-  private let mapView = NMFNaverMapView() // 현재 위치로 초기 로케이션 세팅
+  private let mapView = NMFNaverMapView()
   private let addButton = UIImageView(image: UIImage(named: "plusButton")).then {
     $0.isUserInteractionEnabled = true // 터치 가능하게 꼭 켜야함
   }
-  private let locationButton = NMFLocationButton() // 네이버에서 제공하는 위치 버튼
-  private var locationManager = CLLocationManager()
   
   
   override func viewDidLoad() {
@@ -54,32 +52,6 @@ final class HomeViewController: UIViewController, CLLocationManagerDelegate, NMF
   
   private func setLocationManager() {
     self.mapView.showLocationButton = true
-
-    self.locationManager.delegate = self  // 델리게이트 설정
-    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest  // 거리 정확도 설정
-    // 위치 사용 허용 알림
-    self.locationManager.requestWhenInUseAuthorization()
-    // 위치 사용을 허용하면 현재 위치 정보를 가져옴
-    if CLLocationManager.locationServicesEnabled() {
-      self.locationManager.startUpdatingLocation()
-    }
-    else {
-      print("위치 서비스 허용 off")
-    }
-  }
-  
-  func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-      if let location = locations.first {
-          print("위치 업데이트!")
-          print("위도 : \(location.coordinate.latitude)")
-          print("경도 : \(location.coordinate.longitude)")
-      }
-  }
-      
-  
-  // 위치 가져오기 실패
-  func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-      print("error")
   }
   
   
