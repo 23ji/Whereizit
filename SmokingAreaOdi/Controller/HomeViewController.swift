@@ -25,20 +25,21 @@ final class HomeViewController: UIViewController, CLLocationManagerDelegate, NMF
   
   // MARK: UI
   
-  private let mapView = NMFNaverMapView()
+  //private let mapView = NMFNaverMapView()
+  private let mapView = NMFMapView()
   private let addButton = UIImageView(image: UIImage(named: "plusButton")).then {
     $0.isUserInteractionEnabled = true // 터치 가능하게 꼭 켜야함
   }
+  private let locationManager = CLLocationManager()
   
   
   override func viewDidLoad() {
     super.viewDidLoad()
     self.navigationItem.title = "Home"
-
-    self.addSubviews()
-    self.setLocationManager()
     
+    self.addSubviews()
     self.makeConstraints()
+    self.setLocationManager()
     
     let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapAddButton))
     addButton.addGestureRecognizer(tapGesture)
@@ -50,8 +51,24 @@ final class HomeViewController: UIViewController, CLLocationManagerDelegate, NMF
     self.view.addSubview(self.addButton)
   }
   
+  
   private func setLocationManager() {
-    self.mapView.showLocationButton = true
+    //self.mapView.showLocationButton = true
+    
+    self.locationManager.delegate = self
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+    self.locationManager.requestWhenInUseAuthorization()
+    
+    let userLocationCoordinate = self.locationManager.location?.coordinate ?? CLLocationCoordinate2D(latitude: 37.5666102, longitude: 126.9783881)
+    
+    print("사용자의 현재 위치 : \(userLocationCoordinate)")
+    
+    self.cameraUpdate(lat: userLocationCoordinate.latitude, lng: userLocationCoordinate.longitude)
+  }
+  
+  private func cameraUpdate(lat: Double, lng: Double) {
+    let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: lat, lng: lng))
+    self.mapView.moveCamera(cameraUpdate)
   }
   
   
@@ -67,11 +84,10 @@ final class HomeViewController: UIViewController, CLLocationManagerDelegate, NMF
     }
   }
   
-  
   // MARK: Configure
   
   @objc private func didTapAddButton() {
-    let makerPositionSeletorVC = MarkerPositionSelectorViewController()
-    self.navigationController?.pushViewController(makerPositionSeletorVC, animated: true)
+    let markerPositionSeletorVC = MarkerPositionSelectorViewController()
+    self.navigationController?.pushViewController(markerPositionSeletorVC, animated: true)
   }
 }
