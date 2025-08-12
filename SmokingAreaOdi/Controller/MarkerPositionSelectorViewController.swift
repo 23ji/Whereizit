@@ -13,7 +13,7 @@ import RxSwift
 import UIKit
 
 
-class MarkerPositionSelectorViewController: UIViewController, NMFMapViewCameraDelegate {
+class MarkerPositionSelectorViewController: UIViewController, CLLocationManagerDelegate, NMFMapViewCameraDelegate {
   
   // MARK: Constant
   
@@ -29,6 +29,7 @@ class MarkerPositionSelectorViewController: UIViewController, NMFMapViewCameraDe
   private let marker = NMFMarker()
   private let nextButton = UIButton()
   private let markerCoordinateImageView = UIImageView(image: UIImage(named: "marker_Pin"))
+  private let locationManager = CLLocationManager()
   
   private var disposeBag = DisposeBag()
   
@@ -36,11 +37,13 @@ class MarkerPositionSelectorViewController: UIViewController, NMFMapViewCameraDe
     super.viewDidLoad()
     self.setUI()
     self.addSubViews()
+    self.setLocationManager()
     self.makeConstraints()
     self.configure()
     
     self.nextButton.addTarget(self, action: #selector(didTapNextButton), for: .touchUpInside)
   }
+
   
   private func setUI() {
     self.navigationItem.title = "위치 지정"
@@ -57,6 +60,26 @@ class MarkerPositionSelectorViewController: UIViewController, NMFMapViewCameraDe
     self.view.addSubview(mapView)
     self.view.addSubview(nextButton)
     self.view.addSubview(markerCoordinateImageView)
+  }
+  
+  
+  private func setLocationManager() {
+    //self.mapView.showLocationButton = true
+    
+    self.locationManager.delegate = self
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+    self.locationManager.requestWhenInUseAuthorization()
+    
+    let userLocationCoordinate = self.locationManager.location?.coordinate ?? CLLocationCoordinate2D(latitude: 37.5666102, longitude: 126.9783881)
+    
+    print("사용자의 현재 위치 : \(userLocationCoordinate)")
+    
+    self.cameraUpdate(lat: userLocationCoordinate.latitude, lng: userLocationCoordinate.longitude)
+  }
+  
+  private func cameraUpdate(lat: Double, lng: Double) {
+    let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: lat, lng: lng))
+    self.mapView.moveCamera(cameraUpdate)
   }
   
   
