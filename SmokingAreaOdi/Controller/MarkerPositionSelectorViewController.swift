@@ -40,7 +40,7 @@ class MarkerPositionSelectorViewController: UIViewController, CLLocationManagerD
     self.setLocationManager()
     self.makeConstraints()
     self.configure()
-    
+    print("화면의 중앙 : (\(self.mapView.latitude), \(self.mapView.longitude))")
     self.nextButton.addTarget(self, action: #selector(didTapNextButton), for: .touchUpInside)
   }
 
