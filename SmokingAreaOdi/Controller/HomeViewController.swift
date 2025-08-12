@@ -58,12 +58,20 @@ final class HomeViewController: UIViewController, CLLocationManagerDelegate, NMF
     self.locationManager.delegate = self
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
     self.locationManager.requestWhenInUseAuthorization()
-    
+    self.locationManager.startUpdatingLocation() // 이거 추가함
+
     let userLocationCoordinate = self.locationManager.location?.coordinate ?? CLLocationCoordinate2D(latitude: 37.5666102, longitude: 126.9783881)
     
-    print("사용자의 현재 위치 : \(userLocationCoordinate)")
+    print("1. 사용자의 현재 위치 : \(userLocationCoordinate)")
     
     self.cameraUpdate(lat: userLocationCoordinate.latitude, lng: userLocationCoordinate.longitude)
+  }
+  
+  func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+      guard let location = locations.last else { return }
+      print("정확도: \(location.horizontalAccuracy)m")
+      cameraUpdate(lat: location.coordinate.latitude, lng: location.coordinate.longitude)
+      locationManager.stopUpdatingLocation() // 필요시 한 번만 업데이트
   }
   
   private func cameraUpdate(lat: Double, lng: Double) {

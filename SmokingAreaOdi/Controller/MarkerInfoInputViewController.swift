@@ -13,7 +13,7 @@ import Then
 
 import UIKit
 
-final class MarkerInfoInputViewController: UIViewController {
+final class MarkerInfoInputViewController: UIViewController, CLLocationManagerDelegate, NMFMapViewCameraDelegate {
   
   // MARK: Constant
   
@@ -35,7 +35,9 @@ final class MarkerInfoInputViewController: UIViewController {
   private let scrollView = UIScrollView()
   private let contentView = UIView()
   private let mapView = NMFMapView()
-  
+  private let markerCoordinateImageView = UIImageView(image: UIImage(named: "marker_Pin"))
+  private let locationManager = CLLocationManager()
+
   private let nameLabel = UILabel().then {
     $0.text = "흡연구역 이름"
     $0.font = .systemFont(ofSize: Metric.labelFontSize, weight: .bold)
@@ -98,6 +100,7 @@ final class MarkerInfoInputViewController: UIViewController {
     self.view.backgroundColor = .white
     self.addSubView()
     self.setup()
+    self.cameraUpdate(lat: Double(areaLat!), lng: Double(areaLng!))
     self.defineFlexContainer()
   }
   
@@ -115,6 +118,7 @@ final class MarkerInfoInputViewController: UIViewController {
   private func addSubView() {
     self.view.addSubview(self.scrollView)
     self.scrollView.addSubview(self.contentView)
+    self.mapView.addSubview(markerCoordinateImageView)
   }
   
   
@@ -123,6 +127,47 @@ final class MarkerInfoInputViewController: UIViewController {
   private func setup() {
     self.navigationItem.title = "흡연구역 등록"
     self.descriptionTextView.delegate = self
+    self.mapView.isExclusiveTouch = false
+  }
+  
+  private func setLocationManager() {
+    //self.mapView.showLocationButton = true
+    
+    self.locationManager.delegate = self
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+    self.locationManager.requestWhenInUseAuthorization()
+    self.locationManager.startUpdatingLocation() // 이거 추가함
+
+    guard let areaLat = self.areaLat else { return }
+    guard let areaLng = self.areaLng else { return }
+    
+    self.cameraUpdate(lat: areaLat, lng: areaLng)
+  }
+  
+  func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+      guard let location = locations.last else { return }
+
+      let lat = location.coordinate.latitude
+      let lng = location.coordinate.longitude
+      print("정확도: \(location.horizontalAccuracy)m")
+
+      // 실제 받은 GPS 좌표로 카메라 이동
+      cameraUpdate(lat: lat, lng: lng)
+
+      // 마커 추가
+      let marker = NMFMarker()
+      marker.position = NMGLatLng(lat: lat, lng: lng)
+      marker.mapView = mapView
+
+      locationManager.stopUpdatingLocation()
+  }
+
+  
+  private func cameraUpdate(lat: Double, lng: Double) {
+    
+    let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: lat, lng: lng))
+    self.mapView.moveCamera(cameraUpdate)
+    print("3. \(areaLat), \(areaLng)")
   }
   
   
@@ -134,6 +179,7 @@ final class MarkerInfoInputViewController: UIViewController {
       .direction(.column)
       .define {
         $0.addItem(self.mapView).height(Metric.mapHeight)
+        
         
         $0.addItem()
           .direction(.column)
@@ -186,9 +232,9 @@ final class MarkerInfoInputViewController: UIViewController {
     // 모두 삼항연산자 처리할 방법 찾아보기,,
     let isSelected = selectedTags.contains(tag)
     if isSelected {
-        selectedTags.remove(tag)
+      selectedTags.remove(tag)
     } else {
-        selectedTags.insert(tag)
+      selectedTags.insert(tag)
     }
     button.backgroundColor = isSelected ? .systemGray6 : .systemBlue
     button.setTitleColor(isSelected ? .label : .white, for: .normal)
