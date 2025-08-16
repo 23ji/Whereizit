@@ -65,23 +65,38 @@ class MarkerPositionSelectorViewController: UIViewController, CLLocationManagerD
   
   
   private func setLocationManager() {
-    //self.mapView.showLocationButton = true
-    
-    self.locationManager.delegate = self
-    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
-    self.locationManager.requestWhenInUseAuthorization()
-    self.locationManager.startUpdatingLocation() // 이거 추가함
-
-    let userLocationCoordinate = self.locationManager.location?.coordinate ?? CLLocationCoordinate2D(latitude: 37.5666102, longitude: 126.9783881)
-        
-    self.cameraUpdate(lat: userLocationCoordinate.latitude, lng: userLocationCoordinate.longitude)
+      // 델리게이트를 self(HomeViewController)로 설정
+      self.locationManager.delegate = self
+      
+      // 위치 정확도를 '가장 좋은' 상태로 설정. 이는 배터리 소모가 크지만, 가장 정확한 위치를 제공합니다.
+      self.locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
+      
+      // 위치 업데이트를 받기 위해 필요한 최소 거리를 설정.
+      // kCLDistanceFilterNone은 위치가 조금만 변경되어도 업데이트를 받게 합니다.
+      self.locationManager.distanceFilter = kCLDistanceFilterNone
+      
+      // '앱 사용 중' 위치 권한을 요청
+      self.locationManager.requestWhenInUseAuthorization()
+      
+      // 위치 업데이트를 시작
+      self.locationManager.startUpdatingLocation()
   }
-  
+
+  // CLLocationManagerDelegate
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+      // 가장 최근의 위치 정보를 가져옵니다.
       guard let location = locations.last else { return }
-      print("정확도: \(location.horizontalAccuracy)m")
-      cameraUpdate(lat: location.coordinate.latitude, lng: location.coordinate.longitude)
-      locationManager.stopUpdatingLocation() // 필요시 한 번만 업데이트
+
+      // 위치 정보의 수평 정확도(horizontalAccuracy)가 10미터보다 작을 때(높을 때)만 처리합니다.
+      // 0보다 작은 값은 유효하지 않은 정확도를 의미합니다.
+      if location.horizontalAccuracy > 0 && location.horizontalAccuracy <= 10 {
+          print("정확도: \(location.horizontalAccuracy)m")
+          cameraUpdate(lat: location.coordinate.latitude, lng: location.coordinate.longitude)
+          
+          // 원하는 정확도에 도달하면 위치 업데이트를 중지합니다.
+          // 불필요한 배터리 소모를 막는 효과적인 방법입니다.
+          locationManager.stopUpdatingLocation()
+      }
   }
   
   private func cameraUpdate(lat: Double, lng: Double) {

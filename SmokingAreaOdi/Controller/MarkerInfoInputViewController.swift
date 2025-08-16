@@ -130,44 +130,56 @@ final class MarkerInfoInputViewController: UIViewController, CLLocationManagerDe
     self.mapView.isExclusiveTouch = false
   }
   
+  private var marker = NMFMarker()
+
   private func setLocationManager() {
-    //self.mapView.showLocationButton = true
-    
-    self.locationManager.delegate = self
-    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
-    self.locationManager.requestWhenInUseAuthorization()
-    self.locationManager.startUpdatingLocation() // 이거 추가함
-
-    guard let areaLat = self.areaLat else { return }
-    guard let areaLng = self.areaLng else { return }
-    
-    self.cameraUpdate(lat: areaLat, lng: areaLng)
+      // 델리게이트를 self로 설정합니다.
+      self.locationManager.delegate = self
+      
+      // 위치 정확도를 '내비게이션에 최적인 정확도'로 설정합니다.
+      self.locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
+      
+      // 위치 업데이트를 받기 위해 필요한 최소 거리를 0으로 설정합니다.
+      self.locationManager.distanceFilter = kCLDistanceFilterNone
+      
+      // '앱 사용 중' 위치 권한을 요청합니다.
+      self.locationManager.requestWhenInUseAuthorization()
+      
+      // 위치 업데이트를 시작합니다.
+      self.locationManager.startUpdatingLocation()
   }
-  
-  func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-      guard let location = locations.last else { return }
 
+  // CLLocationManagerDelegate
+  func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+      // 가장 최근의 위치 정보를 가져옵니다.
+      guard let location = locations.last else { return }
+      
       let lat = location.coordinate.latitude
       let lng = location.coordinate.longitude
       print("정확도: \(location.horizontalAccuracy)m")
-
-      // 실제 받은 GPS 좌표로 카메라 이동
-      cameraUpdate(lat: lat, lng: lng)
-
-      // 마커 추가
-      let marker = NMFMarker()
-      marker.position = NMGLatLng(lat: lat, lng: lng)
-      marker.mapView = mapView
-
-      locationManager.stopUpdatingLocation()
+      
+      // 수평 정확도가 10m보다 작을 때(즉, 더 정확할 때)만 로직을 실행합니다.
+      if location.horizontalAccuracy > 0 && location.horizontalAccuracy <= 10 {
+          // 카메라를 현재 위치로 이동시킵니다.
+          cameraUpdate(lat: lat, lng: lng)
+          
+          // 기존 마커가 있다면 위치만 업데이트하고, 없다면 새로 생성하여 지도에 표시합니다.
+          // 마커의 위치를 업데이트합니다.
+          marker.position = NMGLatLng(lat: lat, lng: lng)
+          
+          // 마커가 지도에 표시되어 있지 않다면, 지도에 추가합니다.
+          if marker.mapView == nil {
+              marker.mapView = self.mapView
+          }
+          
+          // 원하는 정확도에 도달하면 더 이상 위치 업데이트를 중지합니다.
+          locationManager.stopUpdatingLocation()
+      }
   }
 
-  
   private func cameraUpdate(lat: Double, lng: Double) {
-    
-    let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: lat, lng: lng))
-    self.mapView.moveCamera(cameraUpdate)
-    print("3. \(areaLat), \(areaLng)")
+      let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: lat, lng: lng))
+      self.mapView.moveCamera(cameraUpdate)
   }
   
   
