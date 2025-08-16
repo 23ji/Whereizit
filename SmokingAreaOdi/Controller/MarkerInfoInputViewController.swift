@@ -32,8 +32,6 @@ final class MarkerInfoInputViewController: UIViewController, CLLocationManagerDe
   
   // MARK: UI
   
-  private let scrollView = UIScrollView()
-  private let contentView = UIView()
   private let mapView = NMFMapView()
   private let markerCoordinateImageView = UIImageView(image: UIImage(named: "marker_Pin"))
   private let locationManager = CLLocationManager()
@@ -101,23 +99,16 @@ final class MarkerInfoInputViewController: UIViewController, CLLocationManagerDe
     self.addSubView()
     self.setup()
     self.cameraUpdate(lat: Double(areaLat!), lng: Double(areaLng!))
-    self.defineFlexContainer()
   }
   
   override func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
-    self.scrollView.pin.all(self.view.pin.safeArea)
-    self.contentView.pin.top().horizontally()
-    self.contentView.flex.layout(mode: .adjustHeight)
-    self.scrollView.contentSize = contentView.frame.size
   }
   
   
   // MARK: addSubView
   
   private func addSubView() {
-    self.view.addSubview(self.scrollView)
-    self.scrollView.addSubview(self.contentView)
     self.mapView.addSubview(markerCoordinateImageView)
   }
   
@@ -174,40 +165,7 @@ final class MarkerInfoInputViewController: UIViewController, CLLocationManagerDe
   // MARK: Layout
   
   //개선하기 / 분리하기
-  private func defineFlexContainer() {
-    self.contentView.flex
-      .direction(.column)
-      .define {
-        $0.addItem(self.mapView).height(Metric.mapHeight)
-        
-        
-        $0.addItem()
-          .direction(.column)
-          .paddingHorizontal(Metric.horizontalMargin)
-          .define {
-            $0.addItem(self.nameLabel).height(Metric.labelHeight)
-            $0.addItem(self.nameTextField).height(Metric.textFieldHeight).marginBottom(10)
-            $0.addItem(self.descriptionLabel).height(Metric.labelHeight)
-            $0.addItem(self.descriptionTextView).height(Metric.textViewHeight).marginBottom(10)
-            
-            for (category, tags) in tagData {
-              let label = UILabel()
-              label.text = category.rawValue
-              label.font = .boldSystemFont(ofSize: Metric.labelFontSize)
-              $0.addItem(label).marginTop(Metric.inPutsMargin).marginBottom(Metric.inPutsMargin)
-              $0.addItem().direction(.row).wrap(.wrap).define { tagFlex in
-                for tag in tags {
-                  let button = tagButton(title: tag)
-                  tagFlex.addItem(button).marginRight(Metric.inPutsMargin).marginBottom(Metric.inPutsMargin)
-                }
-              }
-            }
-            
-            // 저장 버튼
-            $0.addItem(saveButton).height(Metric.saveButtonHeight).marginTop(20).marginBottom(40)
-          }
-      }
-  }
+ 
   
   
   private func tagButton(title: String) -> UIButton {
