@@ -27,30 +27,54 @@ final class HomeViewController: UIViewController, CLLocationManagerDelegate, NMF
   
   // MARK: UI
   
-  //private let mapView = NMFNaverMapView()
   private let mapView = NMFMapView()
   private let addButton = UIImageView(image: UIImage(named: "plusButton")).then {
     $0.isUserInteractionEnabled = true // 터치 가능하게 꼭 켜야함
   }
   private let locationManager = CLLocationManager()
+  
   private let disposeBag = DisposeBag()
+  
+  
+  // MARK: LifeCycle
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    self.navigationItem.title = "Home"
-    
+    self.setup()
     self.addSubviews()
     self.makeConstraints()
+    
     self.setLocationManager()
+    
     self.didTapaddButton()
   }
   
+  
+  // MARK: Setup
+  
+  private func setup() {
+    self.navigationItem.title = "Home"
+  }
   
   private func addSubviews() {
     self.view.addSubview(self.mapView)
     self.view.addSubview(self.addButton)
   }
   
+  private func makeConstraints() {
+    self.mapView.snp.makeConstraints {
+      $0.edges.equalToSuperview()
+    }
+    
+    self.addButton.snp.makeConstraints{
+      $0.size.equalTo(Metric.addButtonSize)
+      $0.trailing.equalToSuperview().inset(Metric.addButtonTrailing)
+      $0.bottom.equalToSuperview().inset(Metric.addButtonBottom)
+    }
+  }
+  
+  
+  // MARK: Location
   
   private func setLocationManager() {
     // CLLocationManagerDelegate를 self(HomeViewController)로 설정합니다.
@@ -93,14 +117,14 @@ final class HomeViewController: UIViewController, CLLocationManagerDelegate, NMF
     
     // 2. 현재 위치의 위도와 경도 추출
     // bestLocation 객체의 coordinate 프로퍼티를 통해 위도(latitude)와 경도(longitude) 값을 추출합니다.
-    let latitude = bestLocation.coordinate.latitude
-    let longitude = bestLocation.coordinate.longitude
+    let userLat = bestLocation.coordinate.latitude
+    let userLng = bestLocation.coordinate.longitude
     
-    print("1. 사용자의 위치 : (\(latitude)   \(longitude))")
-
+    print("1. 사용자의 위치 : (\(userLat), \(userLng))")
+    
     // 3. 지도 뷰를 현재 위치로 이동시키는 메서드 호출
     // 추출한 위도와 경도 값을 사용하여 지도 카메라를 해당 위치로 이동시킵니다.
-    cameraUpdate(lat: latitude, lng: longitude)
+    cameraUpdate(lat: userLat, lng: userLng)
   }
   
   
@@ -110,28 +134,16 @@ final class HomeViewController: UIViewController, CLLocationManagerDelegate, NMF
   }
   
   
-  private func makeConstraints() {
-    self.mapView.snp.makeConstraints {
-      $0.edges.equalToSuperview()
-    }
-    
-    self.addButton.snp.makeConstraints{
-      $0.size.equalTo(Metric.addButtonSize)
-      $0.trailing.equalToSuperview().inset(Metric.addButtonTrailing)
-      $0.bottom.equalToSuperview().inset(Metric.addButtonBottom)
-    }
-  }
-  
   //⭐️ 질문
   private func didTapaddButton() {
     let tapGesture = UITapGestureRecognizer()
     self.addButton.addGestureRecognizer(tapGesture)
-
+    
     tapGesture.rx.event
       .bind(onNext: { [weak self] _ in
-          let markerPositionSelectorVC = MarkerPositionSelectorViewController()
-          self?.navigationController?.pushViewController(markerPositionSelectorVC, animated: true)
-        })
+        let markerPositionSelectorVC = MarkerPositionSelectorViewController()
+        self?.navigationController?.pushViewController(markerPositionSelectorVC, animated: true)
+      })
       .disposed(by: disposeBag)
   }
 }

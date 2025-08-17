@@ -30,6 +30,31 @@ final class MarkerInfoInputViewController: UIViewController, CLLocationManagerDe
   }
   
   
+  // MARK: Properties
+  
+  var markerLat: Double?
+  var markerLng: Double?
+  
+  private let db = Firestore.firestore()
+  
+  // ⭐️ 지도 초기 설정이 완료되었는지 확인하는 플래그
+  private var isMapSetupCompleted = false
+  
+  enum tagType: String {
+    case 환경
+    case 유형
+    case 시설
+  }
+  //개선하기
+  private let tagData: [tagType: [String]] = [
+    .환경: ["실내", "실외", "밀폐형", "개방형"],
+    .유형: ["카페", "술집", "피시방", "식당"],
+    .시설: ["재떨이", "의자", "별도 전자담배 구역"]
+  ]
+  //Set 사용 지양하기
+  private var selectedTags: Set<String> = []
+  
+  
   // MARK: UI
   
   private let scrollView = UIScrollView()
@@ -37,7 +62,7 @@ final class MarkerInfoInputViewController: UIViewController, CLLocationManagerDe
   private let mapView = NMFMapView()
   private let markerCoordinateImageView = UIImageView(image: UIImage(named: "marker_Pin"))
   private let locationManager = CLLocationManager()
-
+  
   private let nameLabel = UILabel().then {
     $0.text = "흡연구역 이름"
     $0.font = .systemFont(ofSize: Metric.labelFontSize, weight: .bold)
@@ -73,47 +98,24 @@ final class MarkerInfoInputViewController: UIViewController, CLLocationManagerDe
   }
   
   
-  // MARK: Properties
-  
-  var markerLat: Double?
-  var markerLng: Double?
-  
-  // ⭐️ 지도 초기 설정이 완료되었는지 확인하는 플래그
-   private var isMapSetupCompleted = false
-  
-  private let db = Firestore.firestore()
-  enum tagType: String {
-    case 환경
-    case 유형
-    case 시설
-  }
-  //개선하기
-  private let tagData: [tagType: [String]] = [
-    .환경: ["실내", "실외", "밀폐형", "개방형"],
-    .유형: ["카페", "술집", "피시방", "식당"],
-    .시설: ["재떨이", "의자", "별도 전자담배 구역"]
-  ]
-  //Set 사용 지양하기
-  private var selectedTags: Set<String> = []
-  
-  
   // MARK: Lifecycle
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
-    print("3. 전달받은 좌표 : \(self.markerLat), \(self.markerLng)")
     self.view.backgroundColor = .white
-    self.addSubView()
     self.setup()
+    self.addSubView()
+    
     self.defineFlexContainer()
     
-    // ⭐️ 전달받은 좌표로 지도 카메라를 이동시킵니다.
-       // 이 작업은 뷰가 로드될 때 한 번만 수행하면 충분합니다.
-       guard let lat = markerLat, let lng = markerLng else { return }
-       let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: lat, lng: lng))
-       self.mapView.moveCamera(cameraUpdate)
+    print("3. 전달받은 좌표 : \(self.markerLat), \(self.markerLng)")
+    guard let lat = markerLat, let lng = markerLng else { return }
+    let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: lat, lng: lng))
+    self.mapView.moveCamera(cameraUpdate)
   }
+  
+  
+  // MARK: setup
   
   override func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
@@ -122,24 +124,11 @@ final class MarkerInfoInputViewController: UIViewController, CLLocationManagerDe
     self.contentView.flex.layout(mode: .adjustHeight)
     
     // ⭐️ 마커 이미지 뷰를 mapView의 정중앙에 배치합니다.
-       // x좌표는 mapView의 중앙, y좌표는 mapView의 중앙에서 이미지 높이의 절반만큼 위로 올립니다.
-       // 이렇게 해야 이미지의 하단 중앙(꼭짓점)이 mapView의 정중앙에 위치하게 됩니다.
-       let mapCenter = CGPoint(x: mapView.bounds.midX, y: mapView.bounds.midY)
-       markerCoordinateImageView.center = CGPoint(x: mapCenter.x, y: mapCenter.y - (markerCoordinateImageView.bounds.height / 2))
-
+    // x좌표는 mapView의 중앙, y좌표는 mapView의 중앙에서 이미지 높이의 절반만큼 위로 올립니다.
+    // 이렇게 해야 이미지의 하단 중앙(꼭짓점)이 mapView의 정중앙에 위치하게 됩니다.
+    let mapCenter = CGPoint(x: mapView.bounds.midX, y: mapView.bounds.midY)
+    markerCoordinateImageView.center = CGPoint(x: mapCenter.x, y: mapCenter.y - (markerCoordinateImageView.bounds.height / 2))
   }
-  
-  
-  // MARK: addSubView
-  
-  private func addSubView() {
-    self.view.addSubview(self.scrollView)
-    self.scrollView.addSubview(self.contentView)
-    self.mapView.addSubview(markerCoordinateImageView)
-  }
-  
-  
-  // MARK: Setup
   
   private func setup() {
     self.navigationItem.title = "흡연구역 등록"
@@ -147,11 +136,11 @@ final class MarkerInfoInputViewController: UIViewController, CLLocationManagerDe
     self.mapView.isExclusiveTouch = false
   }
   
-//  private func cameraUpdate(lat: Double, lng: Double) {
-//    print("3. 카메라 이동 좌표 : \(lat), \(lng)")
-//      let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: lat, lng: lng))
-//      self.mapView.moveCamera(cameraUpdate)
-//  }
+  private func addSubView() {
+    self.view.addSubview(self.scrollView)
+    self.scrollView.addSubview(self.contentView)
+    self.mapView.addSubview(markerCoordinateImageView)
+  }
   
   
   // MARK: Layout
