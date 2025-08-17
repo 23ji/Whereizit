@@ -77,6 +77,10 @@ final class MarkerInfoInputViewController: UIViewController, CLLocationManagerDe
   
   var markerLat: Double?
   var markerLng: Double?
+  
+  // ⭐️ 지도 초기 설정이 완료되었는지 확인하는 플래그
+   private var isMapSetupCompleted = false
+  
   private let db = Firestore.firestore()
   enum tagType: String {
     case 환경
@@ -97,11 +101,18 @@ final class MarkerInfoInputViewController: UIViewController, CLLocationManagerDe
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    print("3. 전달받은 좌표 : \(self.markerLat), \(self.markerLng)")
     self.view.backgroundColor = .white
     self.addSubView()
     self.setup()
-    self.cameraUpdate(lat: markerLat!, lng: markerLng!)
     self.defineFlexContainer()
+    
+    // ⭐️ 전달받은 좌표로 지도 카메라를 이동시킵니다.
+       // 이 작업은 뷰가 로드될 때 한 번만 수행하면 충분합니다.
+       guard let lat = markerLat, let lng = markerLng else { return }
+       let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: lat, lng: lng))
+       self.mapView.moveCamera(cameraUpdate)
   }
   
   override func viewDidLayoutSubviews() {
@@ -109,7 +120,13 @@ final class MarkerInfoInputViewController: UIViewController, CLLocationManagerDe
     self.scrollView.pin.all(self.view.pin.safeArea)
     self.contentView.pin.top().horizontally()
     self.contentView.flex.layout(mode: .adjustHeight)
-    self.scrollView.contentSize = contentView.frame.size
+    
+    // ⭐️ 마커 이미지 뷰를 mapView의 정중앙에 배치합니다.
+       // x좌표는 mapView의 중앙, y좌표는 mapView의 중앙에서 이미지 높이의 절반만큼 위로 올립니다.
+       // 이렇게 해야 이미지의 하단 중앙(꼭짓점)이 mapView의 정중앙에 위치하게 됩니다.
+       let mapCenter = CGPoint(x: mapView.bounds.midX, y: mapView.bounds.midY)
+       markerCoordinateImageView.center = CGPoint(x: mapCenter.x, y: mapCenter.y - (markerCoordinateImageView.bounds.height / 2))
+
   }
   
   
@@ -130,12 +147,11 @@ final class MarkerInfoInputViewController: UIViewController, CLLocationManagerDe
     self.mapView.isExclusiveTouch = false
   }
   
-  private var marker = NMFMarker()
-
-  private func cameraUpdate(lat: Double, lng: Double) {
-      let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: lat, lng: lng))
-      self.mapView.moveCamera(cameraUpdate)
-  }
+//  private func cameraUpdate(lat: Double, lng: Double) {
+//    print("3. 카메라 이동 좌표 : \(lat), \(lng)")
+//      let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: lat, lng: lng))
+//      self.mapView.moveCamera(cameraUpdate)
+//  }
   
   
   // MARK: Layout
