@@ -4,6 +4,7 @@
 //
 //  Created by 이상지 on 7/17/25.
 //
+
 import FirebaseCore
 import FirebaseFirestore
 import FlexLayout
@@ -115,7 +116,7 @@ final class MarkerInfoInputViewController: UIViewController, CLLocationManagerDe
     self.defineFlexContainer()
     
     print("3. 전달받은 좌표 : \(self.markerLat), \(self.markerLng)")
-    guard let lat = markerLat, let lng = markerLng else { return }
+    guard let lat = self.markerLat, let lng = self.markerLng else { return }
     let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: lat, lng: lng))
     self.mapView.moveCamera(cameraUpdate)
   }
@@ -125,6 +126,7 @@ final class MarkerInfoInputViewController: UIViewController, CLLocationManagerDe
   
   override func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
+    //아래 두 줄 viewDidLoad로 가야함
     self.scrollView.pin.all(self.view.pin.safeArea)
     self.contentView.pin.top().horizontally()
     self.contentView.flex.layout(mode: .adjustHeight)

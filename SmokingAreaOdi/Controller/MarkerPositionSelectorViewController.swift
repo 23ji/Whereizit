@@ -4,6 +4,7 @@
 //
 //  Created by 이상지 on 7/16/25.
 //
+
 import NMapsMap
 import PinLayout
 import Then
@@ -62,9 +63,9 @@ final class MarkerPositionSelectorViewController: UIViewController, CLLocationMa
   }
   
   private func addSubViews() {
-    self.view.addSubview(mapView)
-    self.view.addSubview(nextButton)
-    self.view.addSubview(markerCoordinateImageView)
+    self.view.addSubview(self.mapView)
+    self.view.addSubview(self.nextButton)
+    self.view.addSubview(self.markerCoordinateImageView)
   }
   
   private func makeConstraints() {
@@ -81,6 +82,7 @@ final class MarkerPositionSelectorViewController: UIViewController, CLLocationMa
       .marginTop(-markerCoordinateImageView.frame.height / 2) // 마커의 높이 절반을 위로 올려 마커 하단 포인트가 화면 중앙에 배치되도록 설정
   }
   
+  //Then으로 바꾸기
   private func configure() {
     // 다음 버튼
     self.nextButton.setTitle("다음", for: .normal) // 타이틀 설정
@@ -137,6 +139,6 @@ final class MarkerPositionSelectorViewController: UIViewController, CLLocationMa
       markerInfoInputVC.markerLat = self?.mapView.cameraPosition.target.lat
       markerInfoInputVC.markerLng = self?.mapView.cameraPosition.target.lng
     })
-    .disposed(by: disposeBag)
+    .disposed(by: self.disposeBag)
   }
 }

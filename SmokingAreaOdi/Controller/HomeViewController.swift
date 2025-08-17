@@ -4,6 +4,7 @@
 //
 //  Created by 이상지 on 7/14/25.
 //
+
 import CoreLocation
 import NMapsMap
 import RxSwift
@@ -14,7 +15,7 @@ import Then
 import UIKit
 
 
-final class HomeViewController: UIViewController, CLLocationManagerDelegate, NMFMapViewCameraDelegate {
+final class HomeViewController: UIViewController {
   
   // MARK: Constant
   
@@ -31,6 +32,9 @@ final class HomeViewController: UIViewController, CLLocationManagerDelegate, NMF
   private let addButton = UIImageView(image: UIImage(named: "plusButton")).then {
     $0.isUserInteractionEnabled = true // 터치 가능하게 꼭 켜야함
   }
+  
+  // MARK: Property
+  
   private let locationManager = CLLocationManager()
   
   private let disposeBag = DisposeBag()
@@ -46,15 +50,13 @@ final class HomeViewController: UIViewController, CLLocationManagerDelegate, NMF
     
     self.setLocationManager()
     
-    self.didTapaddButton()
+    self.bindTapGesture()
   }
   
   
   // MARK: Setup
   
-  private func setup() {
-    self.navigationItem.title = "Home"
-  }
+  private func setup() { self.navigationItem.title = "Home" } //한 줄로 가능하면 한 줄로
   
   private func addSubviews() {
     self.view.addSubview(self.mapView)
@@ -79,32 +81,32 @@ final class HomeViewController: UIViewController, CLLocationManagerDelegate, NMF
   private func setLocationManager() {
     // CLLocationManagerDelegate를 self(HomeViewController)로 설정합니다.
     // 이는 위치 정보가 업데이트되었을 때 locationManager(_:didUpdateLocations:)와 같은 델리게이트 메서드를 호출하게 합니다.
-    locationManager.delegate = self
+    self.locationManager.delegate = self
     
     // 위치 정확도를 '내비게이션에 최적인 정확도'로 설정합니다.
     // 이는 가장 높은 정확도를 요구하며, 배터리 소모가 상대적으로 큽니다.
-    locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
     
     // 위치 업데이트를 받기 위해 필요한 최소 거리를 설정합니다.
     // kCLDistanceFilterNone은 위치가 조금만 변경되어도 업데이트를 받겠다는 의미입니다.
-    locationManager.distanceFilter = kCLDistanceFilterNone
+    self.locationManager.distanceFilter = kCLDistanceFilterNone
     
     // 앱의 활동 유형을 '다른 내비게이션'으로 설정합니다.
     // 이는 위치 업데이트가 어떤 용도로 사용되는지 iOS에 알려주어 시스템이 배터리 소모를 최적화하도록 돕습니다.
     // 자전거, 스쿠터, 기차, 보트, 오프로드 차량 등 도로를 따르지 않거나 따르지 않을 수 있는 활동에 대한 위치를 나타내는 값입니다.
-    locationManager.activityType = .otherNavigation
+    self.locationManager.activityType = .otherNavigation
     
     // 위치 업데이트가 일시적으로 중단될 수 있는지 여부를 설정합니다.
     // false로 설정하면 사용자가 움직이지 않더라도 위치 업데이트를 중단하지 않습니다.
-    locationManager.pausesLocationUpdatesAutomatically = false
+    self.locationManager.pausesLocationUpdatesAutomatically = false
     
     // 사용자에게 '앱 사용 중' 위치 권한을 요청하는 알림창을 띄웁니다.
     // 이 메서드를 호출하기 전에 Info.plist에 'Privacy - Location When In Use Usage Description' 키를 추가해야 합니다.
-    locationManager.requestWhenInUseAuthorization()
+    self.locationManager.requestWhenInUseAuthorization()
     
     // 위치 업데이트를 시작합니다.
     // 이 시점부터 위치가 변경될 때마다 locationManager(_:didUpdateLocations:) 델리게이트 메서드가 호출됩니다.
-    locationManager.startUpdatingLocation()
+    self.locationManager.startUpdatingLocation()
   }
   
   // CLLocationManagerDelegate
@@ -134,8 +136,8 @@ final class HomeViewController: UIViewController, CLLocationManagerDelegate, NMF
   }
   
   
-  //⭐️ 질문
-  private func didTapaddButton() {
+  // RxGesture로 바꿔보기 or UIButton에 이미지 삽입하기 or 이름 명확히
+  private func bindTapGesture() {
     let tapGesture = UITapGestureRecognizer()
     self.addButton.addGestureRecognizer(tapGesture)
     
@@ -144,6 +146,15 @@ final class HomeViewController: UIViewController, CLLocationManagerDelegate, NMF
         let markerPositionSelectorVC = MarkerPositionSelectorViewController()
         self?.navigationController?.pushViewController(markerPositionSelectorVC, animated: true)
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
   }
+}
+
+//extension으로 관련 코드들 분리하기
+extension HomeViewController: CLLocationManagerDelegate {
+  
+}
+
+extension HomeViewController: NMFMapViewCameraDelegate {
+  
 }
