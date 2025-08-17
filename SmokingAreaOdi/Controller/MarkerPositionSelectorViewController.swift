@@ -89,7 +89,7 @@ class MarkerPositionSelectorViewController: UIViewController, CLLocationManagerD
     self.nextButton.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .bold)
     self.nextButton.tintColor = .white
     self.nextButton.backgroundColor = .systemGreen
-    self.nextButton.layer.cornerRadius = 28 // nextButtondml지름 56이라 28이면 완전 원 됨
+    self.nextButton.layer.cornerRadius = Metric.nextButtonHeight / 2 // nextButton의 지름을 반으로 나누면 완전한 원이 됨
     self.nextButton.clipsToBounds = true
     //nextButton 그림자 효과
     self.nextButton.layer.shadowColor = UIColor.black.cgColor
