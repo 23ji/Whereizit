@@ -38,9 +38,6 @@ final class MarkerInfoInputViewController: UIViewController, CLLocationManagerDe
   
   private let db = Firestore.firestore()
   
-  // ⭐️ 지도 초기 설정이 완료되었는지 확인하는 플래그
-  private var isMapSetupCompleted = false
-  
   
   // MARK: UI
   
@@ -50,6 +47,7 @@ final class MarkerInfoInputViewController: UIViewController, CLLocationManagerDe
   private let markerCoordinateImageView = UIImageView(image: UIImage(named: "marker_Pin"))
   private let locationManager = CLLocationManager()
   
+  //이름
   private let nameLabel = UILabel().then {
     $0.text = "흡연구역 이름"
     $0.font = .systemFont(ofSize: Metric.labelFontSize, weight: .bold)
@@ -60,6 +58,7 @@ final class MarkerInfoInputViewController: UIViewController, CLLocationManagerDe
     $0.font = UIFont.systemFont(ofSize: Metric.textfontSize)
   }
   
+  //설명
   private let descriptionLabel = UILabel().then {
     $0.text = "흡연구역 설명"
     $0.font = .systemFont(ofSize: Metric.labelFontSize, weight: .bold)
@@ -74,27 +73,28 @@ final class MarkerInfoInputViewController: UIViewController, CLLocationManagerDe
     $0.font = UIFont.systemFont(ofSize: Metric.textfontSize)
   }
   
+  //환경
+  private let environmentTags = ["실내", "실외", "밀폐형", "개방형"]
   private let environmentLabel = UILabel().then {
     $0.text = "환경"
     $0.font = .systemFont(ofSize: Metric.labelFontSize, weight: .bold)
   }
   
-  let environmentTags = ["실내", "실외", "밀폐형", "개방형"]
-  
+  //유형
+  private let typeTags = ["흡연구역", "카페", "술집", "식당", "노래방", "보드게임 카페", "당구장", "피시방"]
   private let typeLabel = UILabel().then {
     $0.text = "유형"
     $0.font = .systemFont(ofSize: Metric.labelFontSize, weight: .bold)
   }
   
-  let typeTags = ["흡연구역", "카페", "술집", "식당", "노래방", "보드게임 카페", "당구장", "피시방"]
-  
+  //시설
+  private let facilityTags = ["의자", "별도 전자담배 구역", "라이터"]
   private let facilityLabel = UILabel().then {
     $0.text = "시설"
     $0.font = .systemFont(ofSize: Metric.labelFontSize, weight: .bold)
   }
   
-  let facilityTags = ["의자", "별도 전자담배 구역", "라이터"]
-  
+  //저장
   private let saveButton = UIButton(type: .system).then {
     $0.setTitle("저장", for: .normal)
     $0.titleLabel?.font = .boldSystemFont(ofSize: 18)
@@ -130,9 +130,10 @@ final class MarkerInfoInputViewController: UIViewController, CLLocationManagerDe
     self.contentView.flex.layout(mode: .adjustHeight)
     self.scrollView.contentSize = self.contentView.frame.size
     
-    // ⭐️ 마커 이미지 뷰를 mapView의 정중앙에 배치합니다.
-    // x좌표는 mapView의 중앙, y좌표는 mapView의 중앙에서 이미지 높이의 절반만큼 위로 올립니다.
-    // 이렇게 해야 이미지의 하단 중앙(꼭짓점)이 mapView의 정중앙에 위치하게 됩니다.
+    // ⭐️ 마커 이미지 뷰를 mapView의 정중앙에 배치
+    // x좌표는 mapView의 중앙
+    // y좌표는 mapView의 중앙에서, 이미지 높이의 절반만큼 위로 올림
+    // -> 마커의 하단 중앙(꼭짓점)이 mapView의 정중앙에 위치하게 됨
     let mapCenter = CGPoint(x: mapView.bounds.midX, y: mapView.bounds.midY)
     markerCoordinateImageView.center = CGPoint(x: mapCenter.x, y: mapCenter.y - (markerCoordinateImageView.bounds.height / 2))
   }
@@ -159,7 +160,6 @@ final class MarkerInfoInputViewController: UIViewController, CLLocationManagerDe
       .define {
         $0.addItem(self.mapView).height(Metric.mapHeight)
         
-        
         $0.addItem()
           .direction(.column)
           .paddingHorizontal(Metric.horizontalMargin)
@@ -170,6 +170,7 @@ final class MarkerInfoInputViewController: UIViewController, CLLocationManagerDe
             $0.addItem(self.descriptionTextView).height(Metric.textViewHeight).marginBottom(10)
           }
         
+        // 환경
         $0.addItem()
           .direction(.column)
           .paddingHorizontal(Metric.horizontalMargin)
@@ -197,6 +198,7 @@ final class MarkerInfoInputViewController: UIViewController, CLLocationManagerDe
               }
           }
         
+        // 유형
         $0.addItem()
           .direction(.column)
           .paddingHorizontal(Metric.horizontalMargin)
@@ -224,6 +226,7 @@ final class MarkerInfoInputViewController: UIViewController, CLLocationManagerDe
               }
           }
         
+        // 시설
         $0.addItem()
           .direction(.column)
           .paddingHorizontal(Metric.horizontalMargin)
