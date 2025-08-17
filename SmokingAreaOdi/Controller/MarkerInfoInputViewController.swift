@@ -87,6 +87,10 @@ final class MarkerInfoInputViewController: UIViewController, CLLocationManagerDe
     $0.font = UIFont.systemFont(ofSize: Metric.textfontSize)
   }
   
+//  private let environmentLabel = UILabel().then {
+//    $0.text = "환경"
+//    $0.font = .systemFont(ofSize: Metric.labelFontSize, weight: .bold)
+//  }
   
   private let saveButton = UIButton(type: .system).then {
     $0.setTitle("저장", for: .normal)
@@ -122,7 +126,8 @@ final class MarkerInfoInputViewController: UIViewController, CLLocationManagerDe
     self.scrollView.pin.all(self.view.pin.safeArea)
     self.contentView.pin.top().horizontally()
     self.contentView.flex.layout(mode: .adjustHeight)
-    
+    self.scrollView.contentSize = self.contentView.frame.size
+
     // ⭐️ 마커 이미지 뷰를 mapView의 정중앙에 배치합니다.
     // x좌표는 mapView의 중앙, y좌표는 mapView의 중앙에서 이미지 높이의 절반만큼 위로 올립니다.
     // 이렇게 해야 이미지의 하단 중앙(꼭짓점)이 mapView의 정중앙에 위치하게 됩니다.
