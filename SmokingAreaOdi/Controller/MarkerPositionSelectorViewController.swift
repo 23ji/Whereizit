@@ -50,7 +50,6 @@ class MarkerPositionSelectorViewController: UIViewController, CLLocationManagerD
     self.makeConstraints()
     self.configure()
     self.diTapNextButton()
-    print("2. 화면의 중앙 : (\(self.mapView.latitude)   \(self.mapView.longitude))")
   }
 
   
@@ -59,9 +58,6 @@ class MarkerPositionSelectorViewController: UIViewController, CLLocationManagerD
     
     //카메라 델리게이트 등록해야함
     self.mapView.addCameraDelegate(delegate: self)
-    // 마커 기본 속성 (마커는 첫 위치 지정해줘야 나타남)
-    marker.position = self.mapView.cameraPosition.target // 카메라 중앙에 마커 첫 위치 지정
-    marker.mapView = self.mapView //mapView에 올리기
   }
   
   
@@ -100,12 +96,14 @@ class MarkerPositionSelectorViewController: UIViewController, CLLocationManagerD
     
     // 2. 현재 위치의 위도와 경도 추출
     // bestLocation 객체의 coordinate 프로퍼티를 통해 위도(latitude)와 경도(longitude) 값을 추출합니다.
-    self.markerLat = bestLocation.coordinate.latitude
-    self.markerLng = bestLocation.coordinate.longitude
+    let latitude = bestLocation.coordinate.latitude
+    let longitude = bestLocation.coordinate.longitude
     
+    print("2. 사용자의 좌표 : (\(latitude), \(longitude))")
+
     // 3. 지도 뷰를 현재 위치로 이동시키는 메서드 호출
     // 추출한 위도와 경도 값을 사용하여 지도 카메라를 해당 위치로 이동시킵니다.
-    cameraUpdate(lat: self.markerLat!, lng: self.markerLng!)
+    cameraUpdate(lat: latitude, lng: longitude)
   }
   
   
@@ -156,8 +154,8 @@ class MarkerPositionSelectorViewController: UIViewController, CLLocationManagerD
     self.nextButton.rx.tap.subscribe(onNext: { [weak self] in
       let markerInfoInputVC = MarkerInfoInputViewController()
       self?.navigationController?.pushViewController(markerInfoInputVC, animated: true)
-      markerInfoInputVC.markerLat = self?.markerLat
-      markerInfoInputVC.markerLng = self?.markerLng
+      markerInfoInputVC.markerLat = self?.mapView.cameraPosition.target.lat
+      markerInfoInputVC.markerLng = self?.mapView.cameraPosition.target.lng
     })
     .disposed(by: disposeBag)
   }
