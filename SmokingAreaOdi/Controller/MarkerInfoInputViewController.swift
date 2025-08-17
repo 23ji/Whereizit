@@ -40,20 +40,6 @@ final class MarkerInfoInputViewController: UIViewController, CLLocationManagerDe
   // ⭐️ 지도 초기 설정이 완료되었는지 확인하는 플래그
   private var isMapSetupCompleted = false
   
-  enum tagType: String {
-    case 환경
-    case 유형
-    case 시설
-  }
-  //개선하기
-  private let tagData: [tagType: [String]] = [
-    .환경: ["실내", "실외", "밀폐형", "개방형"],
-    .유형: ["카페", "술집", "피시방", "식당"],
-    .시설: ["재떨이", "의자", "별도 전자담배 구역"]
-  ]
-  //Set 사용 지양하기
-  private var selectedTags: Set<String> = []
-  
   
   // MARK: UI
   
@@ -87,10 +73,20 @@ final class MarkerInfoInputViewController: UIViewController, CLLocationManagerDe
     $0.font = UIFont.systemFont(ofSize: Metric.textfontSize)
   }
   
-//  private let environmentLabel = UILabel().then {
-//    $0.text = "환경"
-//    $0.font = .systemFont(ofSize: Metric.labelFontSize, weight: .bold)
-//  }
+  private let environmentLabel = UILabel().then {
+    $0.text = "환경"
+    $0.font = .systemFont(ofSize: Metric.labelFontSize, weight: .bold)
+  }
+  
+  private let environmentTags = UIButton().then {
+    $0.setTitle("실내", for: .normal)
+    $0.titleLabel?.font = .systemFont(ofSize: 14)
+    $0.backgroundColor = .systemGray6
+    $0.setTitleColor(.label, for: .normal)
+    $0.layer.cornerRadius = 15
+    $0.layer.borderWidth = 0.7
+    $0.layer.borderColor = UIColor.systemGray4.cgColor
+  }
   
   private let saveButton = UIButton(type: .system).then {
     $0.setTitle("저장", for: .normal)
@@ -98,7 +94,6 @@ final class MarkerInfoInputViewController: UIViewController, CLLocationManagerDe
     $0.backgroundColor = .systemBlue
     $0.setTitleColor(.white, for: .normal)
     $0.layer.cornerRadius = 8
-    $0.addTarget(MarkerInfoInputViewController.self, action: #selector(saveData), for: .touchUpInside)
   }
   
   
@@ -127,7 +122,7 @@ final class MarkerInfoInputViewController: UIViewController, CLLocationManagerDe
     self.contentView.pin.top().horizontally()
     self.contentView.flex.layout(mode: .adjustHeight)
     self.scrollView.contentSize = self.contentView.frame.size
-
+    
     // ⭐️ 마커 이미지 뷰를 mapView의 정중앙에 배치합니다.
     // x좌표는 mapView의 중앙, y좌표는 mapView의 중앙에서 이미지 높이의 절반만큼 위로 올립니다.
     // 이렇게 해야 이미지의 하단 중앙(꼭짓점)이 mapView의 정중앙에 위치하게 됩니다.
@@ -138,7 +133,7 @@ final class MarkerInfoInputViewController: UIViewController, CLLocationManagerDe
   private func setup() {
     self.navigationItem.title = "흡연구역 등록"
     self.descriptionTextView.delegate = self
-    self.mapView.isExclusiveTouch = false
+    self.mapView.allowsScrolling = false
   }
   
   private func addSubView() {
@@ -166,88 +161,12 @@ final class MarkerInfoInputViewController: UIViewController, CLLocationManagerDe
             $0.addItem(self.nameTextField).height(Metric.textFieldHeight).marginBottom(10)
             $0.addItem(self.descriptionLabel).height(Metric.labelHeight)
             $0.addItem(self.descriptionTextView).height(Metric.textViewHeight).marginBottom(10)
-            
-            for (category, tags) in tagData {
-              let label = UILabel()
-              label.text = category.rawValue
-              label.font = .boldSystemFont(ofSize: Metric.labelFontSize)
-              $0.addItem(label).marginTop(Metric.inPutsMargin).marginBottom(Metric.inPutsMargin)
-              $0.addItem().direction(.row).wrap(.wrap).define { tagFlex in
-                for tag in tags {
-                  let button = tagButton(title: tag)
-                  tagFlex.addItem(button).marginRight(Metric.inPutsMargin).marginBottom(Metric.inPutsMargin)
-                }
-              }
-            }
-            
-            // 저장 버튼
-            $0.addItem(saveButton).height(Metric.saveButtonHeight).marginTop(20).marginBottom(40)
+            $0.addItem(self.environmentLabel).height(Metric.labelHeight)
           }
+        
+        // 저장 버튼
+        $0.addItem(saveButton).height(Metric.saveButtonHeight).marginTop(20).marginBottom(40)
       }
-  }
-  
-  
-  private func tagButton(title: String) -> UIButton {
-    let button = UIButton(type: .system).then {
-      $0.setTitle(title, for: .normal)
-      $0.titleLabel?.font = .systemFont(ofSize: 14)
-      $0.contentEdgeInsets = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
-      $0.layer.cornerRadius = 16
-      $0.layer.borderWidth = 1
-      $0.layer.borderColor = UIColor.systemGray4.cgColor
-      $0.backgroundColor = .systemGray6
-      $0.setTitleColor(.label, for: .normal)
-    }
-    button.addAction(UIAction { [weak self] _ in
-      self?.toggleTagSelection(tag: title, button: button)
-    }, for: .touchUpInside)
-    return button
-  }
-  
-  private func toggleTagSelection(tag: String, button: UIButton) {
-    
-    // 모두 삼항연산자 처리할 방법 찾아보기,,
-    let isSelected = selectedTags.contains(tag)
-    if isSelected {
-      selectedTags.remove(tag)
-    } else {
-      selectedTags.insert(tag)
-    }
-    button.backgroundColor = isSelected ? .systemGray6 : .systemBlue
-    button.setTitleColor(isSelected ? .label : .white, for: .normal)
-    print("선택된 태그: \(selectedTags)")
-  }
-  
-  
-  // MARK: Firebase 저장
-  
-  @objc private func saveData() {
-    guard let markerLat = self.markerLat else { return }
-    
-    guard let markerLng = markerLng,
-          let areaName = self.nameTextField.text, !areaName.isEmpty,
-          let areaDescription = self.descriptionTextView.text, !description.isEmpty else {
-      print("필수값 누락")
-      return
-    }
-    
-    let data: [String: Any] = [
-      "markerLat": markerLat,
-      "markerLng": markerLng,
-      "areaName": areaName,
-      "areaDescription": areaDescription,
-      "tags": Array(selectedTags),
-      "createdAt": Timestamp(date: Date())
-    ]
-    
-    db.collection("smokingAreas").addDocument(data: data) { error in
-      if let error = error {
-        print("저장 실패: \(error.localizedDescription)")
-      } else {
-        print("저장 성공")
-        self.navigationController?.popToRootViewController(animated: true)
-      }
-    }
   }
 }
 
