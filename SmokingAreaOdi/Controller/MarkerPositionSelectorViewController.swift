@@ -12,8 +12,7 @@ import RxSwift
 
 import UIKit
 
-
-class MarkerPositionSelectorViewController: UIViewController, CLLocationManagerDelegate, NMFMapViewCameraDelegate {
+final class MarkerPositionSelectorViewController: UIViewController, CLLocationManagerDelegate, NMFMapViewCameraDelegate {
   
   // MARK: Constant
   
@@ -27,7 +26,6 @@ class MarkerPositionSelectorViewController: UIViewController, CLLocationManagerD
   //MARK: UI
   
   private let mapView = NMFMapView()
-  private let marker = NMFMarker()
   private let nextButton = UIButton()
   private let markerCoordinateImageView = UIImageView(image: UIImage(named: "marker_Pin"))
   
@@ -84,6 +82,7 @@ class MarkerPositionSelectorViewController: UIViewController, CLLocationManagerD
   }
   
   private func configure() {
+    // 다음 버튼
     self.nextButton.setTitle("다음", for: .normal) // 타이틀 설정
     self.nextButton.setTitleColor(.white, for: .normal) // 텍스트 색상 설정
     self.nextButton.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .bold)
@@ -91,13 +90,12 @@ class MarkerPositionSelectorViewController: UIViewController, CLLocationManagerD
     self.nextButton.backgroundColor = .systemGreen
     self.nextButton.layer.cornerRadius = Metric.nextButtonHeight / 2 // nextButton의 지름을 반으로 나누면 완전한 원이 됨
     self.nextButton.clipsToBounds = true
-    //nextButton 그림자 효과
     self.nextButton.layer.shadowColor = UIColor.black.cgColor
     self.nextButton.layer.shadowOpacity = 0.3
     self.nextButton.layer.shadowOffset = CGSize(width: 0, height: 3)
     self.nextButton.layer.shadowRadius = 4
     
-    //markerCoordinateImageView 그림자 효과
+    // 마커 이미지 뷰
     self.markerCoordinateImageView.layer.shadowColor = UIColor.black.cgColor
     self.markerCoordinateImageView.layer.shadowOpacity = 0.3
     self.markerCoordinateImageView.layer.shadowOffset = CGSize(width: 0, height: 3)
