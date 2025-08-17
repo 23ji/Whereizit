@@ -24,6 +24,7 @@ class MarkerPositionSelectorViewController: UIViewController, CLLocationManagerD
     static let nextButtonBottom: CGFloat = 40
   }
   
+  
   //MARK: UI
   
   private let mapView = NMFMapView() // 현재 위치로 초기 로케이션 세팅
@@ -34,6 +35,13 @@ class MarkerPositionSelectorViewController: UIViewController, CLLocationManagerD
   
   private var disposeBag = DisposeBag()
   
+
+  //MARK: Properties
+  
+  var markerLat: Double?
+  var markerLng: Double?
+  
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     self.setUI()
@@ -41,8 +49,8 @@ class MarkerPositionSelectorViewController: UIViewController, CLLocationManagerD
     self.setLocationManager()
     self.makeConstraints()
     self.configure()
+    self.diTapNextButton()
     print("2. 화면의 중앙 : (\(self.mapView.latitude)   \(self.mapView.longitude))")
-    self.nextButton.addTarget(self, action: #selector(didTapNextButton), for: .touchUpInside)
   }
 
   
@@ -83,21 +91,23 @@ class MarkerPositionSelectorViewController: UIViewController, CLLocationManagerD
   }
 
   // CLLocationManagerDelegate
+  // 새로운 위치 데이터가 업데이트될 때 호출되는 델리게이트 메서드입니다.
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-      // 가장 최근의 위치 정보를 가져옵니다.
-      guard let location = locations.last else { return }
-
-      // 위치 정보의 수평 정확도(horizontalAccuracy)가 10미터보다 작을 때(높을 때)만 처리합니다.
-      // 0보다 작은 값은 유효하지 않은 정확도를 의미합니다.
-      if location.horizontalAccuracy > 0 && location.horizontalAccuracy <= 10 {
-          print("정확도: \(location.horizontalAccuracy)m")
-          cameraUpdate(lat: location.coordinate.latitude, lng: location.coordinate.longitude)
-          
-          // 원하는 정확도에 도달하면 위치 업데이트를 중지합니다.
-          // 불필요한 배터리 소모를 막는 효과적인 방법입니다.
-          locationManager.stopUpdatingLocation()
-      }
+    // 1. locations 배열에서 가장 최근 위치 정보 가져오기
+    // locations 배열에는 여러 위치 정보가 포함될 수 있으며, 가장 마지막에 있는 요소가 최신 위치입니다.
+    // guard let을 사용하여 bestLocation이 nil일 경우 함수를 즉시 종료합니다.
+    guard let bestLocation = locations.last else { return }
+    
+    // 2. 현재 위치의 위도와 경도 추출
+    // bestLocation 객체의 coordinate 프로퍼티를 통해 위도(latitude)와 경도(longitude) 값을 추출합니다.
+    self.markerLat = bestLocation.coordinate.latitude
+    self.markerLng = bestLocation.coordinate.longitude
+    
+    // 3. 지도 뷰를 현재 위치로 이동시키는 메서드 호출
+    // 추출한 위도와 경도 값을 사용하여 지도 카메라를 해당 위치로 이동시킵니다.
+    cameraUpdate(lat: self.markerLat!, lng: self.markerLng!)
   }
+  
   
   private func cameraUpdate(lat: Double, lng: Double) {
     let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: lat, lng: lng))
@@ -142,13 +152,13 @@ class MarkerPositionSelectorViewController: UIViewController, CLLocationManagerD
     self.markerCoordinateImageView.layer.shadowRadius = 4
     }
   
-  
-  @objc private func didTapNextButton() {
-    let markerInfoInputVC = MarkerInfoInputViewController()
-    navigationController?.pushViewController(markerInfoInputVC, animated: true)
-    
-    let center = self.mapView.cameraPosition.target
-    markerInfoInputVC.areaLat = center.lat
-    markerInfoInputVC.areaLng = center.lng
+  private func diTapNextButton() {
+    self.nextButton.rx.tap.subscribe(onNext: { [weak self] in
+      let markerInfoInputVC = MarkerInfoInputViewController()
+      self?.navigationController?.pushViewController(markerInfoInputVC, animated: true)
+      markerInfoInputVC.markerLat = self?.markerLat
+      markerInfoInputVC.markerLng = self?.markerLng
+    })
+    .disposed(by: disposeBag)
   }
 }
