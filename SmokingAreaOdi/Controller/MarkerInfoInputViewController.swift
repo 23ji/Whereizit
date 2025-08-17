@@ -75,8 +75,8 @@ final class MarkerInfoInputViewController: UIViewController, CLLocationManagerDe
   
   // MARK: Properties
   
-  var areaLat: Double?
-  var areaLng: Double?
+  var markerLat: Double?
+  var markerLng: Double?
   private let db = Firestore.firestore()
   enum tagType: String {
     case 환경
@@ -100,7 +100,7 @@ final class MarkerInfoInputViewController: UIViewController, CLLocationManagerDe
     self.view.backgroundColor = .white
     self.addSubView()
     self.setup()
-    self.cameraUpdate(lat: Double(areaLat!), lng: Double(areaLng!))
+    //self.cameraUpdate(lat: Double(areaLat!), lng: Double(areaLng!))
     self.defineFlexContainer()
   }
   
@@ -257,9 +257,9 @@ final class MarkerInfoInputViewController: UIViewController, CLLocationManagerDe
   // MARK: Firebase 저장
   
   @objc private func saveData() {
-    guard let areaLat = self.areaLat else { return }
+    guard let markerLat = self.markerLat else { return }
     
-    guard let areaLng = areaLng,
+    guard let manerLng = markerLng,
           let areaName = self.nameTextField.text, !areaName.isEmpty,
           let areaDescription = self.descriptionTextView.text, !description.isEmpty else {
       print("필수값 누락")
@@ -267,8 +267,8 @@ final class MarkerInfoInputViewController: UIViewController, CLLocationManagerDe
     }
     
     let data: [String: Any] = [
-      "areaLat": areaLat,
-      "areaLng": areaLng,
+      "markerLat": markerLat,
+      "markerLng": markerLng,
       "areaName": areaName,
       "areaDescription": areaDescription,
       "tags": Array(selectedTags),
