@@ -24,6 +24,7 @@ final class MarkerInfoInputViewController: UIViewController, CLLocationManagerDe
     static let textfontSize: CGFloat = 16
     static let textFieldHeight: CGFloat = 40
     static let textViewHeight: CGFloat = 80
+    static let tagButtonHeight: CGFloat = 40
     static let horizontalMargin: CGFloat = 20
     static let inPutsMargin: CGFloat = 10
     static let saveButtonHeight: CGFloat = 50
@@ -78,15 +79,21 @@ final class MarkerInfoInputViewController: UIViewController, CLLocationManagerDe
     $0.font = .systemFont(ofSize: Metric.labelFontSize, weight: .bold)
   }
   
-  private let environmentTags = UIButton().then {
-    $0.setTitle("실내", for: .normal)
-    $0.titleLabel?.font = .systemFont(ofSize: 14)
-    $0.backgroundColor = .systemGray6
-    $0.setTitleColor(.label, for: .normal)
-    $0.layer.cornerRadius = 15
-    $0.layer.borderWidth = 0.7
-    $0.layer.borderColor = UIColor.systemGray4.cgColor
+  let environmentTags = ["실내", "실외", "밀폐형", "개방형"]
+  
+  private let typeLabel = UILabel().then {
+    $0.text = "유형"
+    $0.font = .systemFont(ofSize: Metric.labelFontSize, weight: .bold)
   }
+  
+  let typeTags = ["흡연구역", "카페", "술집", "식당", "노래방", "보드게임 카페", "당구장", "피시방"]
+  
+  private let facilityLabel = UILabel().then {
+    $0.text = "시설"
+    $0.font = .systemFont(ofSize: Metric.labelFontSize, weight: .bold)
+  }
+  
+  let facilityTags = ["의자", "별도 전자담배 구역", "라이터"]
   
   private let saveButton = UIButton(type: .system).then {
     $0.setTitle("저장", for: .normal)
@@ -161,11 +168,91 @@ final class MarkerInfoInputViewController: UIViewController, CLLocationManagerDe
             $0.addItem(self.nameTextField).height(Metric.textFieldHeight).marginBottom(10)
             $0.addItem(self.descriptionLabel).height(Metric.labelHeight)
             $0.addItem(self.descriptionTextView).height(Metric.textViewHeight).marginBottom(10)
+          }
+        
+        $0.addItem()
+          .direction(.column)
+          .paddingHorizontal(Metric.horizontalMargin)
+          .define {
             $0.addItem(self.environmentLabel).height(Metric.labelHeight)
+            
+            $0.addItem()
+              .direction(.row)
+              .wrap(.wrap)
+              .define {
+                for tag in self.environmentTags {
+                  let environmentTag = UIButton().then {
+                    $0.setTitle(tag, for: .normal)
+                    $0.titleLabel?.font = .systemFont(ofSize: 14)
+                    $0.backgroundColor = .systemGray6
+                    $0.setTitleColor(.label, for: .normal)
+                    $0.layer.cornerRadius = 15
+                    $0.layer.borderWidth = 0.7
+                    $0.layer.borderColor = UIColor.systemGray4.cgColor
+                    $0.contentEdgeInsets = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
+                    $0.sizeToFit()
+                  }
+                  $0.addItem(environmentTag).height(Metric.tagButtonHeight).margin(0, 0, 10, 10)
+                }
+              }
+          }
+        
+        $0.addItem()
+          .direction(.column)
+          .paddingHorizontal(Metric.horizontalMargin)
+          .define {
+            $0.addItem(self.typeLabel).height(Metric.labelHeight)
+            
+            $0.addItem()
+              .direction(.row)
+              .wrap(.wrap)
+              .define {
+                for tag in self.typeTags {
+                  let typeTag = UIButton().then {
+                    $0.setTitle(tag, for: .normal)
+                    $0.titleLabel?.font = .systemFont(ofSize: 14)
+                    $0.backgroundColor = .systemGray6
+                    $0.setTitleColor(.label, for: .normal)
+                    $0.layer.cornerRadius = 15
+                    $0.layer.borderWidth = 0.7
+                    $0.layer.borderColor = UIColor.systemGray4.cgColor
+                    $0.contentEdgeInsets = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
+                    $0.sizeToFit()
+                  }
+                  $0.addItem(typeTag).height(Metric.tagButtonHeight).margin(0, 0, 10, 10)
+                }
+              }
+          }
+        
+        $0.addItem()
+          .direction(.column)
+          .paddingHorizontal(Metric.horizontalMargin)
+          .define {
+            $0.addItem(self.facilityLabel).height(Metric.labelHeight)
+            
+            $0.addItem()
+              .direction(.row)
+              .wrap(.wrap)
+              .define {
+                for tag in self.facilityTags {
+                  let facilityTag = UIButton().then {
+                    $0.setTitle(tag, for: .normal)
+                    $0.titleLabel?.font = .systemFont(ofSize: 14)
+                    $0.backgroundColor = .systemGray6
+                    $0.setTitleColor(.label, for: .normal)
+                    $0.layer.cornerRadius = 15
+                    $0.layer.borderWidth = 0.7
+                    $0.layer.borderColor = UIColor.systemGray4.cgColor
+                    $0.contentEdgeInsets = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
+                    $0.sizeToFit()
+                  }
+                  $0.addItem(facilityTag).height(Metric.tagButtonHeight).margin(0, 0, 10, 10)
+                }
+              }
           }
         
         // 저장 버튼
-        $0.addItem(saveButton).height(Metric.saveButtonHeight).marginTop(20).marginBottom(40)
+        $0.addItem(saveButton).height(Metric.saveButtonHeight).margin(Metric.horizontalMargin)
       }
   }
 }
