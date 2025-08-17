@@ -96,6 +96,8 @@ final class HomeViewController: UIViewController, CLLocationManagerDelegate, NMF
     let latitude = bestLocation.coordinate.latitude
     let longitude = bestLocation.coordinate.longitude
     
+    print("1. 사용자의 위치 : (\(latitude)   \(longitude))")
+
     // 3. 지도 뷰를 현재 위치로 이동시키는 메서드 호출
     // 추출한 위도와 경도 값을 사용하여 지도 카메라를 해당 위치로 이동시킵니다.
     cameraUpdate(lat: latitude, lng: longitude)
