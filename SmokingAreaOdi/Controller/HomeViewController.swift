@@ -20,7 +20,6 @@ final class HomeViewController: UIViewController {
   // MARK: Constant
   
   private enum Metric {
-    static let addButtonSize: CGFloat = 56
     static let addButtonTrailing: CGFloat = 24
     static let addButtonBottom: CGFloat = 40
   }
@@ -29,8 +28,8 @@ final class HomeViewController: UIViewController {
   // MARK: UI
   
   private let mapView = NMFMapView()
-  private let addButton = UIImageView(image: UIImage(named: "plusButton")).then {
-    $0.isUserInteractionEnabled = true // 터치 가능하게 꼭 켜야함
+  private let addButton = UIButton().then {
+    $0.setImage(UIImage(named: "plusButton"), for: .normal)
   }
   
   // MARK: Property
@@ -68,8 +67,7 @@ final class HomeViewController: UIViewController {
       $0.edges.equalToSuperview()
     }
     
-    self.addButton.snp.makeConstraints{
-      $0.size.equalTo(Metric.addButtonSize)
+    self.addButton.snp.makeConstraints {
       $0.trailing.equalToSuperview().inset(Metric.addButtonTrailing)
       $0.bottom.equalToSuperview().inset(Metric.addButtonBottom)
     }
