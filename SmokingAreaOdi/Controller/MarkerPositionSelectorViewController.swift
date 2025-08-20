@@ -27,8 +27,25 @@ final class MarkerPositionSelectorViewController: UIViewController, CLLocationMa
   //MARK: UI
   
   private let mapView = NMFMapView()
-  private let nextButton = UIButton()
-  private let markerCoordinateImageView = UIImageView(image: UIImage(named: "marker_Pin"))
+  private let nextButton = UIButton().then {
+    $0.setTitle("다음", for: .normal) // 타이틀 설정
+    $0.setTitleColor(.white, for: .normal) // 텍스트 색상 설정
+    $0.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+    $0.tintColor = .white
+    $0.backgroundColor = .systemGreen
+    $0.layer.cornerRadius = Metric.nextButtonHeight / 2 // nextButton의 지름을 반으로 나누면 완전한 원이 됨
+    $0.clipsToBounds = true
+    $0.layer.shadowColor = UIColor.black.cgColor
+    $0.layer.shadowOpacity = 0.3
+    $0.layer.shadowOffset = CGSize(width: 0, height: 3)
+    $0.layer.shadowRadius = 4
+  }
+  private let markerCoordinateImageView = UIImageView(image: UIImage(named: "marker_Pin")).then {
+    $0.layer.shadowColor = UIColor.black.cgColor
+    $0.layer.shadowOpacity = 0.3
+    $0.layer.shadowOffset = CGSize(width: 0, height: 3)
+    $0.layer.shadowRadius = 4
+  }
   
   private let locationManager = CLLocationManager()
   
@@ -48,7 +65,6 @@ final class MarkerPositionSelectorViewController: UIViewController, CLLocationMa
     self.setup()
     self.addSubViews()
     self.makeConstraints()
-    self.configure()
     
     self.setLocationManager()
     
@@ -79,29 +95,8 @@ final class MarkerPositionSelectorViewController: UIViewController, CLLocationMa
     
     self.markerCoordinateImageView.pin
       .center()
-      .marginTop(-markerCoordinateImageView.frame.height / 2) // 마커의 높이 절반을 위로 올려 마커 하단 포인트가 화면 중앙에 배치되도록 설정
-  }
-  
-  //Then으로 바꾸기
-  private func configure() {
-    // 다음 버튼
-    self.nextButton.setTitle("다음", for: .normal) // 타이틀 설정
-    self.nextButton.setTitleColor(.white, for: .normal) // 텍스트 색상 설정
-    self.nextButton.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .bold)
-    self.nextButton.tintColor = .white
-    self.nextButton.backgroundColor = .systemGreen
-    self.nextButton.layer.cornerRadius = Metric.nextButtonHeight / 2 // nextButton의 지름을 반으로 나누면 완전한 원이 됨
-    self.nextButton.clipsToBounds = true
-    self.nextButton.layer.shadowColor = UIColor.black.cgColor
-    self.nextButton.layer.shadowOpacity = 0.3
-    self.nextButton.layer.shadowOffset = CGSize(width: 0, height: 3)
-    self.nextButton.layer.shadowRadius = 4
-    
-    // 마커 이미지 뷰
-    self.markerCoordinateImageView.layer.shadowColor = UIColor.black.cgColor
-    self.markerCoordinateImageView.layer.shadowOpacity = 0.3
-    self.markerCoordinateImageView.layer.shadowOffset = CGSize(width: 0, height: 3)
-    self.markerCoordinateImageView.layer.shadowRadius = 4
+      .marginTop(-markerCoordinateImageView.frame.height / 2)
+      // 마커의 높이 절반을 위로 올려 마커 하단 포인트가 화면 중앙에 배치되도록 설정
   }
   
   
