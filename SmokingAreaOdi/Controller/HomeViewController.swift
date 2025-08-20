@@ -49,7 +49,7 @@ final class HomeViewController: UIViewController {
     
     self.setLocationManager()
     
-    self.bindTapGesture()
+    self.didTapAddButton()
   }
   
   
@@ -134,17 +134,12 @@ final class HomeViewController: UIViewController {
   }
   
   
-  // RxGesture로 바꿔보기 or UIButton에 이미지 삽입하기 or 이름 명확히
-  private func bindTapGesture() {
-    let tapGesture = UITapGestureRecognizer()
-    self.addButton.addGestureRecognizer(tapGesture)
-    
-    tapGesture.rx.event
-      .bind(onNext: { [weak self] _ in
-        let markerPositionSelectorVC = MarkerPositionSelectorViewController()
-        self?.navigationController?.pushViewController(markerPositionSelectorVC, animated: true)
-      })
-      .disposed(by: self.disposeBag)
+  private func didTapAddButton() {
+    self.addButton.rx.tap.subscribe(onNext : { [weak self] in
+      let markerPositionSeletorVC = MarkerPositionSelectorViewController()
+      self?.navigationController?.pushViewController(markerPositionSeletorVC, animated: true)
+    })
+    .disposed(by: self.disposeBag)
   }
 }
 
