@@ -77,10 +77,11 @@ final class HomeViewController: UIViewController {
   // MARK: Action
   
   private func didTapAddButton() {
-    self.addButton.rx.tap.subscribe(onNext : { [weak self] in
-      let markerPositionSeletorVC = MarkerPositionSelectorViewController()
-      self?.navigationController?.pushViewController(markerPositionSeletorVC, animated: true)
-    })
+    self.addButton.rx.tap.subscribe(
+      onNext : { [weak self] in
+        let markerPositionSeletorVC = MarkerPositionSelectorViewController()
+        self?.navigationController?.pushViewController(markerPositionSeletorVC, animated: true)
+      })
     .disposed(by: self.disposeBag)
   }
 }
@@ -112,11 +113,11 @@ extension HomeViewController: CLLocationManagerDelegate {
     print("1. 사용자의 위치 : (\(userLat), \(userLng))")
     
     // 3. 지도 뷰를 현재 위치로 이동시키는 메서드 호출
-    cameraUpdate(lat: userLat, lng: userLng)
-    
-    func cameraUpdate(lat: Double, lng: Double) {
-      let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: lat, lng: lng))
-      self.mapView.moveCamera(cameraUpdate)
-    }
+    self.cameraUpdate(lat: userLat, lng: userLng)
+  }
+  
+  private func cameraUpdate(lat: Double, lng: Double) {
+    let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: lat, lng: lng))
+    self.mapView.moveCamera(cameraUpdate)
   }
 }

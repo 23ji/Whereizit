@@ -13,7 +13,7 @@ import RxSwift
 
 import UIKit
 
-final class MarkerPositionSelectorViewController: UIViewController, CLLocationManagerDelegate, NMFMapViewCameraDelegate {
+final class MarkerPositionSelectorViewController: UIViewController {
   
   // MARK: Constant
   
@@ -28,8 +28,8 @@ final class MarkerPositionSelectorViewController: UIViewController, CLLocationMa
   
   private let mapView = NMFMapView()
   private let nextButton = UIButton().then {
-    $0.setTitle("다음", for: .normal) // 타이틀 설정
-    $0.setTitleColor(.white, for: .normal) // 텍스트 색상 설정
+    $0.setTitle("다음", for: .normal)
+    $0.setTitleColor(.white, for: .normal)
     $0.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .bold)
     $0.tintColor = .white
     $0.backgroundColor = .systemGreen
@@ -96,12 +96,25 @@ final class MarkerPositionSelectorViewController: UIViewController, CLLocationMa
     self.markerCoordinateImageView.pin
       .center()
       .marginTop(-markerCoordinateImageView.frame.height / 2)
-      // 마커의 높이 절반을 위로 올려 마커 하단 포인트가 화면 중앙에 배치되도록 설정
+    // 마커의 높이 절반을 위로 올려 마커 하단 포인트가 화면 중앙에 배치되도록 설정
   }
   
-  
-  // MARK: Location
-  
+  private func diTapNextButton() {
+    self.nextButton.rx.tap.subscribe(
+      onNext: { [weak self] in
+        let markerInfoInputVC = MarkerInfoInputViewController()
+        self?.navigationController?.pushViewController(markerInfoInputVC, animated: true)
+        markerInfoInputVC.markerLat = self?.mapView.cameraPosition.target.lat
+        markerInfoInputVC.markerLng = self?.mapView.cameraPosition.target.lng
+      })
+    .disposed(by: self.disposeBag)
+  }
+}
+
+
+// MARK: Location
+
+extension MarkerPositionSelectorViewController : CLLocationManagerDelegate {
   private func setLocationManager() {
     self.locationManager.delegate = self
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
@@ -118,22 +131,11 @@ final class MarkerPositionSelectorViewController: UIViewController, CLLocationMa
     
     print("2. 사용자의 좌표 : (\(latitude), \(longitude))")
     
-    cameraUpdate(lat: latitude, lng: longitude)
+    self.cameraUpdate(lat: latitude, lng: longitude)
   }
   
   private func cameraUpdate(lat: Double, lng: Double) {
     let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: lat, lng: lng))
     self.mapView.moveCamera(cameraUpdate)
-  }
-  
-  
-  private func diTapNextButton() {
-    self.nextButton.rx.tap.subscribe(onNext: { [weak self] in
-      let markerInfoInputVC = MarkerInfoInputViewController()
-      self?.navigationController?.pushViewController(markerInfoInputVC, animated: true)
-      markerInfoInputVC.markerLat = self?.mapView.cameraPosition.target.lat
-      markerInfoInputVC.markerLng = self?.mapView.cameraPosition.target.lng
-    })
-    .disposed(by: self.disposeBag)
   }
 }
