@@ -14,7 +14,7 @@ import Then
 
 import UIKit
 
-final class MarkerInfoInputViewController: UIViewController, CLLocationManagerDelegate, NMFMapViewCameraDelegate {
+final class MarkerInfoInputViewController: UIViewController {
   
   // MARK: Constant
   
@@ -46,7 +46,6 @@ final class MarkerInfoInputViewController: UIViewController, CLLocationManagerDe
   private let contentView = UIView()
   private let mapView = NMFMapView()
   private let markerCoordinateImageView = UIImageView(image: UIImage(named: "marker_Pin"))
-  private let locationManager = CLLocationManager()
   
   //이름
   private let nameLabel = UILabel().then {
@@ -109,9 +108,12 @@ final class MarkerInfoInputViewController: UIViewController, CLLocationManagerDe
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    
     self.view.backgroundColor = .white
-    self.setup()
+    self.setupUI()
     self.addSubView()
+    self.scrollView.pin.all(self.view.pin.safeArea)
+    self.contentView.pin.top().horizontally()
     
     self.defineFlexContainer()
     
@@ -126,21 +128,15 @@ final class MarkerInfoInputViewController: UIViewController, CLLocationManagerDe
   
   override func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
-    //아래 두 줄 viewDidLoad로 가야함
-    self.scrollView.pin.all(self.view.pin.safeArea)
-    self.contentView.pin.top().horizontally()
+    
     self.contentView.flex.layout(mode: .adjustHeight)
     self.scrollView.contentSize = self.contentView.frame.size
-    
-    // ⭐️ 마커 이미지 뷰를 mapView의 정중앙에 배치
-    // x좌표는 mapView의 중앙
-    // y좌표는 mapView의 중앙에서, 이미지 높이의 절반만큼 위로 올림
-    // -> 마커의 하단 중앙(꼭짓점)이 mapView의 정중앙에 위치하게 됨
+
     let mapCenter = CGPoint(x: mapView.bounds.midX, y: mapView.bounds.midY)
     markerCoordinateImageView.center = CGPoint(x: mapCenter.x, y: mapCenter.y - (markerCoordinateImageView.bounds.height / 2))
   }
   
-  private func setup() {
+  private func setupUI() {
     self.navigationItem.title = "흡연구역 등록"
     self.descriptionTextView.delegate = self
     self.mapView.allowsScrolling = false
@@ -149,7 +145,7 @@ final class MarkerInfoInputViewController: UIViewController, CLLocationManagerDe
   private func addSubView() {
     self.view.addSubview(self.scrollView)
     self.scrollView.addSubview(self.contentView)
-    self.mapView.addSubview(markerCoordinateImageView)
+    self.mapView.addSubview(self.markerCoordinateImageView)
   }
   
   
@@ -255,7 +251,6 @@ final class MarkerInfoInputViewController: UIViewController, CLLocationManagerDe
                 }
               }
           }
-        
         // 저장 버튼
         $0.addItem(saveButton).height(Metric.saveButtonHeight).margin(Metric.horizontalMargin)
       }
