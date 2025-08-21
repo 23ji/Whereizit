@@ -255,6 +255,11 @@ final class MarkerInfoInputViewController: UIViewController {
         $0.addItem(saveButton).height(Metric.saveButtonHeight).margin(Metric.horizontalMargin)
       }
   }
+  
+  private func makeTagSection(title: String, tags: [String]) -> UIView {
+    
+    return UIView()
+  }
 }
 
 
