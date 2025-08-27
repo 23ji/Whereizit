@@ -10,6 +10,8 @@ import FirebaseFirestore
 import FlexLayout
 import IQKeyboardManagerSwift
 import NMapsMap
+import RxSwift
+import RxCocoa
 import Then
 
 import UIKit
@@ -36,8 +38,11 @@ final class MarkerInfoInputViewController: UIViewController {
   
   var markerLat: Double?
   var markerLng: Double?
+  var tagSelected: Bool = false
   
   private let db = Firestore.firestore()
+  
+  let disposeBag = DisposeBag()
   
   
   // MARK: UI
@@ -191,6 +196,12 @@ final class MarkerInfoInputViewController: UIViewController {
                 $0.contentEdgeInsets = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
                 $0.sizeToFit()
               }
+              
+              // Tap Event
+              tagButton.rx.tap.bind { [weak self] in
+                self?.onTapButton(tagButton: tagButton)
+              }.disposed(by: disposeBag)
+              
               flex.addItem(tagButton)
                 .height(Metric.tagButtonHeight)
                 .margin(0, 0, 10, 10)
@@ -198,6 +209,13 @@ final class MarkerInfoInputViewController: UIViewController {
           }
       }
     return container
+  }
+  
+  private func onTapButton(tagButton: UIButton) {
+    print("onTapButton")
+    self.tagSelected.toggle()
+    
+    tagButton.backgroundColor = self.tagSelected ? .blue : .gray
   }
 }
 
