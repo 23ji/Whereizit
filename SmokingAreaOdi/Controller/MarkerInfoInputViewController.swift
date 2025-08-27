@@ -39,6 +39,9 @@ final class MarkerInfoInputViewController: UIViewController {
   var markerLat: Double?
   var markerLng: Double?
   var tagSelected: Bool = false
+  var selectedEnvironmentTags: [String] = []
+  var selectedTypeTags: [String] = []
+  var selectedFacilityTags: [String] = []
   
   private let db = Firestore.firestore()
   
@@ -199,7 +202,7 @@ final class MarkerInfoInputViewController: UIViewController {
               
               // Tap Event
               tagButton.rx.tap.bind { [weak self] in
-                self?.onTapButton(tagButton: tagButton)
+                self?.onTapButton(tagButton)
               }.disposed(by: disposeBag)
               
               flex.addItem(tagButton)
@@ -211,11 +214,45 @@ final class MarkerInfoInputViewController: UIViewController {
     return container
   }
   
-  private func onTapButton(tagButton: UIButton) {
-    print("onTapButton")
-    self.tagSelected.toggle()
+  
+  // MARK: Button Actions
+
+  private func onTapButton(_ sender: UIButton) {
+    // 선택에 따른 토글 변경
+    sender.isSelected.toggle()
+    // 버튼 외관 업데이트 함수
+    self.updateButtonAppearance(sender)
+    // 해당 배열 업데이트 함수
     
-    tagButton.backgroundColor = self.tagSelected ? .gray : .systemGray6
+    // 프린트로 디버깅
+  }
+  
+  // 버튼 외관 업데이트 함수
+  private func updateButtonAppearance(_ button: UIButton) {
+    // true일 때
+      // 배경 진하게
+    // false 일 때
+      // 배경 원래 색상
+    button.backgroundColor = button.isSelected ? .gray : .systemGray6
+  }
+  
+  
+  // 해당 배열 업데이트 함수
+  private func updateSeletedTags(_ button: UIButton) {
+    // 환경 태그일 때
+      // 해당 배열 업데이트 함수
+    // 유형 태그일 때
+      // 해당 배열 업데이트 함수
+    // 시설 태그일 때
+      // 해당 배열 업데이트 함수
+  }
+  
+  // 해당 배열 업데이트 함수
+  private func updateTag() {
+    // 배열에 해당 값이 있다면
+      // 해당 배열에서 값 빼기
+    // 있으면
+      // 넣기
   }
 }
 
