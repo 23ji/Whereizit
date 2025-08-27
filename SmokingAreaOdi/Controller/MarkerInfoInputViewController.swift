@@ -215,7 +215,7 @@ final class MarkerInfoInputViewController: UIViewController {
     print("onTapButton")
     self.tagSelected.toggle()
     
-    tagButton.backgroundColor = self.tagSelected ? .blue : .gray
+    tagButton.backgroundColor = self.tagSelected ? .gray : .systemGray6
   }
 }
 
