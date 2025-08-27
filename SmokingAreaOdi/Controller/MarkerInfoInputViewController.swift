@@ -47,7 +47,7 @@ final class MarkerInfoInputViewController: UIViewController {
   private let mapView = NMFMapView()
   private let markerCoordinateImageView = UIImageView(image: UIImage(named: "marker_Pin"))
   
-  //이름
+  // 이름
   private let nameLabel = UILabel().then {
     $0.text = "흡연구역 이름"
     $0.font = .systemFont(ofSize: Metric.labelFontSize, weight: .bold)
@@ -58,7 +58,7 @@ final class MarkerInfoInputViewController: UIViewController {
     $0.font = UIFont.systemFont(ofSize: Metric.textfontSize)
   }
   
-  //설명
+  // 설명
   private let descriptionLabel = UILabel().then {
     $0.text = "흡연구역 설명"
     $0.font = .systemFont(ofSize: Metric.labelFontSize, weight: .bold)
@@ -73,28 +73,12 @@ final class MarkerInfoInputViewController: UIViewController {
     $0.font = UIFont.systemFont(ofSize: Metric.textfontSize)
   }
   
-  //환경
+  // 태그들
   private let environmentTags = ["실내", "실외", "밀폐형", "개방형"]
-  private let environmentLabel = UILabel().then {
-    $0.text = "환경"
-    $0.font = .systemFont(ofSize: Metric.labelFontSize, weight: .bold)
-  }
-  
-  //유형
   private let typeTags = ["흡연구역", "카페", "술집", "식당", "노래방", "보드게임 카페", "당구장", "피시방"]
-  private let typeLabel = UILabel().then {
-    $0.text = "유형"
-    $0.font = .systemFont(ofSize: Metric.labelFontSize, weight: .bold)
-  }
-  
-  //시설
   private let facilityTags = ["의자", "별도 전자담배 구역", "라이터"]
-  private let facilityLabel = UILabel().then {
-    $0.text = "시설"
-    $0.font = .systemFont(ofSize: Metric.labelFontSize, weight: .bold)
-  }
   
-  //저장
+  // 저장 버튼
   private let saveButton = UIButton(type: .system).then {
     $0.setTitle("저장", for: .normal)
     $0.titleLabel?.font = .boldSystemFont(ofSize: 18)
@@ -131,7 +115,7 @@ final class MarkerInfoInputViewController: UIViewController {
     
     self.contentView.flex.layout(mode: .adjustHeight)
     self.scrollView.contentSize = self.contentView.frame.size
-
+    
     let mapCenter = CGPoint(x: mapView.bounds.midX, y: mapView.bounds.midY)
     markerCoordinateImageView.center = CGPoint(x: mapCenter.x, y: mapCenter.y - (markerCoordinateImageView.bounds.height / 2))
   }
@@ -151,7 +135,6 @@ final class MarkerInfoInputViewController: UIViewController {
   
   // MARK: Layout
   
-  //개선하기 / 분리하기
   private func defineFlexContainer() {
     self.contentView.flex
       .direction(.column)
@@ -168,97 +151,53 @@ final class MarkerInfoInputViewController: UIViewController {
             $0.addItem(self.descriptionTextView).height(Metric.textViewHeight).marginBottom(10)
           }
         
-        // 환경
-        $0.addItem()
-          .direction(.column)
+        $0.addItem(self.makeTagSection(title: "환경", tags: self.environmentTags))
           .paddingHorizontal(Metric.horizontalMargin)
-          .define {
-            $0.addItem(self.environmentLabel).height(Metric.labelHeight)
-            
-            $0.addItem()
-              .direction(.row)
-              .wrap(.wrap)
-              .define {
-                for tag in self.environmentTags {
-                  let environmentTag = UIButton().then {
-                    $0.setTitle(tag, for: .normal)
-                    $0.titleLabel?.font = .systemFont(ofSize: 14)
-                    $0.backgroundColor = .systemGray6
-                    $0.setTitleColor(.label, for: .normal)
-                    $0.layer.cornerRadius = 15
-                    $0.layer.borderWidth = 0.7
-                    $0.layer.borderColor = UIColor.systemGray4.cgColor
-                    $0.contentEdgeInsets = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
-                    $0.sizeToFit()
-                  }
-                  $0.addItem(environmentTag).height(Metric.tagButtonHeight).margin(0, 0, 10, 10)
-                }
-              }
-          }
+        $0.addItem(self.makeTagSection(title: "유형", tags: self.typeTags))
+          .paddingHorizontal(Metric.horizontalMargin)
+        $0.addItem(self.makeTagSection(title: "시설", tags: self.facilityTags))
+          .paddingHorizontal(Metric.horizontalMargin)
         
-        // 유형
-        $0.addItem()
-          .direction(.column)
-          .paddingHorizontal(Metric.horizontalMargin)
-          .define {
-            $0.addItem(self.typeLabel).height(Metric.labelHeight)
-            
-            $0.addItem()
-              .direction(.row)
-              .wrap(.wrap)
-              .define {
-                for tag in self.typeTags {
-                  let typeTag = UIButton().then {
-                    $0.setTitle(tag, for: .normal)
-                    $0.titleLabel?.font = .systemFont(ofSize: 14)
-                    $0.backgroundColor = .systemGray6
-                    $0.setTitleColor(.label, for: .normal)
-                    $0.layer.cornerRadius = 15
-                    $0.layer.borderWidth = 0.7
-                    $0.layer.borderColor = UIColor.systemGray4.cgColor
-                    $0.contentEdgeInsets = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
-                    $0.sizeToFit()
-                  }
-                  $0.addItem(typeTag).height(Metric.tagButtonHeight).margin(0, 0, 10, 10)
-                }
-              }
-          }
-        
-        // 시설
-        $0.addItem()
-          .direction(.column)
-          .paddingHorizontal(Metric.horizontalMargin)
-          .define {
-            $0.addItem(self.facilityLabel).height(Metric.labelHeight)
-            
-            $0.addItem()
-              .direction(.row)
-              .wrap(.wrap)
-              .define {
-                for tag in self.facilityTags {
-                  let facilityTag = UIButton().then {
-                    $0.setTitle(tag, for: .normal)
-                    $0.titleLabel?.font = .systemFont(ofSize: 14)
-                    $0.backgroundColor = .systemGray6
-                    $0.setTitleColor(.label, for: .normal)
-                    $0.layer.cornerRadius = 15
-                    $0.layer.borderWidth = 0.7
-                    $0.layer.borderColor = UIColor.systemGray4.cgColor
-                    $0.contentEdgeInsets = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
-                    $0.sizeToFit()
-                  }
-                  $0.addItem(facilityTag).height(Metric.tagButtonHeight).margin(0, 0, 10, 10)
-                }
-              }
-          }
-        // 저장 버튼
         $0.addItem(saveButton).height(Metric.saveButtonHeight).margin(Metric.horizontalMargin)
       }
   }
   
   private func makeTagSection(title: String, tags: [String]) -> UIView {
+    let container = UIView()
     
-    return UIView()
+    let titleLabel = UILabel().then {
+      $0.text = title
+      $0.font = .systemFont(ofSize: Metric.labelFontSize, weight: .bold)
+    }
+    
+    container.flex
+      .direction(.column)
+      .define {
+        $0.addItem(titleLabel).height(Metric.labelHeight)
+        
+        $0.addItem()
+          .direction(.row)
+          .wrap(.wrap)
+          .define { flex in
+            for tag in tags {
+              let tagButton = UIButton().then {
+                $0.setTitle(tag, for: .normal)
+                $0.titleLabel?.font = .systemFont(ofSize: 14)
+                $0.backgroundColor = .systemGray6
+                $0.setTitleColor(.label, for: .normal)
+                $0.layer.cornerRadius = 15
+                $0.layer.borderWidth = 0.7
+                $0.layer.borderColor = UIColor.systemGray4.cgColor
+                $0.contentEdgeInsets = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
+                $0.sizeToFit()
+              }
+              flex.addItem(tagButton)
+                .height(Metric.tagButtonHeight)
+                .margin(0, 0, 10, 10)
+            }
+          }
+      }
+    return container
   }
 }
 
