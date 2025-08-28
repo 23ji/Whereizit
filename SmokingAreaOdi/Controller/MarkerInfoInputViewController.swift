@@ -223,7 +223,7 @@ final class MarkerInfoInputViewController: UIViewController {
     // 버튼 외관 업데이트 함수
     self.updateButtonAppearance(sender)
     // 해당 배열 업데이트 함수
-    
+    self.updateSeletedTags(sender)
     // 프린트로 디버깅
   }
   
@@ -239,20 +239,30 @@ final class MarkerInfoInputViewController: UIViewController {
   
   // 해당 배열 업데이트 함수
   private func updateSeletedTags(_ button: UIButton) {
-    // 환경 태그일 때
-      // 해당 배열 업데이트 함수
-    // 유형 태그일 때
-      // 해당 배열 업데이트 함수
-    // 시설 태그일 때
-      // 해당 배열 업데이트 함수
+    guard let title = button.titleLabel?.text else { return }
+    
+    //print(title)
+    if self.environmentTags.contains(title) { // 환경 태그일 때
+      self.updateTag(title: "환경", array: &self.selectedEnvironmentTags, buttonTitle: title) // 해당 배열 업데이트 함수
+    } else if self.typeTags.contains(title) { // 유형 태그일 때
+      self.updateTag(title: "유형", array: &self.selectedTypeTags, buttonTitle: title) // 해당 배열 업데이트 함수
+    } else if self.facilityTags.contains(title) { // 시설 태그일 때
+      self.updateTag(title: "시설", array: &self.selectedFacilityTags, buttonTitle: title) // 해당 배열 업데이트 함수
+    }
   }
   
   // 해당 배열 업데이트 함수
-  private func updateTag() {
+  private func updateTag(title: String, array: inout [String], buttonTitle: String) {
     // 배열에 해당 값이 있다면
       // 해당 배열에서 값 빼기
+    if array.contains(buttonTitle) {
+      array = array.filter { $0 != buttonTitle }
+    } else {
+      array.append(buttonTitle)
+    }
     // 있으면
       // 넣기
+    print(title, array)
   }
 }
 
