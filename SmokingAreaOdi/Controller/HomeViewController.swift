@@ -6,6 +6,8 @@
 //
 
 import CoreLocation
+import FirebaseCore
+import FirebaseFirestore
 import NMapsMap
 import RxSwift
 import RxCocoa
@@ -33,6 +35,8 @@ final class HomeViewController: UIViewController {
   }
   
   // MARK: Property
+  
+  private let db = Firestore.firestore()
   
   private let locationManager = CLLocationManager()
   
