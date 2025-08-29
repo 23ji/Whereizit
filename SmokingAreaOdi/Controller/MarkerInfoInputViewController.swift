@@ -102,17 +102,18 @@ final class MarkerInfoInputViewController: UIViewController {
     super.viewDidLoad()
     
     self.view.backgroundColor = .white
+    
     print("3. 전달받은 좌표 : \(self.markerLat), \(self.markerLng)")
     guard let lat = self.markerLat, let lng = self.markerLng else { return }
     let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: lat, lng: lng))
     self.mapView.moveCamera(cameraUpdate)
+    
     self.setupUI()
     self.addSubView()
     self.scrollView.pin.all(self.view.pin.safeArea)
     self.contentView.pin.top().horizontally()
     
     self.defineFlexContainer()
-    
     
     self.didTappedSavebutton()
   }
@@ -218,7 +219,7 @@ final class MarkerInfoInputViewController: UIViewController {
   
   
   // MARK: Button Actions
-
+  
   private func onTapButton(_ sender: UIButton) {
     // 선택에 따른 토글 변경
     sender.isSelected.toggle()
@@ -232,9 +233,9 @@ final class MarkerInfoInputViewController: UIViewController {
   // 버튼 외관 업데이트 함수
   private func updateButtonAppearance(_ button: UIButton) {
     // true일 때
-      // 배경 진하게
+    // 배경 진하게
     // false 일 때
-      // 배경 원래 색상
+    // 배경 원래 색상
     button.backgroundColor = button.isSelected ? .gray : .systemGray6
   }
   
@@ -242,7 +243,7 @@ final class MarkerInfoInputViewController: UIViewController {
   // 해당 배열 업데이트 함수
   private func updateSeletedTags(_ button: UIButton) {
     guard let title = button.titleLabel?.text else { return }
-
+    
     if self.environmentTags.contains(title) { // 환경 태그일 때
       self.updateTag(title: "환경", array: &self.selectedEnvironmentTags, buttonTitle: title) // 해당 배열 업데이트 함수
     } else if self.typeTags.contains(title) { // 유형 태그일 때
@@ -265,9 +266,45 @@ final class MarkerInfoInputViewController: UIViewController {
   private func didTappedSavebutton() {
     self.saveButton.rx.tap.subscribe(
       onNext: { [weak self] in
+        self?.saveSmokinAreaInfo()
         self?.navigationController?.popToRootViewController(animated: true)
       })
     .disposed(by: self.disposeBag)
+  }
+  
+  private func saveSmokinAreaInfo() {
+    guard
+      let name = self.nameTextField.text, !name.isEmpty,
+      let description = self.descriptionTextView.text, !description.isEmpty,
+      let lat = self.markerLat,
+      let lng = self.markerLng
+    else {
+      // Alert 같은 걸 띄워서 사용자한테 알려주기
+      let alert = UIAlertController(title: "입력 오류", message: "이름, 설명은 필수 입력 항목입니다.", preferredStyle: .alert)
+      alert.addAction(UIAlertAction(title: "확인", style: .default))
+      self.present(alert, animated: true)
+      return
+    }
+    
+    // 모델로 만들기
+    let smokingArea = SmokingArea(
+      name: name,
+      description: description,
+      areaLat: lat,
+      areaLng: lng,
+      selectedEnvironmentTags: self.selectedEnvironmentTags,
+      selectedTypeTags: self.selectedTypeTags,
+      selectedFacilityTags: self.selectedFacilityTags
+    )
+    
+    // Firestore 저장
+    db.collection("smokingAreas").addDocument(data: smokingArea.asDictionary) { error in
+      if let error = error {
+        print("저장 실패: \(error.localizedDescription)")
+      } else {
+        print("저장 성공")
+      }
+    }
   }
 }
 

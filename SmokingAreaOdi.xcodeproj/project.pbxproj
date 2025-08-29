@@ -14,6 +14,7 @@
 		49288AAF2D19450C00FF1E50 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49288AAE2D19450C00FF1E50 /* SceneDelegate.swift */; };
 		49288AB62D19450D00FF1E50 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49288AB52D19450D00FF1E50 /* Assets.xcassets */; };
 		49288AB92D19450D00FF1E50 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 49288AB82D19450D00FF1E50 /* Base */; };
+		4978849C2E6181AD00180C55 /* SmokingArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4978849B2E6181AD00180C55 /* SmokingArea.swift */; };
 		49E629602E27756C00751E26 /* MarkerPositionSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E6295F2E27756C00751E26 /* MarkerPositionSelectorViewController.swift */; };
 		49E629652E2F866000751E26 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 49E629642E2F866000751E26 /* SnapKit */; };
 		49E629682E2F86C200751E26 /* FlexLayout in Frameworks */ = {isa = PBXBuildFile; productRef = 49E629672E2F86C200751E26 /* FlexLayout */; };
@@ -36,6 +37,7 @@
 		49288AB52D19450D00FF1E50 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		49288AB82D19450D00FF1E50 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		49288ABA2D19450D00FF1E50 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4978849B2E6181AD00180C55 /* SmokingArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SmokingArea.swift; path = SmokingAreaOdi/SmokingArea.swift; sourceTree = SOURCE_ROOT; };
 		49E6295F2E27756C00751E26 /* MarkerPositionSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerPositionSelectorViewController.swift; sourceTree = "<group>"; };
 		71E8D5BE6D6F3B97EE6F1699 /* Pods_SmokingAreaOdi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmokingAreaOdi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A76232662D5229D800A0F323 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 		A774711D2D58D8ED006F2F0D /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				4978849B2E6181AD00180C55 /* SmokingArea.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -245,6 +248,7 @@
 				49E629602E27756C00751E26 /* MarkerPositionSelectorViewController.swift in Sources */,
 				A77C88BF2E2528A8002D725E /* HomeViewController.swift in Sources */,
 				49288AAD2D19450C00FF1E50 /* AppDelegate.swift in Sources */,
+				4978849C2E6181AD00180C55 /* SmokingArea.swift in Sources */,
 				49288AAF2D19450C00FF1E50 /* SceneDelegate.swift in Sources */,
 				A7990CBE2E288E5200B3D3CE /* MarkerInfoInputViewController.swift in Sources */,
 			);
