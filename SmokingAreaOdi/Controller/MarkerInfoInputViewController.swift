@@ -102,6 +102,10 @@ final class MarkerInfoInputViewController: UIViewController {
     super.viewDidLoad()
     
     self.view.backgroundColor = .white
+    print("3. 전달받은 좌표 : \(self.markerLat), \(self.markerLng)")
+    guard let lat = self.markerLat, let lng = self.markerLng else { return }
+    let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: lat, lng: lng))
+    self.mapView.moveCamera(cameraUpdate)
     self.setupUI()
     self.addSubView()
     self.scrollView.pin.all(self.view.pin.safeArea)
@@ -109,10 +113,8 @@ final class MarkerInfoInputViewController: UIViewController {
     
     self.defineFlexContainer()
     
-    print("3. 전달받은 좌표 : \(self.markerLat), \(self.markerLng)")
-    guard let lat = self.markerLat, let lng = self.markerLng else { return }
-    let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: lat, lng: lng))
-    self.mapView.moveCamera(cameraUpdate)
+    
+    self.didTappedSavebutton()
   }
   
   
