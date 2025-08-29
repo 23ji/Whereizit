@@ -68,7 +68,7 @@ final class MarkerPositionSelectorViewController: UIViewController {
     
     self.setLocationManager()
     
-    self.diTapNextButton()
+    self.diTappedNextButton()
   }
   
   
@@ -99,7 +99,7 @@ final class MarkerPositionSelectorViewController: UIViewController {
     // 마커의 높이 절반을 위로 올려 마커 하단 포인트가 화면 중앙에 배치되도록 설정
   }
   
-  private func diTapNextButton() {
+  private func diTappedNextButton() {
     self.nextButton.rx.tap.subscribe(
       onNext: { [weak self] in
         let markerInfoInputVC = MarkerInfoInputViewController()
