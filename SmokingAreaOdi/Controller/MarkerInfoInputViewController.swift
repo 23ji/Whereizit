@@ -240,8 +240,7 @@ final class MarkerInfoInputViewController: UIViewController {
   // 해당 배열 업데이트 함수
   private func updateSeletedTags(_ button: UIButton) {
     guard let title = button.titleLabel?.text else { return }
-    
-    //print(title)
+
     if self.environmentTags.contains(title) { // 환경 태그일 때
       self.updateTag(title: "환경", array: &self.selectedEnvironmentTags, buttonTitle: title) // 해당 배열 업데이트 함수
     } else if self.typeTags.contains(title) { // 유형 태그일 때
@@ -253,16 +252,20 @@ final class MarkerInfoInputViewController: UIViewController {
   
   // 해당 배열 업데이트 함수
   private func updateTag(title: String, array: inout [String], buttonTitle: String) {
-    // 배열에 해당 값이 있다면
-      // 해당 배열에서 값 빼기
-    if array.contains(buttonTitle) {
-      array = array.filter { $0 != buttonTitle }
-    } else {
-      array.append(buttonTitle)
+    if array.contains(buttonTitle) { // 배열에 해당 값이 있다면
+      array = array.filter { $0 != buttonTitle } // 해당 배열에서 값 빼기
+    } else { // 있으면
+      array.append(buttonTitle) // 넣기
     }
-    // 있으면
-      // 넣기
     print(title, array)
+  }
+  
+  private func didTappedSavebutton() {
+    self.saveButton.rx.tap.subscribe(
+      onNext: { [weak self] in
+        self?.navigationController?.popToRootViewController(animated: true)
+      })
+    .disposed(by: self.disposeBag)
   }
 }
 
