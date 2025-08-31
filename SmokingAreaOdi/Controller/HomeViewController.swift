@@ -29,7 +29,7 @@ final class HomeViewController: UIViewController {
   
   // MARK: UI
   
-  private let mapView = NMFMapView()
+  private let mapView = NMFNaverMapView()
   private let addButton = UIButton().then {
     $0.setImage(UIImage(named: "plusButton"), for: .normal)
   }
@@ -106,7 +106,7 @@ final class HomeViewController: UIViewController {
         let areaMarker = NMFMarker()
         areaMarker.iconImage = NMFOverlayImage(name: "marker_Pin")
         areaMarker.position = NMGLatLng(lat: areaLat, lng: areaLng)
-        areaMarker.mapView = self.mapView
+        areaMarker.mapView = self.mapView.mapView
       }
     }
   }
@@ -144,6 +144,6 @@ extension HomeViewController: CLLocationManagerDelegate {
   
   private func cameraUpdate(lat: Double, lng: Double) {
     let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: lat, lng: lng))
-    self.mapView.moveCamera(cameraUpdate)
+    self.mapView.mapView.moveCamera(cameraUpdate)
   }
 }
