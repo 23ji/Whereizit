@@ -55,7 +55,6 @@ final class HomeViewController: UIViewController {
     
     self.didTappedAddButton()
     self.smokingAreas()
-    self.showMyViewControllerInACustomizedSheet()
   }
   
   
