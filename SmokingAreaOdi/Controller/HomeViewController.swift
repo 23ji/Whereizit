@@ -90,14 +90,23 @@ final class HomeViewController: UIViewController {
     .disposed(by: self.disposeBag)
   }
   
+  
+  // MARK: Area Marker
+  
   private func smokingAreas() {
-    db.collection("smokingAreas").getDocuments { (snapshot, error) in
-      if error == nil && snapshot != nil {
-        for document in snapshot!.documents {
-          print(document.documentID)
-        }
-      } else {
-        // error. do something
+    db.collection("smokingAreas").addSnapshotListener { snapshot, error in
+      guard let snapshot = snapshot else { return }
+      for doc in snapshot.documents {
+        let data = doc.data()
+        guard let name = data["name"] as? String else { return }
+        guard let description = data["description"] as? String else { return }
+        guard let areaLat = data["areaLat"] as? Double else { return }
+        guard let areaLng = data["areaLng"] as? Double else { return }
+        
+        let areaMarker = NMFMarker()
+        areaMarker.iconImage = NMFOverlayImage(name: "marker_Pin")
+        areaMarker.position = NMGLatLng(lat: areaLat, lng: areaLng)
+        areaMarker.mapView = self.mapView
       }
     }
   }
