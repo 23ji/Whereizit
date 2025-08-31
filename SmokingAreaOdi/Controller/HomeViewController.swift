@@ -53,8 +53,9 @@ final class HomeViewController: UIViewController {
     
     self.setLocationManager()
     
-    self.didTapAddButton()
+    self.didTappedAddButton()
     self.smokingAreas()
+    self.showMyViewControllerInACustomizedSheet()
   }
   
   
@@ -81,7 +82,7 @@ final class HomeViewController: UIViewController {
   
   // MARK: Action
   
-  private func didTapAddButton() {
+  private func didTappedAddButton() {
     self.addButton.rx.tap.subscribe(
       onNext : { [weak self] in
         let markerPositionSeletorVC = MarkerPositionSelectorViewController()
@@ -109,6 +110,24 @@ final class HomeViewController: UIViewController {
         areaMarker.mapView = self.mapView.mapView
       }
     }
+  }
+
+  
+  private func showMyViewControllerInACustomizedSheet() {
+    let viewControllerToPresent = SmokingAreaBottomSheetViewController()
+    if let sheet = viewControllerToPresent.sheetPresentationController {
+      let customDetent = UISheetPresentationController.Detent.custom(identifier: .init("thirtyPercent")) { context in
+        return context.maximumDetentValue * 0.3
+      }
+      
+      sheet.detents = [customDetent, .large()]
+      sheet.selectedDetentIdentifier = .init("thirtyPercent") // 처음 뜰 때 30%로
+      sheet.largestUndimmedDetentIdentifier = .large
+      sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+      sheet.prefersEdgeAttachedInCompactHeight = true
+      sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = true
+    }
+    present(viewControllerToPresent, animated: true, completion: nil)
   }
 }
 
