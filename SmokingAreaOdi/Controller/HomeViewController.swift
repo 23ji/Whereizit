@@ -54,6 +54,7 @@ final class HomeViewController: UIViewController {
     self.setLocationManager()
     
     self.didTapAddButton()
+    self.smokingAreas()
   }
   
   
@@ -87,6 +88,18 @@ final class HomeViewController: UIViewController {
         self?.navigationController?.pushViewController(markerPositionSeletorVC, animated: true)
       })
     .disposed(by: self.disposeBag)
+  }
+  
+  private func smokingAreas() {
+    db.collection("smokingAreas").getDocuments { (snapshot, error) in
+      if error == nil && snapshot != nil {
+        for document in snapshot!.documents {
+          print(document.documentID)
+        }
+      } else {
+        // error. do something
+      }
+    }
   }
 }
 
