@@ -164,7 +164,7 @@ final class HomeViewController: UIViewController {
        sheet.prefersEdgeAttachedInCompactHeight = true
        sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = true
      }
-     
+    viewControllerToPresent.areaName.text = area.name
      present(viewControllerToPresent, animated: true, completion: nil)
   }
 }
