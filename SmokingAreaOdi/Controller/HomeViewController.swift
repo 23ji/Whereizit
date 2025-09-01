@@ -127,7 +127,10 @@ final class HomeViewController: UIViewController {
         areaMarker.iconImage = NMFOverlayImage(name: "marker_Pin")
         areaMarker.position = NMGLatLng(lat: areaLat, lng: areaLng)
         
-        
+        areaMarker.touchHandler = { (overlay: NMFOverlay) -> Bool in
+          print("오버레이 터치됨")
+          return true
+        }
 
         areaMarker.mapView = self.mapView.mapView
       }
