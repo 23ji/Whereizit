@@ -34,12 +34,17 @@ final class HomeViewController: UIViewController {
     $0.setImage(UIImage(named: "plusButton"), for: .normal)
   }
   
+  
   // MARK: Property
   
   private let db = Firestore.firestore()
   
   private let locationManager = CLLocationManager()
   
+  
+  // MARK: Rx
+  
+  private let markerTapped = PublishSubject<SmokingArea>()
   private let disposeBag = DisposeBag()
   
   
@@ -98,19 +103,37 @@ final class HomeViewController: UIViewController {
       guard let snapshot = snapshot else { return }
       for doc in snapshot.documents {
         let data = doc.data()
-        guard let name = data["name"] as? String else { return }
-        guard let description = data["description"] as? String else { return }
-        guard let areaLat = data["areaLat"] as? Double else { return }
-        guard let areaLng = data["areaLng"] as? Double else { return }
+        
+        guard let name = data["name"] as? String,
+              let description = data["description"] as? String,
+              let areaLat = data["areaLat"] as? Double,
+              let areaLng = data["areaLng"] as? Double
+        else { return }
+        let selectedEnvironmentTags = data["selectedEnvironmentTags"] as? [String] ?? []
+        let selectedTypeTags = data["selectedTypeTags"] as? [String] ?? []
+        let selectedFacilityTags = data["selectedFacilityTags"] as? [String] ?? []
+        
+        let areaData = SmokingArea(
+          name: name,
+          description: description,
+          areaLat: areaLat,
+          areaLng: areaLng,
+          selectedEnvironmentTags: selectedEnvironmentTags,
+          selectedTypeTags: selectedTypeTags,
+          selectedFacilityTags: selectedFacilityTags
+        )
         
         let areaMarker = NMFMarker()
         areaMarker.iconImage = NMFOverlayImage(name: "marker_Pin")
         areaMarker.position = NMGLatLng(lat: areaLat, lng: areaLng)
+        
+        
+
         areaMarker.mapView = self.mapView.mapView
       }
     }
   }
-
+  
   
   private func showMyViewControllerInACustomizedSheet() {
     let viewControllerToPresent = SmokingAreaBottomSheetViewController()
