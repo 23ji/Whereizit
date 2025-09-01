@@ -150,22 +150,8 @@ final class HomeViewController: UIViewController {
   
   
   private func showBottomSheet(with area: SmokingArea) {
-    let viewControllerToPresent = SmokingAreaBottomSheetViewController()
-     
-     if let sheet = viewControllerToPresent.sheetPresentationController {
-       let customDetent = UISheetPresentationController.Detent.custom(identifier: .init("thirtyPercent")) { context in
-         return context.maximumDetentValue * 0.3
-       }
-       
-       sheet.detents = [customDetent, .large()]
-       sheet.selectedDetentIdentifier = .init("thirtyPercent")
-       sheet.largestUndimmedDetentIdentifier = .large
-       sheet.prefersScrollingExpandsWhenScrolledToEdge = false
-       sheet.prefersEdgeAttachedInCompactHeight = true
-       sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = true
-     }
-    viewControllerToPresent.areaName.text = area.name
-     present(viewControllerToPresent, animated: true, completion: nil)
+    let bottomSheetVC = SmokingAreaBottomSheetViewController()
+    presentPanModal(bottomSheetVC)
   }
 }
 

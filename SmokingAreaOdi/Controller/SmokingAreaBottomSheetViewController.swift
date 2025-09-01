@@ -1,36 +1,34 @@
-//
 //  SmokingAreaBottomSheetViewController.swift
 //  SmokingAreaOdi
 //
 //  Created by 23ji on 8/31/25.
 //
 
-import Then
-
 import UIKit
+import PanModal
 
-final class SmokingAreaBottomSheetViewController: UIViewController {
-    
-  let areaName = UILabel()
-    
+final class SmokingAreaBottomSheetViewController: UIViewController, PanModalPresentable {
+  
+  private let nameLabel = UILabel().then {
+    $0.text = "ddd"
+    $0.textColor = .black
+    $0.font = .systemFont(ofSize: 16, weight: .bold)
+  }
   
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    self.setUI()
-    self.addSubviews()
-    self.setConstraint()
+    view.backgroundColor = .white
+    view.addSubview(nameLabel)
+    nameLabel.translatesAutoresizingMaskIntoConstraints = false
+    NSLayoutConstraint.activate([
+      nameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+      nameLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+    ])
   }
   
-  private func setUI() {
-    self.view.backgroundColor = .white
-  }
-  
-  private func addSubviews() {
-    self.view.addSubview(self.areaName)
-  }
-  
-  private func setConstraint() {
-    self.areaName.pin.width(100).height(20).top(10).left(10)
-  }
+  // MARK: - PanModalPresentable
+  var panScrollable: UIScrollView? { nil }   // 스크롤뷰 없으면 nil
+  var shortFormHeight: PanModalHeight { .contentHeight(200) } // 처음 높이
+  var longFormHeight: PanModalHeight { .maxHeight } // 위로 끌어올렸을 때 높이
 }

@@ -24,6 +24,7 @@
 		9F933E8B2E484A62001699AA /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 9F933E8A2E484A62001699AA /* RxRelay */; };
 		9F933E8D2E484A62001699AA /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 9F933E8C2E484A62001699AA /* RxSwift */; };
 		9FA6B1792E64473E00A94571 /* SmokingAreaBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA6B1782E64473E00A94571 /* SmokingAreaBottomSheetViewController.swift */; };
+		9FA9DE722E65DB93004D71A7 /* PanModal in Frameworks */ = {isa = PBXBuildFile; productRef = 9FA9DE712E65DB93004D71A7 /* PanModal */; };
 		A75196ED2E3A42D700CE5F1F /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = A75196EC2E3A42D700CE5F1F /* Then */; };
 		A76232672D5229D800A0F323 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A76232662D5229D800A0F323 /* GoogleService-Info.plist */; };
 		A77C88BF2E2528A8002D725E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77C88BE2E2528A8002D725E /* HomeViewController.swift */; };
@@ -54,6 +55,7 @@
 			files = (
 				A75196ED2E3A42D700CE5F1F /* Then in Frameworks */,
 				49168A702E448E77002C5F69 /* FirebaseAuth in Frameworks */,
+				9FA9DE722E65DB93004D71A7 /* PanModal in Frameworks */,
 				9F933E892E484A62001699AA /* RxCocoa in Frameworks */,
 				A77C88C22E252941002D725E /* NMapsMap in Frameworks */,
 				49E6296B2E2F86FE00751E26 /* PinLayout in Frameworks */,
@@ -182,6 +184,7 @@
 				9F933E882E484A62001699AA /* RxCocoa */,
 				9F933E8A2E484A62001699AA /* RxRelay */,
 				9F933E8C2E484A62001699AA /* RxSwift */,
+				9FA9DE712E65DB93004D71A7 /* PanModal */,
 			);
 			productName = SmokeAreaOdi;
 			productReference = 49288AA92D19450C00FF1E50 /* SmokingAreaOdi.app */;
@@ -220,6 +223,7 @@
 				49168A6E2E448E77002C5F69 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				9F73EF6A2E44BFD0008E66E5 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 				9F933E872E484A62001699AA /* XCRemoteSwiftPackageReference "RxSwift" */,
+				9FA9DE702E65DB93004D71A7 /* XCRemoteSwiftPackageReference "PanModal" */,
 			);
 			productRefGroup = 49288AAA2D19450C00FF1E50 /* Products */;
 			projectDirPath = "";
@@ -531,6 +535,14 @@
 				minimumVersion = 6.9.0;
 			};
 		};
+		9FA9DE702E65DB93004D71A7 /* XCRemoteSwiftPackageReference "PanModal" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/slackhq/PanModal.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.7;
+			};
+		};
 		A75196EB2E3A42D700CE5F1F /* XCRemoteSwiftPackageReference "Then" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/devxoul/Then.git";
@@ -599,6 +611,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 9F933E872E484A62001699AA /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = RxSwift;
+		};
+		9FA9DE712E65DB93004D71A7 /* PanModal */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9FA9DE702E65DB93004D71A7 /* XCRemoteSwiftPackageReference "PanModal" */;
+			productName = PanModal;
 		};
 		A75196EC2E3A42D700CE5F1F /* Then */ = {
 			isa = XCSwiftPackageProductDependency;
