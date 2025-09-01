@@ -60,6 +60,7 @@ final class HomeViewController: UIViewController {
     
     self.didTappedAddButton()
     self.smokingAreas()
+    self.bind()
   }
   
   
@@ -128,7 +129,7 @@ final class HomeViewController: UIViewController {
         areaMarker.position = NMGLatLng(lat: areaLat, lng: areaLng)
         
         areaMarker.touchHandler = { (overlay: NMFOverlay) -> Bool in
-          print("오버레이 터치됨")
+          self.markerTapped.onNext(areaData)
           return true
         }
 
@@ -138,21 +139,33 @@ final class HomeViewController: UIViewController {
   }
   
   
-  private func showMyViewControllerInACustomizedSheet() {
+  private func bind() {
+    markerTapped
+      .subscribe(onNext: { [weak self] areaData in
+        print("마커 탭됨: \(areaData.name)")
+        self?.showBottomSheet(with: areaData)
+      })
+      .disposed(by: disposeBag)
+  }
+  
+  
+  private func showBottomSheet(with area: SmokingArea) {
     let viewControllerToPresent = SmokingAreaBottomSheetViewController()
-    if let sheet = viewControllerToPresent.sheetPresentationController {
-      let customDetent = UISheetPresentationController.Detent.custom(identifier: .init("thirtyPercent")) { context in
-        return context.maximumDetentValue * 0.3
-      }
-      
-      sheet.detents = [customDetent, .large()]
-      sheet.selectedDetentIdentifier = .init("thirtyPercent") // 처음 뜰 때 30%로
-      sheet.largestUndimmedDetentIdentifier = .large
-      sheet.prefersScrollingExpandsWhenScrolledToEdge = false
-      sheet.prefersEdgeAttachedInCompactHeight = true
-      sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = true
-    }
-    present(viewControllerToPresent, animated: true, completion: nil)
+     
+     if let sheet = viewControllerToPresent.sheetPresentationController {
+       let customDetent = UISheetPresentationController.Detent.custom(identifier: .init("thirtyPercent")) { context in
+         return context.maximumDetentValue * 0.3
+       }
+       
+       sheet.detents = [customDetent, .large()]
+       sheet.selectedDetentIdentifier = .init("thirtyPercent")
+       sheet.largestUndimmedDetentIdentifier = .large
+       sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+       sheet.prefersEdgeAttachedInCompactHeight = true
+       sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = true
+     }
+     
+     present(viewControllerToPresent, animated: true, completion: nil)
   }
 }
 
