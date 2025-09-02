@@ -8,7 +8,9 @@
 import CoreLocation
 import FirebaseCore
 import FirebaseFirestore
+import FloatingPanel
 import NMapsMap
+import PanModal
 import RxSwift
 import RxCocoa
 import SnapKit
@@ -143,15 +145,8 @@ final class HomeViewController: UIViewController {
     markerTapped
       .subscribe(onNext: { [weak self] areaData in
         print("마커 탭됨: \(areaData.name)")
-        self?.showBottomSheet(with: areaData)
       })
       .disposed(by: disposeBag)
-  }
-  
-  
-  private func showBottomSheet(with area: SmokingArea) {
-    let bottomSheetVC = SmokingAreaBottomSheetViewController()
-    presentPanModal(bottomSheetVC)
   }
 }
 

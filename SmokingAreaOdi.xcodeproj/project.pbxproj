@@ -23,6 +23,7 @@
 		9F933E892E484A62001699AA /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 9F933E882E484A62001699AA /* RxCocoa */; };
 		9F933E8B2E484A62001699AA /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 9F933E8A2E484A62001699AA /* RxRelay */; };
 		9F933E8D2E484A62001699AA /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 9F933E8C2E484A62001699AA /* RxSwift */; };
+		9F9F78012E66EF3B00148859 /* FloatingPanel in Frameworks */ = {isa = PBXBuildFile; productRef = 9F9F78002E66EF3B00148859 /* FloatingPanel */; };
 		9FA6B1792E64473E00A94571 /* SmokingAreaBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA6B1782E64473E00A94571 /* SmokingAreaBottomSheetViewController.swift */; };
 		9FA9DE722E65DB93004D71A7 /* PanModal in Frameworks */ = {isa = PBXBuildFile; productRef = 9FA9DE712E65DB93004D71A7 /* PanModal */; };
 		A75196ED2E3A42D700CE5F1F /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = A75196EC2E3A42D700CE5F1F /* Then */; };
@@ -58,6 +59,7 @@
 				9FA9DE722E65DB93004D71A7 /* PanModal in Frameworks */,
 				9F933E892E484A62001699AA /* RxCocoa in Frameworks */,
 				A77C88C22E252941002D725E /* NMapsMap in Frameworks */,
+				9F9F78012E66EF3B00148859 /* FloatingPanel in Frameworks */,
 				49E6296B2E2F86FE00751E26 /* PinLayout in Frameworks */,
 				49168A722E448E77002C5F69 /* FirebaseCore in Frameworks */,
 				9F933E8D2E484A62001699AA /* RxSwift in Frameworks */,
@@ -185,6 +187,7 @@
 				9F933E8A2E484A62001699AA /* RxRelay */,
 				9F933E8C2E484A62001699AA /* RxSwift */,
 				9FA9DE712E65DB93004D71A7 /* PanModal */,
+				9F9F78002E66EF3B00148859 /* FloatingPanel */,
 			);
 			productName = SmokeAreaOdi;
 			productReference = 49288AA92D19450C00FF1E50 /* SmokingAreaOdi.app */;
@@ -224,6 +227,7 @@
 				9F73EF6A2E44BFD0008E66E5 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 				9F933E872E484A62001699AA /* XCRemoteSwiftPackageReference "RxSwift" */,
 				9FA9DE702E65DB93004D71A7 /* XCRemoteSwiftPackageReference "PanModal" */,
+				9F9F77FF2E66EF3B00148859 /* XCRemoteSwiftPackageReference "FloatingPanel" */,
 			);
 			productRefGroup = 49288AAA2D19450C00FF1E50 /* Products */;
 			projectDirPath = "";
@@ -535,6 +539,14 @@
 				minimumVersion = 6.9.0;
 			};
 		};
+		9F9F77FF2E66EF3B00148859 /* XCRemoteSwiftPackageReference "FloatingPanel" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scenee/FloatingPanel.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.1;
+			};
+		};
 		9FA9DE702E65DB93004D71A7 /* XCRemoteSwiftPackageReference "PanModal" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/slackhq/PanModal.git";
@@ -611,6 +623,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 9F933E872E484A62001699AA /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = RxSwift;
+		};
+		9F9F78002E66EF3B00148859 /* FloatingPanel */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9F9F77FF2E66EF3B00148859 /* XCRemoteSwiftPackageReference "FloatingPanel" */;
+			productName = FloatingPanel;
 		};
 		9FA9DE712E65DB93004D71A7 /* PanModal */ = {
 			isa = XCSwiftPackageProductDependency;
