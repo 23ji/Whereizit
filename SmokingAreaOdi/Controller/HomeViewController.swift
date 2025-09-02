@@ -63,6 +63,7 @@ final class HomeViewController: UIViewController {
     self.didTappedAddButton()
     self.smokingAreas()
     self.bind()
+    self.showBottomSheet()
   }
   
   
@@ -145,6 +146,7 @@ final class HomeViewController: UIViewController {
     markerTapped
       .subscribe(onNext: { [weak self] areaData in
         print("마커 탭됨: \(areaData.name)")
+        // 바텀 시트 호출해야함
       })
       .disposed(by: disposeBag)
   }
@@ -184,4 +186,29 @@ extension HomeViewController: CLLocationManagerDelegate {
     let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: lat, lng: lng))
     self.mapView.mapView.moveCamera(cameraUpdate)
   }
+}
+
+
+extension HomeViewController: FloatingPanelControllerDelegate {
+  
+  private func showBottomSheet() {
+    var fpc: FloatingPanelController!
+    // Initialize a `FloatingPanelController` object.
+    fpc = FloatingPanelController()
+    
+    // Assign self as the delegate of the controller.
+    fpc.delegate = self // Optional
+    
+    // Set a content view controller.
+    let smokingAreaBottomSheetVC = SmokingAreaBottomSheetViewController()
+    
+    fpc.set(contentViewController: smokingAreaBottomSheetVC)
+    
+    // Track a scroll view(or the siblings) in the content view controller.
+    fpc.track(scrollView: smokingAreaBottomSheetVC.tableView)
+    
+    // Add and show the views managed by the `FloatingPanelController` object to self.view.
+    fpc.addPanel(toParent: self)
+  }
+  
 }
