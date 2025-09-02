@@ -47,7 +47,7 @@ final class HomeViewController: UIViewController {
   // FloatingPanel
   private var floatingPanel: FloatingPanelController!
   private let smokingAreaBottomSheetVC = SmokingAreaBottomSheetViewController()
-
+  
   
   // MARK: Rx
   
@@ -117,9 +117,10 @@ final class HomeViewController: UIViewController {
               let areaLat = data["areaLat"] as? Double,
               let areaLng = data["areaLng"] as? Double
         else { return }
-        let selectedEnvironmentTags = data["selectedEnvironmentTags"] as? [String] ?? []
-        let selectedTypeTags = data["selectedTypeTags"] as? [String] ?? []
-        let selectedFacilityTags = data["selectedFacilityTags"] as? [String] ?? []
+        let selectedEnvironmentTags = (data["environmentTags"] as? [String]) ?? []
+        let selectedTypeTags = (data["typeTags"] as? [String]) ?? []
+        let selectedFacilityTags = (data["facilityTags"] as? [String]) ?? []
+
         
         let areaData = SmokingArea(
           name: name,
@@ -139,7 +140,6 @@ final class HomeViewController: UIViewController {
           self.markerTapped.onNext(areaData)
           return true
         }
-
         areaMarker.mapView = self.mapView.mapView
       }
     }
@@ -149,10 +149,10 @@ final class HomeViewController: UIViewController {
   private func bind() {
     markerTapped
       .subscribe(onNext: { [weak self] areaData in
-        //guard let self else { return }
+        guard let self else { return }
         print("마커 탭됨: \(areaData.name)")
-        // 바텀 시트 호출해야함 / 절반 올라오도록
-        // 데이터 넘겨줘야함
+        self.floatingPanel.move(to: .half, animated: true) // 절반 상태로
+        self.smokingAreaBottomSheetVC.configure(with: areaData) // 데이터 전달
       })
       .disposed(by: disposeBag)
   }
@@ -198,31 +198,20 @@ extension HomeViewController: CLLocationManagerDelegate {
 extension HomeViewController: FloatingPanelControllerDelegate {
   
   private func showBottomSheet() {
-    // Initialize a `FloatingPanelController` object.
     self.floatingPanel = FloatingPanelController()
-    
-    // Assign self as the delegate of the controller.
-    self.floatingPanel.delegate = self // Optional
-    
-    // Set a content view controller.
-    let smokingAreaBottomSheetVC = SmokingAreaBottomSheetViewController()
-    
-    self.floatingPanel.set(contentViewController: smokingAreaBottomSheetVC)
-    
-    // Track a scroll view(or the siblings) in the content view controller.
-    self.floatingPanel.track(scrollView: smokingAreaBottomSheetVC.tableView)
-    
-    // Add and show the views managed by the `FloatingPanelController` object to self.view.
+    self.floatingPanel.delegate = self
+    self.floatingPanel.set(contentViewController: self.smokingAreaBottomSheetVC)
+    self.floatingPanel.track(scrollView: self.smokingAreaBottomSheetVC.tableView)
     self.floatingPanel.addPanel(toParent: self)
-    
     self.floatingPanel.surfaceView.layer.cornerRadius = 15
     self.floatingPanel.surfaceView.clipsToBounds = true
+    self.floatingPanel.move(to: .hidden, animated: false)
   }
 }
 
 
 extension HomeViewController: NMFMapViewTouchDelegate {
   func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
-      print("탭: \(latlng.lat), \(latlng.lng)")
+    self.floatingPanel.move(to: .hidden, animated: true) // hidden로 할까 tip으로 할까
   }
 }
