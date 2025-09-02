@@ -69,8 +69,9 @@ final class HomeViewController: UIViewController {
     self.smokingAreas()
     self.bind()
     self.showBottomSheet()
+    
+    self.mapView.mapView.touchDelegate = self
   }
-  
   
   // MARK: Setup
   
@@ -216,5 +217,12 @@ extension HomeViewController: FloatingPanelControllerDelegate {
     
     self.floatingPanel.surfaceView.layer.cornerRadius = 15
     self.floatingPanel.surfaceView.clipsToBounds = true
+  }
+}
+
+
+extension HomeViewController: NMFMapViewTouchDelegate {
+  func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
+      print("탭: \(latlng.lat), \(latlng.lng)")
   }
 }
