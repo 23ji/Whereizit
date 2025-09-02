@@ -44,6 +44,11 @@ final class HomeViewController: UIViewController {
   private let locationManager = CLLocationManager()
   
   
+  // FloatingPanel
+  private var floatingPanel: FloatingPanelController!
+  private let smokingAreaBottomSheetVC = SmokingAreaBottomSheetViewController()
+
+  
   // MARK: Rx
   
   private let markerTapped = PublishSubject<SmokingArea>()
@@ -77,9 +82,7 @@ final class HomeViewController: UIViewController {
   }
   
   private func makeConstraints() {
-    self.mapView.snp.makeConstraints {
-      $0.edges.equalToSuperview()
-    }
+    self.mapView.snp.makeConstraints { $0.edges.equalToSuperview() }
     
     self.addButton.snp.makeConstraints {
       $0.trailing.equalToSuperview().inset(Metric.addButtonTrailing)
@@ -145,8 +148,10 @@ final class HomeViewController: UIViewController {
   private func bind() {
     markerTapped
       .subscribe(onNext: { [weak self] areaData in
+        //guard let self else { return }
         print("마커 탭됨: \(areaData.name)")
-        // 바텀 시트 호출해야함
+        // 바텀 시트 호출해야함 / 절반 올라오도록
+        // 데이터 넘겨줘야함
       })
       .disposed(by: disposeBag)
   }
@@ -192,23 +197,24 @@ extension HomeViewController: CLLocationManagerDelegate {
 extension HomeViewController: FloatingPanelControllerDelegate {
   
   private func showBottomSheet() {
-    var fpc: FloatingPanelController!
     // Initialize a `FloatingPanelController` object.
-    fpc = FloatingPanelController()
+    self.floatingPanel = FloatingPanelController()
     
     // Assign self as the delegate of the controller.
-    fpc.delegate = self // Optional
+    self.floatingPanel.delegate = self // Optional
     
     // Set a content view controller.
     let smokingAreaBottomSheetVC = SmokingAreaBottomSheetViewController()
     
-    fpc.set(contentViewController: smokingAreaBottomSheetVC)
+    self.floatingPanel.set(contentViewController: smokingAreaBottomSheetVC)
     
     // Track a scroll view(or the siblings) in the content view controller.
-    fpc.track(scrollView: smokingAreaBottomSheetVC.tableView)
+    self.floatingPanel.track(scrollView: smokingAreaBottomSheetVC.tableView)
     
     // Add and show the views managed by the `FloatingPanelController` object to self.view.
-    fpc.addPanel(toParent: self)
+    self.floatingPanel.addPanel(toParent: self)
+    
+    self.floatingPanel.surfaceView.layer.cornerRadius = 15
+    self.floatingPanel.surfaceView.clipsToBounds = true
   }
-  
 }
