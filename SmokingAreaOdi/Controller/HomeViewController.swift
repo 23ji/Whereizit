@@ -167,7 +167,7 @@ final class HomeViewController: UIViewController {
               // 4. smokingAreaBottomSheetVC의 configure 메서드를 호출하여,
               //    마커에서 받아온 areaData를 전달하고 UI를 업데이트합니다.
               // self.smokingAreaBottomSheetVC.configure(with: areaData)
-
+            self.smokingAreaBottomSheetVC.configure(with: areaData)
               // 5. 숨겨져 있는 floatingPanel(바텀시트)을 .half 상태로 올립니다.
               //    애니메이션과 함께 움직이도록 animated 파라미터를 true로 설정하세요.
             self.floatingPanelController?.move(to: .half, animated: true)
@@ -221,9 +221,11 @@ extension HomeViewController: FloatingPanelControllerDelegate {
   func showBottomSheet() {
     // 1. FloatingPanelController 인스턴스 생성 및 delegate 설정
     floatingPanelController = FloatingPanelController()
+    floatingPanelController?.surfaceView.layer.cornerRadius = 15
+    floatingPanelController?.surfaceView.layer.masksToBounds = true
     floatingPanelController?.delegate = self
     // 2. 바텀시트에 content로 들어갈 UIViewController 설정 (예: floatingPanel.set(contentViewController:))
-    let smokingAreaBottomSheetVC = SmokingAreaBottomSheetViewController()
+    //let smokingAreaBottomSheetVC = SmokingAreaBottomSheetViewController()
     floatingPanelController?.set(contentViewController: smokingAreaBottomSheetVC)
     // 3. 부모 뷰에 바텀시트 추가 (예: floatingPanel.addPanel(toParent:))
     floatingPanelController?.addPanel(toParent: self)
@@ -236,8 +238,6 @@ extension HomeViewController: FloatingPanelControllerDelegate {
 
 extension HomeViewController: NMFMapViewTouchDelegate {
   func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
-    // TODO: 힌트 7
-    // 지도를 탭했을 때, 화면에 보이는 바텀시트를 다시 숨겨주세요.
     floatingPanelController?.move(to: .hidden, animated: true)
   }
 }
