@@ -24,6 +24,7 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
   
   private let nameLabel = UILabel().then {
     $0.textColor = .black
+    $0.text = "dd"
   }
   
   private let descriptionLabel = UILabel().then {
@@ -43,6 +44,7 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
     self.view.addSubview(self.rootFlexContainer)
     // FlexLayout으로 레이아웃 구조를 정의합니다.
     self.setupLayout()
+    
   }
   
   // PinLayout과 FlexLayout을 사용하여 실제 UI 위치를 계산하고 적용합니다.
@@ -74,7 +76,7 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
         flex.addItem(self.areaImageView).width(100).height(100)
         
         flex.addItem().direction(.column).define {
-          $0.addItem(self.nameLabel).width(30).height(20).marginLeft(20)
+          $0.addItem(self.nameLabel)
           $0.addItem(self.descriptionLabel).width(30).height(20).marginLeft(20)
         }
       }
@@ -98,12 +100,13 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
     // TODO: 힌트 3
     // HomeViewController에서 전달받은 SmokingArea 데이터로 UI를 업데이트 해주세요.
     // 1. nameLabel과 descriptionLabel의 text를 설정해주세요.
+    self.nameLabel.text = data.name
+    self.descriptionLabel.text = data.description
     // 2. 태그 스택뷰들(environmentTagStackView, typeTagStackView)에 기존 태그가 남아있을 수 있으니, 모두 제거해주세요. (재사용 대비)
     // 3. data에 있는 태그 배열(selectedEnvironmentTags, selectedTypeTags)을 반복문으로 돌면서,
     //    createTagLabel(text:) 헬퍼 메서드를 사용해 태그 라벨을 생성하고, 각 스택뷰에 추가해주세요.
     
     // 데이터가 변경되었으므로, 레이아웃을 다시 계산하도록 알려줍니다.
-    rootFlexContainer.flex.markDirty()
   }
   
   
