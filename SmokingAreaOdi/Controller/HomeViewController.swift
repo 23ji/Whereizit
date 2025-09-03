@@ -234,10 +234,10 @@ extension HomeViewController: FloatingPanelControllerDelegate {
 }
 
 
-
 extension HomeViewController: NMFMapViewTouchDelegate {
   func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
     // TODO: 힌트 7
     // 지도를 탭했을 때, 화면에 보이는 바텀시트를 다시 숨겨주세요.
+    floatingPanelController?.move(to: .hidden, animated: true)
   }
 }
