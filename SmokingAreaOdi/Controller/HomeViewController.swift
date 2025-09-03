@@ -145,16 +145,23 @@ final class HomeViewController: UIViewController {
     }
   }
   
-  
+  // HomeViewController.swift
+
   private func bind() {
-    markerTapped
-      .subscribe(onNext: { [weak self] areaData in
-        guard let self else { return }
-        print("마커 탭됨: \(areaData.name)")
-        self.floatingPanel.move(to: .half, animated: true) // 절반 상태로
-        self.smokingAreaBottomSheetVC.configure(with: areaData) // 데이터 전달
-      })
-      .disposed(by: disposeBag)
+      markerTapped
+          .subscribe(onNext: { [weak self] areaData in
+              guard let self else { return }
+              print("마커 탭됨: \(areaData.name)")
+              
+              // ✅ 이 부분의 주석을 해제하여 데이터 전달
+              self.smokingAreaBottomSheetVC.configure(with: areaData)
+              
+              // 바텀 시트가 숨겨져 있다면 .half 상태로 올리기
+              if self.floatingPanel.state == .hidden || self.floatingPanel.state == .tip {
+                  self.floatingPanel.move(to: .half, animated: true)
+              }
+          })
+          .disposed(by: disposeBag)
   }
 }
 
