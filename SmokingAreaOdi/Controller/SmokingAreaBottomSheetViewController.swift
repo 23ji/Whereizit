@@ -15,94 +15,99 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
   
   // MARK:  UI Components
   
-  private let placeImageView = UIImageView().then {
+  // UI 컴포넌트들을 담을 루트 컨테이너입니다.
+  private let rootFlexContainer = UIView()
+  
+  private let areaImageView = UIImageView().then {
     $0.backgroundColor = .systemGray5
-    $0.layer.cornerRadius = 8
-    $0.clipsToBounds = true
-    $0.contentMode = .scaleAspectFill
   }
   
   private let nameLabel = UILabel().then {
-    $0.font = .systemFont(ofSize: 18, weight: .bold)
     $0.textColor = .black
-    $0.text = "장소 이름"
   }
   
   private let descriptionLabel = UILabel().then {
-    $0.font = .systemFont(ofSize: 14, weight: .regular)
     $0.textColor = .systemGray
-    $0.text = "장소 설명 어쩌고 저쩌고"
   }
   
   // 환경, 유형 등을 그룹으로 묶기 위한 UI들
-  private let environmentTitleLabel = createSectionTitleLabel(title: "환경")
-  private let environmentTagStackView = createTagStackView()
   
-  private let typeTitleLabel = createSectionTitleLabel(title: "유형")
-  private let typeTagStackView = createTagStackView()
   
-  // 전체 UI를 담을 메인 스택뷰
-  private let mainStackView = UIStackView().then {
-    $0.axis = .vertical
-    $0.spacing = 20
-    $0.alignment = .fill
-    $0.distribution = .fill
-  }
-  
-  // MARK: - LifeCycle
+  // MARK:  LifeCycle
   
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .white
-    setupLayout()
+    
+    // rootFlexContainer를 뷰에 추가합니다.
+    self.view.addSubview(self.rootFlexContainer)
+    // FlexLayout으로 레이아웃 구조를 정의합니다.
+    self.setupLayout()
+  }
+  
+  // PinLayout과 FlexLayout을 사용하여 실제 UI 위치를 계산하고 적용합니다.
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+    // TODO: 힌트 2
+    // PinLayout을 사용하여 rootFlexContainer의 위치와 크기를 설정해주세요.
+    // 1. rootFlexContainer를 safeArea에 맞춰 전체 화면으로 설정합니다. (예: .pin.all(view.pin.safeArea))
+    self.rootFlexContainer.pin.all(self.view.pin.safeArea)
+    // 2. rootFlexContainer의 flex 레이아웃을 계산하고 적용합니다. (예: .flex.layout())
+    self.rootFlexContainer.flex.layout()
   }
   
   // MARK: - Setup Layout
   
   private func setupLayout() {
     // TODO: 힌트 1
-    // UI 컴포넌트들을 스택뷰(StackView)를 사용하여 그룹화하고 레이아웃을 설정해주세요.
-    // 1. 장소 이름(nameLabel)과 설명(descriptionLabel)을 묶는 수직 스택뷰를 만드세요.
-    // 2. 장소 이미지(placeImageView)와 1번에서 만든 스택뷰를 묶는 수평 스택뷰를 만드세요. (정보 섹션)
-    // 3. 환경 타이틀(environmentTitleLabel)과 환경 태그 스택뷰(environmentTagStackView)를 묶는 수직 스택뷰를 만드세요. (환경 섹션)
-    // 4. 유형 타이틀(typeTitleLabel)과 유형 태그 스택뷰(typeTagStackView)를 묶는 수직 스택뷰를 만드세요. (유형 섹션)
-    // 5. 위에서 만든 모든 섹션(2, 3, 4)을 메인 스택뷰(mainStackView)에 추가하세요.
-    // 6. 마지막으로, view에 mainStackView를 추가하고 SnapKit을 사용해 오토레이아웃 제약조건을 설정해주세요.
+    // FlexLayout의 `define` 클로저 안에서 UI 컴포넌트들의 계층 구조를 정의해주세요.
+    // rootFlexContainer를 기준으로 세로(column) 방향으로 아이템을 배치합니다.
+    
+    // 예시 구조:
+    rootFlexContainer.flex.direction(.column).padding(20).define { flex in
+      // 1. 정보 섹션 (수평): .direction(.row)
+      //    - 이미지 (placeImageView)
+      //    - 이름/설명 그룹 (수직): .direction(.column)
+      //        - 이름 (nameLabel)
+      //        - 설명 (descriptionLabel)
+      flex.addItem().direction(.row).define { flex in
+        flex.addItem(self.areaImageView).width(100).height(100)
+        
+        flex.addItem().direction(.column).define {
+          $0.addItem(self.nameLabel).width(30).height(20).marginLeft(20)
+          $0.addItem(self.descriptionLabel).width(30).height(20).marginLeft(20)
+        }
+      }
+      // 2. 환경 섹션 (수직): .direction(.column)
+      //    - 환경 타이틀 (environmentTitleLabel)
+      //    - 환경 태그 (environmentTagStackView)
+      
+      // 3. 유형 섹션 (수직): .direction(.column)
+      //    - 유형 타이틀 (typeTitleLabel)
+      //    - 유형 태그 (typeTagStackView)
+      
+      // 4. 시설 섹션 (수직): .direction(.column)
+      //    - 유형 타이틀 (FacilityTitleLabel)
+      //    - 유형 태그 (FacilityTagStackView)
+    }
   }
   
   // MARK: - Public Method
   
   public func configure(with data: SmokingArea) {
-    // TODO: 힌트 2
+    // TODO: 힌트 3
     // HomeViewController에서 전달받은 SmokingArea 데이터로 UI를 업데이트 해주세요.
     // 1. nameLabel과 descriptionLabel의 text를 설정해주세요.
     // 2. 태그 스택뷰들(environmentTagStackView, typeTagStackView)에 기존 태그가 남아있을 수 있으니, 모두 제거해주세요. (재사용 대비)
     // 3. data에 있는 태그 배열(selectedEnvironmentTags, selectedTypeTags)을 반복문으로 돌면서,
     //    createTagLabel(text:) 헬퍼 메서드를 사용해 태그 라벨을 생성하고, 각 스택뷰에 추가해주세요.
+    
+    // 데이터가 변경되었으므로, 레이아웃을 다시 계산하도록 알려줍니다.
+    rootFlexContainer.flex.markDirty()
   }
   
   
   // MARK:  Helper Methods (UI 생성)
   
-  private static func createSectionTitleLabel(title: String) -> UILabel {
-    // TODO: 힌트 3
-    // 섹션의 제목(환경, 유형 등)으로 사용할 UILabel을 생성하고 설정하여 반환해주세요.
-    // (글자 크기, 굵기, 색상 등)
-    return UILabel() // 임시 반환
-  }
-  
-  private static func createTagStackView() -> UIStackView {
-    // TODO: 힌트 4
-    // 태그들을 담을 수평 UIStackView를 생성하고 설정하여 반환해주세요.
-    // (방향, 간격 등)
-    return UIStackView() // 임시 반환
-  }
-  
-  private func createTagLabel(text: String) -> UILabel {
-    // TODO: 힌트 5
-    // "실내", "의자 있음" 등 개별 태그로 사용할 UILabel을 생성하고 스타일을 적용하여 반환해주세요.
-    // (배경색, 글자색, 모서리 둥글게 등)
-    return UILabel() // 임시 반환
-  }
 }
 
