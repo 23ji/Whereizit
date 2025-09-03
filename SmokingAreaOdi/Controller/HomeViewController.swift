@@ -20,205 +20,195 @@ import UIKit
 
 
 final class HomeViewController: UIViewController {
-  
-  // MARK: Constant
-  
-  private enum Metric {
-    static let addButtonTrailing: CGFloat = 24
-    static let addButtonBottom: CGFloat = 40
-  }
-  
-  
-  // MARK: UI
-  
-  private let mapView = NMFNaverMapView()
-  private let addButton = UIButton().then {
-    $0.setImage(UIImage(named: "plusButton"), for: .normal)
-  }
-  
-  
-  // MARK: Property
-  
-  private let db = Firestore.firestore()
-  
-  private let locationManager = CLLocationManager()
-  
-  
-  // FloatingPanel
-  private var floatingPanel: FloatingPanelController!
-  private let smokingAreaBottomSheetVC = SmokingAreaBottomSheetViewController()
-  
-  
-  // MARK: Rx
-  
-  private let markerTapped = PublishSubject<SmokingArea>()
-  private let disposeBag = DisposeBag()
-  
-  
-  // MARK: LifeCycle
-  
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    self.setup()
-    self.addSubviews()
-    self.makeConstraints()
     
-    self.setLocationManager()
+    // MARK: Constant
     
-    self.didTappedAddButton()
-    self.smokingAreas()
-    self.bind()
-    self.showBottomSheet()
-    
-    self.mapView.mapView.touchDelegate = self
-  }
-  
-  // MARK: Setup
-  
-  private func setup() { self.navigationItem.title = "Home" } //한 줄로 가능하면 한 줄로
-  
-  private func addSubviews() {
-    self.view.addSubview(self.mapView)
-    self.view.addSubview(self.addButton)
-  }
-  
-  private func makeConstraints() {
-    self.mapView.snp.makeConstraints { $0.edges.equalToSuperview() }
-    
-    self.addButton.snp.makeConstraints {
-      $0.trailing.equalToSuperview().inset(Metric.addButtonTrailing)
-      $0.bottom.equalToSuperview().inset(Metric.addButtonBottom)
+    private enum Metric {
+        static let addButtonTrailing: CGFloat = 24
+        static let addButtonBottom: CGFloat = 40
     }
-  }
-  
-  
-  // MARK: Action
-  
-  private func didTappedAddButton() {
-    self.addButton.rx.tap.subscribe(
-      onNext : { [weak self] in
-        let markerPositionSeletorVC = MarkerPositionSelectorViewController()
-        self?.navigationController?.pushViewController(markerPositionSeletorVC, animated: true)
-      })
-    .disposed(by: self.disposeBag)
-  }
-  
-  
-  // MARK: Area Marker
-  
-  private func smokingAreas() {
-    db.collection("smokingAreas").addSnapshotListener { snapshot, error in
-      guard let snapshot = snapshot else { return }
-      for doc in snapshot.documents {
-        let data = doc.data()
+    
+    
+    // MARK: UI
+    
+    private let mapView = NMFNaverMapView()
+    private let addButton = UIButton().then {
+        $0.setImage(UIImage(named: "plusButton"), for: .normal)
+    }
+    
+    
+    // MARK: Property
+    
+    private let db = Firestore.firestore()
+    
+    private let locationManager = CLLocationManager()
+    
+    
+    // MARK: 바텀시트
+    
+    // TODO: 힌트 1
+    // FloatingPanelController를 담을 변수를 선언해주세요.
+    
+    // TODO: 힌트 2
+    // 바텀시트에 띄울 ViewController의 인스턴스를 생성해주세요.
+    
+    
+    // MARK: Rx
+    
+    private let markerTapped = PublishSubject<SmokingArea>()
+    private let disposeBag = DisposeBag()
+    
+    
+    // MARK: LifeCycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.setup()
+        self.addSubviews()
+        self.makeConstraints()
         
-        guard let name = data["name"] as? String,
-              let description = data["description"] as? String,
-              let areaLat = data["areaLat"] as? Double,
-              let areaLng = data["areaLng"] as? Double
-        else { return }
-        let selectedEnvironmentTags = (data["environmentTags"] as? [String]) ?? []
-        let selectedTypeTags = (data["typeTags"] as? [String]) ?? []
-        let selectedFacilityTags = (data["facilityTags"] as? [String]) ?? []
-
+        self.setLocationManager()
         
-        let areaData = SmokingArea(
-          name: name,
-          description: description,
-          areaLat: areaLat,
-          areaLng: areaLng,
-          selectedEnvironmentTags: selectedEnvironmentTags,
-          selectedTypeTags: selectedTypeTags,
-          selectedFacilityTags: selectedFacilityTags
-        )
+        self.didTappedAddButton()
+        self.smokingAreas()
         
-        let areaMarker = NMFMarker()
-        areaMarker.iconImage = NMFOverlayImage(name: "marker_Pin")
-        areaMarker.position = NMGLatLng(lat: areaLat, lng: areaLng)
+        // TODO: 힌트 3
+        // 마커가 탭 되었을 때의 동작을 처리하는 bind 함수를 호출해주세요.
         
-        areaMarker.touchHandler = { (overlay: NMFOverlay) -> Bool in
-          self.markerTapped.onNext(areaData)
-          return true
+        // TODO: 힌트 4
+        // 바텀시트를 설정하고 초기화하는 함수를 호출해주세요.
+        
+        self.mapView.mapView.touchDelegate = self
+    }
+    
+    // MARK: Setup
+    
+    private func setup() { self.navigationItem.title = "Home" }
+    
+    private func addSubviews() {
+        self.view.addSubview(self.mapView)
+        self.view.addSubview(self.addButton)
+    }
+    
+    private func makeConstraints() {
+        self.mapView.snp.makeConstraints { $0.edges.equalToSuperview() }
+        
+        self.addButton.snp.makeConstraints {
+            $0.trailing.equalToSuperview().inset(Metric.addButtonTrailing)
+            $0.bottom.equalToSuperview().inset(Metric.addButtonBottom)
         }
-        areaMarker.mapView = self.mapView.mapView
-      }
     }
-  }
-  
-  // HomeViewController.swift
-
-  private func bind() {
-      markerTapped
-          .subscribe(onNext: { [weak self] areaData in
-              guard let self else { return }
-              print("마커 탭됨: \(areaData.name)")
-              
-              // ✅ 이 부분의 주석을 해제하여 데이터 전달
-              self.smokingAreaBottomSheetVC.configure(with: areaData)
-              
-              // 바텀 시트가 숨겨져 있다면 .half 상태로 올리기
-              if self.floatingPanel.state == .hidden || self.floatingPanel.state == .tip {
-                  self.floatingPanel.move(to: .half, animated: true)
-              }
-          })
-          .disposed(by: disposeBag)
-  }
+    
+    
+    // MARK: Action
+    
+    private func didTappedAddButton() {
+        self.addButton.rx.tap.subscribe(
+            onNext : { [weak self] in
+                let markerPositionSeletorVC = MarkerPositionSelectorViewController()
+                self?.navigationController?.pushViewController(markerPositionSeletorVC, animated: true)
+            })
+        .disposed(by: self.disposeBag)
+    }
+    
+    
+    // MARK: Area Marker
+    
+    private func smokingAreas() {
+        db.collection("smokingAreas").addSnapshotListener { snapshot, error in
+            guard let snapshot = snapshot else { return }
+            for doc in snapshot.documents {
+                let data = doc.data()
+                
+                guard let name = data["name"] as? String,
+                      let description = data["description"] as? String,
+                      let areaLat = data["areaLat"] as? Double,
+                      let areaLng = data["areaLng"] as? Double
+                else { return }
+                let selectedEnvironmentTags = (data["environmentTags"] as? [String]) ?? []
+                let selectedTypeTags = (data["typeTags"] as? [String]) ?? []
+                let selectedFacilityTags = (data["facilityTags"] as? [String]) ?? []
+                
+                
+                let areaData = SmokingArea(
+                    name: name,
+                    description: description,
+                    areaLat: areaLat,
+                    areaLng: areaLng,
+                    selectedEnvironmentTags: selectedEnvironmentTags,
+                    selectedTypeTags: selectedTypeTags,
+                    selectedFacilityTags: selectedFacilityTags
+                )
+                
+                let areaMarker = NMFMarker()
+                areaMarker.iconImage = NMFOverlayImage(name: "marker_Pin")
+                areaMarker.position = NMGLatLng(lat: areaLat, lng: areaLng)
+                
+                areaMarker.touchHandler = { (overlay: NMFOverlay) -> Bool in
+                    self.markerTapped.onNext(areaData)
+                    return true
+                }
+                areaMarker.mapView = self.mapView.mapView
+            }
+        }
+    }
+    
+    // TODO: 힌트 5
+    // markerTapped 이벤트를 구독(subscribe)하여 처리하는 bind() 함수를 만들어주세요.
+    // 1. 마커에서 전달받은 SmokingArea 데이터로 바텀시트의 UI를 업데이트 해야합니다. (예: smokingAreaBottomSheetVC.configure(with:))
+    // 2. 숨겨져 있는 바텀시트를 위로 올려서 보여줘야 합니다. (예: floatingPanel.move(to: .half, animated: true))
+    
 }
 
 
 // MARK: Location / Camera
 // 위치 업데이트 시 최신 좌표로 카메라 이동
 extension HomeViewController: CLLocationManagerDelegate {
-  
-  private func setLocationManager() {
-    self.locationManager.delegate = self // 위치 정보 업데이트 시 델리게이트 호출
-    self.locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation // 최고 수준 정확도
-    self.locationManager.distanceFilter = kCLDistanceFilterNone // 조금 변경되어도 위치 업데이트
-    self.locationManager.activityType = .otherNavigation // 도로 따르지 않는 수준의 사용자
-    self.locationManager.pausesLocationUpdatesAutomatically = false // 사용자가 움직이지 않아도 위치 업데이트
-    self.locationManager.requestWhenInUseAuthorization() // 위치 사용 권한 요청
-    self.locationManager.startUpdatingLocation() // 위치 업데이트 시작
-  }
-  
-  // CLLocationManagerDelegate
-  // 새로운 위치 데이터가 업데이트될 때 호출되는 델리게이트 메서드입니다.
-  func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-    // 1. locations 배열에서 가장 최근 위치 정보 가져오기
-    guard let bestLocation = locations.last else { return }
-    // 2. 현재 위치의 위도와 경도 추출
-    let userLat = bestLocation.coordinate.latitude
-    let userLng = bestLocation.coordinate.longitude
     
-    print("1. 사용자의 위치 : (\(userLat), \(userLng))")
+    private func setLocationManager() {
+        self.locationManager.delegate = self // 위치 정보 업데이트 시 델리게이트 호출
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation // 최고 수준 정확도
+        self.locationManager.distanceFilter = kCLDistanceFilterNone // 조금 변경되어도 위치 업데이트
+        self.locationManager.activityType = .otherNavigation // 도로 따르지 않는 수준의 사용자
+        self.locationManager.pausesLocationUpdatesAutomatically = false // 사용자가 움직이지 않아도 위치 업데이트
+        self.locationManager.requestWhenInUseAuthorization() // 위치 사용 권한 요청
+        self.locationManager.startUpdatingLocation() // 위치 업데이트 시작
+    }
     
-    // 3. 지도 뷰를 현재 위치로 이동시키는 메서드 호출
-    self.cameraUpdate(lat: userLat, lng: userLng)
-  }
-  
-  private func cameraUpdate(lat: Double, lng: Double) {
-    let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: lat, lng: lng))
-    self.mapView.mapView.moveCamera(cameraUpdate)
-  }
+    // CLLocationManagerDelegate
+    // 새로운 위치 데이터가 업데이트될 때 호출되는 델리게이트 메서드입니다.
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        // 1. locations 배열에서 가장 최근 위치 정보 가져오기
+        guard let bestLocation = locations.last else { return }
+        // 2. 현재 위치의 위도와 경도 추출
+        let userLat = bestLocation.coordinate.latitude
+        let userLng = bestLocation.coordinate.longitude
+        
+        print("1. 사용자의 위치 : (\(userLat), \(userLng))")
+        
+        // 3. 지도 뷰를 현재 위치로 이동시키는 메서드 호출
+        self.cameraUpdate(lat: userLat, lng: userLng)
+    }
+    
+    private func cameraUpdate(lat: Double, lng: Double) {
+        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: lat, lng: lng))
+        self.mapView.mapView.moveCamera(cameraUpdate)
+    }
 }
 
 
-extension HomeViewController: FloatingPanelControllerDelegate {
-  
-  private func showBottomSheet() {
-    self.floatingPanel = FloatingPanelController()
-    self.floatingPanel.delegate = self
-    self.floatingPanel.set(contentViewController: self.smokingAreaBottomSheetVC)
-    //self.floatingPanel.track(scrollView: self.smokingAreaBottomSheetVC.tableView)
-    self.floatingPanel.addPanel(toParent: self)
-    self.floatingPanel.surfaceView.layer.cornerRadius = 15
-    self.floatingPanel.surfaceView.clipsToBounds = true
-    self.floatingPanel.move(to: .hidden, animated: false)
-  }
-}
+// TODO: 힌트 6
+// FloatingPanelControllerDelegate 프로토콜을 채택하고, 바텀시트를 설정하는 함수를 만들어주세요. (예: showBottomSheet)
+// 1. FloatingPanelController 인스턴스 생성 및 delegate 설정
+// 2. 바텀시트에 content로 들어갈 UIViewController 설정 (예: floatingPanel.set(contentViewController:))
+// 3. 부모 뷰에 바텀시트 추가 (예: floatingPanel.addPanel(toParent:))
+// 4. 바텀시트의 초기 상태를 설정 (예: 숨김) (예: floatingPanel.move(to: .hidden, animated: false))
+// + 추가: 바텀시트 외형 커스텀 (모서리 둥글게 등)
 
 
 extension HomeViewController: NMFMapViewTouchDelegate {
-  func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
-    self.floatingPanel.move(to: .hidden, animated: true) // hidden로 할까 tip으로 할까
-  }
+    func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
+        // TODO: 힌트 7
+        // 지도를 탭했을 때, 화면에 보이는 바텀시트를 다시 숨겨주세요.
+    }
 }
