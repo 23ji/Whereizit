@@ -48,11 +48,11 @@ final class HomeViewController: UIViewController {
   
   // TODO: 힌트 1
   // FloatingPanelController를 담을 변수를 선언해주세요.
-  
+  var floatingPanelController: FloatingPanelController?
   
   // TODO: 힌트 2
   // 바텀시트에 띄울 ViewController의 인스턴스를 생성해주세요.
-  
+  var smokingAreaBottomSheetVC = SmokingAreaBottomSheetViewController()
   
   // MARK: Rx
   
@@ -158,6 +158,9 @@ final class HomeViewController: UIViewController {
   // markerTapped 이벤트를 구독(subscribe)하여 처리하는 bind() 함수를 만들어주세요.
   // 1. 마커에서 전달받은 SmokingArea 데이터로 바텀시트의 UI를 업데이트 해야합니다. (예: smokingAreaBottomSheetVC.configure(with:))
   // 2. 숨겨져 있는 바텀시트를 위로 올려서 보여줘야 합니다. (예: floatingPanel.move(to: .half, animated: true))
+  private func bind() {
+    
+  }
   
 }
 
