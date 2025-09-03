@@ -201,7 +201,7 @@ extension HomeViewController: FloatingPanelControllerDelegate {
     self.floatingPanel = FloatingPanelController()
     self.floatingPanel.delegate = self
     self.floatingPanel.set(contentViewController: self.smokingAreaBottomSheetVC)
-    self.floatingPanel.track(scrollView: self.smokingAreaBottomSheetVC.tableView)
+    //self.floatingPanel.track(scrollView: self.smokingAreaBottomSheetVC.tableView)
     self.floatingPanel.addPanel(toParent: self)
     self.floatingPanel.surfaceView.layer.cornerRadius = 15
     self.floatingPanel.surfaceView.clipsToBounds = true
