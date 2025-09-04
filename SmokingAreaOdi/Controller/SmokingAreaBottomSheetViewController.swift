@@ -14,11 +14,10 @@ import UIKit
 final class SmokingAreaBottomSheetViewController: UIViewController {
   
   private enum Metric {
-    static let mapHeight: CGFloat = 200
+    static let horizontalMargin: CGFloat = 20
     static let labelFontSize: CGFloat = 16
     static let labelHeight: CGFloat = 50
     static let tagButtonHeight: CGFloat = 40
-    static let horizontalMargin: CGFloat = 20
   }
   
   // MARK: UI Components
@@ -42,12 +41,9 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
     $0.textColor = .systemGray
     $0.font = .systemFont(ofSize: 14)
     $0.numberOfLines = 0
-    $0.text = "장소에 대한 설명입니다."
   }
   
-  private var environmentTags: [String] = []
-  
-  private var tagSectionView: UIView?
+  private var tagSections: [UIView] = []
   
   // MARK: LifeCycle
   
@@ -69,7 +65,7 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
   private func setupLayout() {
     rootFlexContainer.flex.direction(.column).padding(Metric.horizontalMargin).define { flex in
       // 상단 이미지 + 이름/설명
-      flex.addItem().direction(.row).alignItems(.center).define { flex in
+      flex.addItem().direction(.row).alignItems(.start).define { flex in
         flex.addItem(areaImageView)
           .width(100)
           .height(100)
@@ -79,17 +75,14 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
           .marginLeft(16)
           .grow(1)
           .shrink(1)
-          .define {
-            $0.addItem(nameLabel)
-            $0.addItem(descriptionLabel).marginTop(4)
+          .define { flex in
+            flex.addItem(nameLabel)
+            flex.addItem(descriptionLabel)
+              .marginTop(4)
+              .grow(1)
+              .shrink(1)
+              .minHeight(20)
           }
-      }
-      
-      // 태그 섹션 (나중에 configure에서 갱신 가능하도록 placeholder)
-      tagSectionView = makeTagSection(title: "환경", tags: environmentTags)
-      if let tagSectionView = tagSectionView {
-        flex.addItem(tagSectionView)
-          .marginTop(20)
       }
     }
   }
@@ -117,15 +110,14 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
             $0.layer.borderColor = UIColor.systemGray4.cgColor
             $0.contentEdgeInsets = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
           }
-          
           flex.addItem(tagButton)
             .margin(0, 0, 10, 10)
         }
       }
     }
-    
     return container
   }
+  
   
   // MARK: Public Method
   
@@ -134,22 +126,23 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
       self.nameLabel.text = data.name
       self.descriptionLabel.text = data.description
       
-      // 태그 데이터 업데이트
-      self.environmentTags = data.selectedEnvironmentTags
-      
       // 기존 태그 섹션 제거
-      if let tagSectionView = self.tagSectionView {
-        tagSectionView.removeFromSuperview()
+      for section in self.tagSections {
+        section.removeFromSuperview()
+      }
+      self.tagSections.removeAll()
+      
+      // 새로운 섹션 생성
+      let envSection = self.makeTagSection(title: "환경", tags: data.selectedEnvironmentTags)
+      let typeSection = self.makeTagSection(title: "유형", tags: data.selectedTypeTags)
+      let facilitySection = self.makeTagSection(title: "시설", tags: data.selectedFacilityTags)
+      
+      self.tagSections = [envSection, typeSection, facilitySection]
+      
+      for section in self.tagSections {
+        self.rootFlexContainer.flex.addItem(section).marginTop(20)
       }
       
-      // 새 태그 섹션 추가
-      self.tagSectionView = self.makeTagSection(title: "환경", tags: self.environmentTags)
-      if let tagSectionView = self.tagSectionView {
-        self.rootFlexContainer.flex.addItem(tagSectionView)
-          .marginTop(20)
-      }
-      
-      // 레이아웃 갱신
       self.rootFlexContainer.flex.layout()
     }
   }
