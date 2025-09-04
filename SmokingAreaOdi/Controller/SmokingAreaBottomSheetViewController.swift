@@ -37,6 +37,17 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
     $0.text = "장소에 대한 설명입니다."
   }
   
+  private let environmentLabel = UILabel().then {
+    $0.font = .systemFont(ofSize: 18, weight: .bold)
+    $0.text = "환경"
+  }
+  
+  private let environmentTags = UIView().then {
+    $0.backgroundColor = .green
+  }
+  
+  private let environmentTagLabel = UILabel()
+  
   
   // MARK:  LifeCycle
   
@@ -75,6 +86,13 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
             $0.addItem(self.descriptionLabel).marginTop(4)
           }
       }
+      flex.addItem().direction(.column).alignItems(.start).padding(20).define { flex in
+        flex.addItem(self.environmentLabel).width(100).height(100)
+        
+        flex.addItem().direction(.row).marginLeft(16).grow(1).shrink(1).define {
+          $0.addItem(self.environmentTagLabel).width(100).height(100)
+        }
+      }
     }
   }
   
@@ -86,6 +104,7 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
       self.nameLabel.text = data.name
       self.descriptionLabel.text = data.description
       
+      self.environmentTagLabel.text = data.selectedEnvironmentTags.first
       self.rootFlexContainer.flex.markDirty()
       self.view.setNeedsLayout()
     }
