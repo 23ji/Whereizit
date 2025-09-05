@@ -84,7 +84,7 @@ final class MarkerInfoInputViewController: UIViewController {
   // 태그들
   private let environmentTags = ["실내", "실외", "밀폐형", "개방형"]
   private let typeTags = ["흡연구역", "카페", "술집", "식당", "노래방", "보드게임 카페", "당구장", "피시방"]
-  private let facilityTags = ["의자", "별도 전자담배 구역", "라이터"]
+  private let facilityTags = ["재떨이", "의자", "별도 전자담배 구역", "라이터"]
   
   // 저장 버튼
   private let saveButton = UIButton(type: .system).then {
