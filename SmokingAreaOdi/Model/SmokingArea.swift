@@ -8,7 +8,7 @@
 import Foundation
 
 struct SmokingArea {
-  // var picture: Image
+  //var picture: Image
   var name: String
   var description: String
   var areaLat: Double
