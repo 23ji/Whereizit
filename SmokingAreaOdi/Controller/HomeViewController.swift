@@ -46,10 +46,10 @@ final class HomeViewController: UIViewController {
   
   // MARK: 바텀시트
   
-  // FloatingPanelController를 담을 변수를 선언해주세요.
+  // FloatingPanelController를 담을 변수를 선언
   var floatingPanelController: FloatingPanelController?
   
-  // 바텀시트에 띄울 ViewController의 인스턴스를 생성해주세요.
+  // 바텀시트에 띄울 ViewController의 인스턴스를 생성
   var smokingAreaBottomSheetVC = SmokingAreaBottomSheetViewController()
   
   // MARK: Rx
@@ -155,19 +155,15 @@ final class HomeViewController: UIViewController {
   
   
   private func bind() {
-      // 1. markerTapped PublishSubject를 구독(subscribe)합니다.
-      markerTapped
-          .subscribe(onNext: { areaData in // 2. onNext 클로저에서 이벤트를 처리합니다. [weak self]로 순환 참조를 방지하세요.
-              // 3. self가 해제되었을 경우를 대비해 guard let으로 안전하게 언래핑합니다.
-              // 4. smokingAreaBottomSheetVC의 configure 메서드를 호출하여,
-              //    마커에서 받아온 areaData를 전달하고 UI를 업데이트합니다.
-              // self.smokingAreaBottomSheetVC.configure(with: areaData)
-            self.smokingAreaBottomSheetVC.configure(with: areaData)
-              // 5. 숨겨져 있는 floatingPanel(바텀시트)을 .half 상태로 올립니다.
-              //    애니메이션과 함께 움직이도록 animated 파라미터를 true로 설정하세요.
-            self.floatingPanelController?.move(to: .half, animated: true)
-          })
-          .disposed(by: disposeBag) // 6. 생성된 구독을 disposeBag에 추가하여 메모리 누수를 방지합니다.
+    // 1. markerTapped PublishSubject를 구독(subscribe)합니다.
+    self.markerTapped
+      .subscribe(onNext: { [weak self] areaData in
+        guard let self = self else { return }
+        
+        self.smokingAreaBottomSheetVC.configure(with: areaData)
+        self.floatingPanelController?.move(to: .half, animated: true)
+      })
+      .disposed(by: disposeBag)
   }
   
 }
@@ -216,14 +212,12 @@ extension HomeViewController: FloatingPanelControllerDelegate {
     floatingPanelController?.surfaceView.layer.cornerRadius = 15
     floatingPanelController?.surfaceView.layer.masksToBounds = true
     floatingPanelController?.delegate = self
-    // 2. 바텀시트에 content로 들어갈 UIViewController 설정 (예: floatingPanel.set(contentViewController:))
-    //let smokingAreaBottomSheetVC = SmokingAreaBottomSheetViewController()
+    // 2. 바텀시트에 content로 들어갈 UIViewController 설정
     floatingPanelController?.set(contentViewController: smokingAreaBottomSheetVC)
-    // 3. 부모 뷰에 바텀시트 추가 (예: floatingPanel.addPanel(toParent:))
+    // 3. 부모 뷰에 바텀시트 추가
     floatingPanelController?.addPanel(toParent: self)
-    // 4. 바텀시트의 초기 상태를 설정 (예: 숨김) (예: floatingPanel.move(to: .hidden, animated: false))
+    // 4. 바텀시트의 초기 상태를 설정
     floatingPanelController?.move(to: .hidden, animated: true)
-    // + 추가: 바텀시트 외형 커스텀 (모서리 둥글게 등)
   }
 }
 
