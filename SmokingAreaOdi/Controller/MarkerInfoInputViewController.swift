@@ -62,8 +62,8 @@ final class MarkerInfoInputViewController: UIViewController {
     $0.setImage(UIImage(systemName: "camera.on.rectangle.fill"), for: .normal)
     $0.layer.borderWidth = 0.5
     $0.layer.borderColor = UIColor.systemGray4.cgColor
-    //$0.layer.cornerRadius = 15
-    //$0.layer.masksToBounds = true
+    $0.layer.cornerRadius = 5
+    $0.layer.masksToBounds = true
   }
   
   
