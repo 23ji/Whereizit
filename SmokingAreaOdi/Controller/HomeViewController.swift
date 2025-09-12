@@ -65,18 +65,11 @@ final class HomeViewController: UIViewController {
     self.setup()
     self.addSubviews()
     self.makeConstraints()
-    
     self.setLocationManager()
-    
-    self.didTappedAddButton()
     self.smokingAreas()
     self.showBottomSheet()
-    // TODO: 힌트 3
-    // 마커가 탭 되었을 때의 동작을 처리하는 bind 함수를 호출해주세요.
+    self.didTappedAddButton()
     self.bind()
-    
-    // TODO: 힌트 4
-    // 바텀시트를 설정하고 초기화하는 함수를 호출해주세요.
     
     self.mapView.mapView.touchDelegate = self
   }
@@ -99,19 +92,7 @@ final class HomeViewController: UIViewController {
     }
   }
   
-  
-  // MARK: Action
-  
-  private func didTappedAddButton() {
-    self.addButton.rx.tap.subscribe(
-      onNext : { [weak self] in
-        let markerPositionSeletorVC = MarkerPositionSelectorViewController()
-        self?.navigationController?.pushViewController(markerPositionSeletorVC, animated: true)
-      })
-    .disposed(by: self.disposeBag)
-  }
-  
-  
+
   // MARK: Area Marker
   
   private func smokingAreas() {
@@ -128,7 +109,6 @@ final class HomeViewController: UIViewController {
         let selectedEnvironmentTags = (data["environmentTags"] as? [String]) ?? []
         let selectedTypeTags = (data["typeTags"] as? [String]) ?? []
         let selectedFacilityTags = (data["facilityTags"] as? [String]) ?? []
-        
         
         let areaData = SmokingArea(
           name: name,
@@ -155,22 +135,32 @@ final class HomeViewController: UIViewController {
   
   
   private func bind() {
-    // 1. markerTapped PublishSubject를 구독(subscribe)합니다.
     self.markerTapped
       .subscribe(onNext: { [weak self] areaData in
         guard let self = self else { return }
-        
         self.smokingAreaBottomSheetVC.configure(with: areaData)
         self.floatingPanelController?.move(to: .half, animated: true)
       })
       .disposed(by: disposeBag)
   }
   
+  
+  // MARK: Action
+  
+  private func didTappedAddButton() {
+    self.addButton.rx.tap.subscribe(
+      onNext : { [weak self] in
+        let markerPositionSeletorVC = MarkerPositionSelectorViewController()
+        self?.navigationController?.pushViewController(markerPositionSeletorVC, animated: true)
+      })
+    .disposed(by: self.disposeBag)
+  }
 }
 
 
 // MARK: Location / Camera
 // 위치 업데이트 시 최신 좌표로 카메라 이동
+
 extension HomeViewController: CLLocationManagerDelegate {
   
   private func setLocationManager() {
@@ -204,6 +194,8 @@ extension HomeViewController: CLLocationManagerDelegate {
   }
 }
 
+
+// MARK: FloatingPanel
 
 extension HomeViewController: FloatingPanelControllerDelegate {
   func showBottomSheet() {
