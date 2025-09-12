@@ -58,7 +58,7 @@ final class MarkerInfoInputViewController: UIViewController {
   private let markerCoordinateImageView = UIImageView(image: UIImage(named: "marker_Pin"))
   
   //사진
-  private let areaImage = UIButton().then {
+  private var areaImage = UIButton().then {
     $0.setImage(UIImage(systemName: "camera.on.rectangle.fill"), for: .normal)
     $0.layer.borderWidth = 0.5
     $0.layer.borderColor = UIColor.systemGray4.cgColor
@@ -283,6 +283,7 @@ final class MarkerInfoInputViewController: UIViewController {
     self.areaImage.rx.tap.subscribe(
       onNext: { [weak self] in
         print("카메라 버튼 눌림")
+        self?.openCamera()
       })
     .disposed(by: disposeBag)
   }
@@ -349,4 +350,25 @@ extension MarkerInfoInputViewController: UITextViewDelegate {
       self.descriptionTextView.textColor = .systemGray3
     }
   }
+}
+
+
+extension MarkerInfoInputViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+  
+  func openCamera() {
+    let camera = UIImagePickerController()
+    camera.sourceType = .camera
+    camera.delegate = self
+    present(camera, animated: true, completion: nil)
+  }
+  
+  func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    //???
+    picker.dismiss(animated: true, completion: nil)
+  }
+  
+  func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+    picker.dismiss(animated: true, completion: nil)
+  }
+  
 }
