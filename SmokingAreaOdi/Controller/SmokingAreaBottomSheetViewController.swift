@@ -18,6 +18,7 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
     static let labelFontSize: CGFloat = 16
     static let labelHeight: CGFloat = 50
     static let tagButtonHeight: CGFloat = 40
+    static let imageSize: CGFloat = 100
   }
   
   // MARK: UI Components
@@ -63,29 +64,53 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
   // MARK: Setup Layout
   
   private func setupLayout() {
-    rootFlexContainer.flex.direction(.column).padding(Metric.horizontalMargin).define { flex in
+    rootFlexContainer.flex.direction(.column).padding(Metric.horizontalMargin).define {
       // 상단 이미지 + 이름/설명
-      flex.addItem().direction(.row).alignItems(.start).define { flex in
-        flex.addItem(areaImageView)
-          .width(100)
-          .height(100)
-        
-        flex.addItem()
-          .direction(.column)
-          .marginLeft(16)
-          .grow(1)
-          .shrink(1)
-          .define { flex in
-            flex.addItem(nameLabel)
-            flex.addItem(descriptionLabel)
-              .marginTop(4)
-              .grow(1)
-              .shrink(1)
-              .minHeight(20)
-          }
-      }
+      $0.addItem().direction(.row).alignItems(.start)
+        .define {
+          $0.addItem(areaImageView)
+            .width(Metric.imageSize)
+            .height(Metric.imageSize)
+          
+          $0.addItem().direction(.column).marginLeft(16).grow(1).shrink(1)
+            .define {
+              $0.addItem(nameLabel)
+              $0.addItem(descriptionLabel)
+                .marginTop(4).grow(1).shrink(1).minHeight(20)
+            }
+        }
     }
   }
+  
+  
+  // MARK: Public Method
+  
+  public func configure(with data: SmokingArea) {
+    DispatchQueue.main.async {
+      self.nameLabel.text = data.name
+      self.descriptionLabel.text = data.description
+      
+      // 기존 태그 섹션 제거
+      for section in self.tagSections {
+        section.removeFromSuperview()
+      }
+      self.tagSections.removeAll()
+      
+      // 새로운 섹션 생성
+      let envSection = self.makeTagSection(title: "환경", tags: data.selectedEnvironmentTags)
+      let typeSection = self.makeTagSection(title: "유형", tags: data.selectedTypeTags)
+      let facilitySection = self.makeTagSection(title: "시설", tags: data.selectedFacilityTags)
+      
+      self.tagSections = [envSection, typeSection, facilitySection]
+      
+      for section in self.tagSections {
+        self.rootFlexContainer.flex.addItem(section).marginTop(20)
+      }
+      
+      self.rootFlexContainer.flex.layout()
+    }
+  }
+  
   
   private func makeTagSection(title: String, tags: [String]) -> UIView {
     let container = UIView()
@@ -116,34 +141,5 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
       }
     }
     return container
-  }
-  
-  
-  // MARK: Public Method
-  
-  public func configure(with data: SmokingArea) {
-    DispatchQueue.main.async {
-      self.nameLabel.text = data.name
-      self.descriptionLabel.text = data.description
-      
-      // 기존 태그 섹션 제거
-      for section in self.tagSections {
-        section.removeFromSuperview()
-      }
-      self.tagSections.removeAll()
-      
-      // 새로운 섹션 생성
-      let envSection = self.makeTagSection(title: "환경", tags: data.selectedEnvironmentTags)
-      let typeSection = self.makeTagSection(title: "유형", tags: data.selectedTypeTags)
-      let facilitySection = self.makeTagSection(title: "시설", tags: data.selectedFacilityTags)
-      
-      self.tagSections = [envSection, typeSection, facilitySection]
-      
-      for section in self.tagSections {
-        self.rootFlexContainer.flex.addItem(section).marginTop(20)
-      }
-      
-      self.rootFlexContainer.flex.layout()
-    }
   }
 }

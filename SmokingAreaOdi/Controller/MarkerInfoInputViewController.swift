@@ -21,7 +21,9 @@ final class MarkerInfoInputViewController: UIViewController {
   // MARK: Constant
   
   private enum Metric {
-    static let mapHeight: CGFloat = 200
+    //static let mapHeight: CGFloat = 200
+    static let imageMargin: CGFloat = 20
+    static let imageSize: CGFloat = 70
     static let labelFontSize: CGFloat = 16
     static let labelHeight: CGFloat = 50
     static let textfontSize: CGFloat = 16
@@ -54,6 +56,16 @@ final class MarkerInfoInputViewController: UIViewController {
   private let contentView = UIView()
   private let mapView = NMFMapView()
   private let markerCoordinateImageView = UIImageView(image: UIImage(named: "marker_Pin"))
+  
+  //사진
+  private let areaImage = UIButton().then {
+    $0.setImage(UIImage(systemName: "camera.on.rectangle.fill"), for: .normal)
+    $0.layer.borderWidth = 0.5
+    $0.layer.borderColor = UIColor.systemGray4.cgColor
+    //$0.layer.cornerRadius = 15
+    //$0.layer.masksToBounds = true
+  }
+  
   
   // 이름
   private let nameLabel = UILabel().then {
@@ -150,7 +162,8 @@ final class MarkerInfoInputViewController: UIViewController {
     self.contentView.flex
       .direction(.column)
       .define {
-        $0.addItem(self.mapView).height(Metric.mapHeight)
+        //$0.addItem(self.mapView).height(Metric.mapHeight)
+        $0.addItem(self.areaImage).height(Metric.imageSize).width(Metric.imageSize).marginLeft(Metric.imageMargin).marginTop(Metric.imageMargin)
         
         $0.addItem()
           .direction(.column)
