@@ -66,7 +66,6 @@ final class MarkerInfoInputViewController: UIViewController {
     $0.layer.masksToBounds = true
   }
   
-  
   // 이름
   private let nameLabel = UILabel().then {
     $0.text = "흡연구역 이름"
@@ -127,7 +126,8 @@ final class MarkerInfoInputViewController: UIViewController {
     
     self.defineFlexContainer()
     
-    self.didTappedSavebutton()
+    self.didTappedAreaImageButton()
+    self.didTappedSaveButton()
   }
   
   
@@ -276,7 +276,20 @@ final class MarkerInfoInputViewController: UIViewController {
     print(title, array)
   }
   
-  private func didTappedSavebutton() {
+  
+  // 카메라 버튼 탭
+  
+  private func didTappedAreaImageButton() {
+    self.areaImage.rx.tap.subscribe(
+      onNext: { [weak self] in
+        print("카메라 버튼 눌림")
+      })
+    .disposed(by: disposeBag)
+  }
+  
+  // 저장 버튼 탭
+  
+  private func didTappedSaveButton() {
     self.saveButton.rx.tap.subscribe(
       onNext: { [weak self] in
         self?.saveSmokinAreaInfo()
