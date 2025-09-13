@@ -8,7 +8,7 @@
 import Foundation
 
 struct SmokingArea {
-  //var areaImage: Image
+  var imageURL: String?
   var name: String
   var description: String
   var areaLat: Double
@@ -21,6 +21,7 @@ struct SmokingArea {
   
   var asDictionary: [String: Any] {
       return [
+        "imageUrl": imageURL ?? "",
         "name": name,
         "description": description,
         "areaLat": areaLat,
