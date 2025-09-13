@@ -26,7 +26,7 @@ final class MarkerPositionSelectorViewController: UIViewController {
   
   //MARK: UI
   
-  private let mapView = NMFMapView()
+  private let mapView = NMFNaverMapView()
   private let nextButton = UIButton().then {
     $0.setTitle("다음", for: .normal)
     $0.setTitleColor(.white, for: .normal)
@@ -76,6 +76,7 @@ final class MarkerPositionSelectorViewController: UIViewController {
   
   private func setup() {
     self.navigationItem.title = "위치 지정"
+    self.mapView.showLocationButton = true
   }
   
   private func addSubViews() {
@@ -104,8 +105,8 @@ final class MarkerPositionSelectorViewController: UIViewController {
       onNext: { [weak self] in
         let markerInfoInputVC = MarkerInfoInputViewController()
         self?.navigationController?.pushViewController(markerInfoInputVC, animated: true)
-        markerInfoInputVC.markerLat = self?.mapView.cameraPosition.target.lat
-        markerInfoInputVC.markerLng = self?.mapView.cameraPosition.target.lng
+        markerInfoInputVC.markerLat = self?.mapView.mapView.cameraPosition.target.lat
+        markerInfoInputVC.markerLng = self?.mapView.mapView.cameraPosition.target.lng
       })
     .disposed(by: self.disposeBag)
   }
@@ -137,6 +138,6 @@ extension MarkerPositionSelectorViewController : CLLocationManagerDelegate {
   
   private func cameraUpdate(lat: Double, lng: Double) {
     let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: lat, lng: lng))
-    self.mapView.moveCamera(cameraUpdate)
+    self.mapView.mapView.moveCamera(cameraUpdate)
   }
 }

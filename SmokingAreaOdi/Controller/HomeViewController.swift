@@ -76,7 +76,10 @@ final class HomeViewController: UIViewController {
   
   // MARK: Setup
   
-  private func setup() { self.navigationItem.title = "Home" }
+  private func setup() {
+    self.navigationItem.title = "Home"
+    self.mapView.showLocationButton = true
+}
   
   private func addSubviews() {
     self.view.addSubview(self.mapView)
