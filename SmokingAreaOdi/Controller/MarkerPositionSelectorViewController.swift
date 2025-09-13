@@ -132,6 +132,7 @@ extension MarkerPositionSelectorViewController : CLLocationManagerDelegate {
     print("2. 사용자의 좌표 : (\(latitude), \(longitude))")
     
     self.cameraUpdate(lat: latitude, lng: longitude)
+    manager.stopUpdatingLocation()
   }
   
   private func cameraUpdate(lat: Double, lng: Double) {
