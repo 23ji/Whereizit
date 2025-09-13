@@ -186,6 +186,7 @@ extension HomeViewController: CLLocationManagerDelegate {
     
     // 3. 지도 뷰를 현재 위치로 이동시키는 메서드 호출
     self.cameraUpdate(lat: userLat, lng: userLng)
+    manager.stopUpdatingLocation()
   }
   
   private func cameraUpdate(lat: Double, lng: Double) {
