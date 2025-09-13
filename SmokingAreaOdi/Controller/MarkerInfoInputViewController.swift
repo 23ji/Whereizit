@@ -6,6 +6,7 @@
 //
 
 import FirebaseCore
+import FirebaseStorage
 import FirebaseFirestore
 import FlexLayout
 import IQKeyboardManagerSwift
@@ -44,6 +45,8 @@ final class MarkerInfoInputViewController: UIViewController {
   var selectedEnvironmentTags: [String] = []
   var selectedTypeTags: [String] = []
   var selectedFacilityTags: [String] = []
+  
+  private var capturedImageUrl: String?
   
   private let db = Firestore.firestore()
   
@@ -315,6 +318,7 @@ final class MarkerInfoInputViewController: UIViewController {
     
     // 모델로 만들기
     let smokingArea = SmokingArea(
+      imageURL: capturedImageUrl,
       name: name,
       description: description,
       areaLat: lat,
@@ -363,12 +367,32 @@ extension MarkerInfoInputViewController: UIImagePickerControllerDelegate, UINavi
   }
   
   func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-    //???
     picker.dismiss(animated: true, completion: nil)
+    if let image = info[.originalImage] as? UIImage {
+      self.areaImage.setImage(image, for: .normal)
+      self.uploadImage(image)
+    }
   }
   
   func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
     picker.dismiss(animated: true, completion: nil)
   }
   
+  func uploadImage(_ image: UIImage) {
+    guard let imageData = image.jpegData(compressionQuality: 0.8) else { return }
+    let storageRef = Storage.storage().reference()
+    let fileName = "smokingAreas/\(UUID().uuidString).jpg"
+    let imageRef = storageRef.child(fileName)
+    
+    imageRef.putData(imageData, metadata: nil) { [weak self] _, error in
+      if let error = error {
+        print("이미지 업로드 실패")
+        return
+      }
+      imageRef.downloadURL { url, _ in
+        self?.capturedImageUrl = url?.absoluteString
+        print("업로드 완료 : ", self?.capturedImageUrl)
+      }
+    }
+  }
 }
