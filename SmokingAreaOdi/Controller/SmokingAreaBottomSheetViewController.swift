@@ -25,9 +25,6 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
   // MARK: UI Components
   private let rootFlexContainer = UIView()
   
-  // storage는 직접 사용하지 않으므로 이 클래스에서는 필요 없을 수 있습니다.
-  // let storage = Storage.storage()
-  
   private let areaImageView = UIImageView().then {
     $0.backgroundColor = .systemGray5
     $0.layer.cornerRadius = 8
@@ -66,22 +63,23 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
   
   // MARK: Setup Layout
   private func setupLayout() {
-    rootFlexContainer.flex.direction(.column).padding(Metric.horizontalMargin).define {
-      // 상단 이미지 + 이름/설명
-      $0.addItem().direction(.row).alignItems(.start)
-        .define {
-          $0.addItem(areaImageView)
-            .width(Metric.imageSize)
-            .height(Metric.imageSize)
-          
-          $0.addItem().direction(.column).marginLeft(16).grow(1).shrink(1)
-            .define {
-              $0.addItem(nameLabel)
-              $0.addItem(descriptionLabel)
-                .marginTop(4).grow(1).shrink(1).minHeight(20)
-            }
-        }
-    }
+    rootFlexContainer.flex.direction(.column).padding(Metric.horizontalMargin)
+      .define {
+        // 상단 이미지 + 이름/설명
+        $0.addItem().direction(.row).alignItems(.start)
+          .define {
+            $0.addItem(areaImageView)
+              .width(Metric.imageSize)
+              .height(Metric.imageSize)
+            
+            $0.addItem().direction(.column).marginLeft(16).grow(1).shrink(1)
+              .define {
+                $0.addItem(nameLabel)
+                $0.addItem(descriptionLabel)
+                  .marginTop(4).grow(1).shrink(1).minHeight(20)
+              }
+          }
+      }
   }
   
   
