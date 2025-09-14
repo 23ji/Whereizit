@@ -110,11 +110,13 @@ final class HomeViewController: UIViewController {
               let areaLat = data["areaLat"] as? Double,
               let areaLng = data["areaLng"] as? Double
         else { return }
+        let imageURL = data["imageURL"] as? String ?? ""
         let selectedEnvironmentTags = (data["environmentTags"] as? [String]) ?? []
         let selectedTypeTags = (data["typeTags"] as? [String]) ?? []
         let selectedFacilityTags = (data["facilityTags"] as? [String]) ?? []
         
         let areaData = SmokingArea(
+          imageURL: imageURL,
           name: name,
           description: description,
           areaLat: areaLat,

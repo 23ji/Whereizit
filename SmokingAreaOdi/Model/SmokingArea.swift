@@ -21,7 +21,7 @@ struct SmokingArea {
   
   var asDictionary: [String: Any] {
       return [
-        "imageUrl": imageURL ?? "",
+        "imageURL": imageURL,
         "name": name,
         "description": description,
         "areaLat": areaLat,

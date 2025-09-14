@@ -5,11 +5,12 @@
 //  Created by 23ji on 8/31/25.
 //
 
+import UIKit
+import FirebaseCore
+import FirebaseStorage
 import FlexLayout
 import PinLayout
 import Then
-
-import UIKit
 
 final class SmokingAreaBottomSheetViewController: UIViewController {
   
@@ -22,13 +23,16 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
   }
   
   // MARK: UI Components
-  
   private let rootFlexContainer = UIView()
+  
+  // storage는 직접 사용하지 않으므로 이 클래스에서는 필요 없을 수 있습니다.
+  // let storage = Storage.storage()
   
   private let areaImageView = UIImageView().then {
     $0.backgroundColor = .systemGray5
     $0.layer.cornerRadius = 8
     $0.clipsToBounds = true
+    $0.contentMode = .scaleAspectFill // 이미지가 꽉 차도록 설정
   }
   
   private let nameLabel = UILabel().then {
@@ -47,7 +51,6 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
   private var tagSections: [UIView] = []
   
   // MARK: LifeCycle
-  
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .white
@@ -62,7 +65,6 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
   }
   
   // MARK: Setup Layout
-  
   private func setupLayout() {
     rootFlexContainer.flex.direction(.column).padding(Metric.horizontalMargin).define {
       // 상단 이미지 + 이름/설명
@@ -90,18 +92,19 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
       self.nameLabel.text = data.name
       self.descriptionLabel.text = data.description
       
-      // 기존 태그 섹션 제거
-      for section in self.tagSections {
-        section.removeFromSuperview()
-      }
+      // 이미지 로딩 전, 기본 이미지(placeholder) 설정 또는 nil로 초기화
+      self.areaImageView.image = nil
+      
+      self.loadImage(from: data.imageURL)
+      
+      self.tagSections.forEach { $0.removeFromSuperview() }
       self.tagSections.removeAll()
       
-      // 새로운 섹션 생성
       let envSection = self.makeTagSection(title: "환경", tags: data.selectedEnvironmentTags)
       let typeSection = self.makeTagSection(title: "유형", tags: data.selectedTypeTags)
       let facilitySection = self.makeTagSection(title: "시설", tags: data.selectedFacilityTags)
       
-      self.tagSections = [envSection, typeSection, facilitySection]
+      self.tagSections = [envSection, typeSection, facilitySection].filter { !$0.subviews.isEmpty }
       
       for section in self.tagSections {
         self.rootFlexContainer.flex.addItem(section).marginTop(20)
@@ -111,8 +114,25 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
     }
   }
   
+  private func loadImage(from urlString: String?) {
+      guard let urlString = urlString, let url = URL(string: urlString) else { return }
+      
+      URLSession.shared.dataTask(with: url) { data, _, _ in
+          if let data = data, let image = UIImage(data: data) {
+              DispatchQueue.main.async {
+                  self.areaImageView.image = image
+              }
+          }
+      }.resume()
+  }
+
   
   private func makeTagSection(title: String, tags: [String]) -> UIView {
+    // 태그가 없으면 뷰를 생성하지 않음
+    guard !tags.isEmpty else {
+      return UIView()
+    }
+    
     let container = UIView()
     
     let titleLabel = UILabel().then {
@@ -121,7 +141,7 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
     }
     
     container.flex.direction(.column).define { flex in
-      flex.addItem(titleLabel).height(Metric.labelHeight)
+      flex.addItem(titleLabel).marginBottom(10) // 타이틀과 태그 사이 간격
       
       flex.addItem().direction(.row).wrap(.wrap).define { flex in
         for tag in tags {
@@ -134,9 +154,9 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
             $0.layer.borderWidth = 0.7
             $0.layer.borderColor = UIColor.systemGray4.cgColor
             $0.contentEdgeInsets = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
+            $0.isUserInteractionEnabled = false // 클릭 방지
           }
-          flex.addItem(tagButton)
-            .margin(0, 0, 10, 10)
+          flex.addItem(tagButton).marginRight(8).marginBottom(8)
         }
       }
     }
