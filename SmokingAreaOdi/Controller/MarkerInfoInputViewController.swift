@@ -386,7 +386,7 @@ extension MarkerInfoInputViewController: UIImagePickerControllerDelegate, UINavi
     
     imageRef.putData(imageData, metadata: nil) { [weak self] _, error in
       if let error = error {
-        print("이미지 업로드 실패")
+        print("이미지 업로드 실패", error)
         return
       }
       imageRef.downloadURL { url, _ in

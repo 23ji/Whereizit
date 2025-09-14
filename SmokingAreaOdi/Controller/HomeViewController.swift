@@ -8,6 +8,7 @@
 import CoreLocation
 import FirebaseCore
 import FirebaseFirestore
+import FirebaseStorage
 import FloatingPanel
 import NMapsMap
 import PanModal
@@ -181,6 +182,7 @@ extension HomeViewController: CLLocationManagerDelegate {
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
     // 1. locations 배열에서 가장 최근 위치 정보 가져오기
     guard let bestLocation = locations.last else { return }
+    
     // 2. 현재 위치의 위도와 경도 추출
     let userLat = bestLocation.coordinate.latitude
     let userLng = bestLocation.coordinate.longitude
@@ -204,16 +206,19 @@ extension HomeViewController: CLLocationManagerDelegate {
 extension HomeViewController: FloatingPanelControllerDelegate {
   func showBottomSheet() {
     // 1. FloatingPanelController 인스턴스 생성 및 delegate 설정
-    floatingPanelController = FloatingPanelController()
-    floatingPanelController?.surfaceView.layer.cornerRadius = 15
-    floatingPanelController?.surfaceView.layer.masksToBounds = true
-    floatingPanelController?.delegate = self
+    self.floatingPanelController = FloatingPanelController()
+    self.floatingPanelController?.surfaceView.layer.cornerRadius = 15
+    self.floatingPanelController?.surfaceView.layer.masksToBounds = true
+    self.floatingPanelController?.delegate = self
+    
     // 2. 바텀시트에 content로 들어갈 UIViewController 설정
-    floatingPanelController?.set(contentViewController: smokingAreaBottomSheetVC)
+    self.floatingPanelController?.set(contentViewController: smokingAreaBottomSheetVC)
+    
     // 3. 부모 뷰에 바텀시트 추가
-    floatingPanelController?.addPanel(toParent: self)
+    self.floatingPanelController?.addPanel(toParent: self)
+    
     // 4. 바텀시트의 초기 상태를 설정
-    floatingPanelController?.move(to: .hidden, animated: true)
+    self.floatingPanelController?.move(to: .hidden, animated: true)
   }
 }
 
