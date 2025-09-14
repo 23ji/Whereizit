@@ -19,7 +19,6 @@
 		49E629652E2F866000751E26 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 49E629642E2F866000751E26 /* SnapKit */; };
 		49E629682E2F86C200751E26 /* FlexLayout in Frameworks */ = {isa = PBXBuildFile; productRef = 49E629672E2F86C200751E26 /* FlexLayout */; };
 		49E6296B2E2F86FE00751E26 /* PinLayout in Frameworks */ = {isa = PBXBuildFile; productRef = 49E6296A2E2F86FE00751E26 /* PinLayout */; };
-		49E8883C2E73F22D00969A0F /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E8883B2E73F22D00969A0F /* CameraViewController.swift */; };
 		9F1932812E75718500F94CB2 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 9F1932802E75718500F94CB2 /* FirebaseStorage */; };
 		9F73EF6C2E44BFD0008E66E5 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 9F73EF6B2E44BFD0008E66E5 /* IQKeyboardManagerSwift */; };
 		9F933E892E484A62001699AA /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 9F933E882E484A62001699AA /* RxCocoa */; };
@@ -44,7 +43,6 @@
 		49288AB82D19450D00FF1E50 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		49288ABA2D19450D00FF1E50 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		49E6295F2E27756C00751E26 /* MarkerPositionSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerPositionSelectorViewController.swift; sourceTree = "<group>"; };
-		49E8883B2E73F22D00969A0F /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		71E8D5BE6D6F3B97EE6F1699 /* Pods_SmokingAreaOdi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmokingAreaOdi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FA6B1782E64473E00A94571 /* SmokingAreaBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokingAreaBottomSheetViewController.swift; sourceTree = "<group>"; };
 		9FA7F6A02E76BB03000BEF34 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -142,7 +140,6 @@
 				49E6295F2E27756C00751E26 /* MarkerPositionSelectorViewController.swift */,
 				A7990CBD2E288E5100B3D3CE /* MarkerInfoInputViewController.swift */,
 				9FA6B1782E64473E00A94571 /* SmokingAreaBottomSheetViewController.swift */,
-				49E8883B2E73F22D00969A0F /* CameraViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -267,7 +264,6 @@
 				49288AAD2D19450C00FF1E50 /* AppDelegate.swift in Sources */,
 				49288AAF2D19450C00FF1E50 /* SceneDelegate.swift in Sources */,
 				490221A12E67DBBF0069DDEC /* SmokingArea.swift in Sources */,
-				49E8883C2E73F22D00969A0F /* CameraViewController.swift in Sources */,
 				A7990CBE2E288E5200B3D3CE /* MarkerInfoInputViewController.swift in Sources */,
 				9FA6B1792E64473E00A94571 /* SmokingAreaBottomSheetViewController.swift in Sources */,
 			);
