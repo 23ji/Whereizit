@@ -15,24 +15,32 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
   func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
     guard let windowScene = scene as? UIWindowScene else { return }
     
-    //메인 윈도우 생성
     let window = UIWindow(windowScene: windowScene)
     
-    // 첫화면
-    let rootVC = HomeViewController()
+    let homeVC = HomeViewController()
+    homeVC.title = "Home"
+    let mapImage = UIImage(systemName: "map")?
+        .withConfiguration(UIImage.SymbolConfiguration(pointSize: 15))
+    homeVC.tabBarItem = UITabBarItem(title: "흡연구역", image: mapImage, tag: 0)
+    let homeNav = UINavigationController(rootViewController: homeVC)
     
-    //루트
-    let navController = UINavigationController(rootViewController: rootVC)
+    let markerPositionSelectorVC = MarkerPositionSelectorViewController()
+    markerPositionSelectorVC.title = "추가"
+    let plusImage = UIImage(systemName: "plus")?
+        .withConfiguration(UIImage.SymbolConfiguration(pointSize: 15))
+    markerPositionSelectorVC.tabBarItem = UITabBarItem(title: "추가", image: plusImage, tag: 1)
+    let markerPositionSelectorNav = UINavigationController(rootViewController: markerPositionSelectorVC)
     
-    // 네비게이션 바 전역 스타일 예시 (옵션)
-    let appearance = UINavigationBarAppearance()
-    appearance.configureWithOpaqueBackground()
-    appearance.backgroundColor = .systemBackground
-    navController.navigationBar.standardAppearance = appearance
-    navController.navigationBar.scrollEdgeAppearance = appearance
+    let tabBarController = UITabBarController()
+    tabBarController.viewControllers = [homeNav, markerPositionSelectorNav]
     
-    // 윈도우에 네비게이션 컨트롤러 적용
-    window.rootViewController = navController
+    let tabBarAppearance = UITabBarAppearance()
+    tabBarAppearance.configureWithOpaqueBackground()
+    tabBarAppearance.backgroundColor = .white
+    tabBarController.tabBar.standardAppearance = tabBarAppearance
+    tabBarController.tabBar.scrollEdgeAppearance = tabBarAppearance
+    
+    window.rootViewController = tabBarController
     self.window = window
     window.makeKeyAndVisible()
   }
