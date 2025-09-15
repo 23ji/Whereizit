@@ -29,29 +29,30 @@ final class HomeViewController: UIViewController {
     static let addButtonBottom: CGFloat = 40
   }
   
-  
   // MARK: UI
   
   private let mapView = NMFNaverMapView()
   private let addButton = UIButton().then {
     $0.setImage(UIImage(named: "plusButton"), for: .normal)
   }
-  
+  private let currentLocationButton = UIButton().then {
+    $0.setImage(UIImage(systemName: "dot.scope"), for: .normal)
+    $0.backgroundColor = .white
+    $0.layer.cornerRadius = 25
+    $0.layer.shadowOpacity = 0.1
+    $0.tintColor = .black
+  }
   
   // MARK: Property
   
   private let db = Firestore.firestore()
-  
   private let locationManager = CLLocationManager()
-  
   
   // MARK: 바텀시트
   
-  // FloatingPanelController를 담을 변수를 선언
   var nearbyPanel: FloatingPanelController!
   var tappedPanel: FloatingPanelController!
   
-  // 바텀시트에 띄울 ViewController의 인스턴스를 생성
   var nearBySmokingAreasBottomSheetVC = NearbySmokingAreasBottomSheetViewController()
   var smokingAreaBottomSheetVC = SmokingAreaBottomSheetViewController()
   
@@ -59,7 +60,6 @@ final class HomeViewController: UIViewController {
   
   private let markerTapped = PublishSubject<SmokingArea>()
   private let disposeBag = DisposeBag()
-  
   
   // MARK: LifeCycle
   
@@ -73,6 +73,7 @@ final class HomeViewController: UIViewController {
     self.setupPanels()
     self.didTappedAddButton()
     self.bind()
+    self.didTapCurrentLocationButton()
     
     self.mapView.mapView.touchDelegate = self
   }
@@ -81,12 +82,13 @@ final class HomeViewController: UIViewController {
   
   private func setup() {
     self.navigationItem.title = "Home"
-    self.mapView.showLocationButton = true
-}
+    self.mapView.showLocationButton = false // 기본 버튼 숨김
+  }
   
   private func addSubviews() {
     self.view.addSubview(self.mapView)
     self.view.addSubview(self.addButton)
+    self.view.addSubview(self.currentLocationButton)
   }
   
   private func makeConstraints() {
@@ -96,9 +98,14 @@ final class HomeViewController: UIViewController {
       $0.trailing.equalToSuperview().inset(Metric.addButtonTrailing)
       $0.bottom.equalToSuperview().inset(Metric.addButtonBottom)
     }
+    
+    self.currentLocationButton.snp.makeConstraints {
+      $0.trailing.equalToSuperview().inset(10)
+      $0.bottom.equalTo(self.addButton.snp.top).offset(-70) // addButton 위에 위치
+      $0.width.height.equalTo(50)
+    }
   }
   
-
   // MARK: Area Marker
   
   private func smokingAreas() {
@@ -141,7 +148,6 @@ final class HomeViewController: UIViewController {
     }
   }
   
-  
   private func bind() {
     self.markerTapped
       .subscribe(onNext: { [weak self] areaData in
@@ -153,7 +159,6 @@ final class HomeViewController: UIViewController {
       .disposed(by: disposeBag)
   }
   
-  
   // MARK: Action
   
   private func didTappedAddButton() {
@@ -164,37 +169,46 @@ final class HomeViewController: UIViewController {
       })
     .disposed(by: self.disposeBag)
   }
+  
+  private func didTapCurrentLocationButton() {
+    self.currentLocationButton.rx.tap
+      .subscribe(onNext: { [weak self] in
+        guard let self = self,
+              let loc = self.locationManager.location else { return }
+        
+        let update = NMFCameraUpdate(scrollTo: NMGLatLng(
+          lat: loc.coordinate.latitude,
+          lng: loc.coordinate.longitude
+        ))
+        self.mapView.mapView.moveCamera(update)
+      })
+      .disposed(by: self.disposeBag)
+  }
 }
 
 
 // MARK: Location / Camera
-// 위치 업데이트 시 최신 좌표로 카메라 이동
 
 extension HomeViewController: CLLocationManagerDelegate {
   
   private func setLocationManager() {
-    self.locationManager.delegate = self // 위치 정보 업데이트 시 델리게이트 호출
-    self.locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation // 최고 수준 정확도
-    self.locationManager.distanceFilter = kCLDistanceFilterNone // 조금 변경되어도 위치 업데이트
-    self.locationManager.activityType = .otherNavigation // 도로 따르지 않는 수준의 사용자
-    self.locationManager.pausesLocationUpdatesAutomatically = false // 사용자가 움직이지 않아도 위치 업데이트
-    self.locationManager.requestWhenInUseAuthorization() // 위치 사용 권한 요청
-    self.locationManager.startUpdatingLocation() // 위치 업데이트 시작
+    self.locationManager.delegate = self
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
+    self.locationManager.distanceFilter = kCLDistanceFilterNone
+    self.locationManager.activityType = .otherNavigation
+    self.locationManager.pausesLocationUpdatesAutomatically = false
+    self.locationManager.requestWhenInUseAuthorization()
+    self.locationManager.startUpdatingLocation()
   }
   
-  // CLLocationManagerDelegate
-  // 새로운 위치 데이터가 업데이트될 때 호출되는 델리게이트 메서드입니다.
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-    // 1. locations 배열에서 가장 최근 위치 정보 가져오기
     guard let bestLocation = locations.last else { return }
     
-    // 2. 현재 위치의 위도와 경도 추출
     let userLat = bestLocation.coordinate.latitude
     let userLng = bestLocation.coordinate.longitude
     
     print("1. 사용자의 위치 : (\(userLat), \(userLng))")
     
-    // 3. 지도 뷰를 현재 위치로 이동시키는 메서드 호출
     self.cameraUpdate(lat: userLat, lng: userLng)
     manager.stopUpdatingLocation()
   }
@@ -211,21 +225,21 @@ extension HomeViewController: CLLocationManagerDelegate {
 extension HomeViewController: FloatingPanelControllerDelegate {
   
   func setupPanels() {
-      // 1. Nearby 패널
-      nearbyPanel = FloatingPanelController()
-      nearbyPanel.surfaceView.layer.cornerRadius = 15
-      nearbyPanel.surfaceView.layer.masksToBounds = true
-      nearbyPanel.set(contentViewController: nearBySmokingAreasBottomSheetVC)
-      nearbyPanel.addPanel(toParent: self)
-      nearbyPanel.move(to: .tip, animated: false)
+    // Nearby 패널
+    self.nearbyPanel = FloatingPanelController()
+    self.nearbyPanel.surfaceView.layer.cornerRadius = 15
+    self.nearbyPanel.surfaceView.layer.masksToBounds = true
+    self.nearbyPanel.set(contentViewController: nearBySmokingAreasBottomSheetVC)
+    self.nearbyPanel.addPanel(toParent: self)
+    self.nearbyPanel.move(to: .tip, animated: false)
 
-      // 2. Tapped 패널
-      tappedPanel = FloatingPanelController()
-      tappedPanel.surfaceView.layer.cornerRadius = 15
-      tappedPanel.surfaceView.layer.masksToBounds = true
-      tappedPanel.set(contentViewController: smokingAreaBottomSheetVC)
-      tappedPanel.addPanel(toParent: self)
-      tappedPanel.move(to: .hidden, animated: false)
+    // Tapped 패널
+    self.tappedPanel = FloatingPanelController()
+    self.tappedPanel.surfaceView.layer.cornerRadius = 15
+    self.tappedPanel.surfaceView.layer.masksToBounds = true
+    self.tappedPanel.set(contentViewController: smokingAreaBottomSheetVC)
+    self.tappedPanel.addPanel(toParent: self)
+    self.tappedPanel.move(to: .hidden, animated: false)
   }
 }
 

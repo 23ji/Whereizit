@@ -16,7 +16,7 @@ final class NearbySmokingAreasBottomSheetViewController: UIViewController {
   
   private let titleLabel = UILabel().then {
     $0.text = "주변 흡연구역 목록"
-    $0.font = .systemFont(ofSize: 15, weight: .light)
+    $0.font = .systemFont(ofSize: 15, weight: .regular)
     $0.textAlignment = .center
   }
   
