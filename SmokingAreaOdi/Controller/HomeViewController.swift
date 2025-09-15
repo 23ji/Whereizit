@@ -26,7 +26,7 @@ final class HomeViewController: UIViewController {
   
   private enum Metric {
     static let addButtonTrailing: CGFloat = 24
-    static let addButtonBottom: CGFloat = 80
+    static let addButtonBottom: CGFloat = 180
   }
   
   // MARK: UI
@@ -77,7 +77,7 @@ final class HomeViewController: UIViewController {
         self.mapView.mapView.contentInset = UIEdgeInsets(
               top: 0,
               left: 0,
-              bottom: tabBarHeight,
+              bottom: tabBarHeight - 10,
               right: 0
           )
       }
@@ -165,7 +165,8 @@ final class HomeViewController: UIViewController {
     self.addButton.rx.tap.subscribe(
       onNext : { [weak self] in
         let markerPositionSeletorVC = MarkerPositionSelectorViewController()
-        self?.navigationController?.pushViewController(markerPositionSeletorVC, animated: true)
+        markerPositionSeletorVC.modalPresentationStyle = .fullScreen
+        self?.present(markerPositionSeletorVC, animated: true)
       })
     .disposed(by: self.disposeBag)
   }
