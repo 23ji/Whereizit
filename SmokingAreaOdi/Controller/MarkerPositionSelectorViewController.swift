@@ -77,6 +77,14 @@ final class MarkerPositionSelectorViewController: UIViewController {
   private func setup() {
     self.navigationItem.title = "위치 지정"
     self.mapView.showLocationButton = true
+    
+    guard let navBar = self.navigationController?.navigationBar else { return }
+    let appearance   = UINavigationBarAppearance()
+    appearance.configureWithOpaqueBackground()
+    appearance.backgroundColor = .white
+
+    navBar.standardAppearance = appearance
+    navBar.scrollEdgeAppearance = appearance
   }
   
   private func addSubViews() {
