@@ -51,32 +51,32 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
   // MARK: LifeCycle
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.backgroundColor = .white
-    view.addSubview(rootFlexContainer)
-    setupLayout()
+    self.view.backgroundColor = .white
+    self.view.addSubview(self.rootFlexContainer)
+    self.setupLayout()
   }
   
   override func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
-    rootFlexContainer.pin.all(view.pin.safeArea)
-    rootFlexContainer.flex.layout()
+    self.rootFlexContainer.pin.all(view.pin.safeArea)
+    self.rootFlexContainer.flex.layout()
   }
   
   // MARK: Setup Layout
   private func setupLayout() {
-    rootFlexContainer.flex.direction(.column).padding(Metric.horizontalMargin)
+    self.rootFlexContainer.flex.direction(.column).padding(Metric.horizontalMargin)
       .define {
         // 상단 이미지 + 이름/설명
         $0.addItem().direction(.row).alignItems(.start)
           .define {
-            $0.addItem(areaImageView)
+            $0.addItem(self.areaImageView)
               .width(Metric.imageSize)
               .height(Metric.imageSize)
             
             $0.addItem().direction(.column).marginLeft(16).grow(1).shrink(1)
               .define {
-                $0.addItem(nameLabel)
-                $0.addItem(descriptionLabel)
+                $0.addItem(self.nameLabel)
+                $0.addItem(self.descriptionLabel)
                   .marginTop(4).grow(1).shrink(1).minHeight(20)
               }
           }
