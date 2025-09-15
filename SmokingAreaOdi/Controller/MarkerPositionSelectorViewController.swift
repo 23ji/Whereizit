@@ -75,7 +75,7 @@ final class MarkerPositionSelectorViewController: UIViewController {
   // MARK: Setup
   
   private func setup() {
-    self.navigationItem.title = "위치 지정"
+    self.navigationItem.title = "흡연구역 추가 위치 지정"
     self.mapView.showLocationButton = true
     
     guard let navBar = self.navigationController?.navigationBar else { return }
