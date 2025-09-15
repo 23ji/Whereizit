@@ -15,6 +15,7 @@
 		49288AAF2D19450C00FF1E50 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49288AAE2D19450C00FF1E50 /* SceneDelegate.swift */; };
 		49288AB62D19450D00FF1E50 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49288AB52D19450D00FF1E50 /* Assets.xcassets */; };
 		49288AB92D19450D00FF1E50 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 49288AB82D19450D00FF1E50 /* Base */; };
+		498ECFA32E77F32C00B9EABC /* NearbySmokingAreasBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498ECFA22E77F32C00B9EABC /* NearbySmokingAreasBottomSheetViewController.swift */; };
 		49E629602E27756C00751E26 /* MarkerPositionSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E6295F2E27756C00751E26 /* MarkerPositionSelectorViewController.swift */; };
 		49E629652E2F866000751E26 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 49E629642E2F866000751E26 /* SnapKit */; };
 		49E629682E2F86C200751E26 /* FlexLayout in Frameworks */ = {isa = PBXBuildFile; productRef = 49E629672E2F86C200751E26 /* FlexLayout */; };
@@ -42,6 +43,7 @@
 		49288AB52D19450D00FF1E50 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		49288AB82D19450D00FF1E50 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		49288ABA2D19450D00FF1E50 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		498ECFA22E77F32C00B9EABC /* NearbySmokingAreasBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbySmokingAreasBottomSheetViewController.swift; sourceTree = "<group>"; };
 		49E6295F2E27756C00751E26 /* MarkerPositionSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerPositionSelectorViewController.swift; sourceTree = "<group>"; };
 		71E8D5BE6D6F3B97EE6F1699 /* Pods_SmokingAreaOdi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmokingAreaOdi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FA6B1782E64473E00A94571 /* SmokingAreaBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokingAreaBottomSheetViewController.swift; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 				49E6295F2E27756C00751E26 /* MarkerPositionSelectorViewController.swift */,
 				A7990CBD2E288E5100B3D3CE /* MarkerInfoInputViewController.swift */,
 				9FA6B1782E64473E00A94571 /* SmokingAreaBottomSheetViewController.swift */,
+				498ECFA22E77F32C00B9EABC /* NearbySmokingAreasBottomSheetViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -265,6 +268,7 @@
 				49288AAF2D19450C00FF1E50 /* SceneDelegate.swift in Sources */,
 				490221A12E67DBBF0069DDEC /* SmokingArea.swift in Sources */,
 				A7990CBE2E288E5200B3D3CE /* MarkerInfoInputViewController.swift in Sources */,
+				498ECFA32E77F32C00B9EABC /* NearbySmokingAreasBottomSheetViewController.swift in Sources */,
 				9FA6B1792E64473E00A94571 /* SmokingAreaBottomSheetViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

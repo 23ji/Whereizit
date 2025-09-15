@@ -48,9 +48,11 @@ final class HomeViewController: UIViewController {
   // MARK: 바텀시트
   
   // FloatingPanelController를 담을 변수를 선언
-  var floatingPanelController: FloatingPanelController?
+  var nearbyPanel: FloatingPanelController!
+  var tappedPanel: FloatingPanelController!
   
   // 바텀시트에 띄울 ViewController의 인스턴스를 생성
+  var nearBySmokingAreasBottomSheetVC = NearbySmokingAreasBottomSheetViewController()
   var smokingAreaBottomSheetVC = SmokingAreaBottomSheetViewController()
   
   // MARK: Rx
@@ -68,7 +70,7 @@ final class HomeViewController: UIViewController {
     self.makeConstraints()
     self.setLocationManager()
     self.smokingAreas()
-    self.showBottomSheet()
+    self.setupPanels()
     self.didTappedAddButton()
     self.bind()
     
@@ -145,7 +147,8 @@ final class HomeViewController: UIViewController {
       .subscribe(onNext: { [weak self] areaData in
         guard let self = self else { return }
         self.smokingAreaBottomSheetVC.configure(with: areaData)
-        self.floatingPanelController?.move(to: .half, animated: true)
+        self.tappedPanel.move(to: .half, animated: true)
+        self.nearbyPanel.move(to: .hidden, animated: true)
       })
       .disposed(by: disposeBag)
   }
@@ -206,27 +209,30 @@ extension HomeViewController: CLLocationManagerDelegate {
 // MARK: FloatingPanel
 
 extension HomeViewController: FloatingPanelControllerDelegate {
-  func showBottomSheet() {
-    // 1. FloatingPanelController 인스턴스 생성 및 delegate 설정
-    self.floatingPanelController = FloatingPanelController()
-    self.floatingPanelController?.surfaceView.layer.cornerRadius = 15
-    self.floatingPanelController?.surfaceView.layer.masksToBounds = true
-    self.floatingPanelController?.delegate = self
-    
-    // 2. 바텀시트에 content로 들어갈 UIViewController 설정
-    self.floatingPanelController?.set(contentViewController: smokingAreaBottomSheetVC)
-    
-    // 3. 부모 뷰에 바텀시트 추가
-    self.floatingPanelController?.addPanel(toParent: self)
-    
-    // 4. 바텀시트의 초기 상태를 설정
-    self.floatingPanelController?.move(to: .hidden, animated: true)
+  
+  func setupPanels() {
+      // 1. Nearby 패널
+      nearbyPanel = FloatingPanelController()
+      nearbyPanel.surfaceView.layer.cornerRadius = 15
+      nearbyPanel.surfaceView.layer.masksToBounds = true
+      nearbyPanel.set(contentViewController: nearBySmokingAreasBottomSheetVC)
+      nearbyPanel.addPanel(toParent: self)
+      nearbyPanel.move(to: .tip, animated: false)
+
+      // 2. Tapped 패널
+      tappedPanel = FloatingPanelController()
+      tappedPanel.surfaceView.layer.cornerRadius = 15
+      tappedPanel.surfaceView.layer.masksToBounds = true
+      tappedPanel.set(contentViewController: smokingAreaBottomSheetVC)
+      tappedPanel.addPanel(toParent: self)
+      tappedPanel.move(to: .hidden, animated: false)
   }
 }
 
 
 extension HomeViewController: NMFMapViewTouchDelegate {
   func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
-    floatingPanelController?.move(to: .hidden, animated: true)
+    self.nearbyPanel.move(to: .tip, animated: true)
+    self.tappedPanel.move(to: .hidden, animated: true)
   }
 }
