@@ -27,6 +27,7 @@ final class MarkerPositionSelectorViewController: UIViewController {
   //MARK: UI
   
   private let mapView = NMFNaverMapView()
+  
   private let nextButton = UIButton().then {
     $0.setTitle("다음", for: .normal)
     $0.setTitleColor(.white, for: .normal)
@@ -40,11 +41,20 @@ final class MarkerPositionSelectorViewController: UIViewController {
     $0.layer.shadowOffset = CGSize(width: 0, height: 3)
     $0.layer.shadowRadius = 4
   }
+  
   private let markerCoordinateImageView = UIImageView(image: UIImage(named: "marker_Pin")).then {
     $0.layer.shadowColor = UIColor.black.cgColor
     $0.layer.shadowOpacity = 0.3
     $0.layer.shadowOffset = CGSize(width: 0, height: 3)
     $0.layer.shadowRadius = 4
+  }
+  
+  private let closeButton = UIButton().then {
+    $0.setImage(UIImage(systemName: "xmark"), for: .normal)
+    $0.tintColor = .black
+    $0.backgroundColor = .white
+    $0.layer.cornerRadius = 20
+    $0.layer.shadowOpacity = 0.1
   }
   
   private let locationManager = CLLocationManager()
@@ -65,6 +75,7 @@ final class MarkerPositionSelectorViewController: UIViewController {
     self.setup()
     self.addSubViews()
     self.makeConstraints()
+    self.setupCloseButton()
     
     self.setLocationManager()
     
@@ -75,15 +86,14 @@ final class MarkerPositionSelectorViewController: UIViewController {
   // MARK: Setup
   
   private func setup() {
-    self.navigationItem.title = "흡연구역 추가 위치 지정"
     self.mapView.showLocationButton = true
     self.mapView.mapView.zoomLevel = 16.0
-
+    
     guard let navBar = self.navigationController?.navigationBar else { return }
     let appearance   = UINavigationBarAppearance()
     appearance.configureWithOpaqueBackground()
     appearance.backgroundColor = .white
-
+    
     navBar.standardAppearance = appearance
     navBar.scrollEdgeAppearance = appearance
   }
@@ -108,6 +118,23 @@ final class MarkerPositionSelectorViewController: UIViewController {
       .marginTop(-markerCoordinateImageView.frame.height / 2)
     // 마커의 높이 절반을 위로 올려 마커 하단 포인트가 화면 중앙에 배치되도록 설정
   }
+  
+  
+  private func setupCloseButton() {
+    view.addSubview(closeButton)
+    closeButton.snp.makeConstraints {
+      $0.top.equalTo(view.safeAreaLayoutGuide).inset(16)
+      $0.trailing.equalToSuperview().inset(16)
+      $0.width.height.equalTo(40)
+    }
+    
+    closeButton.rx.tap
+      .subscribe(onNext: { [weak self] in
+        self?.dismiss(animated: true) // 모달 닫기
+      })
+      .disposed(by: disposeBag)
+  }
+  
   
   private func diTappedNextButton() {
     self.nextButton.rx.tap.subscribe(
