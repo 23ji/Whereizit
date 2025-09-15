@@ -26,7 +26,7 @@ final class HomeViewController: UIViewController {
   
   private enum Metric {
     static let addButtonTrailing: CGFloat = 24
-    static let addButtonBottom: CGFloat = 40
+    static let addButtonBottom: CGFloat = 80
   }
   
   // MARK: UI
@@ -34,13 +34,6 @@ final class HomeViewController: UIViewController {
   private let mapView = NMFNaverMapView()
   private let addButton = UIButton().then {
     $0.setImage(UIImage(named: "plusButton"), for: .normal)
-  }
-  private let currentLocationButton = UIButton().then {
-    $0.setImage(UIImage(systemName: "dot.scope"), for: .normal)
-    $0.backgroundColor = .white
-    $0.layer.cornerRadius = 25
-    $0.layer.shadowOpacity = 0.1
-    $0.tintColor = .black
   }
   
   // MARK: Property
@@ -73,22 +66,35 @@ final class HomeViewController: UIViewController {
     self.setupPanels()
     self.didTappedAddButton()
     self.bind()
-    self.didTapCurrentLocationButton()
     
     self.mapView.mapView.touchDelegate = self
   }
+  
+  
+  override func viewDidLayoutSubviews() {
+      super.viewDidLayoutSubviews()
+      if let tabBarHeight = self.tabBarController?.tabBar.frame.height {
+        self.mapView.mapView.contentInset = UIEdgeInsets(
+              top: 0,
+              left: 0,
+              bottom: tabBarHeight,
+              right: 0
+          )
+      }
+  }
+
   
   // MARK: Setup
   
   private func setup() {
     self.navigationItem.title = "Home"
     self.mapView.mapView.zoomLevel = 16.0
+    self.mapView.showLocationButton = true
   }
   
   private func addSubviews() {
     self.view.addSubview(self.mapView)
     self.view.addSubview(self.addButton)
-    self.view.addSubview(self.currentLocationButton)
   }
   
   private func makeConstraints() {
@@ -97,12 +103,6 @@ final class HomeViewController: UIViewController {
     self.addButton.snp.makeConstraints {
       $0.trailing.equalToSuperview().inset(Metric.addButtonTrailing)
       $0.bottom.equalToSuperview().inset(Metric.addButtonBottom)
-    }
-    
-    self.currentLocationButton.snp.makeConstraints {
-      $0.trailing.equalToSuperview().inset(10)
-      $0.bottom.equalTo(self.addButton.snp.top).offset(-70) // addButton 위에 위치
-      $0.width.height.equalTo(50)
     }
   }
   
@@ -168,21 +168,6 @@ final class HomeViewController: UIViewController {
         self?.navigationController?.pushViewController(markerPositionSeletorVC, animated: true)
       })
     .disposed(by: self.disposeBag)
-  }
-  
-  private func didTapCurrentLocationButton() {
-    self.currentLocationButton.rx.tap
-      .subscribe(onNext: { [weak self] in
-        guard let self = self,
-              let loc = self.locationManager.location else { return }
-        
-        let update = NMFCameraUpdate(scrollTo: NMGLatLng(
-          lat: loc.coordinate.latitude,
-          lng: loc.coordinate.longitude
-        ))
-        self.mapView.mapView.moveCamera(update)
-      })
-      .disposed(by: self.disposeBag)
   }
 }
 
