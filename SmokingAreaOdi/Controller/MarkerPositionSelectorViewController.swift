@@ -77,7 +77,8 @@ final class MarkerPositionSelectorViewController: UIViewController {
   private func setup() {
     self.navigationItem.title = "흡연구역 추가 위치 지정"
     self.mapView.showLocationButton = true
-    
+    self.mapView.mapView.zoomLevel = 16.0
+
     guard let navBar = self.navigationController?.navigationBar else { return }
     let appearance   = UINavigationBarAppearance()
     appearance.configureWithOpaqueBackground()

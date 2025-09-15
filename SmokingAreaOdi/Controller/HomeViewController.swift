@@ -82,7 +82,7 @@ final class HomeViewController: UIViewController {
   
   private func setup() {
     self.navigationItem.title = "Home"
-    self.mapView.showLocationButton = false // 기본 버튼 숨김
+    self.mapView.mapView.zoomLevel = 16.0
   }
   
   private func addSubviews() {
@@ -202,6 +202,7 @@ extension HomeViewController: CLLocationManagerDelegate {
   }
   
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    
     guard let bestLocation = locations.last else { return }
     
     let userLat = bestLocation.coordinate.latitude
