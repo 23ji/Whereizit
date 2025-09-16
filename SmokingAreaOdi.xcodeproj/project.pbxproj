@@ -15,6 +15,7 @@
 		49288AAF2D19450C00FF1E50 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49288AAE2D19450C00FF1E50 /* SceneDelegate.swift */; };
 		49288AB62D19450D00FF1E50 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49288AB52D19450D00FF1E50 /* Assets.xcassets */; };
 		49288AB92D19450D00FF1E50 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 49288AB82D19450D00FF1E50 /* Base */; };
+		4969371D2E793BA3008B0FCD /* KakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 4969371C2E793BA3008B0FCD /* KakaoSDK */; };
 		498ECFA32E77F32C00B9EABC /* NearbySmokingAreasBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498ECFA22E77F32C00B9EABC /* NearbySmokingAreasBottomSheetViewController.swift */; };
 		49E629602E27756C00751E26 /* MarkerPositionSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E6295F2E27756C00751E26 /* MarkerPositionSelectorViewController.swift */; };
 		49E629652E2F866000751E26 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 49E629642E2F866000751E26 /* SnapKit */; };
@@ -58,6 +59,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A75196ED2E3A42D700CE5F1F /* Then in Frameworks */,
+				4969371D2E793BA3008B0FCD /* KakaoSDK in Frameworks */,
 				49168A702E448E77002C5F69 /* FirebaseAuth in Frameworks */,
 				9FA9DE722E65DB93004D71A7 /* PanModal in Frameworks */,
 				9F933E892E484A62001699AA /* RxCocoa in Frameworks */,
@@ -194,6 +196,7 @@
 				9FA9DE712E65DB93004D71A7 /* PanModal */,
 				9F9F78002E66EF3B00148859 /* FloatingPanel */,
 				9F1932802E75718500F94CB2 /* FirebaseStorage */,
+				4969371C2E793BA3008B0FCD /* KakaoSDK */,
 			);
 			productName = SmokeAreaOdi;
 			productReference = 49288AA92D19450C00FF1E50 /* SmokingAreaOdi.app */;
@@ -234,6 +237,7 @@
 				9F933E872E484A62001699AA /* XCRemoteSwiftPackageReference "RxSwift" */,
 				9FA9DE702E65DB93004D71A7 /* XCRemoteSwiftPackageReference "PanModal" */,
 				9F9F77FF2E66EF3B00148859 /* XCRemoteSwiftPackageReference "FloatingPanel" */,
+				4969371B2E793BA3008B0FCD /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
 			);
 			productRefGroup = 49288AAA2D19450C00FF1E50 /* Products */;
 			projectDirPath = "";
@@ -506,6 +510,14 @@
 				minimumVersion = 12.1.0;
 			};
 		};
+		4969371B2E793BA3008B0FCD /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kakao/kakao-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.24.6;
+			};
+		};
 		49E629632E2F866000751E26 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -595,6 +607,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 49168A6E2E448E77002C5F69 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
+		};
+		4969371C2E793BA3008B0FCD /* KakaoSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4969371B2E793BA3008B0FCD /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDK;
 		};
 		49E629642E2F866000751E26 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
