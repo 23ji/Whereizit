@@ -18,3 +18,5 @@ Manifest.lock
 *.swp
 *.swo
 
+# 보안 관련 설정 파일
+Config.xcconfig
