@@ -44,12 +44,12 @@
 		49288AB52D19450D00FF1E50 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		49288AB82D19450D00FF1E50 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		49288ABA2D19450D00FF1E50 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4969371E2E794128008B0FCD /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		498ECFA22E77F32C00B9EABC /* NearbySmokingAreasBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbySmokingAreasBottomSheetViewController.swift; sourceTree = "<group>"; };
 		49E6295F2E27756C00751E26 /* MarkerPositionSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerPositionSelectorViewController.swift; sourceTree = "<group>"; };
 		71E8D5BE6D6F3B97EE6F1699 /* Pods_SmokingAreaOdi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmokingAreaOdi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FA6B1782E64473E00A94571 /* SmokingAreaBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokingAreaBottomSheetViewController.swift; sourceTree = "<group>"; };
 		9FA7F6A02E76BB03000BEF34 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		9FB2BC052E79777D00C3B4F3 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		A77C88BE2E2528A8002D725E /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		A7990CBD2E288E5100B3D3CE /* MarkerInfoInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerInfoInputViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -84,7 +84,7 @@
 		49288AA02D19450C00FF1E50 = {
 			isa = PBXGroup;
 			children = (
-				4969371E2E794128008B0FCD /* Config.xcconfig */,
+				9FB2BC052E79777D00C3B4F3 /* Config.xcconfig */,
 				49288AAB2D19450C00FF1E50 /* SmokingAreaOdi */,
 				49288AAA2D19450C00FF1E50 /* Products */,
 				4961B4892D3A2DD500CCDD8C /* Recovered References */,
@@ -295,7 +295,6 @@
 /* Begin XCBuildConfiguration section */
 		49288ABB2D19450D00FF1E50 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4969371E2E794128008B0FCD /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
