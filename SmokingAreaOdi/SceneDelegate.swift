@@ -5,6 +5,8 @@
 //  Created by 이상지 on 12/23/24.
 //
 
+import KakaoSDKAuth
+
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -44,6 +46,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     self.window = window
     window.makeKeyAndVisible()
   }
+  
+  
+  func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+          if let url = URLContexts.first?.url {
+              if (AuthApi.isKakaoTalkLoginUrl(url)) {
+                  _ = AuthController.handleOpenUrl(url: url)
+              }
+          }
+      }
+  
   
   func sceneDidDisconnect(_ scene: UIScene) {
     // Called as the scene is being released by the system.
