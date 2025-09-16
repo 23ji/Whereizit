@@ -31,6 +31,7 @@
 		9FA7F6A12E76BB03000BEF34 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9FA7F6A02E76BB03000BEF34 /* GoogleService-Info.plist */; };
 		9FA9DE722E65DB93004D71A7 /* PanModal in Frameworks */ = {isa = PBXBuildFile; productRef = 9FA9DE712E65DB93004D71A7 /* PanModal */; };
 		9FB2BC072E79783500C3B4F3 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB2BC062E79783500C3B4F3 /* LoginViewController.swift */; };
+		9FB2BC0A2E7980A800C3B4F3 /* RxKakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 9FB2BC092E7980A800C3B4F3 /* RxKakaoSDK */; };
 		A75196ED2E3A42D700CE5F1F /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = A75196EC2E3A42D700CE5F1F /* Then */; };
 		A77C88BF2E2528A8002D725E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77C88BE2E2528A8002D725E /* HomeViewController.swift */; };
 		A77C88C22E252941002D725E /* NMapsMap in Frameworks */ = {isa = PBXBuildFile; productRef = A77C88C12E252941002D725E /* NMapsMap */; };
@@ -65,6 +66,7 @@
 				4969371D2E793BA3008B0FCD /* KakaoSDK in Frameworks */,
 				49168A702E448E77002C5F69 /* FirebaseAuth in Frameworks */,
 				9FA9DE722E65DB93004D71A7 /* PanModal in Frameworks */,
+				9FB2BC0A2E7980A800C3B4F3 /* RxKakaoSDK in Frameworks */,
 				9F933E892E484A62001699AA /* RxCocoa in Frameworks */,
 				A77C88C22E252941002D725E /* NMapsMap in Frameworks */,
 				9F9F78012E66EF3B00148859 /* FloatingPanel in Frameworks */,
@@ -202,6 +204,7 @@
 				9F9F78002E66EF3B00148859 /* FloatingPanel */,
 				9F1932802E75718500F94CB2 /* FirebaseStorage */,
 				4969371C2E793BA3008B0FCD /* KakaoSDK */,
+				9FB2BC092E7980A800C3B4F3 /* RxKakaoSDK */,
 			);
 			productName = SmokeAreaOdi;
 			productReference = 49288AA92D19450C00FF1E50 /* SmokingAreaOdi.app */;
@@ -243,6 +246,7 @@
 				9FA9DE702E65DB93004D71A7 /* XCRemoteSwiftPackageReference "PanModal" */,
 				9F9F77FF2E66EF3B00148859 /* XCRemoteSwiftPackageReference "FloatingPanel" */,
 				4969371B2E793BA3008B0FCD /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
+				9FB2BC082E7980A800C3B4F3 /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */,
 			);
 			productRefGroup = 49288AAA2D19450C00FF1E50 /* Products */;
 			projectDirPath = "";
@@ -586,6 +590,14 @@
 				minimumVersion = 1.2.7;
 			};
 		};
+		9FB2BC082E7980A800C3B4F3 /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kakao/kakao-ios-sdk-rx";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.24.6;
+			};
+		};
 		A75196EB2E3A42D700CE5F1F /* XCRemoteSwiftPackageReference "Then" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/devxoul/Then.git";
@@ -673,6 +685,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 9FA9DE702E65DB93004D71A7 /* XCRemoteSwiftPackageReference "PanModal" */;
 			productName = PanModal;
+		};
+		9FB2BC092E7980A800C3B4F3 /* RxKakaoSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9FB2BC082E7980A800C3B4F3 /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */;
+			productName = RxKakaoSDK;
 		};
 		A75196EC2E3A42D700CE5F1F /* Then */ = {
 			isa = XCSwiftPackageProductDependency;

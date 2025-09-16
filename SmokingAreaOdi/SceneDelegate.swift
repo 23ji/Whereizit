@@ -6,6 +6,7 @@
 //
 
 import KakaoSDKAuth
+import RxKakaoSDKAuth
 
 import UIKit
 
@@ -42,7 +43,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     tabBarController.tabBar.standardAppearance = tabBarAppearance
     tabBarController.tabBar.scrollEdgeAppearance = tabBarAppearance
     
-    window.rootViewController = tabBarController
+    window.rootViewController = LoginViewController()
     self.window = window
     window.makeKeyAndVisible()
   }
