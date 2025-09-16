@@ -140,9 +140,9 @@ final class MarkerPositionSelectorViewController: UIViewController {
     self.nextButton.rx.tap.subscribe(
       onNext: { [weak self] in
         let markerInfoInputVC = MarkerInfoInputViewController()
-        self?.navigationController?.pushViewController(markerInfoInputVC, animated: true)
         markerInfoInputVC.markerLat = self?.mapView.mapView.cameraPosition.target.lat
         markerInfoInputVC.markerLng = self?.mapView.mapView.cameraPosition.target.lng
+        self?.present(markerInfoInputVC, animated: true)
       })
     .disposed(by: self.disposeBag)
   }
