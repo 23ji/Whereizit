@@ -17,10 +17,23 @@ import FirebaseFunctions
 
 final class LoginViewController: UIViewController {
   
+  private enum Metric {
+    static let imageButtonWidth: CGFloat = 200
+    static let buttonWidth: CGFloat = 180
+    static let buttonHeight: CGFloat = 50
+  }
+  
   private let disposeBag = DisposeBag()
   
   private let kakaoLoginButton = UIButton().then {
     $0.setImage(UIImage(named: "kakao_login_medium_narrow"), for: .normal)
+  }
+  
+  private let signInButton = UIButton().then {
+    $0.setTitle("회원가입", for: .normal)
+    $0.backgroundColor = .systemGray4
+    $0.layer.cornerRadius = 5
+    $0.layer.masksToBounds = true
   }
   
   private let skipButton = UIButton().then {
@@ -45,19 +58,25 @@ final class LoginViewController: UIViewController {
   
   private func addSubviews() {
     self.view.addSubview(self.kakaoLoginButton)
+    self.view.addSubview(self.signInButton)
     self.view.addSubview(self.skipButton)
   }
   
   private func setupLayout() {
     self.view.flex.direction(.column).define {
-      $0.addItem(kakaoLoginButton)
-        .width(200)
-        .height(50)
+      $0.addItem(self.kakaoLoginButton)
+        .width(Metric.imageButtonWidth)
+        .height(Metric.buttonHeight)
         .alignSelf(.center)
         .marginTop(200)
-      $0.addItem(skipButton)
-        .width(200)
-        .height(50)
+      $0.addItem(self.signInButton)
+        .width(Metric.buttonWidth)
+        .height(Metric.buttonHeight)
+        .alignSelf(.center)
+        .marginTop(200)
+      $0.addItem(self.skipButton)
+        .width(Metric.buttonWidth)
+        .height(Metric.buttonHeight)
         .alignSelf(.center)
         .marginTop(20)
     }
