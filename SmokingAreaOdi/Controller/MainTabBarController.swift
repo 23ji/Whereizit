@@ -1,5 +1,5 @@
 //
-//  MianTabBarController.swift
+//  MainTabBarController.swift
 //  SmokingAreaOdi
 //
 //  Created by 이상지 on 9/17/25.

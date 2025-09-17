@@ -16,7 +16,7 @@
 		49288AB62D19450D00FF1E50 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49288AB52D19450D00FF1E50 /* Assets.xcassets */; };
 		49288AB92D19450D00FF1E50 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 49288AB82D19450D00FF1E50 /* Base */; };
 		4969371D2E793BA3008B0FCD /* KakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 4969371C2E793BA3008B0FCD /* KakaoSDK */; };
-		498B448F2E7A53E800FF06B6 /* MianTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498B448E2E7A53E800FF06B6 /* MianTabBarController.swift */; };
+		498B448F2E7A53E800FF06B6 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498B448E2E7A53E800FF06B6 /* MainTabBarController.swift */; };
 		498B44912E7A82F900FF06B6 /* MyPageViewContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498B44902E7A82F900FF06B6 /* MyPageViewContoller.swift */; };
 		498ECFA32E77F32C00B9EABC /* NearbySmokingAreasBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498ECFA22E77F32C00B9EABC /* NearbySmokingAreasBottomSheetViewController.swift */; };
 		49E629602E27756C00751E26 /* MarkerPositionSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E6295F2E27756C00751E26 /* MarkerPositionSelectorViewController.swift */; };
@@ -48,7 +48,7 @@
 		49288AB52D19450D00FF1E50 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		49288AB82D19450D00FF1E50 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		49288ABA2D19450D00FF1E50 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		498B448E2E7A53E800FF06B6 /* MianTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MianTabBarController.swift; sourceTree = "<group>"; };
+		498B448E2E7A53E800FF06B6 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		498B44902E7A82F900FF06B6 /* MyPageViewContoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewContoller.swift; sourceTree = "<group>"; };
 		498ECFA22E77F32C00B9EABC /* NearbySmokingAreasBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbySmokingAreasBottomSheetViewController.swift; sourceTree = "<group>"; };
 		49E6295F2E27756C00751E26 /* MarkerPositionSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerPositionSelectorViewController.swift; sourceTree = "<group>"; };
@@ -156,7 +156,7 @@
 				9FA6B1782E64473E00A94571 /* SmokingAreaBottomSheetViewController.swift */,
 				498ECFA22E77F32C00B9EABC /* NearbySmokingAreasBottomSheetViewController.swift */,
 				9FB2BC062E79783500C3B4F3 /* LoginViewController.swift */,
-				498B448E2E7A53E800FF06B6 /* MianTabBarController.swift */,
+				498B448E2E7A53E800FF06B6 /* MainTabBarController.swift */,
 				498B44902E7A82F900FF06B6 /* MyPageViewContoller.swift */,
 			);
 			path = Controller;
@@ -287,7 +287,7 @@
 				49288AAD2D19450C00FF1E50 /* AppDelegate.swift in Sources */,
 				49288AAF2D19450C00FF1E50 /* SceneDelegate.swift in Sources */,
 				490221A12E67DBBF0069DDEC /* SmokingArea.swift in Sources */,
-				498B448F2E7A53E800FF06B6 /* MianTabBarController.swift in Sources */,
+				498B448F2E7A53E800FF06B6 /* MainTabBarController.swift in Sources */,
 				A7990CBE2E288E5200B3D3CE /* MarkerInfoInputViewController.swift in Sources */,
 				498ECFA32E77F32C00B9EABC /* NearbySmokingAreasBottomSheetViewController.swift in Sources */,
 				498B44912E7A82F900FF06B6 /* MyPageViewContoller.swift in Sources */,
