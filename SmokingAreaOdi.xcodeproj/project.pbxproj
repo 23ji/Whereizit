@@ -34,6 +34,7 @@
 		9FA9DE722E65DB93004D71A7 /* PanModal in Frameworks */ = {isa = PBXBuildFile; productRef = 9FA9DE712E65DB93004D71A7 /* PanModal */; };
 		9FB2BC072E79783500C3B4F3 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB2BC062E79783500C3B4F3 /* LoginViewController.swift */; };
 		9FB2BC0A2E7980A800C3B4F3 /* RxKakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 9FB2BC092E7980A800C3B4F3 /* RxKakaoSDK */; };
+		9FDC5EEE2E7ACFB900C1335B /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = 9FDC5EED2E7ACFB900C1335B /* FirebaseFunctions */; };
 		A75196ED2E3A42D700CE5F1F /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = A75196EC2E3A42D700CE5F1F /* Then */; };
 		A77C88BF2E2528A8002D725E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77C88BE2E2528A8002D725E /* HomeViewController.swift */; };
 		A77C88C22E252941002D725E /* NMapsMap in Frameworks */ = {isa = PBXBuildFile; productRef = A77C88C12E252941002D725E /* NMapsMap */; };
@@ -69,6 +70,7 @@
 				A75196ED2E3A42D700CE5F1F /* Then in Frameworks */,
 				4969371D2E793BA3008B0FCD /* KakaoSDK in Frameworks */,
 				49168A702E448E77002C5F69 /* FirebaseAuth in Frameworks */,
+				9FDC5EEE2E7ACFB900C1335B /* FirebaseFunctions in Frameworks */,
 				9FA9DE722E65DB93004D71A7 /* PanModal in Frameworks */,
 				9FB2BC0A2E7980A800C3B4F3 /* RxKakaoSDK in Frameworks */,
 				9F933E892E484A62001699AA /* RxCocoa in Frameworks */,
@@ -211,6 +213,7 @@
 				9F1932802E75718500F94CB2 /* FirebaseStorage */,
 				4969371C2E793BA3008B0FCD /* KakaoSDK */,
 				9FB2BC092E7980A800C3B4F3 /* RxKakaoSDK */,
+				9FDC5EED2E7ACFB900C1335B /* FirebaseFunctions */,
 			);
 			productName = SmokeAreaOdi;
 			productReference = 49288AA92D19450C00FF1E50 /* SmokingAreaOdi.app */;
@@ -698,6 +701,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 9FB2BC082E7980A800C3B4F3 /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */;
 			productName = RxKakaoSDK;
+		};
+		9FDC5EED2E7ACFB900C1335B /* FirebaseFunctions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 49168A6E2E448E77002C5F69 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFunctions;
 		};
 		A75196EC2E3A42D700CE5F1F /* Then */ = {
 			isa = XCSwiftPackageProductDependency;

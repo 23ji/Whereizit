@@ -85,11 +85,12 @@ final class LoginViewController: UIViewController {
   private func loginKakao() {
     if (UserApi.isKakaoTalkLoginAvailable()) {
         UserApi.shared.rx.loginWithKakaoTalk()
-            .subscribe(onNext:{ (oauthToken) in
-                print("loginWithKakaoTalk() success.")
-            
-                // 성공 시 동작 구현
-                _ = oauthToken
+        .subscribe(onNext:{ (oauthToken) in
+          let token = oauthToken
+          print("카카오 토큰:", token.accessToken)
+          
+          // 성공 시 동작 구현
+          _ = oauthToken
             }, onError: {error in
                 print(error)
             })
