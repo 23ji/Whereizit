@@ -2,8 +2,6 @@
 //  LoginViewController.swift
 //  SmokingAreaOdi
 //
-//  Created by 23ji on 9/16/25.
-//
 
 import FlexLayout
 import KakaoSDKAuth
@@ -13,8 +11,9 @@ import RxKakaoSDKCommon
 import RxKakaoSDKUser
 import RxSwift
 import Then
-
 import UIKit
+import FirebaseAuth
+import FirebaseFunctions
 
 final class LoginViewController: UIViewController {
   
@@ -44,7 +43,6 @@ final class LoginViewController: UIViewController {
     self.bindAction()
   }
   
-  
   private func addSubviews() {
     self.view.addSubview(self.kakaoLoginButton)
     self.view.addSubview(self.skipButton)
@@ -66,7 +64,6 @@ final class LoginViewController: UIViewController {
     self.view.flex.layout(mode: .fitContainer)
   }
   
-  
   private func bindAction() {
     self.kakaoLoginButton.rx.tap
       .subscribe(onNext: { [weak self] in
@@ -81,31 +78,68 @@ final class LoginViewController: UIViewController {
       .disposed(by: disposeBag)
   }
   
-  
   private func loginKakao() {
-    if (UserApi.isKakaoTalkLoginAvailable()) {
-        UserApi.shared.rx.loginWithKakaoTalk()
-        .subscribe(onNext:{ (oauthToken) in
-          let token = oauthToken
-          print("카카오 토큰:", token.accessToken)
+    let functions = Functions.functions(region: "us-central1")
+    
+    if UserApi.isKakaoTalkLoginAvailable() {
+      UserApi.shared.rx.loginWithKakaoTalk()
+        .subscribe(onNext: { oauthToken in
+          let kakaoToken = oauthToken.accessToken
+          print("카카오 토큰 (from KakaoTalk):", kakaoToken)
           
-          // 성공 시 동작 구현
-          _ = oauthToken
-            }, onError: {error in
-                print(error)
-            })
+          // Firebase Function 호출
+          let callable = functions.httpsCallable("kakaoLogin")
+          callable.call(["accessToken": kakaoToken]) { result, error in
+            if let error = error as NSError? {
+              print("Firebase Function 호출 에러:", error.localizedDescription)
+              print("에러 코드:", error.code)
+              print("에러 도메인:", error.domain)
+              return
+            }
+            if let token = (result?.data as? [String: Any])?["token"] as? String {
+              Auth.auth().signIn(withCustomToken: token) { authResult, error in
+                if let user = authResult?.user {
+                  print("Firebase 로그인 성공: \(user.uid)")
+                  self.goHome()
+                } else if let error = error {
+                  print("Firebase 커스텀 토큰 로그인 에러:", error.localizedDescription)
+                }
+              }
+            }
+          }
+        }, onError: { error in
+          print("카카오톡 로그인 에러:", error.localizedDescription)
+        })
         .disposed(by: disposeBag)
     } else {
       UserApi.shared.rx.loginWithKakaoAccount()
-          .subscribe(onNext:{ (oauthToken) in
-              print("loginWithKakaoAccount() success.")
-
-              // 성공 시 동작 구현
-              _ = oauthToken
-          }, onError: {error in
-              print(error)
-          })
-          .disposed(by: disposeBag)
+        .subscribe(onNext: { oauthToken in
+          let kakaoToken = oauthToken.accessToken
+          print("카카오 토큰 (from KakaoAccount):", kakaoToken)
+          
+          let callable = functions.httpsCallable("kakaoLogin")
+          callable.call(["accessToken": kakaoToken]) { result, error in
+            if let error = error as NSError? {
+              print("Firebase Function 호출 에러:", error.localizedDescription)
+              print("에러 코드:", error.code)
+              print("에러 도메인:", error.domain)
+              return
+            }
+            if let token = (result?.data as? [String: Any])?["token"] as? String {
+              Auth.auth().signIn(withCustomToken: token) { authResult, error in
+                if let user = authResult?.user {
+                  print("Firebase 로그인 성공: \(user.uid)")
+                  self.goHome()
+                } else if let error = error {
+                  print("Firebase 커스텀 토큰 로그인 에러:", error.localizedDescription)
+                }
+              }
+            }
+          }
+        }, onError: { error in
+          print("카카오 계정 로그인 에러:", error.localizedDescription)
+        })
+        .disposed(by: disposeBag)
     }
   }
   
