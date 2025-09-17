@@ -73,7 +73,8 @@ final class LoginViewController: UIViewController {
         .width(Metric.buttonWidth)
         .height(Metric.buttonHeight)
         .alignSelf(.center)
-        .marginTop(200)
+        .padding(10)
+        .marginTop(20)
       $0.addItem(self.skipButton)
         .width(Metric.buttonWidth)
         .height(Metric.buttonHeight)
@@ -87,6 +88,12 @@ final class LoginViewController: UIViewController {
     self.kakaoLoginButton.rx.tap
       .subscribe(onNext: { [weak self] in
         self?.loginKakao()
+      })
+      .disposed(by: disposeBag)
+    
+    self.signInButton.rx.tap
+      .subscribe(onNext: { [weak self] in
+        self?.signIn()
       })
       .disposed(by: disposeBag)
     
@@ -160,6 +167,12 @@ final class LoginViewController: UIViewController {
         })
         .disposed(by: disposeBag)
     }
+  }
+  
+  
+  private func signIn() {
+    let signInVC = SignInViewController()
+    self.present(signInVC, animated: true)
   }
   
   private func goHome() {

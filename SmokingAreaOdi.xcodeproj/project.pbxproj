@@ -34,6 +34,7 @@
 		9FA9DE722E65DB93004D71A7 /* PanModal in Frameworks */ = {isa = PBXBuildFile; productRef = 9FA9DE712E65DB93004D71A7 /* PanModal */; };
 		9FB2BC072E79783500C3B4F3 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB2BC062E79783500C3B4F3 /* LoginViewController.swift */; };
 		9FB2BC0A2E7980A800C3B4F3 /* RxKakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 9FB2BC092E7980A800C3B4F3 /* RxKakaoSDK */; };
+		9FB65AC22E7B7D4E00F788BF /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB65AC12E7B7D4E00F788BF /* SignInViewController.swift */; };
 		9FDC5EEE2E7ACFB900C1335B /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = 9FDC5EED2E7ACFB900C1335B /* FirebaseFunctions */; };
 		A75196ED2E3A42D700CE5F1F /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = A75196EC2E3A42D700CE5F1F /* Then */; };
 		A77C88BF2E2528A8002D725E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77C88BE2E2528A8002D725E /* HomeViewController.swift */; };
@@ -58,6 +59,7 @@
 		9FA7F6A02E76BB03000BEF34 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9FB2BC052E79777D00C3B4F3 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		9FB2BC062E79783500C3B4F3 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		9FB65AC12E7B7D4E00F788BF /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		A77C88BE2E2528A8002D725E /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		A7990CBD2E288E5100B3D3CE /* MarkerInfoInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerInfoInputViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -157,9 +159,10 @@
 				A7990CBD2E288E5100B3D3CE /* MarkerInfoInputViewController.swift */,
 				9FA6B1782E64473E00A94571 /* SmokingAreaBottomSheetViewController.swift */,
 				498ECFA22E77F32C00B9EABC /* NearbySmokingAreasBottomSheetViewController.swift */,
-				9FB2BC062E79783500C3B4F3 /* LoginViewController.swift */,
 				498B448E2E7A53E800FF06B6 /* MainTabBarController.swift */,
 				498B44902E7A82F900FF06B6 /* MyPageViewContoller.swift */,
+				9FB2BC062E79783500C3B4F3 /* LoginViewController.swift */,
+				9FB65AC12E7B7D4E00F788BF /* SignInViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -292,6 +295,7 @@
 				490221A12E67DBBF0069DDEC /* SmokingArea.swift in Sources */,
 				498B448F2E7A53E800FF06B6 /* MainTabBarController.swift in Sources */,
 				A7990CBE2E288E5200B3D3CE /* MarkerInfoInputViewController.swift in Sources */,
+				9FB65AC22E7B7D4E00F788BF /* SignInViewController.swift in Sources */,
 				498ECFA32E77F32C00B9EABC /* NearbySmokingAreasBottomSheetViewController.swift in Sources */,
 				498B44912E7A82F900FF06B6 /* MyPageViewContoller.swift in Sources */,
 				9FA6B1792E64473E00A94571 /* SmokingAreaBottomSheetViewController.swift in Sources */,
