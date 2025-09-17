@@ -6,6 +6,10 @@
 //
 
 import FlexLayout
+import KakaoSDKAuth
+import KakaoSDKUser
+import RxKakaoSDKAuth
+import RxKakaoSDKCommon
 import RxSwift
 import Then
 
@@ -36,34 +40,64 @@ final class LoginViewController: UIViewController {
     self.view.backgroundColor = .white
     self.addSubviews()
     self.setupLayout()
+    self.bindKakaoLogin()
     self.bindAction()
   }
   
   
   private func addSubviews() {
     self.view.addSubview(self.kakaoLoginButton)
+    self.view.addSubview(self.skipButton)
   }
   
   private func setupLayout() {
     self.view.flex.direction(.column).define {
-      $0.addItem(self.kakaoLoginButton).margin(10).grow(1)
-      $0.addItem(self.skipButton).margin(10).grow(1)
+      $0.addItem(kakaoLoginButton)
+                      .width(200)
+                      .height(50)
+                      .alignSelf(.center)
+                      .marginTop(200)
+                  $0.addItem(skipButton)
+                      .width(200)
+                      .height(50)
+                      .alignSelf(.center)
+                      .marginTop(20)
     }
     self.view.flex.layout(mode: .fitContainer)
   }
   
   
+  private func bindKakaoLogin() {
+   
+  }
+  
+  
   private func bindAction() {
-    self.skipButton.rx.tap
-      .bind { _ in
-        guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-              let window = scene.windows.first else { return }
-        
-        let tabBar = MainTabBarController()
-        window.rootViewController = tabBar
-        window.makeKeyAndVisible()
-      }
+    
+    self.kakaoLoginButton.rx.tap
+      .subscribe(onNext: { [weak self] in
+        self?.loginKakao()
+      })
       .disposed(by: disposeBag)
+    
+    self.skipButton.rx.tap
+      .subscribe(onNext: { [weak self] in
+        self?.goHome()
+      })
+      .disposed(by: disposeBag)
+  }
+  
+  
+  private func loginKakao() {
+    
+  }
+  
+  private func goHome() {
+    guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                  let window = scene.windows.first else { return }
+            let tabBar = MainTabBarController()
+            window.rootViewController = tabBar
+            window.makeKeyAndVisible()
   }
   
   /*
