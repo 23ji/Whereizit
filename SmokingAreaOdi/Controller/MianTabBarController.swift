@@ -14,7 +14,7 @@ final class MainTabBarController: UITabBarController {
     let homeVC = UINavigationController(rootViewController: HomeViewController())
     homeVC.tabBarItem = UITabBarItem(title: "홈", image: UIImage(systemName: "house"), tag: 0)
     
-    let myPageVC = UINavigationController(rootViewController: HomeViewController())
+    let myPageVC = UINavigationController(rootViewController: MyPageViewContoller())
     myPageVC.tabBarItem = UITabBarItem(title: "마이페이지", image: UIImage(systemName: "person"), tag: 1)
     
     viewControllers = [homeVC, myPageVC]
