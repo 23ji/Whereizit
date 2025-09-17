@@ -9,7 +9,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>kakao${KAKAO_NATIVE_APP_KEY}</string>
+				<string>kakaod069a3a53c6e316d62077c91c5c7c103</string>
 			</array>
 		</dict>
 		<dict/>
@@ -17,7 +17,7 @@
 	<key>IDEPreferLogStreaming</key>
 	<string>YES</string>
 	<key>KAKAO_APP_KEY</key>
-	<string>$(KAKAO_APP_KEY)</string>
+	<string>d069a3a53c6e316d62077c91c5c7c103</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>kakaokompassauth</string>

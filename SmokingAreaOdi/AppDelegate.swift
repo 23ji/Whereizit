@@ -27,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     FirebaseApp.configure()
     if let kakaoKey = Bundle.main.object(forInfoDictionaryKey: "KAKAO_APP_KEY") as? String {
-        print("Kakao Key:", kakaoKey)
+        print("123Kakao Key:", kakaoKey)
         KakaoSDK.initSDK(appKey: kakaoKey)
     }
     IQKeyboardManager.shared.isEnabled = true
