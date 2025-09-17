@@ -19,9 +19,21 @@ final class LoginViewController: UIViewController {
     $0.setImage(UIImage(named: "kakao_login_medium_narrow"), for: .normal)
   }
   
+  private let skipButton = UIButton().then {
+    let title = "로그인 건너뛰기"
+        let attributedString = NSAttributedString(
+            string: title,
+            attributes: [
+                .underlineStyle: NSUnderlineStyle.single.rawValue,
+                .foregroundColor: UIColor.gray
+            ]
+        )
+        $0.setAttributedTitle(attributedString, for: .normal)
+  }
+  
   override func viewDidLoad() {
     super.viewDidLoad()
-    self.view.backgroundColor = .red
+    self.view.backgroundColor = .white
     self.addSubviews()
     self.setupLayout()
   }
@@ -34,6 +46,7 @@ final class LoginViewController: UIViewController {
   private func setupLayout() {
     self.view.flex.direction(.column).define {
       $0.addItem(self.kakaoLoginButton).margin(10).grow(1)
+      $0.addItem(self.skipButton).margin(10).grow(1)
     }
     self.view.flex.layout(mode: .fitContainer)
   }
