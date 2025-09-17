@@ -36,6 +36,7 @@ final class LoginViewController: UIViewController {
     self.view.backgroundColor = .white
     self.addSubviews()
     self.setupLayout()
+    self.bindAction()
   }
   
   
@@ -49,6 +50,20 @@ final class LoginViewController: UIViewController {
       $0.addItem(self.skipButton).margin(10).grow(1)
     }
     self.view.flex.layout(mode: .fitContainer)
+  }
+  
+  
+  private func bindAction() {
+    self.skipButton.rx.tap
+      .bind { _ in
+        guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let window = scene.windows.first else { return }
+        
+        let tabBar = MainTabBarController()
+        window.rootViewController = tabBar
+        window.makeKeyAndVisible()
+      }
+      .disposed(by: disposeBag)
   }
   
   /*
