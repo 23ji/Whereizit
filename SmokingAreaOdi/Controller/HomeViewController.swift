@@ -34,6 +34,7 @@ final class HomeViewController: UIViewController {
   private let mapView = NMFNaverMapView()
   private let addButton = UIButton().then {
     $0.setImage(UIImage(named: "plusButton"), for: .normal)
+    $0.layer.shadowOpacity = 0.1
   }
   
   // MARK: Property
