@@ -7,8 +7,10 @@
 
 import FlexLayout
 import Then
+import RxSwift
 
 import UIKit
+import FirebaseAuth
 
 class SignInViewController: UIViewController {
   
@@ -21,12 +23,15 @@ class SignInViewController: UIViewController {
     static let buttonHeight : CGFloat = 50
   }
   
+  private let disposeBag = DisposeBag()
+
   private let emailLabel = UILabel().then{
     $0.text = "Email"
   }
   
   private let emailTextFeild = UITextField().then{
     $0.borderStyle = .roundedRect
+    $0.autocapitalizationType = .none
   }
   
   private let passwordLabel = UILabel().then{
@@ -35,6 +40,8 @@ class SignInViewController: UIViewController {
   
   private let passwordTextFeild = UITextField().then{
     $0.borderStyle = .roundedRect
+    $0.isSecureTextEntry = true
+    $0.autocapitalizationType = .none
   }
   
   private let signinButtton = UIButton().then {
@@ -48,6 +55,7 @@ class SignInViewController: UIViewController {
     super.viewDidLoad()
     self.addSubviews()
     self.setupLayout()
+    self.didTappedSignInButton()
   }
   
   private func addSubviews() {
@@ -68,5 +76,24 @@ class SignInViewController: UIViewController {
       $0.addItem(self.signinButtton).width(Metric.buttonWidth).height(Metric.buttonHeight).alignSelf(.center).marginTop(50)
     }
     self.view.flex.layout(mode: .fitContainer)
+  }
+  
+  
+  private func didTappedSignInButton() {
+    self.signinButtton.rx.tap
+      .subscribe(onNext: { [weak self] in
+        guard let self = self,
+              let email = self.emailTextFeild.text,
+              let password = self.passwordTextFeild.text else { return }
+        
+        Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+          if let error = error {
+            print("회원가입 실패", error)
+          } else {
+            print("회원가입 성공", authResult?.user.uid)
+          }
+        }
+      })
+      .disposed(by: self.disposeBag)
   }
 }

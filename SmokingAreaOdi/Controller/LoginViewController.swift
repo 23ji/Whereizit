@@ -175,7 +175,7 @@ final class LoginViewController: UIViewController {
     self.present(signInVC, animated: true)
   }
   
-  private func goHome() {
+  func goHome() {
     guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
           let window = scene.windows.first else { return }
     let tabBar = MainTabBarController()
