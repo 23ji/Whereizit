@@ -91,6 +91,7 @@ class SignInViewController: UIViewController {
             print("회원가입 실패", error)
           } else {
             print("회원가입 성공", authResult?.user.uid)
+            self.goHome()
           }
         }
       })

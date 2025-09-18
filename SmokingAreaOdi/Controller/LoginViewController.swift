@@ -174,10 +174,13 @@ final class LoginViewController: UIViewController {
     let signInVC = SignInViewController()
     self.present(signInVC, animated: true)
   }
-  
+}
+
+extension UIViewController {
   func goHome() {
     guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
           let window = scene.windows.first else { return }
+    
     let tabBar = MainTabBarController()
     window.rootViewController = tabBar
     window.makeKeyAndVisible()
