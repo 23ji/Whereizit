@@ -100,23 +100,31 @@ final class LoginViewController: UIViewController {
   
   private func setupLayout() {
     self.view.flex.direction(.column).define {
+      //로그인 입력
       $0.addItem(self.emailLabel).width(Metric.labelWidth).height(Metric.labelHeight).alignSelf(.center).marginTop(200)
       $0.addItem(self.emailTextFeild).width(Metric.textFieldWidth).height(Metric.textFieldHeight).alignSelf(.center)
       $0.addItem(self.passwordLabel).width(Metric.labelWidth).height(Metric.labelHeight).alignSelf(.center)
       $0.addItem(self.passwordTextFeild).width(Metric.textFieldWidth).height(Metric.textFieldHeight).alignSelf(.center)
+      
+      //로그인 버튼
       $0.addItem(self.loginButtton).width(Metric.buttonWidth).height(Metric.buttonHeight).alignSelf(.center).marginTop(50)
       
+      //카카오 로그인 버튼
       $0.addItem(self.kakaoLoginButton)
         .width(Metric.imageButtonWidth)
         .height(Metric.buttonHeight)
         .alignSelf(.center)
         .marginTop(50)
+      
+      //회원가입 버튼
       $0.addItem(self.signInButton)
         .width(Metric.buttonWidth)
         .height(Metric.buttonHeight)
         .alignSelf(.center)
         .padding(10)
         .marginTop(20)
+      
+      //로그인 건너뛰기 버튼
       $0.addItem(self.skipButton)
         .width(Metric.buttonWidth)
         .height(Metric.buttonHeight)
@@ -127,6 +135,12 @@ final class LoginViewController: UIViewController {
   }
   
   private func bindAction() {
+    self.loginButtton.rx.tap
+      .subscribe(onNext: { [weak self] in
+        self?.login()
+      })
+      .disposed(by: disposeBag)
+    
     self.kakaoLoginButton.rx.tap
       .subscribe(onNext: { [weak self] in
         self?.loginKakao()
@@ -144,6 +158,24 @@ final class LoginViewController: UIViewController {
         self?.goHome()
       })
       .disposed(by: disposeBag)
+  }
+  
+  
+  private func login() {
+    
+    guard let email = self.emailTextFeild.text else { return }
+    guard let password = self.passwordTextFeild.text else { return }
+    
+    Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
+      print("result", authResult)
+      if authResult != nil {
+        print("로그인 이메일: ", authResult?.user.email)
+        self?.goHome()
+      } else {
+        print("로그인 실패!")
+        print(error)
+      }
+    }
   }
   
   private func loginKakao() {
