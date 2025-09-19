@@ -44,7 +44,7 @@ class SignInViewController: UIViewController {
     $0.autocapitalizationType = .none
   }
   
-  private let signinButtton = UIButton().then {
+  private let signInButtton = UIButton().then {
     $0.setTitle("회원가입", for: .normal)
     $0.backgroundColor = .systemGray
     $0.layer.cornerRadius = 10
@@ -63,7 +63,7 @@ class SignInViewController: UIViewController {
     self.view.addSubview(self.emailTextFeild)
     self.view.addSubview(self.passwordLabel)
     self.view.addSubview(self.passwordTextFeild)
-    self.view.addSubview(self.signinButtton)
+    self.view.addSubview(self.signInButtton)
   }
   
   private func setupLayout() {
@@ -73,14 +73,14 @@ class SignInViewController: UIViewController {
       $0.addItem(self.emailTextFeild).width(Metric.textFieldWidth).height(Metric.textFieldHeight).alignSelf(.center)
       $0.addItem(self.passwordLabel).width(Metric.labelWidth).height(Metric.labelHeight).alignSelf(.center)
       $0.addItem(self.passwordTextFeild).width(Metric.textFieldWidth).height(Metric.textFieldHeight).alignSelf(.center)
-      $0.addItem(self.signinButtton).width(Metric.buttonWidth).height(Metric.buttonHeight).alignSelf(.center).marginTop(50)
+      $0.addItem(self.signInButtton).width(Metric.buttonWidth).height(Metric.buttonHeight).alignSelf(.center).marginTop(50)
     }
     self.view.flex.layout(mode: .fitContainer)
   }
   
   
   private func didTappedSignInButton() {
-    self.signinButtton.rx.tap
+    self.signInButtton.rx.tap
       .subscribe(onNext: { [weak self] in
         guard let self = self,
               let email = self.emailTextFeild.text,
