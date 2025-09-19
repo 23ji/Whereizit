@@ -21,9 +21,40 @@ final class LoginViewController: UIViewController {
     static let imageButtonWidth: CGFloat = 200
     static let buttonWidth: CGFloat = 180
     static let buttonHeight: CGFloat = 50
+    static let labelWidth : CGFloat = 300
+    static let labelHeight : CGFloat = 50
+    static let textFieldWidth : CGFloat = 300
+    static let textFieldHeight : CGFloat = 50
   }
   
   private let disposeBag = DisposeBag()
+  
+  
+  private let emailLabel = UILabel().then{
+    $0.text = "Email"
+  }
+  
+  private let emailTextFeild = UITextField().then{
+    $0.borderStyle = .roundedRect
+    $0.autocapitalizationType = .none
+  }
+  
+  private let passwordLabel = UILabel().then{
+    $0.text = "Password"
+  }
+  
+  private let passwordTextFeild = UITextField().then{
+    $0.borderStyle = .roundedRect
+    $0.isSecureTextEntry = true
+    $0.autocapitalizationType = .none
+  }
+  
+  private let loginButtton = UIButton().then {
+    $0.setTitle("로그인", for: .normal)
+    $0.backgroundColor = .systemGray
+    $0.layer.cornerRadius = 5
+    $0.layer.masksToBounds = true
+  }
   
   private let kakaoLoginButton = UIButton().then {
     $0.setImage(UIImage(named: "kakao_login_medium_narrow"), for: .normal)
@@ -57,6 +88,11 @@ final class LoginViewController: UIViewController {
   }
   
   private func addSubviews() {
+    self.view.addSubview(self.emailLabel)
+    self.view.addSubview(self.emailTextFeild)
+    self.view.addSubview(self.passwordLabel)
+    self.view.addSubview(self.passwordTextFeild)
+    self.view.addSubview(self.loginButtton)
     self.view.addSubview(self.kakaoLoginButton)
     self.view.addSubview(self.signInButton)
     self.view.addSubview(self.skipButton)
@@ -64,11 +100,17 @@ final class LoginViewController: UIViewController {
   
   private func setupLayout() {
     self.view.flex.direction(.column).define {
+      $0.addItem(self.emailLabel).width(Metric.labelWidth).height(Metric.labelHeight).alignSelf(.center).marginTop(200)
+      $0.addItem(self.emailTextFeild).width(Metric.textFieldWidth).height(Metric.textFieldHeight).alignSelf(.center)
+      $0.addItem(self.passwordLabel).width(Metric.labelWidth).height(Metric.labelHeight).alignSelf(.center)
+      $0.addItem(self.passwordTextFeild).width(Metric.textFieldWidth).height(Metric.textFieldHeight).alignSelf(.center)
+      $0.addItem(self.loginButtton).width(Metric.buttonWidth).height(Metric.buttonHeight).alignSelf(.center).marginTop(50)
+      
       $0.addItem(self.kakaoLoginButton)
         .width(Metric.imageButtonWidth)
         .height(Metric.buttonHeight)
         .alignSelf(.center)
-        .marginTop(200)
+        .marginTop(50)
       $0.addItem(self.signInButton)
         .width(Metric.buttonWidth)
         .height(Metric.buttonHeight)
