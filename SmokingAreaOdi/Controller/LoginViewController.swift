@@ -167,13 +167,16 @@ final class LoginViewController: UIViewController {
     guard let password = self.passwordTextFeild.text else { return }
     
     Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
-      print("result", authResult)
       if authResult != nil {
         print("로그인 이메일: ", authResult?.user.email)
         self?.goHome()
       } else {
-        print("로그인 실패!")
-        print(error)
+        print("❗️ 로그인 실패!", error)
+        
+        let alert = UIAlertController(title: "알림", message: "아이디 혹은 비밀번호가 잘못 입력되었습니다.", preferredStyle: .alert)
+        let check = UIAlertAction(title: "확인", style: .destructive, handler: nil)
+        alert.addAction(check)
+        self?.present(alert, animated: true, completion: nil)
       }
     }
   }
