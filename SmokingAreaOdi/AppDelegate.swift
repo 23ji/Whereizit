@@ -28,6 +28,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     if GIDSignIn.sharedInstance.handle(url) {
       return true
     }
+    return false
+  }
   
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     FirebaseApp.configure()
