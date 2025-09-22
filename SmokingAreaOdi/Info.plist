@@ -12,7 +12,14 @@
 				<string>kakaod069a3a53c6e316d62077c91c5c7c103</string>
 			</array>
 		</dict>
-		<dict/>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.498042004788-u5dlmt3fe0791kiqs6v2elbpno91fl98</string>
+			</array>
+		</dict>
 	</array>
 	<key>IDEPreferLogStreaming</key>
 	<string>YES</string>

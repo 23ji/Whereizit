@@ -29,8 +29,10 @@
 		9F933E8B2E484A62001699AA /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 9F933E8A2E484A62001699AA /* RxRelay */; };
 		9F933E8D2E484A62001699AA /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 9F933E8C2E484A62001699AA /* RxSwift */; };
 		9F9F78012E66EF3B00148859 /* FloatingPanel in Frameworks */ = {isa = PBXBuildFile; productRef = 9F9F78002E66EF3B00148859 /* FloatingPanel */; };
+		9FA27D2A2E8214BD00D36B6C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9FA27D292E8214BD00D36B6C /* GoogleService-Info.plist */; };
+		9FA27D2D2E82152100D36B6C /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 9FA27D2C2E82152100D36B6C /* GoogleSignIn */; };
+		9FA27D2F2E82152100D36B6C /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 9FA27D2E2E82152100D36B6C /* GoogleSignInSwift */; };
 		9FA6B1792E64473E00A94571 /* SmokingAreaBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA6B1782E64473E00A94571 /* SmokingAreaBottomSheetViewController.swift */; };
-		9FA7F6A12E76BB03000BEF34 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9FA7F6A02E76BB03000BEF34 /* GoogleService-Info.plist */; };
 		9FA9DE722E65DB93004D71A7 /* PanModal in Frameworks */ = {isa = PBXBuildFile; productRef = 9FA9DE712E65DB93004D71A7 /* PanModal */; };
 		9FB2BC072E79783500C3B4F3 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB2BC062E79783500C3B4F3 /* LoginViewController.swift */; };
 		9FB2BC0A2E7980A800C3B4F3 /* RxKakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 9FB2BC092E7980A800C3B4F3 /* RxKakaoSDK */; };
@@ -55,8 +57,8 @@
 		498ECFA22E77F32C00B9EABC /* NearbySmokingAreasBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbySmokingAreasBottomSheetViewController.swift; sourceTree = "<group>"; };
 		49E6295F2E27756C00751E26 /* MarkerPositionSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerPositionSelectorViewController.swift; sourceTree = "<group>"; };
 		71E8D5BE6D6F3B97EE6F1699 /* Pods_SmokingAreaOdi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmokingAreaOdi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9FA27D292E8214BD00D36B6C /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9FA6B1782E64473E00A94571 /* SmokingAreaBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokingAreaBottomSheetViewController.swift; sourceTree = "<group>"; };
-		9FA7F6A02E76BB03000BEF34 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9FB2BC052E79777D00C3B4F3 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		9FB2BC062E79783500C3B4F3 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		9FB65AC12E7B7D4E00F788BF /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
@@ -72,6 +74,7 @@
 				A75196ED2E3A42D700CE5F1F /* Then in Frameworks */,
 				4969371D2E793BA3008B0FCD /* KakaoSDK in Frameworks */,
 				49168A702E448E77002C5F69 /* FirebaseAuth in Frameworks */,
+				9FA27D2D2E82152100D36B6C /* GoogleSignIn in Frameworks */,
 				9FDC5EEE2E7ACFB900C1335B /* FirebaseFunctions in Frameworks */,
 				9FA9DE722E65DB93004D71A7 /* PanModal in Frameworks */,
 				9FB2BC0A2E7980A800C3B4F3 /* RxKakaoSDK in Frameworks */,
@@ -83,6 +86,7 @@
 				9F1932812E75718500F94CB2 /* FirebaseStorage in Frameworks */,
 				9F933E8D2E484A62001699AA /* RxSwift in Frameworks */,
 				9F73EF6C2E44BFD0008E66E5 /* IQKeyboardManagerSwift in Frameworks */,
+				9FA27D2F2E82152100D36B6C /* GoogleSignInSwift in Frameworks */,
 				49168A742E448E77002C5F69 /* FirebaseFirestore in Frameworks */,
 				49E629682E2F86C200751E26 /* FlexLayout in Frameworks */,
 				49E629652E2F866000751E26 /* SnapKit in Frameworks */,
@@ -124,7 +128,7 @@
 				49288AB52D19450D00FF1E50 /* Assets.xcassets */,
 				49288AB72D19450D00FF1E50 /* LaunchScreen.storyboard */,
 				49288ABA2D19450D00FF1E50 /* Info.plist */,
-				9FA7F6A02E76BB03000BEF34 /* GoogleService-Info.plist */,
+				9FA27D292E8214BD00D36B6C /* GoogleService-Info.plist */,
 			);
 			path = SmokingAreaOdi;
 			sourceTree = "<group>";
@@ -217,6 +221,8 @@
 				4969371C2E793BA3008B0FCD /* KakaoSDK */,
 				9FB2BC092E7980A800C3B4F3 /* RxKakaoSDK */,
 				9FDC5EED2E7ACFB900C1335B /* FirebaseFunctions */,
+				9FA27D2C2E82152100D36B6C /* GoogleSignIn */,
+				9FA27D2E2E82152100D36B6C /* GoogleSignInSwift */,
 			);
 			productName = SmokeAreaOdi;
 			productReference = 49288AA92D19450C00FF1E50 /* SmokingAreaOdi.app */;
@@ -259,6 +265,7 @@
 				9F9F77FF2E66EF3B00148859 /* XCRemoteSwiftPackageReference "FloatingPanel" */,
 				4969371B2E793BA3008B0FCD /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
 				9FB2BC082E7980A800C3B4F3 /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */,
+				9FA27D2B2E82152100D36B6C /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 			);
 			productRefGroup = 49288AAA2D19450C00FF1E50 /* Products */;
 			projectDirPath = "";
@@ -275,7 +282,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				49288AB62D19450D00FF1E50 /* Assets.xcassets in Resources */,
-				9FA7F6A12E76BB03000BEF34 /* GoogleService-Info.plist in Resources */,
+				9FA27D2A2E8214BD00D36B6C /* GoogleService-Info.plist in Resources */,
 				49288AB92D19450D00FF1E50 /* Base in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -597,6 +604,14 @@
 				minimumVersion = 3.0.1;
 			};
 		};
+		9FA27D2B2E82152100D36B6C /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
 		9FA9DE702E65DB93004D71A7 /* XCRemoteSwiftPackageReference "PanModal" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/slackhq/PanModal.git";
@@ -695,6 +710,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 9F9F77FF2E66EF3B00148859 /* XCRemoteSwiftPackageReference "FloatingPanel" */;
 			productName = FloatingPanel;
+		};
+		9FA27D2C2E82152100D36B6C /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9FA27D2B2E82152100D36B6C /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		9FA27D2E2E82152100D36B6C /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9FA27D2B2E82152100D36B6C /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
 		};
 		9FA9DE712E65DB93004D71A7 /* PanModal */ = {
 			isa = XCSwiftPackageProductDependency;
