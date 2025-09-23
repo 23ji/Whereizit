@@ -14,6 +14,8 @@ import Then
 import UIKit
 import FirebaseAuth
 import FirebaseFunctions
+import FirebaseCore
+import GoogleSignIn
 
 final class LoginViewController: UIViewController {
   
@@ -56,6 +58,10 @@ final class LoginViewController: UIViewController {
     $0.layer.masksToBounds = true
   }
   
+  private let googleLoginButton = UIButton().then {
+    $0.setImage(UIImage(named: "ios_light_sq_SI"), for: .normal)
+  }
+  
   private let kakaoLoginButton = UIButton().then {
     $0.setImage(UIImage(named: "kakao_login_medium_narrow"), for: .normal)
   }
@@ -93,6 +99,7 @@ final class LoginViewController: UIViewController {
     self.view.addSubview(self.passwordLabel)
     self.view.addSubview(self.passwordTextFeild)
     self.view.addSubview(self.loginButtton)
+    self.view.addSubview(self.googleLoginButton)
     self.view.addSubview(self.kakaoLoginButton)
     self.view.addSubview(self.signInButton)
     self.view.addSubview(self.skipButton)
@@ -109,12 +116,19 @@ final class LoginViewController: UIViewController {
       //로그인 버튼
       $0.addItem(self.loginButtton).width(Metric.buttonWidth).height(Metric.buttonHeight).alignSelf(.center).marginTop(50)
       
+      //구글 로그인 버튼
+      $0.addItem(self.googleLoginButton)
+        .width(Metric.imageButtonWidth)
+        .height(Metric.buttonHeight)
+        .alignSelf(.center)
+        .marginTop(50)
+      
       //카카오 로그인 버튼
       $0.addItem(self.kakaoLoginButton)
         .width(Metric.imageButtonWidth)
         .height(Metric.buttonHeight)
         .alignSelf(.center)
-        .marginTop(50)
+        .marginTop(20)
       
       //회원가입 버튼
       $0.addItem(self.signInButton)
@@ -138,6 +152,12 @@ final class LoginViewController: UIViewController {
     self.loginButtton.rx.tap
       .subscribe(onNext: { [weak self] in
         self?.login()
+      })
+      .disposed(by: disposeBag)
+    
+    self.googleLoginButton.rx.tap
+      .subscribe(onNext: { [weak self] in
+        self?.loginGoogle()
       })
       .disposed(by: disposeBag)
     
@@ -179,6 +199,14 @@ final class LoginViewController: UIViewController {
         self?.present(alert, animated: true, completion: nil)
       }
     }
+  }
+  
+  private func loginGoogle() {
+    guard let clientID = FirebaseApp.app()?.options.clientID else { return }
+    
+    // Create Google Sign In configuration object.
+    let config = GIDConfiguration(clientID: clientID)
+    GIDSignIn.sharedInstance.configuration = config
   }
   
   private func loginKakao() {
