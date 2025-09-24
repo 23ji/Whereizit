@@ -22,7 +22,7 @@ final class LoginViewController: UIViewController {
   private enum Metric {
     static let imageButtonWidth: CGFloat = 200
     static let buttonWidth: CGFloat = 180
-    static let buttonHeight: CGFloat = 50
+    static let buttonHeight: CGFloat = 44
     static let labelWidth : CGFloat = 300
     static let labelHeight : CGFloat = 50
     static let textFieldWidth : CGFloat = 300
@@ -59,8 +59,20 @@ final class LoginViewController: UIViewController {
   }
   
   private let googleLoginButton = UIButton().then {
-    $0.setImage(UIImage(named: "ios_light_sq_SI"), for: .normal)
-  }
+    $0.setTitle("구글로 시작하기", for: .normal)
+    $0.setTitleColor(.black, for: .normal)
+    $0.backgroundColor = .white
+    $0.layer.borderWidth = 0.5
+    $0.layer.borderColor = UIColor.gray.cgColor
+    $0.layer.cornerRadius = 5
+    $0.layer.masksToBounds = true
+    
+    $0.setImage(UIImage(named: "googlesuperg_2x_24dp"), for: .normal) // 구글 로고 이미지
+    $0.imageView?.contentMode = .scaleAspectFit
+    $0.contentHorizontalAlignment = .left
+    $0.imageEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
+    $0.titleEdgeInsets = UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 16) // 수정하기 ❗️
+}
   
   private let kakaoLoginButton = UIButton().then {
     $0.setImage(UIImage(named: "kakao_login_medium_narrow"), for: .normal)
