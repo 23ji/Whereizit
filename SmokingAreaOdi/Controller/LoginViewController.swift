@@ -61,9 +61,12 @@ final class LoginViewController: UIViewController {
   }
   
   private let googleLoginButton = UIButton().then {
-    $0.setImage(UIImage(named: "googlesuperg_2x_24dp"), for: .normal)
-    $0.setTitle("Google로 시작하기", for: .normal)
-    $0.setTitleColor(.black, for: .normal)
+    var config = UIButton.Configuration.plain()
+    config.image = UIImage(named: "googlesuperg_2x_24dp")
+    config.title = "Google로 시작하기"
+    config.imagePadding = 12
+    config.baseForegroundColor = .black
+    $0.configuration = config
     $0.backgroundColor = .white
     $0.layer.borderWidth = 0.5
     $0.layer.borderColor = UIColor.gray.cgColor
