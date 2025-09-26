@@ -53,12 +53,7 @@ final class LoginViewController: UIViewController {
     $0.autocapitalizationType = .none
   }
   
-  private let loginButtton = UIButton().then {
-    $0.setTitle("로그인", for: .normal)
-    $0.backgroundColor = .systemGray
-    $0.layer.cornerRadius = 5
-    $0.layer.masksToBounds = true
-  }
+  private let loginButtton = LoginButton(type: .login)
   
   private let googleLoginButton = LoginButton(type: .google)
   
