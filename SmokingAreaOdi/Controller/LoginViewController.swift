@@ -60,30 +60,11 @@ final class LoginViewController: UIViewController {
     $0.layer.masksToBounds = true
   }
   
-  private let googleLoginButton = UIButton().then {
-    var config = UIButton.Configuration.plain()
-    config.image = UIImage(named: "googlesuperg_2x_24dp")
-    config.title = "Google로 시작하기"
-    config.imagePadding = 12
-    config.baseForegroundColor = .black
-    $0.configuration = config
-    $0.backgroundColor = .white
-    $0.layer.borderWidth = 0.5
-    $0.layer.borderColor = UIColor.gray.cgColor
-    $0.layer.cornerRadius = 5
-    $0.layer.masksToBounds = true
-  }
+  private let googleLoginButton = LoginButton(type: .google)
   
-  private let kakaoLoginButton = UIButton().then {
-    $0.setImage(UIImage(named: "kakao_login_medium_narrow"), for: .normal)
-  }
+  private let kakaoLoginButton = LoginButton(type: .kakao)
   
-  private let signInButton = UIButton().then {
-    $0.setTitle("회원가입", for: .normal)
-    $0.backgroundColor = .systemGray4
-    $0.layer.cornerRadius = 5
-    $0.layer.masksToBounds = true
-  }
+  private let signInButton = LoginButton(type: .signIn)
   
   private let skipButton = UIButton().then {
     let title = "로그인 건너뛰기"
@@ -137,7 +118,7 @@ final class LoginViewController: UIViewController {
       
       //카카오 로그인 버튼
       $0.addItem(self.kakaoLoginButton)
-        .width(Metric.imageButtonWidth)
+        .width(Metric.buttonWidth)
         .height(Metric.buttonHeight)
         .alignSelf(.center)
         .marginTop(20)
