@@ -39,7 +39,7 @@ final class LoginButton: UIButton {
       
     case .login:
       configuration.title = "로그인"
-      configuration.baseForegroundColor = .black
+      configuration.baseForegroundColor = .white
       self.backgroundColor = .darkGray
 
     case .google:
