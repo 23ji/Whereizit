@@ -8,6 +8,7 @@
 import UIKit
 
 enum LoginType {
+  case login
   case google
   case apple
   case kakao
@@ -35,6 +36,12 @@ final class LoginButton: UIButton {
     self.layer.masksToBounds = true
     
     switch type {
+      
+    case .login:
+      configuration.title = "로그인"
+      configuration.baseForegroundColor = .black
+      self.backgroundColor = .darkGray
+
     case .google:
       configuration.image = UIImage(named: "googleLoginButton")
       configuration.title = "Google로 시작하기"
