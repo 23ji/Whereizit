@@ -2,6 +2,8 @@
 //  LoginViewController.swift
 //  SmokingAreaOdi
 //
+//  Created by 23ji on 9/16/25.
+//
 
 import FlexLayout
 import KakaoSDKAuth
@@ -21,7 +23,7 @@ final class LoginViewController: UIViewController {
   
   private enum Metric {
     static let imageButtonWidth: CGFloat = 200
-    static let buttonWidth: CGFloat = 180
+    static let buttonWidth: CGFloat = 250
     static let buttonHeight: CGFloat = 44
     static let labelWidth : CGFloat = 300
     static let labelHeight : CGFloat = 50
@@ -85,6 +87,14 @@ final class LoginViewController: UIViewController {
     $0.layer.masksToBounds = true
   }
   
+  private let loginButtton = LoginButton(type: .login)
+  
+  private let googleLoginButton = LoginButton(type: .google)
+  
+  private let kakaoLoginButton = LoginButton(type: .kakao)
+  
+  private let signInButton = LoginButton(type: .signIn)
+  
   private let skipButton = UIButton().then {
     let title = "로그인 건너뛰기"
     let attributedString = NSAttributedString(
@@ -130,14 +140,14 @@ final class LoginViewController: UIViewController {
       
       //구글 로그인 버튼
       $0.addItem(self.googleLoginButton)
-        .width(Metric.imageButtonWidth)
+        .width(Metric.buttonWidth)
         .height(Metric.buttonHeight)
         .alignSelf(.center)
         .marginTop(50)
       
       //카카오 로그인 버튼
       $0.addItem(self.kakaoLoginButton)
-        .width(Metric.imageButtonWidth)
+        .width(Metric.buttonWidth)
         .height(Metric.buttonHeight)
         .alignSelf(.center)
         .marginTop(20)

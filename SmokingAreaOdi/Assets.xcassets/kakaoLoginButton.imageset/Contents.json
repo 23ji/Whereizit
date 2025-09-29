@@ -1,15 +1,16 @@
 {
   "images" : [
     {
+      "filename" : "kakaoLoginButton.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "kakaoLoginButton 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "ios_light_sq_SI@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
