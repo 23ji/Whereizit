@@ -9,8 +9,9 @@ import UIKit
 
 final class MyPageViewContoller : UIViewController {
   
+  let userName: String = "홍길동"
+  
   private let nameLabel = UILabel().then {
-    $0.text = "ddd"
     $0.textColor = .black
     $0.font = $0.font.withSize(30)
   }
@@ -27,10 +28,14 @@ final class MyPageViewContoller : UIViewController {
   }
   
   private func setupLayout() {
-    
-    self.view.flex.direction(.column).define {
-      $0.addItem(self.nameLabel).width(200).height(50).margin(100)
-    }
-    self.view.flex.layout(mode: .fitContainer)
+      self.view.flex.direction(.column).define {
+          $0.addItem(self.nameLabel)
+              .width(200)
+              .height(50)
+              .marginTop(100)
+              .alignSelf(.center)
+      }
+      self.nameLabel.text = "\(self.userName)님"
+      self.view.flex.layout(mode: .fitContainer)
   }
 }
