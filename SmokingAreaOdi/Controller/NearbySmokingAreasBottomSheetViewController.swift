@@ -5,10 +5,13 @@
 //  Created by 이상지 on 9/15/25.
 //
 
-import UIKit
+import FirebaseFirestore
 import FlexLayout
 import PinLayout
 import Then
+
+import UIKit
+
 
 final class NearbySmokingAreasBottomSheetViewController: UIViewController {
   
@@ -21,6 +24,8 @@ final class NearbySmokingAreasBottomSheetViewController: UIViewController {
   }
   
   private let tableView = UITableView()
+  
+  private var smokingAreas: [String] = []
   
   
   override func viewDidLoad() {
@@ -49,8 +54,12 @@ final class NearbySmokingAreasBottomSheetViewController: UIViewController {
       .alignItems(.center)
       .define {
         $0.addItem(self.titleLabel)
-        $0.addItem(self.tableView).height(100%)
+        $0.addItem(self.tableView).height(100%).marginTop(15)
       }
+  }
+  
+  private func fetchSmokingAreas() {
+    //데이터 가져오기
   }
 }
 
@@ -65,5 +74,4 @@ extension NearbySmokingAreasBottomSheetViewController: UITableViewDelegate, UITa
     cell.textLabel?.text = "Row \(indexPath.row + 1)"
     return cell
   }
-
 }
