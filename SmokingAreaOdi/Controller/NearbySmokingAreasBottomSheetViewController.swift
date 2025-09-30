@@ -20,10 +20,18 @@ final class NearbySmokingAreasBottomSheetViewController: UIViewController {
     $0.textAlignment = .center
   }
   
+  private let tableView = UITableView()
+  
   
   override func viewDidLoad() {
     super.viewDidLoad()
     self.view.backgroundColor = .white
+    self.tableView.delegate = self
+    self.tableView.dataSource = self
+    
+    self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+
+    
     self.view.addSubview(rootContainer)
     self.setupLayout()
   }
@@ -40,7 +48,22 @@ final class NearbySmokingAreasBottomSheetViewController: UIViewController {
     self.rootContainer.flex.justifyContent(.start).marginTop(30)
       .alignItems(.center)
       .define {
-        $0.addItem(titleLabel)
+        $0.addItem(self.titleLabel)
+        $0.addItem(self.tableView).height(100%)
       }
   }
+}
+
+
+extension NearbySmokingAreasBottomSheetViewController: UITableViewDelegate, UITableViewDataSource {
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return 5
+  }
+  
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+    cell.textLabel?.text = "Row \(indexPath.row + 1)"
+    return cell
+  }
+
 }
