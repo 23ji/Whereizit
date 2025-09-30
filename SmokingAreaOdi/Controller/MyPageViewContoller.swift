@@ -9,11 +9,14 @@ import UIKit
 
 final class MyPageViewContoller : UIViewController {
   
+  private let rootContainer = UIView()
+  
   let userName: String = "홍길동"
   
   private let nameLabel = UILabel().then {
     $0.textColor = .black
     $0.font = $0.font.withSize(30)
+    $0.textAlignment = .center
   }
   
   override func viewDidLoad() {
@@ -23,12 +26,17 @@ final class MyPageViewContoller : UIViewController {
     self.setupLayout()
   }
   
-  private func addSubviews() {
-    self.view.addSubview(self.nameLabel)
+  override func viewDidLayoutSubviews() {
+    self.rootContainer.pin.all(self.view.pin.safeArea)
+    self.rootContainer.flex.layout()
   }
   
+  private func addSubviews() {
+    self.view.addSubview(self.rootContainer)
+  }
+
   private func setupLayout() {
-      self.view.flex.direction(.column).define {
+      self.rootContainer.flex.direction(.column).define {
           $0.addItem(self.nameLabel)
               .width(200)
               .height(50)
@@ -36,6 +44,5 @@ final class MyPageViewContoller : UIViewController {
               .alignSelf(.center)
       }
       self.nameLabel.text = "\(self.userName)님"
-      self.view.flex.layout(mode: .fitContainer)
   }
 }
