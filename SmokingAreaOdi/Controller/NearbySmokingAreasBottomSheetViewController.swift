@@ -25,12 +25,18 @@ final class NearbySmokingAreasBottomSheetViewController: UIViewController {
   
   private let tableView = UITableView()
   
+  let db = Firestore.firestore()
+  
   private var smokingAreas: [String] = []
+  
+  private var areaName: String = ""
   
   
   override func viewDidLoad() {
     super.viewDidLoad()
     self.view.backgroundColor = .white
+    self.fetchSmokingAreas()
+    
     self.tableView.delegate = self
     self.tableView.dataSource = self
     
@@ -59,7 +65,13 @@ final class NearbySmokingAreasBottomSheetViewController: UIViewController {
   }
   
   private func fetchSmokingAreas() {
-    //데이터 가져오기
+    db.collection("smokingAreas").addSnapshotListener { snapshot, error in
+      guard let snapshot = snapshot else { return }
+      for doc in snapshot.documents {
+        let data = doc.data()
+        print(data)
+      }
+    }
   }
 }
 
@@ -72,6 +84,7 @@ extension NearbySmokingAreasBottomSheetViewController: UITableViewDelegate, UITa
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
     cell.textLabel?.text = "Row \(indexPath.row + 1)"
+    
     return cell
   }
 }
