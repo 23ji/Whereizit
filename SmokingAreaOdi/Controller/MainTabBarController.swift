@@ -18,5 +18,13 @@ final class MainTabBarController: UITabBarController {
     myPageVC.tabBarItem = UITabBarItem(title: "마이페이지", image: UIImage(systemName: "person"), tag: 1)
     
     viewControllers = [homeVC, myPageVC]
+    
+    
+    let appearance = UITabBarAppearance()
+    appearance.configureWithOpaqueBackground()
+    appearance.backgroundColor = .white
+    appearance.shadowColor = .clear
+    self.tabBar.standardAppearance = appearance
+    self.tabBar.scrollEdgeAppearance = appearance
   }
 }
