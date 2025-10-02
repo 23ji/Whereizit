@@ -27,7 +27,7 @@ final class NearbySmokingAreasBottomSheetViewController: UIViewController {
   
   let db = Firestore.firestore()
   
-  private var smokingAreas: [String] = []
+  //private var smokingAreas: SmokingArea
   
   private var areaName: String = ""
   
