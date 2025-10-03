@@ -27,7 +27,7 @@ final class NearbySmokingAreasBottomSheetViewController: UIViewController {
   
   let db = Firestore.firestore()
   
-  //private var smokingAreas: SmokingArea
+  private var smokingAreas: [SmokingArea] = []
   
   private var areaName: String = ""
   
@@ -41,7 +41,6 @@ final class NearbySmokingAreasBottomSheetViewController: UIViewController {
     self.tableView.dataSource = self
     
     self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-
     
     self.view.addSubview(rootContainer)
     self.setupLayout()
@@ -65,12 +64,40 @@ final class NearbySmokingAreasBottomSheetViewController: UIViewController {
   }
   
   private func fetchSmokingAreas() {
-    db.collection("smokingAreas").addSnapshotListener { snapshot, error in
-      guard let snapshot = snapshot else { return }
+    db.collection("smokingAreas").addSnapshotListener { [weak self] snapshot, error in
+      guard let self = self, let snapshot = snapshot else { return }
+      
+      var newAreas: [SmokingArea] = []
+      
       for doc in snapshot.documents {
         let data = doc.data()
-        print(data)
+        
+        if let name = data["name"] as? String,
+           let description = data["description"] as? String,
+           let areaLat = data["areaLat"] as? Double,
+           let areaLng = data["areaLng"] as? Double {
+          
+          let imageURL = data["imageURL"] as? String
+          let envTags = data["environmentTags"] as? [String] ?? []
+          let typeTags = data["typeTags"] as? [String] ?? []
+          let facTags = data["facilityTags"] as? [String] ?? []
+          
+          let area = SmokingArea(
+            imageURL: imageURL,
+            name: name,
+            description: description,
+            areaLat: areaLat,
+            areaLng: areaLng,
+            selectedEnvironmentTags: envTags,
+            selectedTypeTags: typeTags,
+            selectedFacilityTags: facTags
+          )
+          newAreas.append(area)
+        }
       }
+      
+      self.smokingAreas = newAreas
+      self.tableView.reloadData()
     }
   }
 }
@@ -78,12 +105,14 @@ final class NearbySmokingAreasBottomSheetViewController: UIViewController {
 
 extension NearbySmokingAreasBottomSheetViewController: UITableViewDelegate, UITableViewDataSource {
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 5
+    return smokingAreas.count
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-    cell.textLabel?.text = "Row \(indexPath.row + 1)"
+    let area = smokingAreas[indexPath.row]
+    
+    cell.textLabel?.text = area.name
     
     return cell
   }
