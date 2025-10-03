@@ -58,6 +58,7 @@
 		498ECFA22E77F32C00B9EABC /* NearbySmokingAreasBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbySmokingAreasBottomSheetViewController.swift; sourceTree = "<group>"; };
 		49E6295F2E27756C00751E26 /* MarkerPositionSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerPositionSelectorViewController.swift; sourceTree = "<group>"; };
 		71E8D5BE6D6F3B97EE6F1699 /* Pods_SmokingAreaOdi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmokingAreaOdi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9F0EB9282E8FA15C0091976A /* SmokingAreaTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokingAreaTableViewCell.swift; sourceTree = "<group>"; };
 		9FA27D292E8214BD00D36B6C /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9FA6B1782E64473E00A94571 /* SmokingAreaBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokingAreaBottomSheetViewController.swift; sourceTree = "<group>"; };
 		9FB2BC052E79777D00C3B4F3 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
@@ -102,6 +103,7 @@
 		49288AA02D19450C00FF1E50 = {
 			isa = PBXGroup;
 			children = (
+				9F0EB9282E8FA15C0091976A /* SmokingAreaTableViewCell.swift */,
 				9FB2BC052E79777D00C3B4F3 /* Config.xcconfig */,
 				49288AAB2D19450C00FF1E50 /* SmokingAreaOdi */,
 				49288AAA2D19450C00FF1E50 /* Products */,
