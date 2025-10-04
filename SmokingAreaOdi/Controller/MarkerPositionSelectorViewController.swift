@@ -42,7 +42,7 @@ final class MarkerPositionSelectorViewController: UIViewController {
     $0.layer.shadowRadius = 4
   }
   
-  private let markerCoordinateImageView = UIImageView(image: UIImage(named: "plus_Pin")).then {
+  private let markerCoordinateImageView = UIImageView(image: UIImage(named: "marker_Pin")).then {
     $0.layer.shadowColor = UIColor.black.cgColor
     $0.layer.shadowOpacity = 0.3
     $0.layer.shadowOffset = CGSize(width: 0, height: 3)
