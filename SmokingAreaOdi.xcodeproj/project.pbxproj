@@ -458,6 +458,7 @@
 				DEVELOPMENT_TEAM = Z4QCD3KW2W;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SmokingAreaOdi/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "흡구오디";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_NSCameraUsageDescription = "사진을 촬영하기 위해 카메라 접근 권한이 필요합니다.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "현재 위치 표시를 위해 앱 사용 중 사용자의 위치를 받습니다.";
@@ -495,6 +496,7 @@
 				DEVELOPMENT_TEAM = Z4QCD3KW2W;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SmokingAreaOdi/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "흡구오디";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_NSCameraUsageDescription = "사진을 촬영하기 위해 카메라 접근 권한이 필요합니다.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "현재 위치 표시를 위해 앱 사용 중 사용자의 위치를 받습니다.";
