@@ -87,7 +87,7 @@ final class MarkerPositionSelectorViewController: UIViewController {
   
   private func setup() {
     self.mapView.showLocationButton = true
-    self.mapView.mapView.zoomLevel = 16.0
+    self.mapView.mapView.zoomLevel = 18.0
     
     guard let navBar = self.navigationController?.navigationBar else { return }
     let appearance   = UINavigationBarAppearance()
