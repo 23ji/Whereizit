@@ -40,7 +40,7 @@ final class NearbySmokingAreasBottomSheetViewController: UIViewController {
     self.tableView.delegate = self
     self.tableView.dataSource = self
     
-    self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+    self.tableView.register(SmokingAreaTableViewCell.self, forCellReuseIdentifier: "SmokingAreaCell")
     
     self.view.addSubview(rootContainer)
     self.setupLayout()
@@ -109,7 +109,9 @@ extension NearbySmokingAreasBottomSheetViewController: UITableViewDelegate, UITa
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: "SmokingAreaCell", for: indexPath)
+            as? SmokingAreaTableViewCell else { return UITableViewCell() }
+    
     let area = smokingAreas[indexPath.row]
     
     cell.textLabel?.text = area.name

@@ -34,6 +34,7 @@
 		9FA27D2F2E82152100D36B6C /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 9FA27D2E2E82152100D36B6C /* GoogleSignInSwift */; };
 		9FA6B1792E64473E00A94571 /* SmokingAreaBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA6B1782E64473E00A94571 /* SmokingAreaBottomSheetViewController.swift */; };
 		9FA9DE722E65DB93004D71A7 /* PanModal in Frameworks */ = {isa = PBXBuildFile; productRef = 9FA9DE712E65DB93004D71A7 /* PanModal */; };
+		9FAB5F9A2E90F9E600A7EE33 /* SmokingAreaTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0EB9282E8FA15C0091976A /* SmokingAreaTableViewCell.swift */; };
 		9FB2BC072E79783500C3B4F3 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB2BC062E79783500C3B4F3 /* LoginViewController.swift */; };
 		9FB2BC0A2E7980A800C3B4F3 /* RxKakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 9FB2BC092E7980A800C3B4F3 /* RxKakaoSDK */; };
 		9FB65AC22E7B7D4E00F788BF /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB65AC12E7B7D4E00F788BF /* SignInViewController.swift */; };
@@ -103,7 +104,6 @@
 		49288AA02D19450C00FF1E50 = {
 			isa = PBXGroup;
 			children = (
-				9F0EB9282E8FA15C0091976A /* SmokingAreaTableViewCell.swift */,
 				9FB2BC052E79777D00C3B4F3 /* Config.xcconfig */,
 				49288AAB2D19450C00FF1E50 /* SmokingAreaOdi */,
 				49288AAA2D19450C00FF1E50 /* Products */,
@@ -127,6 +127,7 @@
 				49288AAE2D19450C00FF1E50 /* SceneDelegate.swift */,
 				A774711D2D58D8ED006F2F0D /* Model */,
 				9FDBC1FB2E867BA2009924E8 /* LoginButton.swift */,
+				9F0EB9282E8FA15C0091976A /* SmokingAreaTableViewCell.swift */,
 				A774711E2D58D913006F2F0D /* View */,
 				A774711F2D58D917006F2F0D /* Controller */,
 				A77471202D58D93E006F2F0D /* Service */,
@@ -304,6 +305,7 @@
 				A77C88BF2E2528A8002D725E /* HomeViewController.swift in Sources */,
 				49288AAD2D19450C00FF1E50 /* AppDelegate.swift in Sources */,
 				49288AAF2D19450C00FF1E50 /* SceneDelegate.swift in Sources */,
+				9FAB5F9A2E90F9E600A7EE33 /* SmokingAreaTableViewCell.swift in Sources */,
 				490221A12E67DBBF0069DDEC /* SmokingArea.swift in Sources */,
 				498B448F2E7A53E800FF06B6 /* MainTabBarController.swift in Sources */,
 				A7990CBE2E288E5200B3D3CE /* MarkerInfoInputViewController.swift in Sources */,
