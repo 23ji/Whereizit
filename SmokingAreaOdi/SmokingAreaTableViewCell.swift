@@ -44,14 +44,27 @@ final class SmokingAreaTableViewCell: UITableViewCell {
   }
   
   private func setupLayout() {
-    contentView.flex.padding(10).define {
-      $0.addItem(self.areaImageView)
+    contentView.flex.direction(.row).padding(10).define {
+      $0.addItem(self.areaImageView).height(50).width(50).margin(10)
       $0.addItem(self.titleLabel)
     }
   }
   
+  private func loadImage(from urlString: String?) {
+        guard let urlString = urlString, let url = URL(string: urlString) else { return }
+        
+        URLSession.shared.dataTask(with: url) { data, _, _ in
+            if let data = data, let image = UIImage(data: data) {
+                DispatchQueue.main.async {
+                    self.areaImageView.image = image
+                }
+            }
+        }.resume()
+    }
+  
   func configure(with area: SmokingArea) {
     self.titleLabel.text = area.name
+    self.loadImage(from: area.imageURL)
   }
   
   
