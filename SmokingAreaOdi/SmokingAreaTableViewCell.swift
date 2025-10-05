@@ -26,7 +26,7 @@ final class SmokingAreaTableViewCell: UITableViewCell {
   private let titleLabel = UILabel().then {
     $0.font = .systemFont(ofSize: 18, weight: .medium)
   }
-  
+
   
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -37,18 +37,34 @@ final class SmokingAreaTableViewCell: UITableViewCell {
   
   required init?(coder: NSCoder) { fatalError() }
   
+  
   override func layoutSubviews() {
     super.layoutSubviews()
     self.contentView.pin.all()
-    self.contentView.flex.layout()
+    self.contentView.flex.layout(mode: .adjustHeight)
   }
   
-  private func setupLayout() {
-    contentView.flex.direction(.row).padding(10).define {
-      $0.addItem(self.areaImageView).height(50).width(50).margin(10)
-      $0.addItem(self.titleLabel)
-    }
+  override func sizeThatFits(_ size: CGSize) -> CGSize {
+      self.contentView.pin.width(size.width)
+      self.contentView.flex.layout(mode: .adjustHeight)
+      return self.contentView.frame.size
   }
+
+  
+  private func setupLayout() {
+    self.contentView.flex.direction(.row)
+      .alignItems(.center)
+      .padding(10)
+      .define {
+        $0.addItem(self.areaImageView)
+          .width(50)
+          .height(50)
+          .marginRight(12)
+        $0.addItem(self.titleLabel)
+          .grow(1)
+      }
+  }
+
   
   private func loadImage(from urlString: String?) {
         guard let urlString = urlString, let url = URL(string: urlString) else { return }

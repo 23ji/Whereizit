@@ -41,6 +41,8 @@ final class NearbySmokingAreasBottomSheetViewController: UIViewController {
     self.tableView.dataSource = self
     
     self.tableView.register(SmokingAreaTableViewCell.self, forCellReuseIdentifier: "SmokingAreaCell")
+    self.tableView.rowHeight = UITableView.automaticDimension
+    self.tableView.estimatedRowHeight = 120
     
     self.view.addSubview(rootContainer)
     self.setupLayout()
