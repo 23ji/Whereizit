@@ -37,6 +37,10 @@ final class SmokingAreaTableViewCell: UITableViewCell {
   
   required init?(coder: NSCoder) { fatalError() }
   
+  override func prepareForReuse() {
+    self.areaImageView.image = nil
+    self.titleLabel.text = nil
+  }
   
   override func layoutSubviews() {
     super.layoutSubviews()
@@ -82,6 +86,4 @@ final class SmokingAreaTableViewCell: UITableViewCell {
     self.titleLabel.text = area.name
     self.loadImage(from: area.imageURL)
   }
-  
-  
 }
