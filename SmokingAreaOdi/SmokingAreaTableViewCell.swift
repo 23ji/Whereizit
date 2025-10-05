@@ -17,6 +17,9 @@ import UIKit
 final class SmokingAreaTableViewCell: UITableViewCell {
   
   private let areaImageView = UIImageView().then {
+    $0.image = UIImage(named: "defaultImage")
+    $0.layer.borderWidth = 0.5
+    $0.layer.borderColor = UIColor.systemGray5.cgColor
     $0.backgroundColor = .systemGray5
     $0.layer.cornerRadius = 8
     $0.clipsToBounds = true
