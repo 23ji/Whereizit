@@ -114,7 +114,8 @@ extension NearbySmokingAreasBottomSheetViewController: UITableViewDelegate, UITa
     
     let area = smokingAreas[indexPath.row]
     
-    cell.textLabel?.text = area.name
+    // area 데이터 cell의 configure에 넘겨주기
+    cell.configure(with: area)
     
     return cell
   }
