@@ -316,6 +316,10 @@ final class MarkerInfoInputViewController: UIViewController {
       return
     }
     
+    let formatter = DateFormatter()
+    formatter.dateFormat = "yy.MM.dd.HH:mm"
+    let nowString = formatter.string(from: Date())
+    
     // 모델로 만들기
     let smokingArea = SmokingArea(
       imageURL: capturedImageUrl,
@@ -328,14 +332,10 @@ final class MarkerInfoInputViewController: UIViewController {
       selectedFacilityTags: self.selectedFacilityTags
     )
     
+    let documentID = "\(name)_\(nowString)"
+    
     // Firestore 저장
-    db.collection("smokingAreas").addDocument(data: smokingArea.asDictionary) { error in
-      if let error = error {
-        print("저장 실패: \(error.localizedDescription)")
-      } else {
-        print("저장 성공")
-      }
-    }
+    db.collection("smokingAreas").document(documentID).setData(smokingArea.asDictionary)
   }
 }
 
