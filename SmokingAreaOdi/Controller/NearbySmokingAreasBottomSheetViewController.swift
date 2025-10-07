@@ -5,6 +5,7 @@
 //  Created by 이상지 on 9/15/25.
 //
 
+import FirebaseAuth
 import FirebaseFirestore
 import FlexLayout
 import PinLayout
@@ -14,6 +15,8 @@ import UIKit
 
 
 final class NearbySmokingAreasBottomSheetViewController: UIViewController {
+  
+  let user = Auth.auth().currentUser
   
   private let rootContainer = UIView()
   
@@ -94,6 +97,7 @@ final class NearbySmokingAreasBottomSheetViewController: UIViewController {
               selectedEnvironmentTags: envTags,
               selectedTypeTags: typeTags,
               selectedFacilityTags: facTags,
+              uploadUser: self.user?.email ?? "",
               uploadDate: timestamp
           )
 

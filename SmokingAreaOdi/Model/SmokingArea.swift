@@ -18,7 +18,7 @@ struct SmokingArea {
   var selectedEnvironmentTags: [String]
   var selectedTypeTags: [String]
   var selectedFacilityTags: [String]
-  //var uploadUser: String
+  var uploadUser: String
   var uploadDate: Timestamp
   
   var asDictionary: [String: Any] {
@@ -31,6 +31,7 @@ struct SmokingArea {
         "environmentTags": selectedEnvironmentTags,
         "typeTags": selectedTypeTags,
         "facilityTags": selectedFacilityTags,
+        "uploadUser": uploadUser,
         "uploadDate": uploadDate
       ]
     }

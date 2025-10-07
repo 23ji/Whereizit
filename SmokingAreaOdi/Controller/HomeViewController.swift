@@ -125,6 +125,7 @@ final class HomeViewController: UIViewController {
         let selectedTypeTags = (data["typeTags"] as? [String]) ?? []
         let selectedFacilityTags = (data["facilityTags"] as? [String]) ?? []
         let uploadTimestamp = data["uploadDate"] as? Timestamp ?? Timestamp(date: Date())
+        let uploadUser = data["uploadUser"] as? String ?? ""
         
         let areaData = SmokingArea(
           imageURL: imageURL,
@@ -135,6 +136,7 @@ final class HomeViewController: UIViewController {
           selectedEnvironmentTags: selectedEnvironmentTags,
           selectedTypeTags: selectedTypeTags,
           selectedFacilityTags: selectedFacilityTags,
+          uploadUser: uploadUser,
           uploadDate: uploadTimestamp
         )
         

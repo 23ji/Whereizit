@@ -5,6 +5,7 @@
 //  Created by 이상지 on 7/17/25.
 //
 
+import FirebaseAuth
 import FirebaseCore
 import FirebaseStorage
 import FirebaseFirestore
@@ -36,6 +37,8 @@ final class MarkerInfoInputViewController: UIViewController {
     static let saveButtonHeight: CGFloat = 50
   }
   
+  let user = Auth.auth().currentUser
+
   
   // MARK: Properties
   
@@ -332,6 +335,7 @@ final class MarkerInfoInputViewController: UIViewController {
       selectedEnvironmentTags: self.selectedEnvironmentTags,
       selectedTypeTags: self.selectedTypeTags,
       selectedFacilityTags: self.selectedFacilityTags,
+      uploadUser: self.user?.email ?? "",
       uploadDate: uploadTimestamp
     )
     
