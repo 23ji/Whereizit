@@ -320,6 +320,8 @@ final class MarkerInfoInputViewController: UIViewController {
     formatter.dateFormat = "yy.MM.dd.HH:mm"
     let nowString = formatter.string(from: Date())
     
+    let uploadTimestamp = Timestamp(date: Date())
+
     // 모델로 만들기
     let smokingArea = SmokingArea(
       imageURL: capturedImageUrl,
@@ -329,7 +331,8 @@ final class MarkerInfoInputViewController: UIViewController {
       areaLng: lng,
       selectedEnvironmentTags: self.selectedEnvironmentTags,
       selectedTypeTags: self.selectedTypeTags,
-      selectedFacilityTags: self.selectedFacilityTags
+      selectedFacilityTags: self.selectedFacilityTags,
+      uploadDate: uploadTimestamp
     )
     
     let documentID = "\(name)_\(nowString)"

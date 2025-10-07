@@ -124,6 +124,7 @@ final class HomeViewController: UIViewController {
         let selectedEnvironmentTags = (data["environmentTags"] as? [String]) ?? []
         let selectedTypeTags = (data["typeTags"] as? [String]) ?? []
         let selectedFacilityTags = (data["facilityTags"] as? [String]) ?? []
+        let uploadTimestamp = data["uploadDate"] as? Timestamp ?? Timestamp(date: Date())
         
         let areaData = SmokingArea(
           imageURL: imageURL,
@@ -133,7 +134,8 @@ final class HomeViewController: UIViewController {
           areaLng: areaLng,
           selectedEnvironmentTags: selectedEnvironmentTags,
           selectedTypeTags: selectedTypeTags,
-          selectedFacilityTags: selectedFacilityTags
+          selectedFacilityTags: selectedFacilityTags,
+          uploadDate: uploadTimestamp
         )
         
         let areaMarker = NMFMarker()

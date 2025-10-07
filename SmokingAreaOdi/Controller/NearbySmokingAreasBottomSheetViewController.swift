@@ -83,17 +83,20 @@ final class NearbySmokingAreasBottomSheetViewController: UIViewController {
           let envTags = data["environmentTags"] as? [String] ?? []
           let typeTags = data["typeTags"] as? [String] ?? []
           let facTags = data["facilityTags"] as? [String] ?? []
-          
+          let timestamp = data["uploadDate"] as? Timestamp ?? Timestamp(date: Date())
+
           let area = SmokingArea(
-            imageURL: imageURL,
-            name: name,
-            description: description,
-            areaLat: areaLat,
-            areaLng: areaLng,
-            selectedEnvironmentTags: envTags,
-            selectedTypeTags: typeTags,
-            selectedFacilityTags: facTags
+              imageURL: imageURL,
+              name: name,
+              description: description,
+              areaLat: areaLat,
+              areaLng: areaLng,
+              selectedEnvironmentTags: envTags,
+              selectedTypeTags: typeTags,
+              selectedFacilityTags: facTags,
+              uploadDate: timestamp
           )
+
           newAreas.append(area)
         }
       }

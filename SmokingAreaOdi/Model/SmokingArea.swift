@@ -5,6 +5,8 @@
 //  Created by 이상지 on 8/29/25.
 //
 
+import FirebaseFirestore
+
 import Foundation
 
 struct SmokingArea {
@@ -16,8 +18,8 @@ struct SmokingArea {
   var selectedEnvironmentTags: [String]
   var selectedTypeTags: [String]
   var selectedFacilityTags: [String]
-  // var uploadUser: String
-  // var uploadDate
+  //var uploadUser: String
+  var uploadDate: Timestamp
   
   var asDictionary: [String: Any] {
       return [
@@ -28,7 +30,8 @@ struct SmokingArea {
         "areaLng": areaLng,
         "environmentTags": selectedEnvironmentTags,
         "typeTags": selectedTypeTags,
-        "facilityTags": selectedFacilityTags
+        "facilityTags": selectedFacilityTags,
+        "uploadDate": uploadDate
       ]
     }
 }
