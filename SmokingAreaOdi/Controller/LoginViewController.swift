@@ -76,6 +76,10 @@ final class LoginViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     self.view.backgroundColor = .white
+    if let user = Auth.auth().currentUser {
+      print(user.email)
+      self.goHome()
+    }
     self.addSubviews()
     self.setupLayout()
     self.bindAction()
