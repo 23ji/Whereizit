@@ -41,6 +41,7 @@
 		9FDBC1FC2E867BA2009924E8 /* LoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FDBC1FB2E867BA2009924E8 /* LoginButton.swift */; };
 		9FDC5EEE2E7ACFB900C1335B /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = 9FDC5EED2E7ACFB900C1335B /* FirebaseFunctions */; };
 		9FF116062E9609AB0076A359 /* ReactorKit in Frameworks */ = {isa = PBXBuildFile; productRef = 9FF116052E9609AB0076A359 /* ReactorKit */; };
+		9FF116082E960A0C0076A359 /* HomeViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF116072E960A0C0076A359 /* HomeViewReactor.swift */; };
 		A75196ED2E3A42D700CE5F1F /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = A75196EC2E3A42D700CE5F1F /* Then */; };
 		A77C88BF2E2528A8002D725E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77C88BE2E2528A8002D725E /* HomeViewController.swift */; };
 		A77C88C22E252941002D725E /* NMapsMap in Frameworks */ = {isa = PBXBuildFile; productRef = A77C88C12E252941002D725E /* NMapsMap */; };
@@ -67,6 +68,7 @@
 		9FB2BC062E79783500C3B4F3 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		9FB65AC12E7B7D4E00F788BF /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		9FDBC1FB2E867BA2009924E8 /* LoginButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginButton.swift; sourceTree = "<group>"; };
+		9FF116072E960A0C0076A359 /* HomeViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewReactor.swift; sourceTree = "<group>"; };
 		A77C88BE2E2528A8002D725E /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		A7990CBD2E288E5100B3D3CE /* MarkerInfoInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerInfoInputViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -174,6 +176,7 @@
 				498B44902E7A82F900FF06B6 /* MyPageViewController.swift */,
 				9FB2BC062E79783500C3B4F3 /* LoginViewController.swift */,
 				9FB65AC12E7B7D4E00F788BF /* SignInViewController.swift */,
+				9FF116072E960A0C0076A359 /* HomeViewReactor.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -307,6 +310,7 @@
 				A7990CBE2E288E5200B3D3CE /* MarkerInfoInputViewController.swift in Sources */,
 				9FB65AC22E7B7D4E00F788BF /* SignInViewController.swift in Sources */,
 				498ECFA32E77F32C00B9EABC /* NearbySmokingAreasBottomSheetViewController.swift in Sources */,
+				9FF116082E960A0C0076A359 /* HomeViewReactor.swift in Sources */,
 				498B44912E7A82F900FF06B6 /* MyPageViewController.swift in Sources */,
 				9FA6B1792E64473E00A94571 /* SmokingAreaBottomSheetViewController.swift in Sources */,
 				9FDBC1FC2E867BA2009924E8 /* LoginButton.swift in Sources */,

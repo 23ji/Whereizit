@@ -23,6 +23,8 @@ import NMapsMap
 
 import UIKit
 
+import ReactorKit
+
 
 final class HomeViewController: UIViewController {
   
@@ -61,7 +63,7 @@ final class HomeViewController: UIViewController {
   // MARK: Rx
   
   private let markerTapped = PublishSubject<SmokingArea>()
-  private let disposeBag = DisposeBag()
+  var disposeBag = DisposeBag()
   
   
   // MARK: LifeCycle
@@ -160,6 +162,7 @@ final class HomeViewController: UIViewController {
       }
     }
   }
+
   
   private func bind() {
     self.markerTapped
