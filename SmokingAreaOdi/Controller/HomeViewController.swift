@@ -5,17 +5,21 @@
 //  Created by 이상지 on 7/14/25.
 //
 
+import SnapKit
+import Then
+
+import RxSwift
+import RxCocoa
+
 import CoreLocation
 import FirebaseCore
 import FirebaseFirestore
 import FirebaseStorage
+
 import FloatingPanel
-import NMapsMap
 import PanModal
-import RxSwift
-import RxCocoa
-import SnapKit
-import Then
+
+import NMapsMap
 
 import UIKit
 
@@ -29,6 +33,7 @@ final class HomeViewController: UIViewController {
     static let addButtonBottom: CGFloat = 180
   }
   
+  
   // MARK: UI
   
   private let mapView = NMFNaverMapView()
@@ -37,10 +42,12 @@ final class HomeViewController: UIViewController {
     $0.layer.shadowOpacity = 0.1
   }
   
+  
   // MARK: Property
   
   private let db = Firestore.firestore()
   private let locationManager = CLLocationManager()
+  
   
   // MARK: 바텀시트
   
@@ -50,10 +57,12 @@ final class HomeViewController: UIViewController {
   var nearBySmokingAreasBottomSheetVC = NearbySmokingAreasBottomSheetViewController()
   var smokingAreaBottomSheetVC = SmokingAreaBottomSheetViewController()
   
+  
   // MARK: Rx
   
   private let markerTapped = PublishSubject<SmokingArea>()
   private let disposeBag = DisposeBag()
+  
   
   // MARK: LifeCycle
   
@@ -65,7 +74,6 @@ final class HomeViewController: UIViewController {
     self.setLocationManager()
     self.smokingAreas()
     self.setupPanels()
-    self.didTappedAddButton()
     self.bind()
     
     self.mapView.mapView.touchDelegate = self
@@ -73,21 +81,21 @@ final class HomeViewController: UIViewController {
   
   
   override func viewDidLayoutSubviews() {
-      super.viewDidLayoutSubviews()
-      if let tabBarHeight = self.tabBarController?.tabBar.frame.height {
-        self.mapView.mapView.contentInset = UIEdgeInsets(
-              top: 0,
-              left: 0,
-              bottom: tabBarHeight - 10,
-              right: 0
-          )
-      }
+    super.viewDidLayoutSubviews()
+    if let tabBarHeight = self.tabBarController?.tabBar.frame.height {
+      self.mapView.mapView.contentInset = UIEdgeInsets(
+        top: 0,
+        left: 0,
+        bottom: tabBarHeight - 10,
+        right: 0
+      )
+    }
   }
-
+  
   
   // MARK: Setup
   
-  private func setup() {
+  private func setup() { // 네이밍 변경
     self.navigationItem.title = "Home"
     self.mapView.mapView.zoomLevel = 16.0
     self.mapView.showLocationButton = true
@@ -109,7 +117,7 @@ final class HomeViewController: UIViewController {
   
   // MARK: Area Marker
   
-  private func smokingAreas() {
+  private func smokingAreas() { // 네이밍 변경
     db.collection("smokingAreas").addSnapshotListener { snapshot, error in
       guard let snapshot = snapshot else { return }
       for doc in snapshot.documents {
@@ -162,18 +170,15 @@ final class HomeViewController: UIViewController {
         self.nearbyPanel.move(to: .hidden, animated: true)
       })
       .disposed(by: disposeBag)
-  }
-  
-  // MARK: Action
-  
-  private func didTappedAddButton() {
-    self.addButton.rx.tap.subscribe(
-      onNext : { [weak self] in
+    
+    self.addButton.rx.tap
+      .asDriver()
+      .drive(onNext : { [weak self] in
         let markerPositionSeletorVC = MarkerPositionSelectorViewController()
         markerPositionSeletorVC.modalPresentationStyle = .fullScreen
         self?.present(markerPositionSeletorVC, animated: true)
       })
-    .disposed(by: self.disposeBag)
+      .disposed(by: self.disposeBag)
   }
 }
 

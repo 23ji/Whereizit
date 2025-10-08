@@ -104,6 +104,7 @@
 		49288AA02D19450C00FF1E50 = {
 			isa = PBXGroup;
 			children = (
+				9FF116032E9602E20076A359 /* View */,
 				9FB2BC052E79777D00C3B4F3 /* Config.xcconfig */,
 				49288AAB2D19450C00FF1E50 /* SmokingAreaOdi */,
 				49288AAA2D19450C00FF1E50 /* Products */,
@@ -126,11 +127,7 @@
 				49288AAC2D19450C00FF1E50 /* AppDelegate.swift */,
 				49288AAE2D19450C00FF1E50 /* SceneDelegate.swift */,
 				A774711D2D58D8ED006F2F0D /* Model */,
-				9FDBC1FB2E867BA2009924E8 /* LoginButton.swift */,
-				9F0EB9282E8FA15C0091976A /* SmokingAreaTableViewCell.swift */,
-				A774711E2D58D913006F2F0D /* View */,
 				A774711F2D58D917006F2F0D /* Controller */,
-				A77471202D58D93E006F2F0D /* Service */,
 				49288AB52D19450D00FF1E50 /* Assets.xcassets */,
 				49288AB72D19450D00FF1E50 /* LaunchScreen.storyboard */,
 				49288ABA2D19450D00FF1E50 /* Info.plist */,
@@ -146,19 +143,21 @@
 			name = "Recovered References";
 			sourceTree = "<group>";
 		};
+		9FF116032E9602E20076A359 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				9FDBC1FB2E867BA2009924E8 /* LoginButton.swift */,
+				9F0EB9282E8FA15C0091976A /* SmokingAreaTableViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		A774711D2D58D8ED006F2F0D /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				490221A02E67DBBF0069DDEC /* SmokingArea.swift */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		A774711E2D58D913006F2F0D /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		A774711F2D58D917006F2F0D /* Controller */ = {
@@ -175,13 +174,6 @@
 				9FB65AC12E7B7D4E00F788BF /* SignInViewController.swift */,
 			);
 			path = Controller;
-			sourceTree = "<group>";
-		};
-		A77471202D58D93E006F2F0D /* Service */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Service;
 			sourceTree = "<group>";
 		};
 		C6320CCAA5A88F0BADA6F25C /* Frameworks */ = {

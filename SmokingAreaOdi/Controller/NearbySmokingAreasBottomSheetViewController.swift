@@ -26,7 +26,9 @@ final class NearbySmokingAreasBottomSheetViewController: UIViewController {
     $0.textAlignment = .center
   }
   
-  private let tableView = UITableView()
+  private let tableView = UITableView().then {
+    $0.contentInset = .init(top: 0, left: 0, bottom: 50, right: 0)
+  }
   
   let db = Firestore.firestore()
   
