@@ -41,7 +41,7 @@ final class SmokingAreaTableViewCell: UITableViewCell {
   required init?(coder: NSCoder) { fatalError() }
   
   override func prepareForReuse() {
-    self.areaImageView.image = nil
+    //self.areaImageView.image = nil
     self.titleLabel.text = nil
   }
   

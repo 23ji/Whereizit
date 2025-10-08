@@ -106,7 +106,6 @@
 		49288AA02D19450C00FF1E50 = {
 			isa = PBXGroup;
 			children = (
-				9FF116032E9602E20076A359 /* View */,
 				9FB2BC052E79777D00C3B4F3 /* Config.xcconfig */,
 				49288AAB2D19450C00FF1E50 /* SmokingAreaOdi */,
 				49288AAA2D19450C00FF1E50 /* Products */,
@@ -129,6 +128,7 @@
 				49288AAC2D19450C00FF1E50 /* AppDelegate.swift */,
 				49288AAE2D19450C00FF1E50 /* SceneDelegate.swift */,
 				A774711D2D58D8ED006F2F0D /* Model */,
+				9FF116032E9602E20076A359 /* View */,
 				A774711F2D58D917006F2F0D /* Controller */,
 				49288AB52D19450D00FF1E50 /* Assets.xcassets */,
 				49288AB72D19450D00FF1E50 /* LaunchScreen.storyboard */,
