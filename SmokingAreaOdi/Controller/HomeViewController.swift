@@ -63,7 +63,7 @@ final class HomeViewController: UIViewController {
   // MARK: Rx
   
   private let markerTapped = PublishSubject<SmokingArea>()
-  var disposeBag = DisposeBag()
+  private let disposeBag = DisposeBag()
   
   
   // MARK: LifeCycle
