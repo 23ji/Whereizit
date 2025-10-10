@@ -237,13 +237,25 @@ extension HomeViewController: FloatingPanelControllerDelegate {
 
     // Tapped 패널
     self.tappedPanel = FloatingPanelController()
+    self.tappedPanel.delegate = self
     self.tappedPanel.surfaceView.layer.cornerRadius = 15
     self.tappedPanel.surfaceView.layer.masksToBounds = true
     self.tappedPanel.set(contentViewController: smokingAreaBottomSheetVC)
     self.tappedPanel.addPanel(toParent: self)
     self.tappedPanel.move(to: .hidden, animated: false)
   }
+  
+  // 수정하기❗️
+  func floatingPanelWillEndDragging(_ fpc: FloatingPanelController, withVelocity velocity: CGPoint, targetState: UnsafeMutablePointer<FloatingPanelState>) {
+    if fpc == self.tappedPanel && fpc.state == .half && velocity.y > 0 {
+      self.tappedPanel.move(to: .hidden, animated: false)
+      self.nearbyPanel.move(to: .tip, animated: false)
+      print("작동")
+      //self.view.bringSubviewToFront(self.nearbyPanel.view)
+    }
+  }
 }
+
 
 
 extension HomeViewController: NMFMapViewTouchDelegate {
@@ -266,6 +278,5 @@ extension HomeViewController: NearbySmokingAreasDelegate {
     self.smokingAreaBottomSheetVC.configure(with: areaData)
     self.tappedPanel.move(to: .half, animated: true)
     self.nearbyPanel.move(to: .hidden, animated: true)
-    print("작동")
   }
 }
