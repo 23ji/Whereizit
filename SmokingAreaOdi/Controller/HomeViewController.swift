@@ -171,6 +171,7 @@ final class HomeViewController: UIViewController {
         self.smokingAreaBottomSheetVC.configure(with: areaData)
         self.tappedPanel.move(to: .half, animated: true)
         self.nearbyPanel.move(to: .hidden, animated: true)
+        self.moveCameraToSmokingArea(lat: areaData.areaLat, lng: areaData.areaLng)
       })
       .disposed(by: disposeBag)
     
