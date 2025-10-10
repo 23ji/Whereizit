@@ -240,6 +240,8 @@ extension HomeViewController: FloatingPanelControllerDelegate {
     self.tappedPanel.set(contentViewController: smokingAreaBottomSheetVC)
     self.tappedPanel.addPanel(toParent: self)
     self.tappedPanel.move(to: .hidden, animated: false)
+    
+    self.nearBySmokingAreasBottomSheetVC.delegate = self
   }
 }
 
@@ -248,5 +250,14 @@ extension HomeViewController: NMFMapViewTouchDelegate {
   func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
     self.nearbyPanel.move(to: .tip, animated: true)
     self.tappedPanel.move(to: .hidden, animated: true)
+  }
+}
+
+
+extension HomeViewController: NearbySmokingAreasDelegate {
+  func moveCameraToSmokingArea(lat: Double, lng: Double) {
+    let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: lat, lng: lng))
+    cameraUpdate.animation = .easeIn
+    self.mapView.mapView.moveCamera(cameraUpdate)
   }
 }

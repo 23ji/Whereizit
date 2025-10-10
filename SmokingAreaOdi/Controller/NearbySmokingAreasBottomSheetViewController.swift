@@ -14,7 +14,14 @@ import Then
 import UIKit
 
 
+protocol NearbySmokingAreasDelegate: AnyObject {
+  func moveCameraToSmokingArea(lat: Double, lng: Double)
+}
+
+
 final class NearbySmokingAreasBottomSheetViewController: UIViewController {
+  
+  weak var delegate: NearbySmokingAreasDelegate?
   
   let user = Auth.auth().currentUser
   
@@ -129,5 +136,10 @@ extension NearbySmokingAreasBottomSheetViewController: UITableViewDelegate, UITa
     cell.configure(with: area)
     
     return cell
+  }
+  
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    let area = smokingAreas[indexPath.row]
+    delegate?.moveCameraToSmokingArea(lat: area.areaLat, lng: area.areaLng)
   }
 }
