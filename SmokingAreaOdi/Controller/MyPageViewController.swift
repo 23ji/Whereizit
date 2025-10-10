@@ -7,12 +7,16 @@
 
 import FirebaseAuth
 
+import RxSwift
+
 import UIKit
 
 final class MyPageViewController : UIViewController {
   
   private let rootContainer = UIView()
   
+  private let disposeBag = DisposeBag()
+
   var userEmail: String = ""
   
   private let emailLabel = UILabel().then {
@@ -20,6 +24,19 @@ final class MyPageViewController : UIViewController {
     $0.font = $0.font.withSize(30)
     $0.textAlignment = .center
   }
+  
+  private let signOutButton = UIButton().then {
+    let title = "로그아웃"
+    let attributedString = NSAttributedString(
+      string: title,
+      attributes: [
+        .underlineStyle: NSUnderlineStyle.single.rawValue,
+        .foregroundColor: UIColor.gray
+      ]
+    )
+    $0.setAttributedTitle(attributedString, for: .normal)
+  }
+  
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -29,6 +46,7 @@ final class MyPageViewController : UIViewController {
     
     self.addSubviews()
     self.setupLayout()
+    self.bindAction()
   }
   
   override func viewDidLayoutSubviews() {
@@ -46,7 +64,32 @@ final class MyPageViewController : UIViewController {
         .grow(1)
         .marginTop(100)
         .alignSelf(.center)
+      $0.addItem(self.signOutButton)
+        .grow(1)
+        .marginTop(100)
+        .alignSelf(.center)
     }
     self.emailLabel.text = "\(self.userEmail)님"
+  }
+  
+  
+  private func bindAction() {
+    self.signOutButton.rx.tap
+      .subscribe(onNext: { [weak self] in
+        self?.signOut()
+      })
+      .disposed(by: disposeBag)
+  }
+  
+  
+  private func signOut() {
+    let firebaseAuth = Auth.auth()
+    do {
+      try firebaseAuth.signOut()
+      print("로그아웃")
+      self.goHome()
+    } catch let signOutError as NSError {
+      print("Error signing out: %@", signOutError)
+    }
   }
 }
