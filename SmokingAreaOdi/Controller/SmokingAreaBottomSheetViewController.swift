@@ -91,8 +91,7 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
       self.nameLabel.text = data.name
       self.descriptionLabel.text = data.description
       
-      // 이미지 로딩 전, 기본 이미지(placeholder) 설정 또는 nil로 초기화
-      self.areaImageView.image = nil
+      self.areaImageView.image = UIImage(named: "defaultImage")
       
       self.loadImage(from: data.imageURL)
       
