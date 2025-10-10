@@ -8,6 +8,9 @@
 import FirebaseCore
 import FirebaseStorage
 import FlexLayout
+
+import Kingfisher
+
 import PinLayout
 import Then
 
@@ -113,15 +116,8 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
   }
   
   private func loadImage(from urlString: String?) {
-      guard let urlString = urlString, let url = URL(string: urlString) else { return }
-      
-      URLSession.shared.dataTask(with: url) { data, _, _ in
-          if let data = data, let image = UIImage(data: data) {
-              DispatchQueue.main.async {
-                  self.areaImageView.image = image
-              }
-          }
-      }.resume()
+    guard let urlString = urlString, let url = URL(string: urlString) else { return }
+    self.areaImageView.kf.setImage(with: url)
   }
 
   

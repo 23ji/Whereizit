@@ -17,7 +17,6 @@ import FirebaseFirestore
 import FirebaseStorage
 
 import FloatingPanel
-import PanModal
 
 import NMapsMap
 

@@ -29,7 +29,7 @@ final class SmokingAreaTableViewCell: UITableViewCell {
   private let titleLabel = UILabel().then {
     $0.font = .systemFont(ofSize: 18, weight: .medium)
   }
-
+  
   
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -52,11 +52,11 @@ final class SmokingAreaTableViewCell: UITableViewCell {
   }
   
   override func sizeThatFits(_ size: CGSize) -> CGSize {
-      self.contentView.pin.width(size.width)
-      self.contentView.flex.layout(mode: .adjustHeight)
-      return self.contentView.frame.size
+    self.contentView.pin.width(size.width)
+    self.contentView.flex.layout(mode: .adjustHeight)
+    return self.contentView.frame.size
   }
-
+  
   
   private func setupLayout() {
     self.contentView.flex.direction(.row)
@@ -71,19 +71,12 @@ final class SmokingAreaTableViewCell: UITableViewCell {
           .grow(1)
       }
   }
-
+  
   
   private func loadImage(from urlString: String?) {
-        guard let urlString = urlString, let url = URL(string: urlString) else { return }
-        
-        URLSession.shared.dataTask(with: url) { data, _, _ in
-            if let data = data, let image = UIImage(data: data) {
-                DispatchQueue.main.async {
-                    self.areaImageView.image = image
-                }
-            }
-        }.resume()
-    }
+    guard let urlString = urlString, let url = URL(string: urlString) else { return }
+    self.areaImageView.kf.setImage(with: url)
+  }
   
   func configure(with area: SmokingArea) {
     self.titleLabel.text = area.name
