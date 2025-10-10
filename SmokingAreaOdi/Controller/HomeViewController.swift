@@ -233,6 +233,8 @@ extension HomeViewController: FloatingPanelControllerDelegate {
     self.nearbyPanel.addPanel(toParent: self)
     self.nearbyPanel.move(to: .tip, animated: false)
 
+    self.nearBySmokingAreasBottomSheetVC.delegate = self
+
     // Tapped 패널
     self.tappedPanel = FloatingPanelController()
     self.tappedPanel.surfaceView.layer.cornerRadius = 15
@@ -240,8 +242,6 @@ extension HomeViewController: FloatingPanelControllerDelegate {
     self.tappedPanel.set(contentViewController: smokingAreaBottomSheetVC)
     self.tappedPanel.addPanel(toParent: self)
     self.tappedPanel.move(to: .hidden, animated: false)
-    
-    self.nearBySmokingAreasBottomSheetVC.delegate = self
   }
 }
 
@@ -259,5 +259,13 @@ extension HomeViewController: NearbySmokingAreasDelegate {
     let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: lat, lng: lng))
     cameraUpdate.animation = .easeIn
     self.mapView.mapView.moveCamera(cameraUpdate)
+  }
+  
+  
+  func showSmokingAreaBottomSheet(areaData: SmokingArea) {
+    self.smokingAreaBottomSheetVC.configure(with: areaData)
+    self.tappedPanel.move(to: .half, animated: true)
+    self.nearbyPanel.move(to: .hidden, animated: true)
+    print("작동")
   }
 }

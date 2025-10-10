@@ -16,6 +16,8 @@ import UIKit
 
 protocol NearbySmokingAreasDelegate: AnyObject {
   func moveCameraToSmokingArea(lat: Double, lng: Double)
+  
+  func showSmokingAreaBottomSheet(areaData: SmokingArea)
 }
 
 
@@ -141,5 +143,6 @@ extension NearbySmokingAreasBottomSheetViewController: UITableViewDelegate, UITa
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     let area = smokingAreas[indexPath.row]
     delegate?.moveCameraToSmokingArea(lat: area.areaLat, lng: area.areaLng)
+    delegate?.showSmokingAreaBottomSheet(areaData: area)
   }
 }
