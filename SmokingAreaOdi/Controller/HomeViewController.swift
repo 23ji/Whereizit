@@ -69,11 +69,12 @@ final class HomeViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    self.setup()
+    self.navigationItem.title = "Home"
+    self.configureMapView()
     self.addSubviews()
     self.makeConstraints()
     self.setLocationManager()
-    self.smokingAreas()
+    self.observeSmokingAreas()
     self.setupPanels()
     self.bind()
     
@@ -96,8 +97,7 @@ final class HomeViewController: UIViewController {
   
   // MARK: Setup
   
-  private func setup() { // 네이밍 변경
-    self.navigationItem.title = "Home"
+  private func configureMapView() {
     self.mapView.mapView.zoomLevel = 16.0
     self.mapView.showLocationButton = true
   }
@@ -118,7 +118,7 @@ final class HomeViewController: UIViewController {
   
   // MARK: Area Marker
   
-  private func smokingAreas() { // 네이밍 변경
+  private func observeSmokingAreas() {
     db.collection("smokingAreas").addSnapshotListener { snapshot, error in
       guard let snapshot = snapshot else { return }
       for doc in snapshot.documents {

@@ -9,12 +9,16 @@ import FirebaseAuth
 import FirebaseCore
 import FirebaseStorage
 import FirebaseFirestore
+
 import FlexLayout
+import Then
+
 import IQKeyboardManagerSwift
+
 import NMapsMap
+
 import RxSwift
 import RxCocoa
-import Then
 
 import UIKit
 
@@ -23,7 +27,6 @@ final class MarkerInfoInputViewController: UIViewController {
   // MARK: Constant
   
   private enum Metric {
-    //static let mapHeight: CGFloat = 200
     static let imageMargin: CGFloat = 20
     static let imageSize: CGFloat = 70
     static let labelFontSize: CGFloat = 16
@@ -37,7 +40,7 @@ final class MarkerInfoInputViewController: UIViewController {
     static let saveButtonHeight: CGFloat = 50
   }
   
-  let user = Auth.auth().currentUser
+  lazy var user = Auth.auth().currentUser
 
   
   // MARK: Properties
@@ -61,9 +64,9 @@ final class MarkerInfoInputViewController: UIViewController {
   private let scrollView = UIScrollView()
   private let contentView = UIView()
   private let mapView = NMFMapView()
-  private let markerCoordinateImageView = UIImageView(image: UIImage(named: "marker_Pin"))
+  private let markerPinImageView = UIImageView(image: UIImage(named: "marker_Pin"))
   
-  //사진
+  // 흡연구역 사진
   private var areaImage = UIButton().then {
     $0.setImage(UIImage(systemName: "camera.on.rectangle.fill"), for: .normal)
     $0.layer.borderWidth = 0.5
@@ -72,7 +75,7 @@ final class MarkerInfoInputViewController: UIViewController {
     $0.layer.masksToBounds = true
   }
   
-  // 이름
+  // 흡연구역 이름
   private let nameLabel = UILabel().then {
     $0.text = "흡연구역 이름"
     $0.font = .systemFont(ofSize: Metric.labelFontSize, weight: .bold)
@@ -83,7 +86,7 @@ final class MarkerInfoInputViewController: UIViewController {
     $0.font = UIFont.systemFont(ofSize: Metric.textfontSize)
   }
   
-  // 설명
+  // 흡연구역 설명
   private let descriptionLabel = UILabel().then {
     $0.text = "흡연구역 설명"
     $0.font = .systemFont(ofSize: Metric.labelFontSize, weight: .bold)
@@ -98,7 +101,7 @@ final class MarkerInfoInputViewController: UIViewController {
     $0.font = UIFont.systemFont(ofSize: Metric.textfontSize)
   }
   
-  // 태그들
+  // 흡연구역 태그들
   private let environmentTags = ["실내", "실외", "밀폐형", "개방형"]
   private let typeTags = ["흡연구역", "카페", "술집", "식당", "노래방", "보드게임 카페", "당구장", "피시방"]
   private let facilityTags = ["재떨이", "의자", "별도 전자담배 구역", "라이터"]
@@ -117,23 +120,11 @@ final class MarkerInfoInputViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
-    self.view.backgroundColor = .white
-    
-    print("3. 전달받은 좌표 : \(self.markerLat), \(self.markerLng)")
-    guard let lat = self.markerLat, let lng = self.markerLng else { return }
-    let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: lat, lng: lng))
-    self.mapView.moveCamera(cameraUpdate)
-    
-    self.setupUI()
+    self.configureUI()
     self.addSubView()
-    self.scrollView.pin.all(self.view.pin.safeArea)
-    self.contentView.pin.top().horizontally()
-    
     self.defineFlexContainer()
-    
-    self.didTappedAreaImageButton()
-    self.didTappedSaveButton()
+    self.bindAreaImageButton()
+    self.bindSaveButton()
   }
   
   
@@ -141,15 +132,18 @@ final class MarkerInfoInputViewController: UIViewController {
   
   override func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
-    
+    self.scrollView.pin.all(self.view.pin.safeArea)
+    self.contentView.pin.top().horizontally()
+
     self.contentView.flex.layout(mode: .adjustHeight)
     self.scrollView.contentSize = self.contentView.frame.size
     
     let mapCenter = CGPoint(x: mapView.bounds.midX, y: mapView.bounds.midY)
-    markerCoordinateImageView.center = CGPoint(x: mapCenter.x, y: mapCenter.y - (markerCoordinateImageView.bounds.height / 2))
+    self.markerPinImageView.center = CGPoint(x: mapCenter.x, y: mapCenter.y - ( self.markerPinImageView.bounds.height / 2 ))
   }
   
-  private func setupUI() {
+  private func configureUI() {
+    self.view.backgroundColor = .white
     self.navigationItem.title = "흡연구역 등록"
     self.descriptionTextView.delegate = self
     self.mapView.allowsScrolling = false
@@ -158,7 +152,7 @@ final class MarkerInfoInputViewController: UIViewController {
   private func addSubView() {
     self.view.addSubview(self.scrollView)
     self.scrollView.addSubview(self.contentView)
-    self.mapView.addSubview(self.markerCoordinateImageView)
+    self.mapView.addSubview(self.markerPinImageView)
   }
   
   
@@ -285,7 +279,7 @@ final class MarkerInfoInputViewController: UIViewController {
   
   // 카메라 버튼 탭
   
-  private func didTappedAreaImageButton() {
+  private func bindAreaImageButton() {
     self.areaImage.rx.tap.subscribe(
       onNext: { [weak self] in
         print("카메라 버튼 눌림")
@@ -296,23 +290,24 @@ final class MarkerInfoInputViewController: UIViewController {
   
   // 저장 버튼 탭
   
-  private func didTappedSaveButton() {
+  private func bindSaveButton() {
     self.saveButton.rx.tap.subscribe(
       onNext: { [weak self] in
-        self?.saveSmokinAreaInfo()
+        self?.saveSmokingAreaInfo()
         self?.navigationController?.popToRootViewController(animated: true)
       })
     .disposed(by: self.disposeBag)
   }
   
-  private func saveSmokinAreaInfo() {
+  
+  private func saveSmokingAreaInfo() {
     guard
       let name = self.nameTextField.text, !name.isEmpty,
       let description = self.descriptionTextView.text, !description.isEmpty,
       let lat = self.markerLat,
       let lng = self.markerLng
     else {
-      // Alert 같은 걸 띄워서 사용자한테 알려주기
+      // Alert을 띄워서 사용자한테 알려주기
       let alert = UIAlertController(title: "입력 오류", message: "이름, 설명은 필수 입력 항목입니다.", preferredStyle: .alert)
       alert.addAction(UIAlertAction(title: "확인", style: .default))
       self.present(alert, animated: true)

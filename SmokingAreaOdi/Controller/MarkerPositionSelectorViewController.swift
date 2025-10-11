@@ -6,8 +6,10 @@
 //
 
 import NMapsMap
+
 import PinLayout
 import Then
+
 import RxCocoa
 import RxSwift
 
@@ -34,7 +36,7 @@ final class MarkerPositionSelectorViewController: UIViewController {
     $0.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .bold)
     $0.tintColor = .white
     $0.backgroundColor = .systemGreen
-    $0.layer.cornerRadius = Metric.nextButtonHeight / 2 // nextButton의 지름을 반으로 나누면 완전한 원이 됨
+    $0.layer.cornerRadius = Metric.nextButtonHeight / 2 // nextButton의 지름을 반으로 나누면 반원이 됨
     $0.clipsToBounds = true
     $0.layer.shadowColor = UIColor.black.cgColor
     $0.layer.shadowOpacity = 0.3
@@ -42,7 +44,7 @@ final class MarkerPositionSelectorViewController: UIViewController {
     $0.layer.shadowRadius = 4
   }
   
-  private let markerCoordinateImageView = UIImageView(image: UIImage(named: "marker_Pin")).then {
+  private let markerPinImageView = UIImageView(image: UIImage(named: "marker_Pin")).then {
     $0.layer.shadowColor = UIColor.black.cgColor
     $0.layer.shadowOpacity = 0.3
     $0.layer.shadowOffset = CGSize(width: 0, height: 3)
@@ -72,25 +74,28 @@ final class MarkerPositionSelectorViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    self.setup()
+    self.configureMapView()
+    self.configureNavigationBar()
     self.addSubViews()
     self.makeConstraints()
     self.setupCloseButton()
     
     self.setLocationManager()
     
-    self.diTappedNextButton()
+    self.bindActions()
   }
   
   
   // MARK: Setup
   
-  private func setup() {
+  private func configureMapView() {
     self.mapView.showLocationButton = true
     self.mapView.mapView.zoomLevel = 18.0
-    
-    guard let navBar = self.navigationController?.navigationBar else { return }
-    let appearance   = UINavigationBarAppearance()
+  }
+  
+  private func configureNavigationBar() {
+    guard let navBar = navigationController?.navigationBar else { return }
+    let appearance = UINavigationBarAppearance()
     appearance.configureWithOpaqueBackground()
     appearance.backgroundColor = .white
     
@@ -101,7 +106,7 @@ final class MarkerPositionSelectorViewController: UIViewController {
   private func addSubViews() {
     self.view.addSubview(self.mapView)
     self.view.addSubview(self.nextButton)
-    self.view.addSubview(self.markerCoordinateImageView)
+    self.view.addSubview(self.markerPinImageView)
   }
   
   private func makeConstraints() {
@@ -113,12 +118,11 @@ final class MarkerPositionSelectorViewController: UIViewController {
       .bottom(Metric.nextButtonBottom)
       .hCenter()
     
-    self.markerCoordinateImageView.pin
+    self.markerPinImageView.pin
       .center()
-      .marginTop(-markerCoordinateImageView.frame.height / 2)
+      .marginTop(-markerPinImageView.frame.height / 2)
     // 마커의 높이 절반을 위로 올려 마커 하단 포인트가 화면 중앙에 배치되도록 설정
   }
-  
   
   private func setupCloseButton() {
     view.addSubview(closeButton)
@@ -136,7 +140,7 @@ final class MarkerPositionSelectorViewController: UIViewController {
   }
   
   
-  private func diTappedNextButton() {
+  private func bindActions() {
     self.nextButton.rx.tap.subscribe(
       onNext: { [weak self] in
         let markerInfoInputVC = MarkerInfoInputViewController()
