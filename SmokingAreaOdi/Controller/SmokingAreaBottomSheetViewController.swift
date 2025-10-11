@@ -26,7 +26,9 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
     static let imageSize: CGFloat = 100
   }
   
+  
   // MARK: UI Components
+  
   private let rootFlexContainer = UIView()
   
   private let areaImageView = UIImageView().then {
@@ -51,7 +53,9 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
   
   private var tagSections: [UIView] = []
   
+  
   // MARK: LifeCycle
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     self.view.backgroundColor = .white
@@ -65,7 +69,9 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
     self.rootFlexContainer.flex.layout()
   }
   
+  
   // MARK: Setup Layout
+  
   private func setupLayout() {
     self.rootFlexContainer.flex.direction(.column).padding(Metric.horizontalMargin)
       .define {
