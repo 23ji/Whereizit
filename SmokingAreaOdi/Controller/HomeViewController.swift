@@ -161,7 +161,7 @@ final class HomeViewController: UIViewController {
       }
     }
   }
-
+  
   
   private func bind() {
     self.markerTapped
@@ -232,9 +232,9 @@ extension HomeViewController: FloatingPanelControllerDelegate {
     self.nearbyPanel.set(contentViewController: nearBySmokingAreasBottomSheetVC)
     self.nearbyPanel.addPanel(toParent: self)
     self.nearbyPanel.move(to: .tip, animated: false)
-
+    
     self.nearBySmokingAreasBottomSheetVC.delegate = self
-
+    
     // Tapped 패널
     self.tappedPanel = FloatingPanelController()
     self.tappedPanel.delegate = self
@@ -245,13 +245,16 @@ extension HomeViewController: FloatingPanelControllerDelegate {
     self.tappedPanel.move(to: .hidden, animated: false)
   }
   
-  // 수정하기❗️
   func floatingPanelWillEndDragging(_ fpc: FloatingPanelController, withVelocity velocity: CGPoint, targetState: UnsafeMutablePointer<FloatingPanelState>) {
     if fpc == self.tappedPanel && fpc.state == .half && velocity.y > 0 {
-      self.tappedPanel.move(to: .hidden, animated: false)
       self.nearbyPanel.move(to: .tip, animated: false)
       print("작동")
-      //self.view.bringSubviewToFront(self.nearbyPanel.view)
+    }
+  }
+  
+  func floatingPanelDidMove(_ fpc: FloatingPanelController) {
+    if fpc == self.tappedPanel && fpc.state == .tip {
+      self.tappedPanel.move(to: .hidden, animated: false)
     }
   }
 }
@@ -278,5 +281,6 @@ extension HomeViewController: NearbySmokingAreasDelegate {
     self.smokingAreaBottomSheetVC.configure(with: areaData)
     self.tappedPanel.move(to: .half, animated: true)
     self.nearbyPanel.move(to: .hidden, animated: true)
+    print("showSmokingAreaBottomSheet 동작")
   }
 }
