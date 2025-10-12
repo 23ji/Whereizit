@@ -46,6 +46,7 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
   }
   
   private let descriptionLabel = UILabel().then {
+    $0.backgroundColor = .red
     $0.textColor = .systemGray
     $0.font = .systemFont(ofSize: 14)
     $0.numberOfLines = 0
@@ -86,7 +87,7 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
               .define {
                 $0.addItem(self.nameLabel)
                 $0.addItem(self.descriptionLabel)
-                  .marginTop(4).grow(1).shrink(1).minHeight(20)
+                  .marginTop(4).height(30%)
               }
           }
       }
