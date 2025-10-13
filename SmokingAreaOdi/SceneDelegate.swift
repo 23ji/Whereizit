@@ -20,29 +20,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     let window = UIWindow(windowScene: windowScene)
     
-//    let homeVC = HomeViewController()
-//    homeVC.title = "Home"
-//    let mapImage = UIImage(systemName: "map")?
-//        .withConfiguration(UIImage.SymbolConfiguration(pointSize: 15))
-//    homeVC.tabBarItem = UITabBarItem(title: "흡연구역", image: mapImage, tag: 0)
-//    let homeNav = UINavigationController(rootViewController: homeVC)
-//    
-//    let markerPositionSelectorVC = MarkerPositionSelectorViewController()
-//    markerPositionSelectorVC.title = "추가"
-//    let plusImage = UIImage(systemName: "plus")?
-//        .withConfiguration(UIImage.SymbolConfiguration(pointSize: 15))
-//    markerPositionSelectorVC.tabBarItem = UITabBarItem(title: "추가", image: plusImage, tag: 1)
-//    let markerPositionSelectorNav = UINavigationController(rootViewController: markerPositionSelectorVC)
-//    
-//    let tabBarController = UITabBarController()
-//    tabBarController.viewControllers = [homeNav, markerPositionSelectorNav]
-//    
-//    let tabBarAppearance = UITabBarAppearance()
-//    tabBarAppearance.configureWithOpaqueBackground()
-//    tabBarAppearance.backgroundColor = .white
-//    tabBarController.tabBar.standardAppearance = tabBarAppearance
-//    tabBarController.tabBar.scrollEdgeAppearance = tabBarAppearance
-    
     window.rootViewController = LoginViewController()
     self.window = window
     window.makeKeyAndVisible()
