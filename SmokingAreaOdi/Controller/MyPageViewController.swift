@@ -6,23 +6,53 @@
 //
 
 import FirebaseAuth
-
 import RxSwift
 
 import UIKit
 
-final class MyPageViewController : UIViewController {
+final class MyPageViewController: UIViewController {
   
   private let rootContainer = UIView()
   
   private let disposeBag = DisposeBag()
-
+  
   var userEmail: String = ""
   
   private let emailLabel = UILabel().then {
     $0.textColor = .black
-    $0.font = $0.font.withSize(30)
+    $0.font = .boldSystemFont(ofSize: 24)
     $0.textAlignment = .center
+  }
+  
+  // MARK:  마이페이지 메뉴 버튼들
+  
+  private let mySmokingAreasButton = UIButton().then {
+    $0.setTitle("내가 등록한 흡연구역", for: .normal)
+    $0.setTitleColor(.white, for: .normal)
+    $0.backgroundColor = .systemGreen
+    $0.layer.cornerRadius = 10
+  }
+  
+  private let myCommentsButton = UIButton().then {
+    $0.setTitle("내가 단 댓글", for: .normal)
+    $0.setTitleColor(.white, for: .normal)
+    $0.backgroundColor = .systemGreen
+    $0.layer.cornerRadius = 10
+  }
+  
+  private let favoritesButton = UIButton().then {
+    $0.setTitle("즐겨찾기한 구역", for: .normal)
+    $0.setTitleColor(.white, for: .normal)
+    $0.backgroundColor = .systemGreen
+    $0.layer.cornerRadius = 10
+  }
+  
+  private let settingsButton = UIButton().then {
+    $0.setTitle("설정", for: .normal)
+    $0.setTitleColor(.darkGray, for: .normal)
+    $0.layer.borderWidth = 1
+    $0.layer.borderColor = UIColor.lightGray.cgColor
+    $0.layer.cornerRadius = 10
   }
   
   private let signOutButton = UIButton().then {
@@ -38,15 +68,15 @@ final class MyPageViewController : UIViewController {
   }
   
   
+  // MARK: Lifecycle
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     self.view.backgroundColor = .white
-    
     self.userEmail = Auth.auth().currentUser?.email ?? "사용자"
     
     self.addSubviews()
     self.setupLayout()
-    self.bindAction()
   }
   
   override func viewDidLayoutSubviews() {
@@ -54,33 +84,36 @@ final class MyPageViewController : UIViewController {
     self.rootContainer.flex.layout()
   }
   
+  
+  // MARK:  UI
+  
   private func addSubviews() {
     self.view.addSubview(self.rootContainer)
   }
   
   private func setupLayout() {
-    self.rootContainer.flex.direction(.column).define {
+    self.emailLabel.text = "\(self.userEmail)님"
+    
+    self.rootContainer.flex.direction(.column).paddingHorizontal(24).define {
       $0.addItem(self.emailLabel)
-        .grow(1)
-        .marginTop(100)
+        .marginTop(60)
         .alignSelf(.center)
+      
+      $0.addItem().direction(.column).marginTop(60).define {
+        $0.addItem(self.mySmokingAreasButton).height(50).marginBottom(16)
+        $0.addItem(self.myCommentsButton).height(50).marginBottom(16)
+        $0.addItem(self.favoritesButton).height(50).marginBottom(16)
+        $0.addItem(self.settingsButton).height(50)
+      }
+      
       $0.addItem(self.signOutButton)
-        .grow(1)
         .marginTop(100)
         .alignSelf(.center)
     }
-    self.emailLabel.text = "\(self.userEmail)님"
   }
   
   
-  private func bindAction() {
-    self.signOutButton.rx.tap
-      .subscribe(onNext: { [weak self] in
-        self?.signOut()
-      })
-      .disposed(by: disposeBag)
-  }
-  
+  // MARK:  로그아웃 처리
   
   private func signOut() {
     let firebaseAuth = Auth.auth()
