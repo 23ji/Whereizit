@@ -294,7 +294,7 @@ final class MarkerInfoInputViewController: UIViewController {
     self.saveButton.rx.tap.subscribe(
       onNext: { [weak self] in
         self?.saveSmokingAreaInfo()
-        self?.navigationController?.popToRootViewController(animated: true)
+        self?.view.window?.rootViewController?.dismiss(animated: true)
       })
     .disposed(by: self.disposeBag)
   }
