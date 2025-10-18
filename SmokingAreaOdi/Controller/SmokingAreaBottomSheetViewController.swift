@@ -46,10 +46,8 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
   }
   
   private let descriptionLabel = UITextView().then {
-    $0.backgroundColor = .red
     $0.textColor = .systemGray
     $0.font = .systemFont(ofSize: 14)
-    //$0.numberOfLines = 0
   }
   
   private var tagSections: [UIView] = []
@@ -85,9 +83,9 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
             
             $0.addItem().direction(.column).marginLeft(16).grow(1).shrink(1)
               .define {
-                $0.addItem(self.nameLabel)
+                $0.addItem(self.nameLabel).marginTop(5)
                 $0.addItem(self.descriptionLabel)
-                  .marginTop(4).grow(1).shrink(1).minHeight(80)
+                  .marginTop(5).grow(1).shrink(1).minHeight(75)
               }
           }
       }
