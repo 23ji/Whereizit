@@ -195,22 +195,39 @@ final class LoginViewController: UIViewController {
   
   private func loginGoogle() {
     guard let clientID = FirebaseApp.app()?.options.clientID else { return }
-    
-    // Create Google Sign In configuration object.
+
     let config = GIDConfiguration(clientID: clientID)
     GIDSignIn.sharedInstance.configuration = config
-    
+
     GIDSignIn.sharedInstance.signIn(withPresenting: self) { [unowned self] result, error in
-      guard error == nil else { return }
-      
+      guard error == nil else {
+        print("❌ Google 로그인 실패:", error?.localizedDescription ?? "")
+        return
+      }
+
       guard let user = result?.user,
-            let idToken = user.idToken?.tokenString
-      else { return }
-      
-      let credential = GoogleAuthProvider.credential(withIDToken: idToken,
-                                                     accessToken: user.accessToken.tokenString)
-      print("Google credential",credential)
-      self.goHome()
+            let idToken = user.idToken?.tokenString else {
+        print("❌ Google 사용자 정보 없음")
+        return
+      }
+
+      let credential = GoogleAuthProvider.credential(
+        withIDToken: idToken,
+        accessToken: user.accessToken.tokenString
+      )
+
+      // ✅ Firebase Auth에 로그인
+      Auth.auth().signIn(with: credential) { authResult, error in
+        if let error = error {
+          print("❌ Firebase 구글 로그인 실패:", error.localizedDescription)
+          return
+        }
+
+        if let user = authResult?.user {
+          print("✅ Firebase 로그인 성공:", user.email ?? "")
+          self.goHome()
+        }
+      }
     }
   }
   
