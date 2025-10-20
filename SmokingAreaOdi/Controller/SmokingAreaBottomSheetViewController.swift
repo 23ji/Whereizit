@@ -15,14 +15,13 @@ import PinLayout
 import Then
 
 import UIKit
+import FirebaseAuth
 
 final class SmokingAreaBottomSheetViewController: UIViewController {
   
   private enum Metric {
     static let horizontalMargin: CGFloat = 20
     static let labelFontSize: CGFloat = 16
-    static let labelHeight: CGFloat = 50
-    static let tagButtonHeight: CGFloat = 40
     static let imageSize: CGFloat = 100
   }
   
@@ -33,9 +32,9 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
   
   private let areaImageView = UIImageView().then {
     $0.backgroundColor = .systemGray5
-    $0.layer.cornerRadius = 8
+    $0.layer.cornerRadius = 12
     $0.clipsToBounds = true
-    $0.contentMode = .scaleAspectFill // 이미지가 꽉 차도록 설정
+    $0.contentMode = .scaleAspectFill
   }
   
   private let nameLabel = UILabel().then {
@@ -46,8 +45,26 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
   }
   
   private let descriptionLabel = UITextView().then {
-    $0.textColor = .systemGray
-    $0.font = .systemFont(ofSize: 14)
+    $0.textColor = .darkGray
+    $0.font = .systemFont(ofSize: 15)
+    $0.isEditable = false
+    $0.isScrollEnabled = false
+    $0.textContainerInset = .zero
+    $0.textContainer.lineFragmentPadding = 0
+  }
+  
+  private let editButton = UIButton(type: .system).then {
+    $0.setImage(UIImage(systemName: "pencil"), for: .normal)
+    $0.tintColor = .darkGray
+  }
+  
+  private let deleteButton = UIButton(type: .system).then {
+    $0.setImage(UIImage(systemName: "trash"), for: .normal)
+    $0.tintColor = .systemRed
+  }
+  
+  private let divider = UIView().then {
+    $0.backgroundColor = .systemGray5
   }
   
   private var tagSections: [UIView] = []
@@ -73,21 +90,32 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
   
   private func setupLayout() {
     self.rootFlexContainer.flex.direction(.column).padding(Metric.horizontalMargin)
-      .define {
+      .define { flex in
         // 상단 이미지 + 이름/설명
-        $0.addItem().direction(.row).alignItems(.start)
-          .define {
-            $0.addItem(self.areaImageView)
+        flex.addItem().direction(.row).alignItems(.start).paddingTop(10)
+          .define { flex in
+            flex.addItem(self.areaImageView)
               .width(Metric.imageSize)
               .height(Metric.imageSize)
             
-            $0.addItem().direction(.column).marginLeft(16).grow(1).shrink(1)
-              .define {
-                $0.addItem(self.nameLabel).marginTop(5)
-                $0.addItem(self.descriptionLabel)
-                  .marginTop(5).grow(1).shrink(1).minHeight(75)
+            flex.addItem().direction(.column).marginLeft(16).grow(1).shrink(1)
+              .define { flex in
+                flex.addItem(self.nameLabel)
+                
+                flex.addItem(self.descriptionLabel)
+                  .marginTop(8).grow(1).shrink(1).minHeight(70)
               }
           }
+        
+        // 버튼들
+        flex.addItem().direction(.row).justifyContent(.end).marginTop(16).marginBottom(16)
+          .define { flex in
+            flex.addItem(self.editButton).size(22)
+            flex.addItem(self.deleteButton).size(22).marginLeft(8)
+          }
+        
+        // 구분선
+        flex.addItem(self.divider).height(1)
       }
   }
   
@@ -102,6 +130,11 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
       self.areaImageView.image = UIImage(named: "defaultImage")
       
       self.loadImage(from: data.imageURL)
+      
+      // TODO: 현재 사용자가 올린 게시물인지 확인하는 로직 필요
+      let isMine = data.uploadUser == Auth.auth().currentUser?.email
+      self.editButton.isHidden = !isMine
+      self.deleteButton.isHidden = !isMine
       
       self.tagSections.forEach { $0.removeFromSuperview() }
       self.tagSections.removeAll()
@@ -124,10 +157,8 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
     guard let urlString = urlString, let url = URL(string: urlString) else { return }
     self.areaImageView.kf.setImage(with: url)
   }
-
   
   private func makeTagSection(title: String, tags: [String]) -> UIView {
-    // 태그가 없으면 뷰를 생성하지 않음
     guard !tags.isEmpty else {
       return UIView()
     }
@@ -140,7 +171,7 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
     }
     
     container.flex.direction(.column).define { flex in
-      flex.addItem(titleLabel).marginBottom(10) // 타이틀과 태그 사이 간격
+      flex.addItem(titleLabel).marginBottom(12)
       
       flex.addItem().direction(.row).wrap(.wrap).define { flex in
         for tag in tags {
@@ -149,11 +180,11 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
             $0.titleLabel?.font = .systemFont(ofSize: 14)
             $0.backgroundColor = .systemGray6
             $0.setTitleColor(.label, for: .normal)
-            $0.layer.cornerRadius = 15
+            $0.layer.cornerRadius = 8
             $0.layer.borderWidth = 0.7
             $0.layer.borderColor = UIColor.systemGray4.cgColor
             $0.contentEdgeInsets = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
-            $0.isUserInteractionEnabled = false // 클릭 방지
+            $0.isUserInteractionEnabled = false
           }
           flex.addItem(tagButton).marginRight(8).marginBottom(8)
         }
@@ -162,3 +193,4 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
     return container
   }
 }
+
