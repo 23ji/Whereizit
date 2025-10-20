@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		490221A12E67DBBF0069DDEC /* SmokingArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490221A02E67DBBF0069DDEC /* SmokingArea.swift */; };
+		49031DFF2EA5D9EE004F5857 /* MySmokingAreasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49031DFE2EA5D9EE004F5857 /* MySmokingAreasViewController.swift */; };
 		49168A702E448E77002C5F69 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 49168A6F2E448E77002C5F69 /* FirebaseAuth */; };
 		49168A722E448E77002C5F69 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 49168A712E448E77002C5F69 /* FirebaseCore */; };
 		49168A742E448E77002C5F69 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 49168A732E448E77002C5F69 /* FirebaseFirestore */; };
@@ -50,6 +51,7 @@
 
 /* Begin PBXFileReference section */
 		490221A02E67DBBF0069DDEC /* SmokingArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokingArea.swift; sourceTree = "<group>"; };
+		49031DFE2EA5D9EE004F5857 /* MySmokingAreasViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySmokingAreasViewController.swift; sourceTree = "<group>"; };
 		49288AA92D19450C00FF1E50 /* SmokingAreaOdi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmokingAreaOdi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		49288AAC2D19450C00FF1E50 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		49288AAE2D19450C00FF1E50 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 				498B44902E7A82F900FF06B6 /* MyPageViewController.swift */,
 				9FB2BC062E79783500C3B4F3 /* LoginViewController.swift */,
 				9FB65AC12E7B7D4E00F788BF /* SignInViewController.swift */,
+				49031DFE2EA5D9EE004F5857 /* MySmokingAreasViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -313,6 +316,7 @@
 				498ECFA32E77F32C00B9EABC /* NearbySmokingAreasBottomSheetViewController.swift in Sources */,
 				498B44912E7A82F900FF06B6 /* MyPageViewController.swift in Sources */,
 				9FA6B1792E64473E00A94571 /* SmokingAreaBottomSheetViewController.swift in Sources */,
+				49031DFF2EA5D9EE004F5857 /* MySmokingAreasViewController.swift in Sources */,
 				9FDBC1FC2E867BA2009924E8 /* LoginButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
