@@ -72,7 +72,11 @@ final class MySmokingAreasViewController: UIViewController {
   }
   
   private func fetchSmokingAreas() {
-    db.collection("smokingAreas").addSnapshotListener { [weak self] snapshot, error in
+    guard let userEmail = self.user?.email else { return }
+
+    db.collection("smokingAreas")
+      .whereField("uploadUser", isEqualTo: userEmail)
+      .addSnapshotListener { [weak self] snapshot, error in
       guard let self = self, let snapshot = snapshot else { return }
       
       var newAreas: [SmokingArea] = []

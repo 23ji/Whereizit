@@ -74,6 +74,7 @@ final class MyPageViewController: UIViewController {
     super.viewDidLoad()
     self.view.backgroundColor = .white
     self.userEmail = Auth.auth().currentUser?.email ?? "사용자"
+    print(self.userEmail)
     self.bindActions()
     self.addSubviews()
     self.setupLayout()
@@ -90,6 +91,12 @@ final class MyPageViewController: UIViewController {
       .subscribe(onNext: { [weak self] in
         let mySmokingAreasVC = MySmokingAreasViewController()
         self?.navigationController?.pushViewController(mySmokingAreasVC, animated: true)
+      })
+      .disposed(by: disposeBag)
+    
+    self.signOutButton.rx.tap
+      .subscribe(onNext: { [weak self] in
+        self?.signOut()
       })
       .disposed(by: disposeBag)
   }
