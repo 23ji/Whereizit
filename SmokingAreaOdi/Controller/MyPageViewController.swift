@@ -74,7 +74,7 @@ final class MyPageViewController: UIViewController {
     super.viewDidLoad()
     self.view.backgroundColor = .white
     self.userEmail = Auth.auth().currentUser?.email ?? "사용자"
-    
+    self.bindActions()
     self.addSubviews()
     self.setupLayout()
   }
@@ -82,6 +82,16 @@ final class MyPageViewController: UIViewController {
   override func viewDidLayoutSubviews() {
     self.rootContainer.pin.all(self.view.pin.safeArea)
     self.rootContainer.flex.layout()
+  }
+  
+  
+  private func bindActions() {
+    self.mySmokingAreasButton.rx.tap
+      .subscribe(onNext: { [weak self] in
+        let mySmokingAreasVC = MySmokingAreasViewController()
+        self?.navigationController?.pushViewController(mySmokingAreasVC, animated: true)
+      })
+      .disposed(by: disposeBag)
   }
   
   
