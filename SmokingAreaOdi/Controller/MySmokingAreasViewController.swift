@@ -14,7 +14,6 @@ import Then
 import UIKit
 
 final class MySmokingAreasViewController: UIViewController {
-  weak var delegate: NearbySmokingAreasDelegate?
   
   let user = Auth.auth().currentUser
   
@@ -137,8 +136,21 @@ extension MySmokingAreasViewController: UITableViewDelegate, UITableViewDataSour
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    tableView.deselectRow(at: indexPath, animated: true)
+    
     let area = smokingAreas[indexPath.row]
-    delegate?.moveCameraToSmokingArea(lat: area.areaLat, lng: area.areaLng)
-    delegate?.showSmokingAreaBottomSheet(areaData: area)
+    
+    // BottomSheet 띄우기
+    let bottomSheetVC = SmokingAreaBottomSheetViewController()
+    bottomSheetVC.configure(with: area)
+    bottomSheetVC.modalPresentationStyle = .pageSheet
+    
+    if let sheet = bottomSheetVC.sheetPresentationController {
+      sheet.detents = [.medium(), .large()] // 높이 조절
+      sheet.prefersGrabberVisible = true // 위에 손잡이 표시
+      sheet.preferredCornerRadius = 20
+    }
+    
+    present(bottomSheetVC, animated: true)
   }
 }
