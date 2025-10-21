@@ -10,6 +10,7 @@ import FirebaseFirestore
 import Foundation
 
 struct SmokingArea {
+  var documentID: String?
   var imageURL: String?
   var name: String
   var description: String
@@ -23,6 +24,7 @@ struct SmokingArea {
   
   var asDictionary: [String: Any] {
       return [
+        "documentID" : documentID,
         "imageURL": imageURL,
         "name": name,
         "description": description,
