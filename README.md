@@ -43,6 +43,8 @@ B. 사용자가 위치 권한을 허용하면 사용자 위치로, 거부하면 
 
 > SmokingAreaTableViewCell에서 이미지 클릭하면 크게 보기 -> 어떻게 구현?
 
+> class에 init / required init?(coder: NSCoder) 작성하는 것
+
 ---
 
 ### 앞으로 개발할 기능
