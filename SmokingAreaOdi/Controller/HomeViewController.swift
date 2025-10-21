@@ -69,7 +69,6 @@ final class HomeViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    self.navigationItem.title = "Home"
     self.configureMapView()
     self.addSubviews()
     self.makeConstraints()
