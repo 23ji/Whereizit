@@ -171,14 +171,21 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
         guard let data = self?.currentData else { return }
         guard let documentID = data.documentID else { return }
         
-        self?.db.collection("smokingAreas").document(documentID).delete { error in
-          if let error = error {
-            print("문서 삭제 실패:", error)
-          } else {
-            print("문서 삭제 성공")
-            self?.dismiss(animated: true)
+        let alert = UIAlertController(title: "삭제", message: "등록한 흡연구역을 삭제하시겠습니까?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "취소", style: .default))
+        alert.addAction(UIAlertAction(title: "확인", style: .default) { action in
+          self?.db.collection("smokingAreas").document(documentID).delete { error in
+            if let error = error {
+              print("문서 삭제 실패:", error)
+            } else {
+              print("문서 삭제 성공")
+              self?.dismiss(animated: true)
+            }
           }
-        }
+        })
+        self?.present(alert, animated: true, completion: nil)
+        
+        
       })
       .disposed(by: disposeBag)
   }
@@ -223,4 +230,3 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
     return container
   }
 }
-
