@@ -136,6 +136,7 @@ final class HomeViewController: UIViewController {
         let uploadUser = data["uploadUser"] as? String ?? ""
         
         let areaData = SmokingArea(
+          documentID: doc.documentID,
           imageURL: imageURL,
           name: name,
           description: description,

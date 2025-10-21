@@ -4,8 +4,9 @@
 //
 //  Created by 23ji on 8/31/25.
 //
-
+import FirebaseAuth
 import FirebaseCore
+import FirebaseFirestore
 import FirebaseStorage
 import FlexLayout
 
@@ -14,8 +15,10 @@ import Kingfisher
 import PinLayout
 import Then
 
+import RxSwift
+
 import UIKit
-import FirebaseAuth
+
 
 final class SmokingAreaBottomSheetViewController: UIViewController {
   
@@ -26,8 +29,14 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
   }
   
   
-  // MARK: UI Components
+  // MARK: Components
   
+  private var currentData: SmokingArea?
+  
+  private let db = Firestore.firestore()
+
+  private let disposeBag = DisposeBag()
+
   private let rootFlexContainer = UIView()
   
   private let areaImageView = UIImageView().then {
@@ -77,6 +86,7 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
     self.view.backgroundColor = .white
     self.view.addSubview(self.rootFlexContainer)
     self.setupLayout()
+    self.bindActions()
   }
   
   override func viewDidLayoutSubviews() {
@@ -123,6 +133,8 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
   // MARK: Public Method
   
   public func configure(with data: SmokingArea) {
+    self.currentData = data
+    
     DispatchQueue.main.async {
       self.nameLabel.text = data.name
       self.descriptionLabel.text = data.description
@@ -131,7 +143,6 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
       
       self.loadImage(from: data.imageURL)
       
-      // TODO: 현재 사용자가 올린 게시물인지 확인하는 로직 필요
       let isMine = data.uploadUser == Auth.auth().currentUser?.email
       self.editButton.isHidden = !isMine
       self.deleteButton.isHidden = !isMine
@@ -151,6 +162,25 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
       
       self.rootFlexContainer.flex.layout()
     }
+  }
+  
+  
+  private func bindActions() {
+    self.deleteButton.rx.tap
+      .subscribe(onNext: { [weak self] in
+        guard let data = self?.currentData else { return }
+        guard let documentID = data.documentID else { return }
+        
+        self?.db.collection("smokingAreas").document(documentID).delete { error in
+          if let error = error {
+            print("문서 삭제 실패:", error)
+          } else {
+            print("문서 삭제 성공")
+            self?.dismiss(animated: true)
+          }
+        }
+      })
+      .disposed(by: disposeBag)
   }
   
   private func loadImage(from urlString: String?) {
