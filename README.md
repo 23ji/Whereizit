@@ -33,7 +33,7 @@
 
 ---
 
-### 질문 (2025.10.18)
+### 질문
 
 > 사용자가 위치 권한을 거부했을 때를 대비하여 아래 두 방식 중 어떤 게 더 나은지? (HomeViewController)
 
@@ -41,7 +41,11 @@ A. 초기 위치를 지정하고, 사용자가 위치 권한을 허용하면 사
 
 B. 사용자가 위치 권한을 허용하면 사용자 위치로, 거부하면 초기 지정 위치로 이동
 
-> flex로 레이아웃 잡는 것 (기본 켐플릿?)
+> SmokingAreaTableViewCell에서 이미지 클릭하면 크게 보기 -> 어떻게 구현?
+
+> class에 init / required init?(coder: NSCoder) 작성하는 것
+
+> SmokingAreaBottomSheetViewController 179줄에서 어떤 방식으로? 
 
 ---
 
