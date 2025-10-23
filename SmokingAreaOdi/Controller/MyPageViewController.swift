@@ -18,13 +18,21 @@ final class MyPageViewController: UIViewController {
   
   var userEmail: String = ""
   
+  private let profileImageView = UIImageView().then {
+    $0.image = UIImage(systemName: "person.circle.fill")
+    $0.tintColor = .systemGray
+    $0.contentMode = .scaleAspectFill
+    $0.layer.cornerRadius = 50
+    $0.clipsToBounds = true
+  }
+  
   private let emailLabel = UILabel().then {
     $0.textColor = .black
     $0.font = .boldSystemFont(ofSize: 24)
     $0.textAlignment = .center
   }
   
-  // MARK:  마이페이지 메뉴 버튼들
+  // MARK: 버튼들
   
   private let mySmokingAreasButton = UIButton().then {
     $0.setTitle("내가 등록한 흡연구역", for: .normal)
@@ -33,19 +41,25 @@ final class MyPageViewController: UIViewController {
     $0.layer.cornerRadius = 10
   }
   
+  // 나중에 구현 예정 - 댓글
+  /*
   private let myCommentsButton = UIButton().then {
     $0.setTitle("내가 단 댓글", for: .normal)
     $0.setTitleColor(.white, for: .normal)
     $0.backgroundColor = .systemGreen
     $0.layer.cornerRadius = 10
   }
+  */
   
+  // 나중에 구현 예정 - 즐겨찾기
+  /*
   private let favoritesButton = UIButton().then {
     $0.setTitle("즐겨찾기한 구역", for: .normal)
     $0.setTitleColor(.white, for: .normal)
     $0.backgroundColor = .systemGreen
     $0.layer.cornerRadius = 10
   }
+  */
   
   private let settingsButton = UIButton().then {
     $0.setTitle("설정", for: .normal)
@@ -67,7 +81,7 @@ final class MyPageViewController: UIViewController {
     $0.setAttributedTitle(attributedString, for: .normal)
   }
   
-  // MARK:  로그인하지 않았을 때
+  // 로그인 안했을 때
   
   private let loginPromptLabel = UILabel().then {
       $0.text = "로그인을 해주세요"
@@ -75,12 +89,13 @@ final class MyPageViewController: UIViewController {
       $0.font = .systemFont(ofSize: 18, weight: .medium)
     }
     
-    private let loginButton = UIButton().then {
+  private let loginButton = UIButton().then {
       $0.setTitle("로그인하러 가기", for: .normal)
       $0.setTitleColor(.white, for: .normal)
       $0.backgroundColor = .systemGreen
       $0.layer.cornerRadius = 10
     }
+  
   
   // MARK: Lifecycle
   
@@ -88,7 +103,6 @@ final class MyPageViewController: UIViewController {
     super.viewDidLoad()
     self.view.backgroundColor = .white
     self.userEmail = Auth.auth().currentUser?.email ?? "사용자"
-    print(self.userEmail)
     self.bindActions()
     self.addSubviews()
     self.updateLayoutBasedOnLogin()
@@ -123,9 +137,7 @@ final class MyPageViewController: UIViewController {
       .disposed(by: disposeBag)
   }
   
-  
-  // MARK:  UI
-  
+  // MARK: UI
   private func addSubviews() {
     self.view.addSubview(self.rootContainer)
   }
@@ -137,16 +149,23 @@ final class MyPageViewController: UIViewController {
       if let user = Auth.auth().currentUser {
         self.emailLabel.text = "\(self.userEmail)님"
         
-        self.rootContainer.flex.direction(.column).paddingHorizontal(24).define {
-          $0.addItem(self.emailLabel)
+        flex.addItem().direction(.column).paddingHorizontal(24).define {
+          $0.addItem(self.profileImageView)
+            .size(100)
+            .alignSelf(.center)
             .marginTop(60)
+          
+          $0.addItem(self.emailLabel)
+            .marginTop(12)
             .alignSelf(.center)
           
-          $0.addItem().direction(.column).marginTop(60).define {
-            $0.addItem(self.mySmokingAreasButton).height(50).marginBottom(16)
+          $0.addItem().direction(.column).marginTop(40).define { flex in
+            flex.addItem(self.mySmokingAreasButton).height(50).marginBottom(16)
+            /*
             $0.addItem(self.myCommentsButton).height(50).marginBottom(16)
             $0.addItem(self.favoritesButton).height(50).marginBottom(16)
-            $0.addItem(self.settingsButton).height(50)
+            */
+            flex.addItem(self.settingsButton).height(50)
           }
           
           $0.addItem(self.signOutButton)
@@ -169,7 +188,7 @@ final class MyPageViewController: UIViewController {
   }
   
   
-  // MARK:  로그아웃 처리
+  // MARK: 로그아웃 처리
   
   private func signOut() {
     let firebaseAuth = Auth.auth()
