@@ -67,7 +67,7 @@ final class MarkerInfoInputViewController: UIViewController {
   private let markerPinImageView = UIImageView(image: UIImage(named: "marker_Pin"))
   
   // 흡연구역 사진
-  private var areaImage = UIButton().then {
+  var areaImage = UIButton().then {
     $0.setImage(UIImage(systemName: "camera.on.rectangle.fill"), for: .normal)
     $0.layer.borderWidth = 0.5
     $0.layer.borderColor = UIColor.systemGray4.cgColor
@@ -80,7 +80,7 @@ final class MarkerInfoInputViewController: UIViewController {
     $0.text = "흡연구역 이름"
     $0.font = .systemFont(ofSize: Metric.labelFontSize, weight: .bold)
   }
-  private let nameTextField = UITextField().then {
+  let nameTextField = UITextField().then {
     $0.placeholder = "강남역 11번 출구"
     $0.borderStyle = .roundedRect
     $0.font = UIFont.systemFont(ofSize: Metric.textfontSize)
@@ -91,7 +91,7 @@ final class MarkerInfoInputViewController: UIViewController {
     $0.text = "흡연구역 설명"
     $0.font = .systemFont(ofSize: Metric.labelFontSize, weight: .bold)
   }
-  private let descriptionTextView = UITextView().then {
+  let descriptionTextView = UITextView().then {
     $0.text = "우측으로 5m"
     $0.textColor = .systemGray3
     $0.layer.borderWidth = 0.5
@@ -107,7 +107,7 @@ final class MarkerInfoInputViewController: UIViewController {
   private let facilityTags = ["재떨이", "의자", "별도 전자담배 구역", "라이터"]
   
   // 저장 버튼
-  private let saveButton = UIButton(type: .system).then {
+  let saveButton = UIButton(type: .system).then {
     $0.setTitle("저장", for: .normal)
     $0.titleLabel?.font = .boldSystemFont(ofSize: 18)
     $0.backgroundColor = .systemBlue

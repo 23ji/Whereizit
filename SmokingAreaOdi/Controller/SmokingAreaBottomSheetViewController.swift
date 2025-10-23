@@ -164,13 +164,13 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
     }
   }
   
-  
+
   private func bindActions() {
     self.deleteButton.rx.tap
       .subscribe(onNext: { [weak self] in
         guard let data = self?.currentData else { return }
         guard let documentID = data.documentID else { return }
-        
+
         let alert = UIAlertController(title: "삭제", message: "등록한 흡연구역을 삭제하시겠습니까?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "취소", style: .default))
         alert.addAction(UIAlertAction(title: "확인", style: .default) { action in
@@ -184,11 +184,59 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
           }
         })
         self?.present(alert, animated: true, completion: nil)
+      })
+      .disposed(by: disposeBag)
+    
+    self.editButton.rx.tap
+      .subscribe(onNext: { [weak self] in
+        guard let self = self, let data = self.currentData else { return }
         
+        let editVC = MarkerInfoInputViewController()
+        editVC.modalPresentationStyle = .formSheet
         
+        editVC.markerLat = data.areaLat
+        editVC.markerLng = data.areaLng
+        editVC.selectedEnvironmentTags = data.selectedEnvironmentTags
+        editVC.selectedTypeTags = data.selectedTypeTags
+        editVC.selectedFacilityTags = data.selectedFacilityTags
+        
+        editVC.loadViewIfNeeded()
+        editVC.nameTextField.text = data.name
+        editVC.descriptionTextView.text = data.description
+        
+        if let url = URL(string: data.imageURL ?? "") {
+          editVC.areaImage.kf.setImage(with: url, for: .normal)
+        }
+
+        editVC.saveButton.rx.tap
+          .subscribe(onNext: {
+            guard let documentID = data.documentID else { return }
+            
+            let updatedData: [String: Any] = [
+              "name": editVC.nameTextField.text ?? "",
+              "description": editVC.descriptionTextView.text ?? "",
+              "environmentTags": editVC.selectedEnvironmentTags,
+              "typeTags": editVC.selectedTypeTags,
+              "facilityTags": editVC.selectedFacilityTags,
+              "uploadDate": Timestamp(date: Date())
+            ]
+            
+            self.db.collection("smokingAreas").document(documentID).updateData(updatedData) { error in
+              if let error = error {
+                print("업데이트 실패:", error)
+              } else {
+                print("업데이트 성공")
+                self.dismiss(animated: true)
+              }
+            }
+          })
+          .disposed(by: self.disposeBag)
+        
+        self.present(editVC, animated: true)
       })
       .disposed(by: disposeBag)
   }
+
   
   private func loadImage(from urlString: String?) {
     guard let urlString = urlString, let url = URL(string: urlString) else { return }
