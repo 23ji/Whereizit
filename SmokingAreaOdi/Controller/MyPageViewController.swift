@@ -67,6 +67,20 @@ final class MyPageViewController: UIViewController {
     $0.setAttributedTitle(attributedString, for: .normal)
   }
   
+  // MARK:  로그인하지 않았을 때
+  
+  private let loginPromptLabel = UILabel().then {
+      $0.text = "로그인을 해주세요"
+      $0.textAlignment = .center
+      $0.font = .systemFont(ofSize: 18, weight: .medium)
+    }
+    
+    private let loginButton = UIButton().then {
+      $0.setTitle("로그인하러 가기", for: .normal)
+      $0.setTitleColor(.white, for: .normal)
+      $0.backgroundColor = .systemGreen
+      $0.layer.cornerRadius = 10
+    }
   
   // MARK: Lifecycle
   
@@ -77,7 +91,7 @@ final class MyPageViewController: UIViewController {
     print(self.userEmail)
     self.bindActions()
     self.addSubviews()
-    self.setupLayout()
+    self.updateLayoutBasedOnLogin()
   }
   
   override func viewDidLayoutSubviews() {
@@ -99,6 +113,14 @@ final class MyPageViewController: UIViewController {
         self?.signOut()
       })
       .disposed(by: disposeBag)
+    
+    self.loginButton.rx.tap
+      .subscribe(onNext: { [weak self] in
+        let loginVC = LoginViewController()
+        loginVC.modalPresentationStyle = .fullScreen
+        self?.present(loginVC, animated: true)
+      })
+      .disposed(by: disposeBag)
   }
   
   
@@ -108,25 +130,42 @@ final class MyPageViewController: UIViewController {
     self.view.addSubview(self.rootContainer)
   }
   
-  private func setupLayout() {
-    self.emailLabel.text = "\(self.userEmail)님"
+  private func updateLayoutBasedOnLogin() {
+    self.rootContainer.subviews.forEach { $0.removeFromSuperview() }
     
-    self.rootContainer.flex.direction(.column).paddingHorizontal(24).define {
-      $0.addItem(self.emailLabel)
-        .marginTop(60)
-        .alignSelf(.center)
-      
-      $0.addItem().direction(.column).marginTop(60).define {
-        $0.addItem(self.mySmokingAreasButton).height(50).marginBottom(16)
-        $0.addItem(self.myCommentsButton).height(50).marginBottom(16)
-        $0.addItem(self.favoritesButton).height(50).marginBottom(16)
-        $0.addItem(self.settingsButton).height(50)
+    self.rootContainer.flex.define { flex in
+      if let user = Auth.auth().currentUser {
+        self.emailLabel.text = "\(self.userEmail)님"
+        
+        self.rootContainer.flex.direction(.column).paddingHorizontal(24).define {
+          $0.addItem(self.emailLabel)
+            .marginTop(60)
+            .alignSelf(.center)
+          
+          $0.addItem().direction(.column).marginTop(60).define {
+            $0.addItem(self.mySmokingAreasButton).height(50).marginBottom(16)
+            $0.addItem(self.myCommentsButton).height(50).marginBottom(16)
+            $0.addItem(self.favoritesButton).height(50).marginBottom(16)
+            $0.addItem(self.settingsButton).height(50)
+          }
+          
+          $0.addItem(self.signOutButton)
+            .marginTop(100)
+            .alignSelf(.center)
+        }
+      } else {
+        flex.addItem(loginPromptLabel)
+          .marginTop(200)
+          .alignSelf(.center)
+        
+        flex.addItem(loginButton)
+          .marginTop(20)
+          .height(50)
+          .width(200)
+          .alignSelf(.center)
       }
-      
-      $0.addItem(self.signOutButton)
-        .marginTop(100)
-        .alignSelf(.center)
     }
+    self.rootContainer.flex.layout()
   }
   
   
