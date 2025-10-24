@@ -314,15 +314,12 @@ final class MarkerInfoInputViewController: UIViewController {
       return
     }
     
-    let formatter = DateFormatter()
-    formatter.dateFormat = "yy.MM.dd.HH:mm"
-    let nowString = formatter.string(from: Date())
+    let currentTime = Timestamp(date: Date())
     
-    let uploadTimestamp = Timestamp(date: Date())
+    let safeLat = String(format: "%.9f", lat)
+    let safeLng = String(format: "%.9f", lng)
+    let documentID = "\(safeLat)_\(safeLng)"
     
-    let documentID = "\(name)_\(nowString)"
-
-
     // 모델로 만들기
     let smokingArea = SmokingArea(
       imageURL: capturedImageUrl,
@@ -334,13 +331,10 @@ final class MarkerInfoInputViewController: UIViewController {
       selectedTypeTags: self.selectedTypeTags,
       selectedFacilityTags: self.selectedFacilityTags,
       uploadUser: self.user?.email ?? "",
-      uploadDate: uploadTimestamp
+      uploadDate: currentTime
     )
     
-    
     // Firestore 저장
-//    db.collection("smokingAreas").document(documentID).setData(smokingArea.asDictionary)
-    
     let docRef = db.collection("smokingAreas").document(documentID)
     
     docRef.getDocument { snapshot, error in
@@ -348,13 +342,7 @@ final class MarkerInfoInputViewController: UIViewController {
         print(error)
       }
       
-      if let snapshot = snapshot, snapshot.exists {
-        docRef.updateData(smokingArea.asDictionary)
-        print("업데이트 성공")
-      } else {
-        docRef.setData(smokingArea.asDictionary)
-        print("업로드 성공")
-      }
+      docRef.setData(smokingArea.asDictionary)
     }
   }
 }
