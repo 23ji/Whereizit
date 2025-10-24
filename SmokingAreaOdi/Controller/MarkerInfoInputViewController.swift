@@ -319,6 +319,9 @@ final class MarkerInfoInputViewController: UIViewController {
     let nowString = formatter.string(from: Date())
     
     let uploadTimestamp = Timestamp(date: Date())
+    
+    let documentID = "\(name)_\(nowString)"
+
 
     // 모델로 만들기
     let smokingArea = SmokingArea(
@@ -334,10 +337,25 @@ final class MarkerInfoInputViewController: UIViewController {
       uploadDate: uploadTimestamp
     )
     
-    let documentID = "\(name)_\(nowString)"
     
     // Firestore 저장
-    db.collection("smokingAreas").document(documentID).setData(smokingArea.asDictionary)
+//    db.collection("smokingAreas").document(documentID).setData(smokingArea.asDictionary)
+    
+    let docRef = db.collection("smokingAreas").document(documentID)
+    
+    docRef.getDocument { snapshot, error in
+      if let error = error {
+        print(error)
+      }
+      
+      if let snapshot = snapshot, snapshot.exists {
+        docRef.updateData(smokingArea.asDictionary)
+        print("업데이트 성공")
+      } else {
+        docRef.setData(smokingArea.asDictionary)
+        print("업로드 성공")
+      }
+    }
   }
 }
 
