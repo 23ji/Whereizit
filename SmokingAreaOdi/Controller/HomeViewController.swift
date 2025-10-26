@@ -49,6 +49,9 @@ final class HomeViewController: UIViewController {
   private let db = Firestore.firestore()
   private let locationManager = CLLocationManager()
   
+  // MARK: [FIX] 현재 지도에 표시된 마커를 Document ID를 키로 하는 딕셔너리로 변경 (효율적인 관리)
+  private var areaMarkers: [String: NMFMarker] = [:]
+  
   
   // MARK: 바텀시트
   
@@ -117,17 +120,29 @@ final class HomeViewController: UIViewController {
   
   // MARK: Area Marker
   
+  // 기존 마커 전체를 제거하는 함수 (선택적으로 사용)
+  private func clearMarkers() {
+    self.areaMarkers.values.forEach { $0.mapView = nil }
+    self.areaMarkers.removeAll()
+  }
+  
   private func observeSmokingAreas() {
-    db.collection("smokingAreas").addSnapshotListener { snapshot, error in
-      guard let snapshot = snapshot else { return }
-      for doc in snapshot.documents {
+    // [FIX] snapshot.documentChanges를 사용하여 효율적으로 마커를 관리합니다.
+    db.collection("smokingAreas").addSnapshotListener { [weak self] snapshot, error in
+      guard let self = self, let snapshot = snapshot else { return }
+      
+      for change in snapshot.documentChanges {
+        let doc = change.document
         let data = doc.data()
+        let documentID = doc.documentID
         
+        // Document Data 파싱
         guard let name = data["name"] as? String,
               let description = data["description"] as? String,
               let areaLat = data["areaLat"] as? Double,
               let areaLng = data["areaLng"] as? Double
-        else { return }
+        else { continue } // 데이터 파싱 실패 시 건너뜀
+        
         let imageURL = data["imageURL"] as? String ?? ""
         let selectedEnvironmentTags = (data["environmentTags"] as? [String]) ?? []
         let selectedTypeTags = (data["typeTags"] as? [String]) ?? []
@@ -136,7 +151,7 @@ final class HomeViewController: UIViewController {
         let uploadUser = data["uploadUser"] as? String ?? ""
         
         let areaData = SmokingArea(
-          documentID: doc.documentID,
+          documentID: documentID,
           imageURL: imageURL,
           name: name,
           description: description,
@@ -149,15 +164,50 @@ final class HomeViewController: UIViewController {
           uploadDate: uploadTimestamp
         )
         
-        let areaMarker = NMFMarker()
-        areaMarker.iconImage = NMFOverlayImage(name: "marker_Pin")
-        areaMarker.position = NMGLatLng(lat: areaLat, lng: areaLng)
-        
-        areaMarker.touchHandler = { (overlay: NMFOverlay) -> Bool in
-          self.markerTapped.onNext(areaData)
-          return true
+        switch change.type {
+        case .added:
+          let areaMarker = NMFMarker()
+          areaMarker.iconImage = NMFOverlayImage(name: "marker_Pin")
+          areaMarker.position = NMGLatLng(lat: areaData.areaLat, lng: areaData.areaLng)
+          
+          areaMarker.touchHandler = { [weak self] (overlay: NMFOverlay) -> Bool in
+            self?.markerTapped.onNext(areaData)
+            return true
+          }
+          
+          areaMarker.mapView = self.mapView.mapView
+          self.areaMarkers[documentID] = areaMarker
+          
+        case .modified:
+          if let existingMarker = self.areaMarkers[documentID] {
+            existingMarker.mapView = nil // 지도에서 제거
+            self.areaMarkers.removeValue(forKey: documentID) // 딕셔너리에서 제거
+            
+            let areaMarker = NMFMarker()
+            areaMarker.iconImage = NMFOverlayImage(name: "marker_Pin")
+            areaMarker.position = NMGLatLng(lat: areaData.areaLat, lng: areaData.areaLng)
+            
+            areaMarker.touchHandler = { [weak self] (overlay: NMFOverlay) -> Bool in
+              self?.markerTapped.onNext(areaData)
+              return true
+            }
+            
+            areaMarker.mapView = self.mapView.mapView
+            self.areaMarkers[documentID] = areaMarker
+            
+            self.tappedPanel.move(to: .hidden, animated: true)
+            self.nearbyPanel.move(to: .tip, animated: true)
+          }
+          
+        case .removed:
+          if let existingMarker = self.areaMarkers[documentID] {
+            existingMarker.mapView = nil // 지도에서 제거
+            self.areaMarkers.removeValue(forKey: documentID) // 딕셔너리에서 제거
+            
+            self.tappedPanel.move(to: .hidden, animated: true)
+            self.nearbyPanel.move(to: .tip, animated: true)
+          }
         }
-        areaMarker.mapView = self.mapView.mapView
       }
     }
   }

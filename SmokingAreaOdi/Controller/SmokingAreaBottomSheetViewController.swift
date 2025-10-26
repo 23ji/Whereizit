@@ -179,7 +179,6 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
               print("문서 삭제 실패:", error)
             } else {
               print("문서 삭제 성공")
-              self?.dismiss(animated: true)
             }
           }
         })
