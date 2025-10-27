@@ -144,5 +144,7 @@ extension NearbySmokingAreasBottomSheetViewController: UITableViewDelegate, UITa
     let area = smokingAreas[indexPath.row]
     delegate?.moveCameraToSmokingArea(lat: area.areaLat, lng: area.areaLng)
     delegate?.showSmokingAreaBottomSheet(areaData: area)
+    
+    tableView.deselectRow(at: indexPath, animated: true)
   }
 }
