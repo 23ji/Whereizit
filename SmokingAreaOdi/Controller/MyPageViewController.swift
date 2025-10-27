@@ -148,6 +148,13 @@ final class MyPageViewController: UIViewController {
       })
       .disposed(by: disposeBag)
     
+    self.settingsButton.rx.tap
+      .subscribe(onNext: { [weak self] in
+        let settingVC = SettingsViewController()
+        self?.navigationController?.pushViewController(settingVC, animated: true)
+      })
+      .disposed(by: disposeBag)
+    
     self.signOutButton.rx.tap
       .subscribe(onNext: { [weak self] in
         self?.signOut()

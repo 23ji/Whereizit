@@ -46,6 +46,7 @@
 		9FB65AC22E7B7D4E00F788BF /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB65AC12E7B7D4E00F788BF /* SignInViewController.swift */; };
 		9FDBC1FC2E867BA2009924E8 /* LoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FDBC1FB2E867BA2009924E8 /* LoginButton.swift */; };
 		9FDC5EEE2E7ACFB900C1335B /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = 9FDC5EED2E7ACFB900C1335B /* FirebaseFunctions */; };
+		9FE2378C2EAF8B5500B19283 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE2378B2EAF8B5500B19283 /* SettingsViewController.swift */; };
 		9FF116062E9609AB0076A359 /* ReactorKit in Frameworks */ = {isa = PBXBuildFile; productRef = 9FF116052E9609AB0076A359 /* ReactorKit */; };
 		A75196ED2E3A42D700CE5F1F /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = A75196EC2E3A42D700CE5F1F /* Then */; };
 		A77C88BF2E2528A8002D725E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77C88BE2E2528A8002D725E /* HomeViewController.swift */; };
@@ -75,6 +76,7 @@
 		9FB2BC062E79783500C3B4F3 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		9FB65AC12E7B7D4E00F788BF /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		9FDBC1FB2E867BA2009924E8 /* LoginButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginButton.swift; sourceTree = "<group>"; };
+		9FE2378B2EAF8B5500B19283 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		A77C88BE2E2528A8002D725E /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		A7990CBD2E288E5100B3D3CE /* MarkerInfoInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerInfoInputViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -188,6 +190,7 @@
 				9FB65AC12E7B7D4E00F788BF /* SignInViewController.swift */,
 				49031DFE2EA5D9EE004F5857 /* MySmokingAreasViewController.swift */,
 				49031E072EAF4E11004F5857 /* FullImageViewController.swift */,
+				9FE2378B2EAF8B5500B19283 /* SettingsViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -322,6 +325,7 @@
 				A77C88BF2E2528A8002D725E /* HomeViewController.swift in Sources */,
 				49288AAD2D19450C00FF1E50 /* AppDelegate.swift in Sources */,
 				49288AAF2D19450C00FF1E50 /* SceneDelegate.swift in Sources */,
+				9FE2378C2EAF8B5500B19283 /* SettingsViewController.swift in Sources */,
 				9FAB5F9A2E90F9E600A7EE33 /* SmokingAreaTableViewCell.swift in Sources */,
 				490221A12E67DBBF0069DDEC /* SmokingArea.swift in Sources */,
 				498B448F2E7A53E800FF06B6 /* MainTabBarController.swift in Sources */,
