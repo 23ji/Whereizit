@@ -102,7 +102,7 @@ final class MyPageViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     self.view.backgroundColor = .white
-    self.userEmail = Auth.auth().currentUser?.email ?? "사용자"
+    self.setupProfile()
     self.bindActions()
     self.addSubviews()
     self.updateLayoutBasedOnLogin()
@@ -113,6 +113,15 @@ final class MyPageViewController: UIViewController {
     self.rootContainer.flex.layout()
   }
   
+  
+  private func setupProfile() {
+    self.userEmail = Auth.auth().currentUser?.displayName ?? "사용자"
+    if let photoURL = Auth.auth().currentUser?.photoURL {
+        self.profileImageView.kf.setImage(with: photoURL)
+    } else {
+        self.profileImageView.image = UIImage(systemName: "person.circle.fill")
+    }
+  }
   
   private func bindActions() {
     self.mySmokingAreasButton.rx.tap
