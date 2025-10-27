@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		490221A12E67DBBF0069DDEC /* SmokingArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490221A02E67DBBF0069DDEC /* SmokingArea.swift */; };
 		49031DFF2EA5D9EE004F5857 /* MySmokingAreasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49031DFE2EA5D9EE004F5857 /* MySmokingAreasViewController.swift */; };
+		49031E062EAF482B004F5857 /* RxGesture in Frameworks */ = {isa = PBXBuildFile; productRef = 49031E052EAF482B004F5857 /* RxGesture */; };
 		49168A702E448E77002C5F69 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 49168A6F2E448E77002C5F69 /* FirebaseAuth */; };
 		49168A722E448E77002C5F69 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 49168A712E448E77002C5F69 /* FirebaseCore */; };
 		49168A742E448E77002C5F69 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 49168A732E448E77002C5F69 /* FirebaseFirestore */; };
@@ -81,6 +82,7 @@
 			files = (
 				A75196ED2E3A42D700CE5F1F /* Then in Frameworks */,
 				4969371D2E793BA3008B0FCD /* KakaoSDK in Frameworks */,
+				49031E062EAF482B004F5857 /* RxGesture in Frameworks */,
 				49168A702E448E77002C5F69 /* FirebaseAuth in Frameworks */,
 				9FA27D2D2E82152100D36B6C /* GoogleSignIn in Frameworks */,
 				9FDC5EEE2E7ACFB900C1335B /* FirebaseFunctions in Frameworks */,
@@ -230,6 +232,7 @@
 				9FA27D2E2E82152100D36B6C /* GoogleSignInSwift */,
 				9FF116052E9609AB0076A359 /* ReactorKit */,
 				9F34CEDA2E98EF5700842643 /* Kingfisher */,
+				49031E052EAF482B004F5857 /* RxGesture */,
 			);
 			productName = SmokeAreaOdi;
 			productReference = 49288AA92D19450C00FF1E50 /* SmokingAreaOdi.app */;
@@ -275,6 +278,7 @@
 				9FA27D2B2E82152100D36B6C /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				9FF116042E9609AB0076A359 /* XCRemoteSwiftPackageReference "ReactorKit" */,
 				9F34CED92E98EF5700842643 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				49031E042EAF482B004F5857 /* XCRemoteSwiftPackageReference "RxGesture" */,
 			);
 			productRefGroup = 49288AAA2D19450C00FF1E50 /* Products */;
 			projectDirPath = "";
@@ -558,6 +562,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		49031E042EAF482B004F5857 /* XCRemoteSwiftPackageReference "RxGesture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxGesture.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.4;
+			};
+		};
 		49168A6E2E448E77002C5F69 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
@@ -681,6 +693,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		49031E052EAF482B004F5857 /* RxGesture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 49031E042EAF482B004F5857 /* XCRemoteSwiftPackageReference "RxGesture" */;
+			productName = RxGesture;
+		};
 		49168A6F2E448E77002C5F69 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 49168A6E2E448E77002C5F69 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

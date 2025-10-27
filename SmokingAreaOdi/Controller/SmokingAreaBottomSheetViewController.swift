@@ -206,30 +206,6 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
         if let url = URL(string: data.imageURL ?? "") {
           editVC.areaImage.kf.setImage(with: url, for: .normal)
         }
-
-//        editVC.saveButton.rx.tap
-//          .subscribe(onNext: {
-//            guard let documentID = data.documentID else { return }
-//            
-////            let updatedData: [String: Any] = [
-////              "name": editVC.nameTextField.text ?? "",
-////              "description": editVC.descriptionTextView.text ?? "",
-////              "environmentTags": editVC.selectedEnvironmentTags,
-////              "typeTags": editVC.selectedTypeTags,
-////              "facilityTags": editVC.selectedFacilityTags,
-////              "uploadDate": Timestamp(date: Date())
-////            ]
-//            
-////            self.db.collection("smokingAreas").document(documentID).updateData(updatedData) { error in
-////              if let error = error {
-////                print("업데이트 실패:", error)
-////              } else {
-////                print("업데이트 성공")
-////                self.dismiss(animated: true)
-////              }
-////            }
-//          })
-          //.disposed(by: self.disposeBag)
         
         self.present(editVC, animated: true)
       })
