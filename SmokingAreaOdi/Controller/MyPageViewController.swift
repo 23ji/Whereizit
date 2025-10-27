@@ -14,40 +14,46 @@ import Then
 
 import UIKit
 
-
 struct Metric {
-  static let profileImageSize: CGFloat = 100
-  static let profileImageCornerRadius: CGFloat = 50
+  static let profileImageSize: CGFloat = 120
+  static let profileImageCornerRadius: CGFloat = 60
   static let emailFontSize: CGFloat = 24
-  static let loginPromptFontSize: CGFloat = 18
-  static let buttonHeight: CGFloat = 50
-  static let buttonCornerRadius: CGFloat = 10
+  static let loginPromptFontSize: CGFloat = 20
+  static let buttonHeight: CGFloat = 52
+  static let buttonCornerRadius: CGFloat = 14
   static let topMarginProfileImage: CGFloat = 60
-  static let topMarginEmailLabel: CGFloat = 12
+  static let topMarginEmailLabel: CGFloat = 16
   static let topMarginButtonsStack: CGFloat = 40
-  static let signOutTopMargin: CGFloat = 100
+  static let signOutTopMargin: CGFloat = 60
   static let loginPromptTopMargin: CGFloat = 200
   static let loginButtonTopMargin: CGFloat = 20
-  static let loginButtonWidth: CGFloat = 200
+  static let loginButtonWidth: CGFloat = 220
   static let buttonMarginBottom: CGFloat = 16
   static let horizontalPadding: CGFloat = 24
   static let cornerRadius: CGFloat = 12
+  static let cardBackgroundColor: UIColor = UIColor.systemGray
 }
 
 final class MyPageViewController: UIViewController {
   
   private let rootContainer = UIView()
-  
   private let disposeBag = DisposeBag()
   
   var userEmail: String = ""
   
+  // MARK: Profile
   private let profileImageView = UIImageView().then {
     $0.image = UIImage(systemName: "person.circle.fill")
-    $0.tintColor = .systemGray
+    $0.tintColor = .systemGray3
     $0.contentMode = .scaleAspectFill
     $0.layer.cornerRadius = Metric.profileImageCornerRadius
     $0.clipsToBounds = true
+    $0.layer.borderWidth = 2
+    $0.layer.borderColor = UIColor.systemGreen.cgColor
+    $0.layer.shadowColor = UIColor.black.cgColor
+    $0.layer.shadowOpacity = 0.1
+    $0.layer.shadowOffset = CGSize(width: 0, height: 2)
+    $0.layer.shadowRadius = 4
   }
   
   private let emailLabel = UILabel().then {
@@ -56,39 +62,27 @@ final class MyPageViewController: UIViewController {
     $0.textAlignment = .center
   }
   
-  // MARK: 버튼들
-  
+  // MARK: Buttons
   private let mySmokingAreasButton = UIButton().then {
     $0.setTitle("내가 등록한 흡연구역", for: .normal)
     $0.setTitleColor(.white, for: .normal)
     $0.backgroundColor = .systemGreen
     $0.layer.cornerRadius = Metric.buttonCornerRadius
+    $0.layer.shadowColor = UIColor.systemGreen.cgColor
+    $0.layer.shadowOffset = CGSize(width: 0, height: 4)
+    $0.layer.shadowRadius = 6
+    $0.layer.shadowOpacity = 0.3
   }
-  
-  /*
-   private let myCommentsButton = UIButton().then {
-   $0.setTitle("내가 단 댓글", for: .normal)
-   $0.setTitleColor(.white, for: .normal)
-   $0.backgroundColor = .systemGreen
-   $0.layer.cornerRadius = Metric.buttonCornerRadius
-   }
-   */
-  
-  /*
-   private let favoritesButton = UIButton().then {
-   $0.setTitle("즐겨찾기한 구역", for: .normal)
-   $0.setTitleColor(.white, for: .normal)
-   $0.backgroundColor = .systemGreen
-   $0.layer.cornerRadius = Metric.buttonCornerRadius
-   }
-   */
   
   private let settingsButton = UIButton().then {
     $0.setTitle("설정", for: .normal)
-    $0.setTitleColor(.darkGray, for: .normal)
-    $0.layer.borderWidth = 1
-    $0.layer.borderColor = UIColor.lightGray.cgColor
+    $0.setTitleColor(.white, for: .normal)
+    $0.backgroundColor = Metric.cardBackgroundColor
     $0.layer.cornerRadius = Metric.buttonCornerRadius
+    $0.layer.shadowColor = UIColor.systemGray.cgColor
+    $0.layer.shadowOffset = CGSize(width: 0, height: 4)
+    $0.layer.shadowRadius = 6
+    $0.layer.shadowOpacity = 0.3
   }
   
   private let signOutButton = UIButton().then {
@@ -103,8 +97,7 @@ final class MyPageViewController: UIViewController {
     $0.setAttributedTitle(attributedString, for: .normal)
   }
   
-  // 로그인 안했을 때
-  
+  // MARK: Login Prompt
   private let loginPromptLabel = UILabel().then {
     $0.text = "로그인을 해주세요"
     $0.textAlignment = .center
@@ -124,7 +117,6 @@ final class MyPageViewController: UIViewController {
   }
   
   // MARK: Lifecycle
-  
   override func viewDidLoad() {
     super.viewDidLoad()
     self.view.backgroundColor = .white
@@ -171,7 +163,6 @@ final class MyPageViewController: UIViewController {
       .disposed(by: disposeBag)
   }
   
-  // MARK: UI
   private func addSubviews() {
     self.view.addSubview(self.rootContainer)
   }
@@ -198,16 +189,6 @@ final class MyPageViewController: UIViewController {
               .height(Metric.buttonHeight)
               .marginBottom(Metric.buttonMarginBottom)
             
-            /*
-             flex.addItem(self.myCommentsButton)
-             .height(Metric.buttonHeight)
-             .marginBottom(Metric.buttonMarginBottom)
-             
-             flex.addItem(self.favoritesButton)
-             .height(Metric.buttonHeight)
-             .marginBottom(Metric.buttonMarginBottom)
-             */
-            
             flex.addItem(self.settingsButton)
               .height(Metric.buttonHeight)
           }
@@ -217,11 +198,11 @@ final class MyPageViewController: UIViewController {
             .alignSelf(.center)
         }
       } else {
-        flex.addItem(loginPromptLabel)
+        flex.addItem(self.loginPromptLabel)
           .marginTop(Metric.loginPromptTopMargin)
           .alignSelf(.center)
         
-        flex.addItem(loginButton)
+        flex.addItem(self.loginButton)
           .marginTop(Metric.loginButtonTopMargin)
           .height(Metric.buttonHeight)
           .width(Metric.loginButtonWidth)
@@ -232,7 +213,6 @@ final class MyPageViewController: UIViewController {
   }
   
   // MARK: 로그아웃 처리
-  
   private func signOut() {
     let firebaseAuth = Auth.auth()
     do {
