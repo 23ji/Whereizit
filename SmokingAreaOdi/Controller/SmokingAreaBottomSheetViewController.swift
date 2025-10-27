@@ -15,6 +15,7 @@ import Kingfisher
 import PinLayout
 import Then
 
+import RxGesture
 import RxSwift
 
 import UIKit
@@ -87,6 +88,7 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
     self.view.addSubview(self.rootFlexContainer)
     self.setupLayout()
     self.bindActions()
+    self.bindImageTapGesture()
   }
   
   override func viewDidLayoutSubviews() {
@@ -208,6 +210,19 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
         }
         
         self.present(editVC, animated: true)
+      })
+      .disposed(by: disposeBag)
+  }
+  
+  
+  private func bindImageTapGesture() {
+    self.areaImageView.rx.tapGesture()
+      .when(.recognized)
+      .subscribe(onNext: { _ in
+        let imageVC = FullImageViewController(image: self.areaImageView.image)
+        imageVC.modalPresentationStyle = .fullScreen
+        imageVC.modalTransitionStyle = .crossDissolve
+        self.present(imageVC, animated: true)
       })
       .disposed(by: disposeBag)
   }
