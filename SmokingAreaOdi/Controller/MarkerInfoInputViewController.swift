@@ -214,6 +214,21 @@ final class MarkerInfoInputViewController: UIViewController {
                 $0.layer.borderColor = UIColor.systemGray4.cgColor
                 $0.contentEdgeInsets = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
                 $0.sizeToFit()
+                
+                let isSelected: Bool
+                switch title {
+                case "환경":
+                  isSelected = self.selectedEnvironmentTags.contains(tag)
+                case "유형":
+                  isSelected = self.selectedTypeTags.contains(tag)
+                case "시설":
+                  isSelected = self.selectedFacilityTags.contains(tag)
+                default:
+                  isSelected = false
+                }
+                $0.isSelected = isSelected
+                $0.backgroundColor = isSelected ? .gray : .systemGray6
+                $0.setTitleColor(.label, for: .normal)
               }
               
               // Tap Event
