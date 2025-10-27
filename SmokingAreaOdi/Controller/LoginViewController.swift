@@ -50,14 +50,14 @@ final class LoginViewController: UIViewController {
   
   private let logoImageView = UIImageView().then {
     $0.contentMode = .scaleAspectFit
-    $0.image = UIImage(systemName: "cloud.fill")
+    $0.image = UIImage(named: "marker_Pin")
     $0.tintColor = .systemGreen
   }
   
   private let appNameLabel = UILabel().then {
     $0.text = "흡구오디?"
     $0.font = .systemFont(ofSize: 32, weight: .bold)
-    $0.textColor = .systemGreen
+    $0.textColor = .black
     $0.textAlignment = .center
   }
   
@@ -167,7 +167,7 @@ final class LoginViewController: UIViewController {
   }
   
   private let googleIcon = UIImageView().then {
-    $0.image = UIImage(systemName: "googleLoginButton")
+    $0.image = UIImage(named: "googleLoginButton")
     $0.tintColor = .systemRed
     $0.contentMode = .scaleAspectFit
   }
