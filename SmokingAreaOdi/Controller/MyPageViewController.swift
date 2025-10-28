@@ -89,6 +89,17 @@ final class MyPageViewController: UIViewController {
     $0.layer.shadowOpacity = 0.3
   }
   
+  private let privacyPolicyButton = UIButton().then {
+    $0.setTitle("개인정보 처리방침", for: .normal)
+    $0.setTitleColor(.white, for: .normal)
+    $0.backgroundColor = Metric.cardBackgroundColor
+    $0.layer.cornerRadius = Metric.buttonCornerRadius
+    $0.layer.shadowColor = UIColor.systemGray.cgColor
+    $0.layer.shadowOffset = CGSize(width: 0, height: 4)
+    $0.layer.shadowRadius = 6
+    $0.layer.shadowOpacity = 0.3
+  }
+  
   private let signOutButton = UIButton().then {
     let title = "로그아웃"
     let attributedString = NSAttributedString(
@@ -128,10 +139,10 @@ final class MyPageViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     self.view.backgroundColor = .white
+    self.updateLayoutBasedOnLogin()
+    self.addSubviews()
     self.setupProfile()
     self.bindActions()
-    self.addSubviews()
-    self.updateLayoutBasedOnLogin()
   }
   
   
@@ -145,6 +156,61 @@ final class MyPageViewController: UIViewController {
   override func viewDidLayoutSubviews() {
     self.rootContainer.pin.all(self.view.pin.safeArea)
     self.rootContainer.flex.layout()
+  }
+  
+  
+  private func updateLayoutBasedOnLogin() {
+    self.rootContainer.subviews.forEach { $0.removeFromSuperview() }
+    
+    self.rootContainer.flex.define { flex in
+      if let user = Auth.auth().currentUser {
+        self.emailLabel.text = "\(self.userEmail)님"
+        
+        flex.addItem().direction(.column).paddingHorizontal(Metric.horizontalPadding).define {
+          $0.addItem(self.profileImageView)
+            .size(Metric.profileImageSize)
+            .alignSelf(.center)
+            .marginTop(Metric.topMarginProfileImage)
+          
+          $0.addItem(self.emailLabel)
+            .marginTop(Metric.topMarginEmailLabel)
+            .alignSelf(.center)
+          
+          $0.addItem().direction(.column).marginTop(Metric.topMarginButtonsStack).define { flex in
+            flex.addItem(self.mySmokingAreasButton)
+              .height(Metric.buttonHeight)
+              .marginBottom(Metric.buttonMarginBottom)
+            
+            flex.addItem(self.settingsButton)
+              .height(Metric.buttonHeight)
+              .marginBottom(Metric.buttonMarginBottom)
+            
+            flex.addItem(self.privacyPolicyButton)
+              .height(Metric.buttonHeight)
+          }
+          
+          $0.addItem(self.signOutButton)
+            .marginTop(Metric.signOutTopMargin)
+            .alignSelf(.center)
+        }
+      } else {
+        flex.addItem(self.loginPromptLabel)
+          .marginTop(Metric.loginPromptTopMargin)
+          .alignSelf(.center)
+        
+        flex.addItem(self.loginButton)
+          .marginTop(Metric.loginButtonTopMargin)
+          .height(Metric.buttonHeight)
+          .width(Metric.loginButtonWidth)
+          .alignSelf(.center)
+      }
+    }
+    self.rootContainer.flex.layout()
+  }
+  
+  
+  private func addSubviews() {
+    self.view.addSubview(self.rootContainer)
   }
   
   
@@ -172,6 +238,14 @@ final class MyPageViewController: UIViewController {
       })
       .disposed(by: disposeBag)
     
+    self.privacyPolicyButton.rx.tap
+      .subscribe(onNext: { [weak self] in
+        let privacyVC = PrivacyPolicyViewController()
+        self?.navigationController?.pushViewController(privacyVC, animated: true)
+      })
+      .disposed(by: disposeBag)
+
+    
     self.signOutButton.rx.tap
       .subscribe(onNext: { [weak self] in
         self?.signOut()
@@ -187,56 +261,7 @@ final class MyPageViewController: UIViewController {
       .disposed(by: disposeBag)
   }
   
-  private func addSubviews() {
-    self.view.addSubview(self.rootContainer)
-  }
-  
-  private func updateLayoutBasedOnLogin() {
-    self.rootContainer.subviews.forEach { $0.removeFromSuperview() }
     
-    self.rootContainer.flex.define { flex in
-      if let user = Auth.auth().currentUser {
-        self.emailLabel.text = "\(self.userEmail)님"
-        
-        flex.addItem().direction(.column).paddingHorizontal(Metric.horizontalPadding).define {
-          $0.addItem(self.profileImageView)
-            .size(Metric.profileImageSize)
-            .alignSelf(.center)
-            .marginTop(Metric.topMarginProfileImage)
-          
-          $0.addItem(self.emailLabel)
-            .marginTop(Metric.topMarginEmailLabel)
-            .alignSelf(.center)
-          
-          $0.addItem().direction(.column).marginTop(Metric.topMarginButtonsStack).define { flex in
-            flex.addItem(self.mySmokingAreasButton)
-              .height(Metric.buttonHeight)
-              .marginBottom(Metric.buttonMarginBottom)
-            
-            flex.addItem(self.settingsButton)
-              .height(Metric.buttonHeight)
-          }
-          
-          $0.addItem(self.signOutButton)
-            .marginTop(Metric.signOutTopMargin)
-            .alignSelf(.center)
-        }
-      } else {
-        flex.addItem(self.loginPromptLabel)
-          .marginTop(Metric.loginPromptTopMargin)
-          .alignSelf(.center)
-        
-        flex.addItem(self.loginButton)
-          .marginTop(Metric.loginButtonTopMargin)
-          .height(Metric.buttonHeight)
-          .width(Metric.loginButtonWidth)
-          .alignSelf(.center)
-      }
-    }
-    self.rootContainer.flex.layout()
-  }
-  
-  
   // MARK: 로그아웃 처리
   
   private func signOut() {

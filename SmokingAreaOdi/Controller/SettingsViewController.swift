@@ -233,10 +233,47 @@ final class SettingsViewController: UIViewController {
   }
   
   private func updateProfileImage(_ image: UIImage) {
-    // Firebase Storage 업로드 후 URL 가져오기
-    self.profileImageView.image = image
-    self.showToast(message: "프로필 사진이 변경되었어요 🎉")
+      guard let user = Auth.auth().currentUser,
+            let imageData = image.jpegData(compressionQuality: 0.8) else { return }
+
+      let storageRef = Storage.storage().reference().child("profile_images/\(user.uid).jpg")
+      let metadata = StorageMetadata()
+      metadata.contentType = "image/jpeg"
+
+      storageRef.putData(imageData, metadata: metadata) { [weak self] metadata, error in
+          guard let self = self else { return }
+          if let error = error {
+              print("이미지 업로드 실패:", error.localizedDescription)
+              self.showToast(message: "프로필 저장 실패 😢")
+              return
+          }
+
+          storageRef.downloadURL { url, error in
+              if let error = error {
+                  print("다운로드 URL 가져오기 실패:", error.localizedDescription)
+                  self.showToast(message: "프로필 저장 실패 😢")
+                  return
+              }
+
+              guard let url = url else { return }
+
+              // Firebase Auth 프로필 업데이트
+              let changeRequest = user.createProfileChangeRequest()
+              changeRequest.photoURL = url
+              changeRequest.commitChanges { error in
+                  if let error = error {
+                      print("프로필 사진 업데이트 실패:", error.localizedDescription)
+                      self.showToast(message: " 프로필 저장 실패 😢 ")
+                  } else {
+                      print("프로필 사진 업데이트 성공")
+                      self.profileImageView.kf.setImage(with: url) // 킹피셔로 표시
+                      self.showToast(message: " 프로필 사진이 변경되었어요 🎉 ")
+                  }
+              }
+          }
+      }
   }
+
   
   private func confirmDeleteAccount() {
     let alert = UIAlertController(title: "회원 탈퇴", message: "정말 탈퇴하시겠습니까?", preferredStyle: .alert)

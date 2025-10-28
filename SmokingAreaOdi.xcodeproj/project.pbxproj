@@ -13,6 +13,7 @@
 		49031E082EAF4E11004F5857 /* FullImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49031E072EAF4E11004F5857 /* FullImageViewController.swift */; };
 		49031E0B2EAF4E82004F5857 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 49031E0A2EAF4E82004F5857 /* SDWebImage */; };
 		49031E0D2EAF4E82004F5857 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 49031E0C2EAF4E82004F5857 /* SDWebImageMapKit */; };
+		49031E112EB08A0B004F5857 /* PrivacyPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49031E102EB08A0B004F5857 /* PrivacyPolicyViewController.swift */; };
 		49168A702E448E77002C5F69 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 49168A6F2E448E77002C5F69 /* FirebaseAuth */; };
 		49168A722E448E77002C5F69 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 49168A712E448E77002C5F69 /* FirebaseCore */; };
 		49168A742E448E77002C5F69 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 49168A732E448E77002C5F69 /* FirebaseFirestore */; };
@@ -58,6 +59,7 @@
 		490221A02E67DBBF0069DDEC /* SmokingArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokingArea.swift; sourceTree = "<group>"; };
 		49031DFE2EA5D9EE004F5857 /* MySmokingAreasViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySmokingAreasViewController.swift; sourceTree = "<group>"; };
 		49031E072EAF4E11004F5857 /* FullImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullImageViewController.swift; sourceTree = "<group>"; };
+		49031E102EB08A0B004F5857 /* PrivacyPolicyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyViewController.swift; sourceTree = "<group>"; };
 		49288AA92D19450C00FF1E50 /* SmokingAreaOdi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmokingAreaOdi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		49288AAC2D19450C00FF1E50 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		49288AAE2D19450C00FF1E50 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -191,6 +193,7 @@
 				49031DFE2EA5D9EE004F5857 /* MySmokingAreasViewController.swift */,
 				49031E072EAF4E11004F5857 /* FullImageViewController.swift */,
 				9FE2378B2EAF8B5500B19283 /* SettingsViewController.swift */,
+				49031E102EB08A0B004F5857 /* PrivacyPolicyViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -335,6 +338,7 @@
 				498B44912E7A82F900FF06B6 /* MyPageViewController.swift in Sources */,
 				9FA6B1792E64473E00A94571 /* SmokingAreaBottomSheetViewController.swift in Sources */,
 				49031E082EAF4E11004F5857 /* FullImageViewController.swift in Sources */,
+				49031E112EB08A0B004F5857 /* PrivacyPolicyViewController.swift in Sources */,
 				49031DFF2EA5D9EE004F5857 /* MySmokingAreasViewController.swift in Sources */,
 				9FDBC1FC2E867BA2009924E8 /* LoginButton.swift in Sources */,
 			);
