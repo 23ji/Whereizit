@@ -41,7 +41,9 @@ final class MyPageViewController: UIViewController {
   
   var userEmail: String = ""
   
+  
   // MARK: Profile
+  
   private let profileImageView = UIImageView().then {
     $0.image = UIImage(systemName: "person.circle.fill")
     $0.tintColor = .systemGray3
@@ -62,7 +64,9 @@ final class MyPageViewController: UIViewController {
     $0.textAlignment = .center
   }
   
+  
   // MARK: Buttons
+  
   private let mySmokingAreasButton = UIButton().then {
     $0.setTitle("내가 등록한 흡연구역", for: .normal)
     $0.setTitleColor(.white, for: .normal)
@@ -97,7 +101,9 @@ final class MyPageViewController: UIViewController {
     $0.setAttributedTitle(attributedString, for: .normal)
   }
   
+  
   // MARK: Login Prompt
+  
   private let loginPromptLabel = UILabel().then {
     $0.text = "로그인을 해주세요"
     $0.textAlignment = .center
@@ -116,7 +122,9 @@ final class MyPageViewController: UIViewController {
     $0.layer.shadowOpacity = 0.3
   }
   
+  
   // MARK: Lifecycle
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     self.view.backgroundColor = .white
@@ -126,10 +134,19 @@ final class MyPageViewController: UIViewController {
     self.updateLayoutBasedOnLogin()
   }
   
+  
+  override func viewWillAppear(_ animated: Bool) {
+      super.viewWillAppear(animated)
+      self.setupProfile()
+      self.updateLayoutBasedOnLogin()
+  }
+  
+  
   override func viewDidLayoutSubviews() {
     self.rootContainer.pin.all(self.view.pin.safeArea)
     self.rootContainer.flex.layout()
   }
+  
   
   private func setupProfile() {
     self.userEmail = Auth.auth().currentUser?.displayName ?? "사용자"
@@ -219,7 +236,9 @@ final class MyPageViewController: UIViewController {
     self.rootContainer.flex.layout()
   }
   
+  
   // MARK: 로그아웃 처리
+  
   private func signOut() {
     let firebaseAuth = Auth.auth()
     do {
