@@ -1,9 +1,9 @@
-//
 //  SmokingAreaBottomSheetViewController.swift
 //  SmokingAreaOdi
 //
 //  Created by 23ji on 8/31/25.
 //
+
 import FirebaseAuth
 import FirebaseCore
 import FirebaseFirestore
@@ -33,11 +33,8 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
   // MARK: Components
   
   private var currentData: SmokingArea?
-  
   private let db = Firestore.firestore()
-
   private let disposeBag = DisposeBag()
-
   private let rootFlexContainer = UIView()
   
   private let areaImageView = UIImageView().then {
@@ -76,6 +73,12 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
   private let divider = UIView().then {
     $0.backgroundColor = .systemGray5
   }
+
+  private let reportButton = UIButton().then {
+      $0.setTitle("🚨 신고하기", for: .normal)
+      $0.setTitleColor(.systemRed, for: .normal)
+      $0.titleLabel?.font = .systemFont(ofSize: 13, weight: .medium)
+  }
   
   private var tagSections: [UIView] = []
   
@@ -113,7 +116,6 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
             flex.addItem().direction(.column).marginLeft(16).grow(1).shrink(1)
               .define { flex in
                 flex.addItem(self.nameLabel)
-                
                 flex.addItem(self.descriptionLabel)
                   .marginTop(8).grow(1).shrink(1).minHeight(70)
               }
@@ -129,6 +131,11 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
         // 구분선
         flex.addItem(self.divider).height(1)
       }
+    self.view.addSubview(reportButton)
+    self.reportButton.snp.makeConstraints {
+      $0.centerX.equalToSuperview()
+      $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(10)
+    }
   }
   
   
@@ -140,9 +147,7 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
     DispatchQueue.main.async {
       self.nameLabel.text = data.name
       self.descriptionLabel.text = data.description
-      
       self.areaImageView.image = UIImage(named: "defaultImage")
-      
       self.loadImage(from: data.imageURL)
       
       let isMine = data.uploadUser == Auth.auth().currentUser?.email
@@ -165,55 +170,119 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
       self.rootFlexContainer.flex.layout()
     }
   }
-  
 
+  // MARK: Actions
   private func bindActions() {
+    
+    //삭제 버튼
     self.deleteButton.rx.tap
       .subscribe(onNext: { [weak self] in
-        guard let data = self?.currentData else { return }
-        guard let documentID = data.documentID else { return }
-
+        guard let data = self?.currentData,
+              let documentID = data.documentID else { return }
+        
         let alert = UIAlertController(title: "삭제", message: "등록한 흡연구역을 삭제하시겠습니까?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "취소", style: .default))
-        alert.addAction(UIAlertAction(title: "확인", style: .default) { action in
+        alert.addAction(UIAlertAction(title: "확인", style: .default) { _ in
           self?.db.collection("smokingAreas").document(documentID).delete { error in
-            if let error = error {
-              print("문서 삭제 실패:", error)
-            } else {
-              print("문서 삭제 성공")
-            }
+            print(error == nil ? "문서 삭제 성공" : "문서 삭제 실패: \(error!.localizedDescription)")
           }
         })
-        self?.present(alert, animated: true, completion: nil)
+        self?.present(alert, animated: true)
       })
       .disposed(by: disposeBag)
     
+    // 수정 버튼
     self.editButton.rx.tap
       .subscribe(onNext: { [weak self] in
         guard let self = self, let data = self.currentData else { return }
-        
         let editVC = MarkerInfoInputViewController()
         editVC.modalPresentationStyle = .formSheet
-        
         editVC.markerLat = data.areaLat
         editVC.markerLng = data.areaLng
         editVC.selectedEnvironmentTags = data.selectedEnvironmentTags
         editVC.selectedTypeTags = data.selectedTypeTags
         editVC.selectedFacilityTags = data.selectedFacilityTags
-        
         editVC.loadViewIfNeeded()
         editVC.nameTextField.text = data.name
         editVC.descriptionTextView.text = data.description
-        
         if let url = URL(string: data.imageURL ?? "") {
           editVC.areaImage.kf.setImage(with: url, for: .normal)
         }
-        
         self.present(editVC, animated: true)
       })
       .disposed(by: disposeBag)
+    
+    // 🚨 신고하기 버튼 액션
+    self.reportButton.rx.tap
+      .subscribe(onNext: { [weak self] in
+        guard let self = self, let data = self.currentData else { return }
+        
+        // 1️⃣ 신고 사유 목록 정의
+        let reportReasons = [
+          "잘못된 위치",
+          "흡연구역이 아님",
+          "중복 등록",
+          "부적절한 사진",
+          "기타 (직접 입력)"
+        ]
+        
+        // 2️⃣ Action Sheet로 항목 선택
+        let actionSheet = UIAlertController(title: "🚨 신고하기",
+                                            message: "신고 사유를 선택해주세요",
+                                            preferredStyle: .actionSheet)
+        
+        // 각 신고 항목 버튼 추가
+        for reason in reportReasons {
+          actionSheet.addAction(UIAlertAction(title: reason, style: .default, handler: { _ in
+            if reason == "기타 (직접 입력)" {
+              // 기타 입력 Alert 띄우기
+              let inputAlert = UIAlertController(title: "직접 입력", message: "신고 사유를 입력해주세요", preferredStyle: .alert)
+              inputAlert.addTextField { $0.placeholder = "예: 흡연구역이 사라졌어요" }
+              inputAlert.addAction(UIAlertAction(title: "취소", style: .cancel))
+              inputAlert.addAction(UIAlertAction(title: "신고", style: .destructive, handler: { _ in
+                let customReason = inputAlert.textFields?.first?.text ?? ""
+                self.submitReport(data: data, reason: customReason)
+              }))
+              self.present(inputAlert, animated: true)
+            } else {
+              self.submitReport(data: data, reason: reason)
+            }
+          }))
+        }
+        
+        // 취소 버튼
+        actionSheet.addAction(UIAlertAction(title: "취소", style: .cancel))
+        
+        // iPad 대응 (ActionSheet 크래시 방지)
+        if let popover = actionSheet.popoverPresentationController {
+          popover.sourceView = self.reportButton
+          popover.sourceRect = self.reportButton.bounds
+        }
+        
+        self.present(actionSheet, animated: true)
+      })
+      .disposed(by: disposeBag)
+
   }
   
+  
+  private func submitReport(data: SmokingArea, reason: String) {
+    db.collection("reports").addDocument(data: [
+      "reportedAreaID": data.documentID ?? "unknown",
+      "reportedName": data.name,
+      "reportedBy": Auth.auth().currentUser?.email ?? "unknown",
+      "reason": reason.isEmpty ? "기타" : reason,
+      "timestamp": Timestamp()
+    ]) { error in
+      let message = (error == nil)
+      ? "신고가 접수되었습니다. 검토 후 조치하겠습니다."
+      : "신고 중 오류가 발생했습니다."
+      
+      let resultAlert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+      resultAlert.addAction(UIAlertAction(title: "확인", style: .default))
+      self.present(resultAlert, animated: true)
+    }
+  }
   
   private func bindImageTapGesture() {
     self.areaImageView.rx.tapGesture()
@@ -234,20 +303,14 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
   }
   
   private func makeTagSection(title: String, tags: [String]) -> UIView {
-    guard !tags.isEmpty else {
-      return UIView()
-    }
-    
+    guard !tags.isEmpty else { return UIView() }
     let container = UIView()
-    
     let titleLabel = UILabel().then {
       $0.text = title
       $0.font = .systemFont(ofSize: Metric.labelFontSize, weight: .bold)
     }
-    
     container.flex.direction(.column).define { flex in
       flex.addItem(titleLabel).marginBottom(12)
-      
       flex.addItem().direction(.row).wrap(.wrap).define { flex in
         for tag in tags {
           let tagButton = UIButton(type: .system).then {
