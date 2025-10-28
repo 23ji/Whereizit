@@ -179,18 +179,63 @@ final class SettingsViewController: UIViewController {
     self.present(picker, animated: true)
   }
   
+  
+  private func showToast(message: String, duration: TimeInterval = 2.0) {
+    let toastLabel = UILabel().then {
+      $0.backgroundColor = UIColor.black.withAlphaComponent(0.7)
+      $0.textColor = .white
+      $0.textAlignment = .center
+      $0.font = .systemFont(ofSize: 14)
+      $0.text = message
+      $0.alpha = 0.0
+      $0.layer.cornerRadius = 10
+      $0.clipsToBounds = true
+    }
+    
+    self.view.addSubview(toastLabel)
+    toastLabel.translatesAutoresizingMaskIntoConstraints = false
+    NSLayoutConstraint.activate([
+      toastLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+      toastLabel.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -50),
+      toastLabel.widthAnchor.constraint(lessThanOrEqualTo: self.view.widthAnchor, multiplier: 0.8),
+      toastLabel.heightAnchor.constraint(equalToConstant: 40)
+    ])
+    
+    UIView.animate(withDuration: 0.5, animations: {
+      toastLabel.alpha = 1.0
+    }) { _ in
+      UIView.animate(withDuration: 0.5, delay: duration, options: [], animations: {
+        toastLabel.alpha = 0.0
+      }, completion: { _ in
+        toastLabel.removeFromSuperview()
+      })
+    }
+  }
+  
   private func updateNickname() {
     guard let newName = self.nicknameTextField.text, !newName.isEmpty else { return }
     
+    // 키보드 내리기
+    self.nicknameTextField.resignFirstResponder()
+    
     let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
     changeRequest?.displayName = newName
-    changeRequest?.commitChanges { error in
+    changeRequest?.commitChanges { [weak self] error in
+      guard let self = self else { return }
       if let error = error {
         print("닉네임 업데이트 실패:", error.localizedDescription)
+        self.showToast(message: " 닉네임 저장 실패 😢 ")
       } else {
         print("닉네임 업데이트 성공:", newName)
+        self.showToast(message: " 닉네임이 저장되었어요 🎉 ")
       }
     }
+  }
+  
+  private func updateProfileImage(_ image: UIImage) {
+    // Firebase Storage 업로드 후 URL 가져오기
+    self.profileImageView.image = image
+    self.showToast(message: "프로필 사진이 변경되었어요 🎉")
   }
   
   private func confirmDeleteAccount() {
@@ -222,7 +267,7 @@ extension SettingsViewController: PHPickerViewControllerDelegate {
     provider.loadObject(ofClass: UIImage.self) { [weak self] image, _ in
       guard let self = self, let image = image as? UIImage else { return }
       DispatchQueue.main.async {
-        self.profileImageView.image = image
+        self.updateProfileImage(image) // 토스트 띄우기 포함
       }
     }
   }
