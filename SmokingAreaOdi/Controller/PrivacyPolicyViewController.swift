@@ -51,7 +51,7 @@ final class PrivacyPolicyViewController: UIViewController {
         6. 이용자의 권리 및 행사 방법
            - 개인정보 열람, 정정, 삭제 요청 가능
            - 개인정보 처리 정지 요청 가능
-           - 요청 방법: 앱 내 문의 또는 이메일(support@yourapp.com)
+           - 요청 방법: 앱 내 문의 또는 이메일(23g1014@gmail.com)
 
         7. 개인정보의 안전성 확보 조치
            - SSL 암호화 통신 적용
@@ -63,8 +63,8 @@ final class PrivacyPolicyViewController: UIViewController {
            - 최종 업데이트 일자 명시
 
         9. 연락처
-           - 개인정보 보호책임자: [이름]
-           - 연락처: support@yourapp.com
+           - 개인정보 보호책임자: 이상지
+           - 연락처: 23g1014@gmail.com
 
         """
         $0.font = .systemFont(ofSize: 16)
