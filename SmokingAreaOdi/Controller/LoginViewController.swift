@@ -14,11 +14,14 @@ import RxKakaoSDKCommon
 import RxKakaoSDKUser
 import RxSwift
 import Then
-import UIKit
 import FirebaseAuth
 import FirebaseFunctions
 import FirebaseCore
 import GoogleSignIn
+
+import AuthenticationServices
+import UIKit
+
 
 final class LoginViewController: UIViewController {
   
@@ -156,6 +159,22 @@ final class LoginViewController: UIViewController {
   
   // MARK:  Social Login Buttons
   
+  private let appleButton = UIButton().then {
+    $0.setTitle("Apple로 계속하기", for: .normal)
+    $0.setTitleColor(.white, for: .normal)
+    $0.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
+    $0.backgroundColor = .black
+    $0.layer.cornerRadius = Metric.cornerRadius
+    $0.layer.borderWidth = 1.5
+    $0.layer.borderColor = UIColor.black.cgColor
+  }
+  
+  private let appleIcon = UIImageView().then {
+    $0.image = UIImage(systemName: "apple.logo")?.withTintColor(.white)
+  
+    $0.contentMode = .scaleAspectFit
+  }
+
   private let googleButton = UIButton().then {
     $0.setTitle("Google로 계속하기", for: .normal)
     $0.setTitleColor(.label, for: .normal)
@@ -168,7 +187,6 @@ final class LoginViewController: UIViewController {
   
   private let googleIcon = UIImageView().then {
     $0.image = UIImage(named: "googleLoginButton")
-    $0.tintColor = .systemRed
     $0.contentMode = .scaleAspectFit
   }
   
@@ -287,6 +305,9 @@ final class LoginViewController: UIViewController {
     self.dividerContainer.addSubview(self.rightLine)
     
     // Social Buttons
+    self.contentContainer.addSubview(self.appleButton)
+    self.googleButton.addSubview(self.appleIcon)
+
     self.contentContainer.addSubview(self.googleButton)
     self.googleButton.addSubview(self.googleIcon)
     //self.contentContainer.addSubview(self.kakaoButton)
@@ -341,6 +362,12 @@ final class LoginViewController: UIViewController {
         .marginHorizontal(Metric.horizontalPadding)
       
       // Social Buttons
+      flex.addItem(self.appleButton)
+          .width(100%)
+          .height(Metric.buttonHeight)
+          .marginTop(12)
+          .marginHorizontal(Metric.horizontalPadding)
+      
       flex.addItem(self.googleButton)
         .width(100%)
         .height(Metric.buttonHeight)
@@ -449,6 +476,13 @@ final class LoginViewController: UIViewController {
     self.loginButton.rx.tap
       .subscribe(onNext: { [weak self] in
         self?.login()
+      })
+      .disposed(by: disposeBag)
+    
+    // 애플 로그인
+    self.appleButton.rx.tap
+      .subscribe(onNext: { [weak self] in
+        self?.startSignInWithAppleFlow()
       })
       .disposed(by: disposeBag)
     
@@ -592,6 +626,10 @@ final class LoginViewController: UIViewController {
         self?.showAlert(message: "이메일 또는 비밀번호가 올바르지 않습니다.")
       }
     }
+  }
+  
+  private func startSignInWithAppleFlow() {
+      
   }
   
   private func loginGoogle() {

@@ -60,6 +60,7 @@
 		49031DFE2EA5D9EE004F5857 /* MySmokingAreasViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySmokingAreasViewController.swift; sourceTree = "<group>"; };
 		49031E072EAF4E11004F5857 /* FullImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullImageViewController.swift; sourceTree = "<group>"; };
 		49031E102EB08A0B004F5857 /* PrivacyPolicyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyViewController.swift; sourceTree = "<group>"; };
+		49031E122EB09A67004F5857 /* SmokingAreaOdi.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SmokingAreaOdi.entitlements; sourceTree = "<group>"; };
 		49288AA92D19450C00FF1E50 /* SmokingAreaOdi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmokingAreaOdi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		49288AAC2D19450C00FF1E50 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		49288AAE2D19450C00FF1E50 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -141,6 +142,7 @@
 		49288AAB2D19450C00FF1E50 /* SmokingAreaOdi */ = {
 			isa = PBXGroup;
 			children = (
+				49031E122EB09A67004F5857 /* SmokingAreaOdi.entitlements */,
 				49288AAC2D19450C00FF1E50 /* AppDelegate.swift */,
 				49288AAE2D19450C00FF1E50 /* SceneDelegate.swift */,
 				A774711D2D58D8ED006F2F0D /* Model */,
@@ -482,6 +484,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SmokingAreaOdi/SmokingAreaOdi.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -522,6 +525,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SmokingAreaOdi/SmokingAreaOdi.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
