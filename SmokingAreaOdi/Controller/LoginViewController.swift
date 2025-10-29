@@ -170,8 +170,8 @@ final class LoginViewController: UIViewController {
   }
   
   private let appleIcon = UIImageView().then {
-    $0.image = UIImage(systemName: "apple.logo")?.withTintColor(.white)
-  
+    $0.image = UIImage(systemName: "apple.logo")
+    $0.tintColor = .white
     $0.contentMode = .scaleAspectFit
   }
 
@@ -306,7 +306,7 @@ final class LoginViewController: UIViewController {
     
     // Social Buttons
     self.contentContainer.addSubview(self.appleButton)
-    self.googleButton.addSubview(self.appleIcon)
+    self.appleButton.addSubview(self.appleIcon)
 
     self.contentContainer.addSubview(self.googleButton)
     self.googleButton.addSubview(self.googleIcon)
@@ -458,6 +458,12 @@ final class LoginViewController: UIViewController {
       .height(1)
     
     // Social Button Icons
+    self.appleIcon.pin
+      .left(16)
+      .vCenter()
+      .width(24)
+      .height(24)
+    
     self.googleIcon.pin
       .left(16)
       .vCenter()
