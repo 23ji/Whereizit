@@ -11,6 +11,7 @@ import FlexLayout
 import PinLayout
 import Then
 
+import CoreLocation
 import UIKit
 
 
@@ -29,6 +30,9 @@ final class NearbySmokingAreasBottomSheetViewController: UIViewController {
   
   private let rootContainer = UIView()
   
+  private let locationManager = CLLocationManager()
+  private var currentLocation: CLLocation?
+
   private let titleLabel = UILabel().then {
     $0.text = "주변 흡연구역 목록"
     $0.font = .systemFont(ofSize: 15, weight: .regular)
@@ -58,6 +62,11 @@ final class NearbySmokingAreasBottomSheetViewController: UIViewController {
     self.tableView.rowHeight = UITableView.automaticDimension
     self.tableView.estimatedRowHeight = 120
     
+    self.locationManager.delegate = self
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+    self.locationManager.requestWhenInUseAuthorization()
+    self.locationManager.startUpdatingLocation()
+
     self.view.addSubview(rootContainer)
     self.setupLayout()
   }
@@ -116,6 +125,15 @@ final class NearbySmokingAreasBottomSheetViewController: UIViewController {
         }
       }
       
+      // 현재 위치가 있으면 거리 기준으로 정렬
+      if let currentLocation = self.currentLocation {
+        newAreas.sort { a, b in
+          let locA = CLLocation(latitude: a.areaLat, longitude: a.areaLng)
+          let locB = CLLocation(latitude: b.areaLat, longitude: b.areaLng)
+          return currentLocation.distance(from: locA) < currentLocation.distance(from: locB)
+        }
+      }
+      
       self.smokingAreas = newAreas
       self.tableView.reloadData()
     }
@@ -135,7 +153,7 @@ extension NearbySmokingAreasBottomSheetViewController: UITableViewDelegate, UITa
     let area = smokingAreas[indexPath.row]
     
     // area 데이터 cell의 configure에 넘겨주기
-    cell.configure(with: area)
+    cell.configure(with: area, currentLocation: self.currentLocation)
     
     return cell
   }
@@ -146,5 +164,27 @@ extension NearbySmokingAreasBottomSheetViewController: UITableViewDelegate, UITa
     delegate?.showSmokingAreaBottomSheet(areaData: area)
     
     tableView.deselectRow(at: indexPath, animated: true)
+  }
+}
+
+
+extension NearbySmokingAreasBottomSheetViewController: CLLocationManagerDelegate {
+  func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+      self.currentLocation = locations.last
+      
+      // 거리 기준 정렬
+      if let currentLocation = self.currentLocation {
+          self.smokingAreas.sort { a, b in
+              let locA = CLLocation(latitude: a.areaLat, longitude: a.areaLng)
+              let locB = CLLocation(latitude: b.areaLat, longitude: b.areaLng)
+              return currentLocation.distance(from: locA) < currentLocation.distance(from: locB)
+          }
+      }
+      
+      self.tableView.reloadData() // 위치 업데이트되면 거리 표시 갱신
+  }
+  
+  func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+      print("Location error: \(error.localizedDescription)")
   }
 }

@@ -11,6 +11,7 @@ import FlexLayout
 import PinLayout
 import Then
 
+import CoreLocation
 import UIKit
 
 final class MySmokingAreasViewController: UIViewController {
@@ -18,6 +19,9 @@ final class MySmokingAreasViewController: UIViewController {
   let user = Auth.auth().currentUser
   
   private let rootContainer = UIView()
+  
+  private let locationManager = CLLocationManager()
+  private var currentLocation: CLLocation?
   
   private let titleLabel = UILabel().then {
     $0.text = "주변 흡연구역 목록"
@@ -49,6 +53,11 @@ final class MySmokingAreasViewController: UIViewController {
     self.tableView.rowHeight = UITableView.automaticDimension
     self.tableView.estimatedRowHeight = 120
     
+    self.locationManager.delegate = self
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+    self.locationManager.requestWhenInUseAuthorization()
+    self.locationManager.startUpdatingLocation()
+    
     self.view.addSubview(rootContainer)
     self.setupLayout()
   }
@@ -72,29 +81,29 @@ final class MySmokingAreasViewController: UIViewController {
   
   private func fetchSmokingAreas() {
     guard let userEmail = self.user?.email else { return }
-
+    
     db.collection("smokingAreas")
       .whereField("uploadUser", isEqualTo: userEmail)
       .addSnapshotListener { [weak self] snapshot, error in
-      guard let self = self, let snapshot = snapshot else { return }
-      
-      var newAreas: [SmokingArea] = []
-      
-      for doc in snapshot.documents {
-        let data = doc.data()
+        guard let self = self, let snapshot = snapshot else { return }
         
-        if let name = data["name"] as? String,
-           let description = data["description"] as? String,
-           let areaLat = data["areaLat"] as? Double,
-           let areaLng = data["areaLng"] as? Double {
+        var newAreas: [SmokingArea] = []
+        
+        for doc in snapshot.documents {
+          let data = doc.data()
           
-          let imageURL = data["imageURL"] as? String
-          let envTags = data["environmentTags"] as? [String] ?? []
-          let typeTags = data["typeTags"] as? [String] ?? []
-          let facTags = data["facilityTags"] as? [String] ?? []
-          let timestamp = data["uploadDate"] as? Timestamp ?? Timestamp(date: Date())
-
-          let area = SmokingArea(
+          if let name = data["name"] as? String,
+             let description = data["description"] as? String,
+             let areaLat = data["areaLat"] as? Double,
+             let areaLng = data["areaLng"] as? Double {
+            
+            let imageURL = data["imageURL"] as? String
+            let envTags = data["environmentTags"] as? [String] ?? []
+            let typeTags = data["typeTags"] as? [String] ?? []
+            let facTags = data["facilityTags"] as? [String] ?? []
+            let timestamp = data["uploadDate"] as? Timestamp ?? Timestamp(date: Date())
+            
+            let area = SmokingArea(
               imageURL: imageURL,
               name: name,
               description: description,
@@ -105,15 +114,24 @@ final class MySmokingAreasViewController: UIViewController {
               selectedFacilityTags: facTags,
               uploadUser: self.user?.email ?? "",
               uploadDate: timestamp
-          )
-
-          newAreas.append(area)
+            )
+            
+            newAreas.append(area)
+          }
         }
+        
+        // 현재 위치가 있으면 거리 기준으로 정렬
+        if let currentLocation = self.currentLocation {
+          newAreas.sort { a, b in
+            let locA = CLLocation(latitude: a.areaLat, longitude: a.areaLng)
+            let locB = CLLocation(latitude: b.areaLat, longitude: b.areaLng)
+            return currentLocation.distance(from: locA) < currentLocation.distance(from: locB)
+          }
+        }
+        
+        self.smokingAreas = newAreas
+        self.tableView.reloadData()
       }
-      
-      self.smokingAreas = newAreas
-      self.tableView.reloadData()
-    }
   }
 }
 
@@ -130,7 +148,7 @@ extension MySmokingAreasViewController: UITableViewDelegate, UITableViewDataSour
     let area = smokingAreas[indexPath.row]
     
     // area 데이터 cell의 configure에 넘겨주기
-    cell.configure(with: area)
+    cell.configure(with: area, currentLocation: currentLocation)
     
     return cell
   }
@@ -154,3 +172,26 @@ extension MySmokingAreasViewController: UITableViewDelegate, UITableViewDataSour
     present(bottomSheetVC, animated: true)
   }
 }
+
+
+extension MySmokingAreasViewController: CLLocationManagerDelegate {
+  func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    self.currentLocation = locations.last
+    
+    // 거리 기준 정렬
+    if let currentLocation = self.currentLocation {
+      self.smokingAreas.sort { a, b in
+        let locA = CLLocation(latitude: a.areaLat, longitude: a.areaLng)
+        let locB = CLLocation(latitude: b.areaLat, longitude: b.areaLng)
+        return currentLocation.distance(from: locA) < currentLocation.distance(from: locB)
+      }
+    }
+    
+    self.tableView.reloadData() // 위치 업데이트되면 거리 표시 갱신
+  }
+  
+  func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+    print("Location error: \(error.localizedDescription)")
+  }
+}
+

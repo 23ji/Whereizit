@@ -12,6 +12,7 @@ import PinLayout
 import Then
 
 import UIKit
+import CoreLocation
 
 
 final class SmokingAreaTableViewCell: UITableViewCell {
@@ -30,6 +31,12 @@ final class SmokingAreaTableViewCell: UITableViewCell {
     $0.font = .systemFont(ofSize: 18, weight: .medium)
   }
   
+  private let distanceLabel = UILabel().then {
+      $0.textColor = .systemGray
+      $0.font = .systemFont(ofSize: 13, weight: .medium)
+      $0.textAlignment = .right
+  }
+  
   
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -41,7 +48,6 @@ final class SmokingAreaTableViewCell: UITableViewCell {
   required init?(coder: NSCoder) { fatalError() }
   
   override func prepareForReuse() {
-    //self.areaImageView.image = nil
     self.titleLabel.text = nil
   }
   
@@ -69,6 +75,8 @@ final class SmokingAreaTableViewCell: UITableViewCell {
           .marginRight(12)
         $0.addItem(self.titleLabel)
           .grow(1)
+        $0.addItem(self.distanceLabel)
+          .width(60)
       }
   }
   
@@ -78,8 +86,23 @@ final class SmokingAreaTableViewCell: UITableViewCell {
     self.areaImageView.kf.setImage(with: url)
   }
   
-  func configure(with area: SmokingArea) {
+  
+  func configure(with area: SmokingArea, currentLocation: CLLocation?) {
     self.titleLabel.text = area.name
     self.loadImage(from: area.imageURL)
+    
+    if let currentLocation = currentLocation {
+      let areaLocation = CLLocation(latitude: area.areaLat, longitude: area.areaLng)
+      let distanceInMeters = currentLocation.distance(from: areaLocation)
+      
+      if distanceInMeters < 1000 {
+        self.distanceLabel.text = String(format: "%.0fm", distanceInMeters)
+      } else {
+        self.distanceLabel.text = String(format: "%.1fkm", distanceInMeters / 1000)
+      }
+    } else {
+      self.distanceLabel.text = "-"
+    }
   }
+
 }
