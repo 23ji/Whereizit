@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>498042004788-u5dlmt3fe0791kiqs6v2elbpno91fl98.apps.googleusercontent.com</string>
+	<string>498042004788-abbmmo3fkr8v3b6bfuj0b3bvcs5dglnv.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.498042004788-u5dlmt3fe0791kiqs6v2elbpno91fl98</string>
+	<string>com.googleusercontent.apps.498042004788-abbmmo3fkr8v3b6bfuj0b3bvcs5dglnv</string>
 	<key>API_KEY</key>
 	<string>AIzaSyAJscHmyuL-S2HKvTheMMHiAKCAR3lOe9I</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.SmokingAreaOdi</string>
+	<string>com.G32.SmokingAreaOdi</string>
 	<key>PROJECT_ID</key>
 	<string>smokingareaodi</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:498042004788:ios:f3f16fcedd2c157cff7161</string>
+	<string>1:498042004788:ios:f67d13071514a52aff7161</string>
 </dict>
 </plist>

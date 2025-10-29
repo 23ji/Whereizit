@@ -19,7 +19,9 @@ import FirebaseFunctions
 import FirebaseCore
 import GoogleSignIn
 
+import CryptoKit
 import AuthenticationServices
+
 import UIKit
 
 
@@ -36,6 +38,8 @@ final class LoginViewController: UIViewController {
   
   private let disposeBag = DisposeBag()
   
+  fileprivate var currentNonce: String?
+
   
   // MARK:  Root Container
   
@@ -634,10 +638,6 @@ final class LoginViewController: UIViewController {
     }
   }
   
-  private func startSignInWithAppleFlow() {
-      
-  }
-  
   private func loginGoogle() {
     guard let clientID = FirebaseApp.app()?.options.clientID else { return }
     
@@ -725,6 +725,84 @@ final class LoginViewController: UIViewController {
   private func signIn() {
     let signInVC = SignInViewController()
     self.present(signInVC, animated: true)
+  }
+}
+
+
+
+
+
+// MARK:  Apple Login
+extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
+  
+  func startSignInWithAppleFlow() {
+    let nonce = randomNonceString()
+    currentNonce = nonce
+    let request = ASAuthorizationAppleIDProvider().createRequest()
+    request.requestedScopes = [.fullName, .email]
+    request.nonce = sha256(nonce)
+    
+    let controller = ASAuthorizationController(authorizationRequests: [request])
+    controller.delegate = self
+    controller.presentationContextProvider = self
+    controller.performRequests()
+  }
+  
+  func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+    guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential else { return }
+    guard let nonce = currentNonce else {
+      print("Invalid state: No login request was sent.")
+      return
+    }
+    guard let appleIDToken = appleIDCredential.identityToken,
+          let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
+      print("Unable to fetch identity token.")
+      return
+    }
+    
+    // ✅ 최신 Firebase 방식
+    let credential = OAuthProvider.appleCredential(withIDToken: idTokenString,
+                                                    rawNonce: nonce,
+                                                    fullName: appleIDCredential.fullName)
+    
+    Auth.auth().signIn(with: credential) { [weak self] authResult, error in
+      if let error = error {
+        print("Error during Firebase sign-in: \(error.localizedDescription)")
+        return
+      }
+      print("✅ Apple login success: \(authResult?.user.uid ?? "")")
+      self?.goHome()
+    }
+  }
+  
+  func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+    return view.window!
+  }
+  
+  private func sha256(_ input: String) -> String {
+    let inputData = Data(input.utf8)
+    let hashedData = SHA256.hash(data: inputData)
+    return hashedData.compactMap { String(format: "%02x", $0) }.joined()
+  }
+  
+  private func randomNonceString(length: Int = 32) -> String {
+    precondition(length > 0)
+    let charset: [Character] =
+      Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
+    var result = ""
+    var remainingLength = length
+    
+    while remainingLength > 0 {
+      let randoms = (0 ..< 16).map { _ in UInt8.random(in: 0...255) }
+      randoms.forEach { random in
+        if remainingLength == 0 { return }
+        if random < charset.count {
+          result.append(charset[Int(random)])
+          remainingLength -= 1
+        }
+      }
+    }
+    return result
   }
 }
 

@@ -14,6 +14,7 @@
 		49031E0B2EAF4E82004F5857 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 49031E0A2EAF4E82004F5857 /* SDWebImage */; };
 		49031E0D2EAF4E82004F5857 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 49031E0C2EAF4E82004F5857 /* SDWebImageMapKit */; };
 		49031E112EB08A0B004F5857 /* PrivacyPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49031E102EB08A0B004F5857 /* PrivacyPolicyViewController.swift */; };
+		49031E142EB1AEF4004F5857 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 49031E132EB1AEF4004F5857 /* GoogleService-Info.plist */; };
 		49168A702E448E77002C5F69 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 49168A6F2E448E77002C5F69 /* FirebaseAuth */; };
 		49168A722E448E77002C5F69 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 49168A712E448E77002C5F69 /* FirebaseCore */; };
 		49168A742E448E77002C5F69 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 49168A732E448E77002C5F69 /* FirebaseFirestore */; };
@@ -36,7 +37,6 @@
 		9F933E8B2E484A62001699AA /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 9F933E8A2E484A62001699AA /* RxRelay */; };
 		9F933E8D2E484A62001699AA /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 9F933E8C2E484A62001699AA /* RxSwift */; };
 		9F9F78012E66EF3B00148859 /* FloatingPanel in Frameworks */ = {isa = PBXBuildFile; productRef = 9F9F78002E66EF3B00148859 /* FloatingPanel */; };
-		9FA27D2A2E8214BD00D36B6C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9FA27D292E8214BD00D36B6C /* GoogleService-Info.plist */; };
 		9FA27D2D2E82152100D36B6C /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 9FA27D2C2E82152100D36B6C /* GoogleSignIn */; };
 		9FA27D2F2E82152100D36B6C /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 9FA27D2E2E82152100D36B6C /* GoogleSignInSwift */; };
 		9FA6B1792E64473E00A94571 /* SmokingAreaBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA6B1782E64473E00A94571 /* SmokingAreaBottomSheetViewController.swift */; };
@@ -61,6 +61,7 @@
 		49031E072EAF4E11004F5857 /* FullImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullImageViewController.swift; sourceTree = "<group>"; };
 		49031E102EB08A0B004F5857 /* PrivacyPolicyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyViewController.swift; sourceTree = "<group>"; };
 		49031E122EB09A67004F5857 /* SmokingAreaOdi.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SmokingAreaOdi.entitlements; sourceTree = "<group>"; };
+		49031E132EB1AEF4004F5857 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		49288AA92D19450C00FF1E50 /* SmokingAreaOdi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmokingAreaOdi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		49288AAC2D19450C00FF1E50 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		49288AAE2D19450C00FF1E50 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -73,7 +74,6 @@
 		49E6295F2E27756C00751E26 /* MarkerPositionSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerPositionSelectorViewController.swift; sourceTree = "<group>"; };
 		71E8D5BE6D6F3B97EE6F1699 /* Pods_SmokingAreaOdi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmokingAreaOdi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F0EB9282E8FA15C0091976A /* SmokingAreaTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokingAreaTableViewCell.swift; sourceTree = "<group>"; };
-		9FA27D292E8214BD00D36B6C /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9FA6B1782E64473E00A94571 /* SmokingAreaBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokingAreaBottomSheetViewController.swift; sourceTree = "<group>"; };
 		9FB2BC052E79777D00C3B4F3 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		9FB2BC062E79783500C3B4F3 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -151,7 +151,7 @@
 				49288AB52D19450D00FF1E50 /* Assets.xcassets */,
 				49288AB72D19450D00FF1E50 /* LaunchScreen.storyboard */,
 				49288ABA2D19450D00FF1E50 /* Info.plist */,
-				9FA27D292E8214BD00D36B6C /* GoogleService-Info.plist */,
+				49031E132EB1AEF4004F5857 /* GoogleService-Info.plist */,
 			);
 			path = SmokingAreaOdi;
 			sourceTree = "<group>";
@@ -312,8 +312,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49031E142EB1AEF4004F5857 /* GoogleService-Info.plist in Resources */,
 				49288AB62D19450D00FF1E50 /* Assets.xcassets in Resources */,
-				9FA27D2A2E8214BD00D36B6C /* GoogleService-Info.plist in Resources */,
 				49288AB92D19450D00FF1E50 /* Base in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
