@@ -17,10 +17,13 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.498042004788-u5dlmt3fe0791kiqs6v2elbpno91fl98</string>
+				<string>com.googleusercontent.apps.498042004788-abbmmo3fkr8v3b6bfuj0b3bvcs5dglnv</string>
 			</array>
 		</dict>
+		<dict/>
 	</array>
+	<key>GIDClientID</key>
+	<string>$(CLIENT_ID)</string>
 	<key>IDEPreferLogStreaming</key>
 	<string>YES</string>
 	<key>KAKAO_APP_KEY</key>

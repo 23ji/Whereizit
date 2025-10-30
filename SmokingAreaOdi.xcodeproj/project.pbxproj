@@ -14,7 +14,7 @@
 		49031E0B2EAF4E82004F5857 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 49031E0A2EAF4E82004F5857 /* SDWebImage */; };
 		49031E0D2EAF4E82004F5857 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 49031E0C2EAF4E82004F5857 /* SDWebImageMapKit */; };
 		49031E112EB08A0B004F5857 /* PrivacyPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49031E102EB08A0B004F5857 /* PrivacyPolicyViewController.swift */; };
-		49031E142EB1AEF4004F5857 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 49031E132EB1AEF4004F5857 /* GoogleService-Info.plist */; };
+		49031E182EB32DF0004F5857 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 49031E172EB32DF0004F5857 /* GoogleService-Info.plist */; };
 		49168A702E448E77002C5F69 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 49168A6F2E448E77002C5F69 /* FirebaseAuth */; };
 		49168A722E448E77002C5F69 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 49168A712E448E77002C5F69 /* FirebaseCore */; };
 		49168A742E448E77002C5F69 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 49168A732E448E77002C5F69 /* FirebaseFirestore */; };
@@ -61,7 +61,7 @@
 		49031E072EAF4E11004F5857 /* FullImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullImageViewController.swift; sourceTree = "<group>"; };
 		49031E102EB08A0B004F5857 /* PrivacyPolicyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyViewController.swift; sourceTree = "<group>"; };
 		49031E122EB09A67004F5857 /* SmokingAreaOdi.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SmokingAreaOdi.entitlements; sourceTree = "<group>"; };
-		49031E132EB1AEF4004F5857 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		49031E172EB32DF0004F5857 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		49288AA92D19450C00FF1E50 /* SmokingAreaOdi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmokingAreaOdi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		49288AAC2D19450C00FF1E50 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		49288AAE2D19450C00FF1E50 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -151,7 +151,7 @@
 				49288AB52D19450D00FF1E50 /* Assets.xcassets */,
 				49288AB72D19450D00FF1E50 /* LaunchScreen.storyboard */,
 				49288ABA2D19450D00FF1E50 /* Info.plist */,
-				49031E132EB1AEF4004F5857 /* GoogleService-Info.plist */,
+				49031E172EB32DF0004F5857 /* GoogleService-Info.plist */,
 			);
 			path = SmokingAreaOdi;
 			sourceTree = "<group>";
@@ -312,9 +312,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49031E142EB1AEF4004F5857 /* GoogleService-Info.plist in Resources */,
 				49288AB62D19450D00FF1E50 /* Assets.xcassets in Resources */,
 				49288AB92D19450D00FF1E50 /* Base in Resources */,
+				49031E182EB32DF0004F5857 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -362,6 +362,7 @@
 /* Begin XCBuildConfiguration section */
 		49288ABB2D19450D00FF1E50 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9FB2BC052E79777D00C3B4F3 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -425,6 +426,7 @@
 		};
 		49288ABC2D19450D00FF1E50 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9FB2BC052E79777D00C3B4F3 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
