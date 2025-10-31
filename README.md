@@ -33,26 +33,9 @@
 
 ---
 
-### 질문
-
-> 사용자가 위치 권한을 거부했을 때를 대비하여 아래 두 방식 중 어떤 게 더 나은지? (HomeViewController)
-
-A. 초기 위치를 지정하고, 사용자가 위치 권한을 허용하면 사용자 위치로 이동
-
-B. 사용자가 위치 권한을 허용하면 사용자 위치로, 거부하면 초기 지정 위치로 이동
-
-> SmokingAreaTableViewCell에서 이미지 클릭하면 크게 보기 -> 어떻게 구현?
-
-> class에 init / required init?(coder: NSCoder) 작성하는 것
-
-> SmokingAreaBottomSheetViewController에서 self.deleteButton.rx.tap으로 흡연구역 삭제 이후 마커 새로고침 및 tappedPanel 정상적으로 띄우기
-
----
-
 ### 앞으로 개발할 기능
 
 - 사용자가 보고 있는 화면에 있는 마커만 주변 흡연구역 목록에 보여주기
-- 내가 올린 흡연 구역 모아 보기 및 삭제 기능
 - 흡연 구역에 댓글 기능
 
 
