@@ -167,7 +167,7 @@ final class HomeViewController: UIViewController {
         switch change.type {
         case .added:
           let areaMarker = NMFMarker()
-          areaMarker.iconImage = NMFOverlayImage(name: "marker_Pin")
+          areaMarker.iconImage = NMFOverlayImage(name: "marker_Pin_Wind")
           areaMarker.position = NMGLatLng(lat: areaData.areaLat, lng: areaData.areaLng)
           
           areaMarker.touchHandler = { [weak self] (overlay: NMFOverlay) -> Bool in
@@ -184,7 +184,7 @@ final class HomeViewController: UIViewController {
             self.areaMarkers.removeValue(forKey: documentID) // 딕셔너리에서 제거
             
             let areaMarker = NMFMarker()
-            areaMarker.iconImage = NMFOverlayImage(name: "marker_Pin")
+            areaMarker.iconImage = NMFOverlayImage(name: "marker_Pin_Wind")
             areaMarker.position = NMGLatLng(lat: areaData.areaLat, lng: areaData.areaLng)
             
             areaMarker.touchHandler = { [weak self] (overlay: NMFOverlay) -> Bool in

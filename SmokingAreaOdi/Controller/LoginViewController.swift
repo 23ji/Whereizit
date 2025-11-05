@@ -57,7 +57,7 @@ final class LoginViewController: UIViewController {
   
   private let logoImageView = UIImageView().then {
     $0.contentMode = .scaleAspectFit
-    $0.image = UIImage(named: "marker_Pin")
+    $0.image = UIImage(named: "marker_Pin_Wind")
     $0.tintColor = .systemGreen
   }
   
@@ -328,7 +328,7 @@ final class LoginViewController: UIViewController {
       flex.addItem(self.logoContainer)
         .width(Metric.logoSize)
         .height(Metric.logoSize)
-        .marginTop(60)
+        .marginTop(30)
       
       flex.addItem(self.appNameLabel)
         .marginTop(16)
@@ -390,7 +390,7 @@ final class LoginViewController: UIViewController {
       
       // Skip Button
       flex.addItem(self.skipButton)
-        .marginTop(16)
+        .marginTop(10)
         .marginBottom(40)
     }
   }

@@ -41,7 +41,7 @@ final class SignInViewController: UIViewController {
   
   private let logoImageView = UIImageView().then {
     $0.contentMode = .scaleAspectFit
-    $0.image = UIImage(named: "marker_Pin")
+    $0.image = UIImage(named: "marker_Pin_Wind")
     $0.tintColor = .systemGreen
   }
   

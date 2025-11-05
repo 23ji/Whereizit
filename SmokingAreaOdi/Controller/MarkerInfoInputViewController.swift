@@ -64,7 +64,7 @@ final class MarkerInfoInputViewController: UIViewController {
   private let scrollView = UIScrollView()
   private let contentView = UIView()
   private let mapView = NMFMapView()
-  private let markerPinImageView = UIImageView(image: UIImage(named: "marker_Pin"))
+  private let markerPinImageView = UIImageView(image: UIImage(named: "marker_Pin_Wind"))
   
   // 흡연구역 사진
   var areaImage = UIButton().then {
