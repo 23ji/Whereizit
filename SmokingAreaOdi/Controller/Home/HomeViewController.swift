@@ -90,7 +90,7 @@ final class HomeViewController: UIViewController {
       self.mapView.mapView.contentInset = UIEdgeInsets(
         top: 0,
         left: 0,
-        bottom: tabBarHeight - 10,
+        bottom: tabBarHeight - 10, // TODO: Metric
         right: 0
       )
     }

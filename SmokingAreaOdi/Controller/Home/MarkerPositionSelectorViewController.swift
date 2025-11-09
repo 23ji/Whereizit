@@ -60,15 +60,14 @@ final class MarkerPositionSelectorViewController: UIViewController {
   }
   
   private let locationManager = CLLocationManager()
-  
-  private var disposeBag = DisposeBag()
-  
+
   
   //MARK: Properties
   
   var markerLat: Double?
   var markerLng: Double?
-  
+  private var disposeBag = DisposeBag()
+
   
   //MARK: Life Cycle
   
@@ -139,16 +138,17 @@ final class MarkerPositionSelectorViewController: UIViewController {
       .disposed(by: disposeBag)
   }
   
-  
+
   private func bindActions() {
-    self.nextButton.rx.tap.subscribe(
-      onNext: { [weak self] in
+    self.nextButton.rx.tap
+      .subscribe(onNext: { [weak self] in
         let markerInfoInputVC = MarkerInfoInputViewController()
+        // TODO: 상태 직접 건들이지 않기
         markerInfoInputVC.markerLat = self?.mapView.mapView.cameraPosition.target.lat
         markerInfoInputVC.markerLng = self?.mapView.mapView.cameraPosition.target.lng
         self?.present(markerInfoInputVC, animated: true)
       })
-    .disposed(by: self.disposeBag)
+      .disposed(by: self.disposeBag)
   }
 }
 

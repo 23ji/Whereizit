@@ -44,7 +44,7 @@ final class MarkerInfoInputViewController: UIViewController {
 
   
   // MARK: Properties
-  
+  // TODO: 상태들은 감추고 외부에서 func로 일을 위임하는 것
   var markerLat: Double?
   var markerLng: Double?
   var tagSelected: Bool = false
@@ -193,7 +193,7 @@ final class MarkerInfoInputViewController: UIViewController {
       $0.text = title
       $0.font = .systemFont(ofSize: Metric.labelFontSize, weight: .bold)
     }
-    
+    //TODO:
     container.flex
       .direction(.column)
       .define {
@@ -204,6 +204,7 @@ final class MarkerInfoInputViewController: UIViewController {
           .wrap(.wrap)
           .define { flex in
             for tag in tags {
+              // TODO: 추상화 레벨 맞추기
               let tagButton = UIButton().then {
                 $0.setTitle(tag, for: .normal)
                 $0.titleLabel?.font = .systemFont(ofSize: 14)
@@ -283,6 +284,7 @@ final class MarkerInfoInputViewController: UIViewController {
   
   // 해당 배열 업데이트 함수
   private func updateTag(title: String, array: inout [String], buttonTitle: String) {
+    // TODO: inout 쓰지 말기
     if array.contains(buttonTitle) { // 배열에 해당 값이 있다면
       array = array.filter { $0 != buttonTitle } // 해당 배열에서 값 빼기
     } else { // 있으면

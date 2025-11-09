@@ -19,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     guard let windowScene = scene as? UIWindowScene else { return }
     
     let window = UIWindow(windowScene: windowScene)
-    
+    //추상적인거에서 너무 구체적인..Apptstater 두기
     window.rootViewController = LoginViewController()
     self.window = window
     window.makeKeyAndVisible()

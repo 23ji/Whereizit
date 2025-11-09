@@ -68,7 +68,7 @@ final class LoginButton: UIButton {
   }
 }
 
-
+//COlor로 옮기기
 extension UIColor {
   
   convenience init(hexCode: String, alpha: CGFloat = 1.0) {

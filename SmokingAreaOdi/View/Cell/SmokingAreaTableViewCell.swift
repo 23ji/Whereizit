@@ -16,7 +16,8 @@ import CoreLocation
 
 
 final class SmokingAreaTableViewCell: UITableViewCell {
-  
+
+  // TODO: Mark 구분하기
   private let areaImageView = UIImageView().then {
     $0.image = UIImage(named: "defaultImage")
     $0.layer.borderWidth = 0.5
@@ -46,26 +47,16 @@ final class SmokingAreaTableViewCell: UITableViewCell {
   }
   
   required init?(coder: NSCoder) { fatalError() }
-  
-  override func prepareForReuse() {
-    self.titleLabel.text = nil
-  }
-  
-  override func layoutSubviews() {
-    super.layoutSubviews()
-    self.contentView.pin.all()
-    self.contentView.flex.layout(mode: .adjustHeight)
-  }
-  
+
   override func sizeThatFits(_ size: CGSize) -> CGSize {
-    self.contentView.pin.width(size.width)
     self.contentView.flex.layout(mode: .adjustHeight)
     return self.contentView.frame.size
   }
   
   
   private func setupLayout() {
-    self.contentView.flex.direction(.row)
+    self.contentView.flex
+      .direction(.row)
       .alignItems(.center)
       .padding(10)
       .define {
@@ -82,8 +73,11 @@ final class SmokingAreaTableViewCell: UITableViewCell {
   
   
   private func loadImage(from urlString: String?) {
-    guard let urlString = urlString, let url = URL(string: urlString) else { return }
-    self.areaImageView.kf.setImage(with: url)
+    if let urlString, let url = URL(string: urlString) {
+      self.areaImageView.kf.setImage(with: url)
+    } else {
+      self.areaImageView.image = UIImage(named: Constant.defaultImage)
+    }
   }
   
   

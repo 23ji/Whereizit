@@ -150,7 +150,7 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
       self.areaImageView.image = UIImage(named: "defaultImage")
       self.loadImage(from: data.imageURL)
       
-      let isMine = data.uploadUser == Auth.auth().currentUser?.email
+      let isMine = (data.uploadUser == Auth.auth().currentUser?.email)
       self.editButton.isHidden = !isMine
       self.deleteButton.isHidden = !isMine
       
@@ -233,19 +233,19 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
         
         // 각 신고 항목 버튼 추가
         for reason in reportReasons {
-          actionSheet.addAction(UIAlertAction(title: reason, style: .default, handler: { _ in
+          actionSheet.addAction(UIAlertAction(title: reason, style: .default, handler: { [weak self] _ in
             if reason == "기타 (직접 입력)" {
               // 기타 입력 Alert 띄우기
               let inputAlert = UIAlertController(title: "직접 입력", message: "신고 사유를 입력해주세요", preferredStyle: .alert)
               inputAlert.addTextField { $0.placeholder = "예: 흡연구역이 사라졌어요" }
               inputAlert.addAction(UIAlertAction(title: "취소", style: .cancel))
-              inputAlert.addAction(UIAlertAction(title: "신고", style: .destructive, handler: { _ in
+              inputAlert.addAction(UIAlertAction(title: "신고", style: .destructive, handler: { [weak self] _ in
                 let customReason = inputAlert.textFields?.first?.text ?? ""
-                self.submitReport(data: data, reason: customReason)
+                self?.submitReport(data: data, reason: customReason)
               }))
-              self.present(inputAlert, animated: true)
+              self?.present(inputAlert, animated: true)
             } else {
-              self.submitReport(data: data, reason: reason)
+              self?.submitReport(data: data, reason: reason)
             }
           }))
         }
