@@ -346,6 +346,7 @@ final class MarkerInfoInputViewController: UIViewController {
     
     // 모델로 만들기
     let smokingArea = SmokingArea(
+      documentID: documentID,
       imageURL: finalImageURL,
       name: name,
       description: description,
@@ -420,7 +421,7 @@ extension MarkerInfoInputViewController: UIImagePickerControllerDelegate, UINavi
     DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
       alert.dismiss(animated: true)
     }
-    
+
     let storageRef = Storage.storage().reference()
     let fileName = "smokingAreas/\(UUID().uuidString).jpg"
     let imageRef = storageRef.child(fileName)

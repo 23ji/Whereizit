@@ -179,9 +179,13 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
     //삭제 버튼
     self.deleteButton.rx.tap
       .subscribe(onNext: { [weak self] in
+        print("삭제 버튼 눌림@@@@@@")
+        print("currentData: \(self?.currentData)")
+        print("documentID: \(self?.currentData?.documentID)")
+        
         guard let data = self?.currentData,
               let documentID = data.documentID else { return }
-        
+        print("가드 통과, 삭제 시작")
         let alert = UIAlertController(title: "삭제", message: "등록한 구역을 삭제하시겠습니까?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "취소", style: .default))
         alert.addAction(UIAlertAction(title: "확인", style: .default) { _ in

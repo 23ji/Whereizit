@@ -104,6 +104,7 @@ final class MySmokingAreasViewController: UIViewController {
             let timestamp = data["uploadDate"] as? Timestamp ?? Timestamp(date: Date())
             
             let area = SmokingArea(
+              documentID: doc.documentID,
               imageURL: imageURL,
               name: name,
               description: description,
