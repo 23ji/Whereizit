@@ -412,6 +412,15 @@ extension MarkerInfoInputViewController: UIImagePickerControllerDelegate, UINavi
 
   func uploadImage(_ image: UIImage) {
     guard let imageData = image.jpegData(compressionQuality: 0.8) else { return }
+
+    let alert = UIAlertController(title: nil, message: "이미지 업로드 중...", preferredStyle: .alert)
+    present(alert, animated: true)
+
+    // 2초 후 자동 닫기
+    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+      alert.dismiss(animated: true)
+    }
+    
     let storageRef = Storage.storage().reference()
     let fileName = "smokingAreas/\(UUID().uuidString).jpg"
     let imageRef = storageRef.child(fileName)
