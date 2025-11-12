@@ -45,6 +45,7 @@ final class MarkerInfoInputViewController: UIViewController {
   
   // MARK: Properties
   // TODO: 상태들은 감추고 외부에서 func로 일을 위임하는 것
+  var imageURL: String?
   var markerLat: Double?
   var markerLng: Double?
   var tagSelected: Bool = false
@@ -53,7 +54,10 @@ final class MarkerInfoInputViewController: UIViewController {
   var selectedFacilityTags: [String] = []
   
   private var capturedImageUrl: String?
-  
+
+  var isEditMode: Bool = false
+  var existingDocumentID: String?
+
   private let db = Firestore.firestore()
   
   let disposeBag = DisposeBag()
@@ -331,16 +335,18 @@ final class MarkerInfoInputViewController: UIViewController {
       self.present(alert, animated: true)
       return
     }
-    
+
+    let finalImageURL = self.capturedImageUrl ?? self.imageURL
+
     let currentTime = Timestamp(date: Date())
-    
+
     let safeLat = String(format: "%.9f", lat)
     let safeLng = String(format: "%.9f", lng)
     let documentID = "\(safeLat)_\(safeLng)"
     
     // 모델로 만들기
     let smokingArea = SmokingArea(
-      imageURL: capturedImageUrl,
+      imageURL: finalImageURL,
       name: name,
       description: description,
       areaLat: lat,
@@ -384,14 +390,14 @@ extension MarkerInfoInputViewController: UITextViewDelegate {
 
 
 extension MarkerInfoInputViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-  
+
   func openCamera() {
     let camera = UIImagePickerController()
     camera.sourceType = .camera
     camera.delegate = self
     present(camera, animated: true, completion: nil)
   }
-  
+
   func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
     picker.dismiss(animated: true, completion: nil)
     if let image = info[.originalImage] as? UIImage {
@@ -399,25 +405,57 @@ extension MarkerInfoInputViewController: UIImagePickerControllerDelegate, UINavi
       self.uploadImage(image)
     }
   }
-  
+
   func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
     picker.dismiss(animated: true, completion: nil)
   }
-  
+
   func uploadImage(_ image: UIImage) {
     guard let imageData = image.jpegData(compressionQuality: 0.8) else { return }
     let storageRef = Storage.storage().reference()
     let fileName = "smokingAreas/\(UUID().uuidString).jpg"
     let imageRef = storageRef.child(fileName)
-    
+
     imageRef.putData(imageData, metadata: nil) { [weak self] _, error in
       if let error = error {
         print("이미지 업로드 실패", error)
         return
       }
       imageRef.downloadURL { url, _ in
-        self?.capturedImageUrl = url?.absoluteString
-        print("업로드 완료 : ", self?.capturedImageUrl)
+        if let error = error {
+          print("다운로드 URL 가져오기 실패: \(error.localizedDescription)")
+          return
+        }
+
+        guard let downloadURL = url else {
+          print("다운로드 URL이 nil입니다")
+          return
+        }
+        self?.capturedImageUrl = downloadURL.absoluteString
+        print("업로드 완료 : ", self?.capturedImageUrl ?? "nil")
+
+        if ((self?.isEditMode) != nil),
+           let oldImageURL = self?.imageURL,
+           !oldImageURL.isEmpty,
+           oldImageURL != downloadURL.absoluteString {
+          self?.deleteOldImage(urlString: oldImageURL)
+        }
+      }
+    }
+  }
+
+  private func deleteOldImage(urlString: String) {
+    guard let url = URL(string: urlString) else {
+      print("잘못된 이미지 URL")
+      return
+    }
+
+    let storageRef = Storage.storage().reference(forURL: urlString)
+    storageRef.delete { error in
+      if let error = error {
+        print("기존 이미지 삭제 실패: \(error.localizedDescription)")
+      } else {
+        print("기존 이미지 삭제 성공: \(urlString)")
       }
     }
   }

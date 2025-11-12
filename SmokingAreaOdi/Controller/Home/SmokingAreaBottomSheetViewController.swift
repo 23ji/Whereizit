@@ -199,6 +199,8 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
         guard let self = self, let data = self.currentData else { return }
         let editVC = MarkerInfoInputViewController()
         editVC.modalPresentationStyle = .formSheet
+        editVC.isEditMode = true
+        editVC.imageURL = data.imageURL
         editVC.markerLat = data.areaLat
         editVC.markerLng = data.areaLng
         editVC.selectedEnvironmentTags = data.selectedEnvironmentTags
