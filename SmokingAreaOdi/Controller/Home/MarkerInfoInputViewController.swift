@@ -103,7 +103,7 @@ final class MarkerInfoInputViewController: UIViewController {
   
   // 흡연구역 태그들
   private let environmentTags = ["실내", "실외", "밀폐형", "개방형"]
-  private let typeTags = ["흡구", "카페", "술집", "식당", "노래방", "보드게임 카페", "당구장", "피시방"]
+  private let typeTags = ["카페", "술집", "식당", "흡구", "노래방", "보드게임 카페", "당구장", "피시방"]
   private let facilityTags = ["재떨이", "의자", "별도 전담 구역", "라이터"]
   
   // 저장 버튼
