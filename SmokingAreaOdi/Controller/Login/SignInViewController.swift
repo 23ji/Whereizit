@@ -53,7 +53,7 @@ final class SignInViewController: UIViewController {
   }
   
   private let subtitleLabel = UILabel().then {
-    $0.text = "회원가입 후 실시간 흡연구역을 확인해보세요"
+    $0.text = "회원가입 후 실시간 공유 공간을 확인해보세요"
     $0.font = .systemFont(ofSize: 14)
     $0.textColor = .systemGray
     $0.textAlignment = .center

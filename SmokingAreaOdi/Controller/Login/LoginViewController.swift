@@ -62,14 +62,14 @@ final class LoginViewController: UIViewController {
   }
   
   private let appNameLabel = UILabel().then {
-    $0.text = "흡구오디?"
+    $0.text = "흡구오디"
     $0.font = .systemFont(ofSize: 32, weight: .bold)
     $0.textColor = .black
     $0.textAlignment = .center
   }
   
   private let subtitleLabel = UILabel().then {
-    $0.text = "흡연자와 비흡연자를 위한\n실시간 흡연구역 지도"
+    $0.text = "깨끗한 거리를 만드는 우리"
     $0.font = .systemFont(ofSize: 14, weight: .regular)
     $0.textColor = .systemGray
     $0.textAlignment = .center

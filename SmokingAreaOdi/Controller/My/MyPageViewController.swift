@@ -68,7 +68,7 @@ final class MyPageViewController: UIViewController {
   // MARK: Buttons
   
   private let mySmokingAreasButton = UIButton().then {
-    $0.setTitle("내가 등록한 흡연구역", for: .normal)
+    $0.setTitle("내가 등록한 구역", for: .normal)
     $0.setTitleColor(.white, for: .normal)
     $0.backgroundColor = .systemGreen
     $0.layer.cornerRadius = Metric.buttonCornerRadius

@@ -77,7 +77,7 @@ final class MarkerInfoInputViewController: UIViewController {
   
   // 흡연구역 이름
   private let nameLabel = UILabel().then {
-    $0.text = "흡연구역 이름"
+    $0.text = "구역 이름"
     $0.font = .systemFont(ofSize: Metric.labelFontSize, weight: .bold)
   }
   let nameTextField = UITextField().then {
@@ -88,7 +88,7 @@ final class MarkerInfoInputViewController: UIViewController {
   
   // 흡연구역 설명
   private let descriptionLabel = UILabel().then {
-    $0.text = "흡연구역 설명"
+    $0.text = "구역 설명"
     $0.font = .systemFont(ofSize: Metric.labelFontSize, weight: .bold)
   }
   let descriptionTextView = UITextView().then {
@@ -103,8 +103,8 @@ final class MarkerInfoInputViewController: UIViewController {
   
   // 흡연구역 태그들
   private let environmentTags = ["실내", "실외", "밀폐형", "개방형"]
-  private let typeTags = ["흡연구역", "카페", "술집", "식당", "노래방", "보드게임 카페", "당구장", "피시방"]
-  private let facilityTags = ["재떨이", "의자", "별도 전자담배 구역", "라이터"]
+  private let typeTags = ["흡구", "카페", "술집", "식당", "노래방", "보드게임 카페", "당구장", "피시방"]
+  private let facilityTags = ["재떨이", "의자", "별도 전담 구역", "라이터"]
   
   // 저장 버튼
   let saveButton = UIButton(type: .system).then {
@@ -144,7 +144,7 @@ final class MarkerInfoInputViewController: UIViewController {
   
   private func configureUI() {
     self.view.backgroundColor = .white
-    self.navigationItem.title = "흡연구역 등록"
+    self.navigationItem.title = "구역 등록"
     self.descriptionTextView.delegate = self
     self.mapView.allowsScrolling = false
   }
@@ -179,9 +179,10 @@ final class MarkerInfoInputViewController: UIViewController {
           .paddingHorizontal(Metric.horizontalMargin)
         $0.addItem(self.makeTagSection(title: "유형", tags: self.typeTags))
           .paddingHorizontal(Metric.horizontalMargin)
-        $0.addItem(self.makeTagSection(title: "시설", tags: self.facilityTags))
-          .paddingHorizontal(Metric.horizontalMargin)
-        
+        //facilityTags 임시 제거
+        //$0.addItem(self.makeTagSection(title: "시설", tags: self.facilityTags))
+          //.paddingHorizontal(Metric.horizontalMargin)
+
         $0.addItem(saveButton).height(Metric.saveButtonHeight).margin(Metric.horizontalMargin)
       }
   }

@@ -24,7 +24,7 @@ final class MySmokingAreasViewController: UIViewController {
   private var currentLocation: CLLocation?
   
   private let titleLabel = UILabel().then {
-    $0.text = "주변 흡연구역 목록"
+    $0.text = "주변 목록"
     $0.font = .systemFont(ofSize: 15, weight: .regular)
     $0.textAlignment = .center
   }
@@ -42,7 +42,7 @@ final class MySmokingAreasViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    self.navigationItem.title = "내가 추가한 흡연구역 목록"
+    self.navigationItem.title = "내가 추가한 구역 목록"
     self.view.backgroundColor = .white
     self.fetchSmokingAreas()
     

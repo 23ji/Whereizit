@@ -180,6 +180,7 @@
 		9F6207712EC035650045D08C /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				9FA6B1782E64473E00A94571 /* SmokingAreaBottomSheetViewController.swift */,
 				498ECFA22E77F32C00B9EABC /* NearbySmokingAreasBottomSheetViewController.swift */,
 				A77C88BE2E2528A8002D725E /* HomeViewController.swift */,
 				49E6295F2E27756C00751E26 /* MarkerPositionSelectorViewController.swift */,
@@ -191,7 +192,6 @@
 		9F6207722EC0356D0045D08C /* My */ = {
 			isa = PBXGroup;
 			children = (
-				9FA6B1782E64473E00A94571 /* SmokingAreaBottomSheetViewController.swift */,
 				498B44902E7A82F900FF06B6 /* MyPageViewController.swift */,
 				9FE2378B2EAF8B5500B19283 /* SettingsViewController.swift */,
 				49031E102EB08A0B004F5857 /* PrivacyPolicyViewController.swift */,

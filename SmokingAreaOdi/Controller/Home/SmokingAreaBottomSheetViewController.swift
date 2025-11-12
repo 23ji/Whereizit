@@ -159,9 +159,11 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
       
       let envSection = self.makeTagSection(title: "환경", tags: data.selectedEnvironmentTags)
       let typeSection = self.makeTagSection(title: "유형", tags: data.selectedTypeTags)
-      let facilitySection = self.makeTagSection(title: "시설", tags: data.selectedFacilityTags)
-      
-      self.tagSections = [envSection, typeSection, facilitySection].filter { !$0.subviews.isEmpty }
+      //facilitySection 임시 제거
+      //let facilitySection = self.makeTagSection(title: "시설", tags: data.selectedFacilityTags)
+
+      //self.tagSections = [envSection, typeSection, facilitySection].filter { !$0.subviews.isEmpty }
+      self.tagSections = [envSection, typeSection].filter { !$0.subviews.isEmpty }
       
       for section in self.tagSections {
         self.rootFlexContainer.flex.addItem(section).marginTop(20)
@@ -180,7 +182,7 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
         guard let data = self?.currentData,
               let documentID = data.documentID else { return }
         
-        let alert = UIAlertController(title: "삭제", message: "등록한 흡연구역을 삭제하시겠습니까?", preferredStyle: .alert)
+        let alert = UIAlertController(title: "삭제", message: "등록한 구역을 삭제하시겠습니까?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "취소", style: .default))
         alert.addAction(UIAlertAction(title: "확인", style: .default) { _ in
           self?.db.collection("smokingAreas").document(documentID).delete { error in
@@ -220,7 +222,7 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
         // 1️⃣ 신고 사유 목록 정의
         let reportReasons = [
           "잘못된 위치",
-          "흡연구역이 아님",
+          "잘못된 정보",
           "중복 등록",
           "부적절한 사진",
           "기타 (직접 입력)"
@@ -237,7 +239,7 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
             if reason == "기타 (직접 입력)" {
               // 기타 입력 Alert 띄우기
               let inputAlert = UIAlertController(title: "직접 입력", message: "신고 사유를 입력해주세요", preferredStyle: .alert)
-              inputAlert.addTextField { $0.placeholder = "예: 흡연구역이 사라졌어요" }
+              inputAlert.addTextField { $0.placeholder = "예: 구역이 사라졌어요" }
               inputAlert.addAction(UIAlertAction(title: "취소", style: .cancel))
               inputAlert.addAction(UIAlertAction(title: "신고", style: .destructive, handler: { [weak self] _ in
                 let customReason = inputAlert.textFields?.first?.text ?? ""
