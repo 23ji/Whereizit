@@ -14,7 +14,6 @@
 		49031E0B2EAF4E82004F5857 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 49031E0A2EAF4E82004F5857 /* SDWebImage */; };
 		49031E0D2EAF4E82004F5857 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 49031E0C2EAF4E82004F5857 /* SDWebImageMapKit */; };
 		49031E112EB08A0B004F5857 /* PrivacyPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49031E102EB08A0B004F5857 /* PrivacyPolicyViewController.swift */; };
-		49031E182EB32DF0004F5857 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 49031E172EB32DF0004F5857 /* GoogleService-Info.plist */; };
 		49168A702E448E77002C5F69 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 49168A6F2E448E77002C5F69 /* FirebaseAuth */; };
 		49168A722E448E77002C5F69 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 49168A712E448E77002C5F69 /* FirebaseCore */; };
 		49168A742E448E77002C5F69 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 49168A732E448E77002C5F69 /* FirebaseFirestore */; };
@@ -26,6 +25,7 @@
 		498B448F2E7A53E800FF06B6 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498B448E2E7A53E800FF06B6 /* MainTabBarController.swift */; };
 		498B44912E7A82F900FF06B6 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498B44902E7A82F900FF06B6 /* MyPageViewController.swift */; };
 		498ECFA32E77F32C00B9EABC /* NearbySmokingAreasBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498ECFA22E77F32C00B9EABC /* NearbySmokingAreasBottomSheetViewController.swift */; };
+		49E0FF452ECC415500A0B97F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 49E0FF442ECC415500A0B97F /* GoogleService-Info.plist */; };
 		49E629602E27756C00751E26 /* MarkerPositionSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E6295F2E27756C00751E26 /* MarkerPositionSelectorViewController.swift */; };
 		49E629652E2F866000751E26 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 49E629642E2F866000751E26 /* SnapKit */; };
 		49E629682E2F86C200751E26 /* FlexLayout in Frameworks */ = {isa = PBXBuildFile; productRef = 49E629672E2F86C200751E26 /* FlexLayout */; };
@@ -64,7 +64,6 @@
 		49031E072EAF4E11004F5857 /* FullImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullImageViewController.swift; sourceTree = "<group>"; };
 		49031E102EB08A0B004F5857 /* PrivacyPolicyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyViewController.swift; sourceTree = "<group>"; };
 		49031E122EB09A67004F5857 /* Whereizit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Whereizit.entitlements; sourceTree = "<group>"; };
-		49031E172EB32DF0004F5857 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		49288AA92D19450C00FF1E50 /* Whereizit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Whereizit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		49288AAC2D19450C00FF1E50 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		49288AAE2D19450C00FF1E50 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -74,6 +73,7 @@
 		498B448E2E7A53E800FF06B6 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		498B44902E7A82F900FF06B6 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
 		498ECFA22E77F32C00B9EABC /* NearbySmokingAreasBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbySmokingAreasBottomSheetViewController.swift; sourceTree = "<group>"; };
+		49E0FF442ECC415500A0B97F /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		49E6295F2E27756C00751E26 /* MarkerPositionSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerPositionSelectorViewController.swift; sourceTree = "<group>"; };
 		71E8D5BE6D6F3B97EE6F1699 /* Pods_Whereizit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Whereizit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F0EB9282E8FA15C0091976A /* SmokingAreaTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokingAreaTableViewCell.swift; sourceTree = "<group>"; };
@@ -156,7 +156,7 @@
 				9FF116032E9602E20076A359 /* View */,
 				A774711F2D58D917006F2F0D /* Controller */,
 				49288ABA2D19450D00FF1E50 /* Info.plist */,
-				49031E172EB32DF0004F5857 /* GoogleService-Info.plist */,
+				49E0FF442ECC415500A0B97F /* GoogleService-Info.plist */,
 			);
 			path = Whereizit;
 			sourceTree = "<group>";
@@ -387,7 +387,7 @@
 			files = (
 				49288AB62D19450D00FF1E50 /* Assets.xcassets in Resources */,
 				49288AB92D19450D00FF1E50 /* Base in Resources */,
-				49031E182EB32DF0004F5857 /* GoogleService-Info.plist in Resources */,
+				49E0FF452ECC415500A0B97F /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -570,6 +570,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Whereizit/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "어딨쥐?";
@@ -587,7 +588,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.23G.Whereizit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -610,6 +611,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Whereizit/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "어딨쥐?";
@@ -627,7 +629,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.23G.Whereizit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
