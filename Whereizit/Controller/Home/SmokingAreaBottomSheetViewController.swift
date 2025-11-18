@@ -1,3 +1,4 @@
+//
 //  SmokingAreaBottomSheetViewController.swift
 //  SmokingAreaOdi
 //
@@ -13,6 +14,7 @@ import FlexLayout
 import Kingfisher
 
 import PinLayout
+import SnapKit
 import Then
 
 import RxGesture
@@ -22,35 +24,64 @@ import UIKit
 
 
 final class SmokingAreaBottomSheetViewController: UIViewController {
-  
+
   private enum Metric {
     static let horizontalMargin: CGFloat = 20
     static let labelFontSize: CGFloat = 16
-    static let imageSize: CGFloat = 100
+    static let imageSize: CGFloat = 120
+    static let cornerRadius: CGFloat = 16
   }
-  
-  
+
+
   // MARK: Components
-  
+
   private var currentData: SmokingArea?
   private let db = Firestore.firestore()
   private let disposeBag = DisposeBag()
   private let rootFlexContainer = UIView()
-  
+
+  // 카테고리별 아이콘 매핑
+  private let categoryIcons: [String: String] = [
+    "화장실": "🚻",
+    "쓰레기통": "🗑️",
+    "물": "💧",
+    "흡연구역": "🚬"
+  ]
+
+  // 카테고리별 색상 매핑
+  private let categoryColors: [String: UIColor] = [
+    "화장실": UIColor.systemBlue.withAlphaComponent(0.15),
+    "쓰레기통": UIColor.systemGreen.withAlphaComponent(0.15),
+    "물": UIColor.systemCyan.withAlphaComponent(0.15),
+    "흡연구역": UIColor.systemOrange.withAlphaComponent(0.15)
+  ]
+
+  // 카테고리별 텍스트 색상 매핑 (makeSmallCategoryBadge에서 사용)
+  private let categoryTextColors: [String: UIColor] = [
+    "화장실": .systemBlue,
+    "쓰레기통": .systemGreen,
+    "물": .systemCyan,
+    "흡연구역": .systemOrange
+  ]
+
   private let areaImageView = UIImageView().then {
     $0.backgroundColor = .systemGray5
-    $0.layer.cornerRadius = 12
+    $0.layer.cornerRadius = Metric.cornerRadius
     $0.clipsToBounds = true
     $0.contentMode = .scaleAspectFill
+    $0.layer.shadowColor = UIColor.black.cgColor
+    $0.layer.shadowOffset = CGSize(width: 0, height: 2)
+    $0.layer.shadowOpacity = 0.1
+    $0.layer.shadowRadius = 8
   }
-  
+
   private let nameLabel = UILabel().then {
     $0.textColor = .black
-    $0.font = .systemFont(ofSize: 18, weight: .bold)
+    $0.font = .systemFont(ofSize: 20, weight: .bold)
     $0.numberOfLines = 0
     $0.text = "장소 이름"
   }
-  
+
   private let descriptionLabel = UITextView().then {
     $0.textColor = .darkGray
     $0.font = .systemFont(ofSize: 15)
@@ -59,32 +90,36 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
     $0.textContainerInset = .zero
     $0.textContainer.lineFragmentPadding = 0
   }
-  
+
   private let editButton = UIButton(type: .system).then {
-    $0.setImage(UIImage(systemName: "pencil"), for: .normal)
-    $0.tintColor = .darkGray
+    $0.setImage(UIImage(systemName: "pencil.circle"), for: .normal)
+    $0.tintColor = UIColor.lightGray
   }
-  
+
   private let deleteButton = UIButton(type: .system).then {
-    $0.setImage(UIImage(systemName: "trash"), for: .normal)
-    $0.tintColor = .systemRed
+    $0.setImage(UIImage(systemName: "trash.circle"), for: .normal)
+    $0.tintColor = UIColor.lightGray
   }
-  
+
   private let divider = UIView().then {
     $0.backgroundColor = .systemGray5
   }
 
   private let reportButton = UIButton().then {
-      $0.setTitle("🚨 신고하기", for: .normal)
-      $0.setTitleColor(.systemRed, for: .normal)
-      $0.titleLabel?.font = .systemFont(ofSize: 13, weight: .medium)
+    $0.setTitle("🚨 신고하기", for: .normal)
+    $0.setTitleColor(.systemRed, for: .normal)
+    $0.titleLabel?.font = .systemFont(ofSize: 13, weight: .medium)
   }
-  
+
+  private var categoryBadge: UIView?
   private var tagSections: [UIView] = []
-  
-  
+
+  // 카테고리 배지를 담을 컨테이너
+  private let categoryBadgeContainer = UIView()
+
+
   // MARK: LifeCycle
-  
+
   override func viewDidLoad() {
     super.viewDidLoad()
     self.view.backgroundColor = .white
@@ -93,16 +128,16 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
     self.bindActions()
     self.bindImageTapGesture()
   }
-  
+
   override func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
     self.rootFlexContainer.pin.all(view.pin.safeArea)
     self.rootFlexContainer.flex.layout()
   }
-  
-  
+
+
   // MARK: Setup Layout
-  
+
   private func setupLayout() {
     self.rootFlexContainer.flex.direction(.column).padding(Metric.horizontalMargin)
       .define { flex in
@@ -112,70 +147,90 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
             flex.addItem(self.areaImageView)
               .width(Metric.imageSize)
               .height(Metric.imageSize)
-            
+
             flex.addItem().direction(.column).marginLeft(16).grow(1).shrink(1)
               .define { flex in
+                // 카테고리 배지 컨테이너 (이름 위로 이동)
+                flex.addItem(self.categoryBadgeContainer)
+
                 flex.addItem(self.nameLabel)
                 flex.addItem(self.descriptionLabel)
                   .marginTop(8).grow(1).shrink(1).minHeight(70)
               }
           }
-        
+
         // 버튼들
-        flex.addItem().direction(.row).justifyContent(.end).marginTop(16).marginBottom(16)
+        flex.addItem().direction(.row).justifyContent(.end)
           .define { flex in
-            flex.addItem(self.editButton).size(22)
-            flex.addItem(self.deleteButton).size(22).marginLeft(8)
+            flex.addItem(self.editButton).size(28)
+            flex.addItem(self.deleteButton).size(28).marginLeft(12)
           }
-        
+
         // 구분선
-        flex.addItem(self.divider).height(1)
+        flex.addItem(self.divider).height(1).marginVertical(20)
       }
+
+    // 신고하기 버튼
     self.view.addSubview(reportButton)
     self.reportButton.snp.makeConstraints {
       $0.centerX.equalToSuperview()
       $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(10)
     }
+    self.reportButton.pin.center().bottom(view.pin.safeArea.bottom + 10)
   }
-  
-  
+
+
   // MARK: Public Method
-  
+
   public func configure(with data: SmokingArea) {
     self.currentData = data
-    
+
     DispatchQueue.main.async {
       self.nameLabel.text = data.name
       self.descriptionLabel.text = data.description
       self.areaImageView.image = UIImage(named: "defaultImage")
       self.loadImage(from: data.imageURL)
-      
+
       let isMine = (data.uploadUser == Auth.auth().currentUser?.email)
       self.editButton.isHidden = !isMine
       self.deleteButton.isHidden = !isMine
-      
+
+      // 기존 카테고리 배지 제거 (컨테이너 비우기)
+      self.categoryBadgeContainer.subviews.forEach { $0.removeFromSuperview() }
+      self.categoryBadge = nil
+
       self.tagSections.forEach { $0.removeFromSuperview() }
       self.tagSections.removeAll()
-      
-      let envSection = self.makeTagSection(title: "환경", tags: data.selectedEnvironmentTags)
-      let typeSection = self.makeTagSection(title: "유형", tags: data.selectedTypeTags)
-      //facilitySection 임시 제거
-      //let facilitySection = self.makeTagSection(title: "시설", tags: data.selectedFacilityTags)
 
-      //self.tagSections = [envSection, typeSection, facilitySection].filter { !$0.subviews.isEmpty }
-      self.tagSections = [envSection, typeSection].filter { !$0.subviews.isEmpty }
-      
-      for section in self.tagSections {
-        self.rootFlexContainer.flex.addItem(section).marginTop(20)
+      // 카테고리 배지 추가 (이름 위 컨테이너에)
+      if let category = self.detectCategory(from: data) {
+        let badge = self.makeSmallCategoryBadge(category: category)
+        self.categoryBadge = badge
+        self.categoryBadgeContainer.flex.addItem(badge).marginBottom(6)
+        self.categoryBadgeContainer.isHidden = false
+      } else {
+        self.categoryBadgeContainer.isHidden = true
       }
-      
+      self.categoryBadgeContainer.flex.markDirty() // 컨테이너 레이아웃 갱신
+
+
+      let envSection = self.makeTagSection(title: "환경", tags: data.selectedEnvironmentTags, emoji: "📌")
+      let typeSection = self.makeTagSection(title: "유형", tags: data.selectedTypeTags, emoji: "🗂️")
+      let facilitySection = self.makeTagSection(title: "시설", tags: data.selectedFacilityTags, emoji: "🛠️")
+
+      self.tagSections = [envSection, typeSection, facilitySection].filter { !$0.subviews.isEmpty }
+
+      for section in self.tagSections {
+        self.rootFlexContainer.flex.addItem(section).marginTop(16)
+      }
+
       self.rootFlexContainer.flex.layout()
     }
   }
 
   // MARK: Actions
   private func bindActions() {
-    
+
     //삭제 버튼
     self.deleteButton.rx.tap
       .subscribe(onNext: { [weak self] in
@@ -185,7 +240,7 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
         let alert = UIAlertController(title: "삭제", message: "등록한 구역을 삭제하시겠습니까?", preferredStyle: .alert)
 
         alert.addAction(UIAlertAction(title: "취소", style: .default))
-        alert.addAction(UIAlertAction(title: "확인", style: .default) { _ in
+        alert.addAction(UIAlertAction(title: "확인", style: .destructive) { _ in // .default -> .destructive
           self?.db.collection("smokingAreas").document(documentID).delete { error in
             print(error == nil ? "문서 삭제 성공" : "문서 삭제 실패: \(error!.localizedDescription)")
             self?.dismiss(animated: true)
@@ -194,7 +249,8 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
         self?.present(alert, animated: true)
       })
       .disposed(by: disposeBag)
-    
+
+
     // 수정 버튼
     self.editButton.rx.tap
       .subscribe(onNext: { [weak self] in
@@ -217,13 +273,12 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
         self.present(editVC, animated: true)
       })
       .disposed(by: disposeBag)
-    
+
     // 🚨 신고하기 버튼 액션
     self.reportButton.rx.tap
       .subscribe(onNext: { [weak self] in
         guard let self = self, let data = self.currentData else { return }
-        
-        // 1️⃣ 신고 사유 목록 정의
+
         let reportReasons = [
           "잘못된 위치",
           "잘못된 정보",
@@ -231,17 +286,14 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
           "부적절한 사진",
           "기타 (직접 입력)"
         ]
-        
-        // 2️⃣ Action Sheet로 항목 선택
+
         let actionSheet = UIAlertController(title: "🚨 신고하기",
                                             message: "신고 사유를 선택해주세요",
                                             preferredStyle: .actionSheet)
-        
-        // 각 신고 항목 버튼 추가
+
         for reason in reportReasons {
           actionSheet.addAction(UIAlertAction(title: reason, style: .default, handler: { [weak self] _ in
             if reason == "기타 (직접 입력)" {
-              // 기타 입력 Alert 띄우기
               let inputAlert = UIAlertController(title: "직접 입력", message: "신고 사유를 입력해주세요", preferredStyle: .alert)
               inputAlert.addTextField { $0.placeholder = "예: 구역이 사라졌어요" }
               inputAlert.addAction(UIAlertAction(title: "취소", style: .cancel))
@@ -255,23 +307,20 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
             }
           }))
         }
-        
-        // 취소 버튼
+
         actionSheet.addAction(UIAlertAction(title: "취소", style: .cancel))
-        
-        // iPad 대응 (ActionSheet 크래시 방지)
+
         if let popover = actionSheet.popoverPresentationController {
           popover.sourceView = self.reportButton
           popover.sourceRect = self.reportButton.bounds
         }
-        
+
         self.present(actionSheet, animated: true)
       })
       .disposed(by: disposeBag)
-
   }
-  
-  
+
+
   private func submitReport(data: SmokingArea, reason: String) {
     db.collection("reports").addDocument(data: [
       "reportedAreaID": data.documentID ?? "unknown",
@@ -283,14 +332,15 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
       let message = (error == nil)
       ? "신고가 접수되었습니다. 검토 후 조치하겠습니다."
       : "신고 중 오류가 발생했습니다."
-      
+
       let resultAlert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
       resultAlert.addAction(UIAlertAction(title: "확인", style: .default))
       self.present(resultAlert, animated: true)
     }
   }
-  
+
   private func bindImageTapGesture() {
+    self.areaImageView.isUserInteractionEnabled = true // 탭 인식 활성화
     self.areaImageView.rx.tapGesture()
       .when(.recognized)
       .subscribe(onNext: { _ in
@@ -302,38 +352,134 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
       .disposed(by: disposeBag)
   }
 
-  
+
   private func loadImage(from urlString: String?) {
     guard let urlString = urlString, let url = URL(string: urlString) else { return }
     self.areaImageView.kf.setImage(with: url)
   }
-  
-  private func makeTagSection(title: String, tags: [String]) -> UIView {
+
+  // 카테고리 감지 (태그 기반)
+  private func detectCategory(from data: SmokingArea) -> String? {
+    let allTags = data.selectedEnvironmentTags + data.selectedTypeTags + data.selectedFacilityTags
+
+    // 흡연구역 특화 태그
+    let smokingTags = ["실내", "실외", "밀폐형", "개방형", "흡연 구역", "별도 전자담배 구역", "의자", "라이터"]
+    if !allTags.filter({ smokingTags.contains($0) }).isEmpty {
+      return "흡연구역"
+    }
+
+    // 화장실 특화 태그
+    let toiletTags = ["남녀 구분", "남녀 공용", "휴지", "비데"]
+    if !allTags.filter({ toiletTags.contains($0) }).isEmpty {
+      return "화장실"
+    }
+
+    // 쓰레기통 특화 태그
+    let trashTags = ["일반 쓰레기", "재활용 쓰레기", "분리수거"]
+    if !allTags.filter({ trashTags.contains($0) }).isEmpty {
+      return "쓰레기통"
+    }
+
+    // 물 특화 태그
+    let waterTags = ["정수기", "음수대", "약수터", "온수", "얼음"]
+    if !allTags.filter({ waterTags.contains($0) }).isEmpty {
+      return "물"
+    }
+
+    return nil
+  }
+
+  // 작은 카테고리 배지 생성
+  private func makeSmallCategoryBadge(category: String) -> UIView {
+    let container = UIView()
+
+    let icon = categoryIcons[category] ?? "📍"
+    let bgColor = categoryColors[category] ?? UIColor.systemGray6
+    let textColor = categoryTextColors[category] ?? UIColor.label
+
+    let badgeView = UIView().then {
+      $0.backgroundColor = bgColor
+      $0.layer.cornerRadius = 8
+      $0.layer.borderWidth = 1.0
+      $0.layer.borderColor = textColor.withAlphaComponent(0.3).cgColor
+    }
+
+    let iconLabel = UILabel().then {
+      $0.text = icon
+      $0.font = .systemFont(ofSize: 14)
+    }
+
+    let categoryLabel = UILabel().then {
+      $0.text = category
+      $0.font = .systemFont(ofSize: 13, weight: .bold)
+      $0.textColor = textColor
+    }
+
+    container.flex.alignSelf(.start).define { flex in
+      flex.addItem(badgeView)
+        .direction(.row)
+        .alignItems(.center)
+        .padding(4, 8, 4, 8)
+        .define { flex in
+          flex.addItem(iconLabel)
+          flex.addItem(categoryLabel).marginLeft(4)
+        }
+    }
+    return container
+  }
+
+  private func makeTagSection(title: String, tags: [String], emoji: String) -> UIView {
     guard !tags.isEmpty else { return UIView() }
     let container = UIView()
+
+    let headerView = UIView()
+    let emojiLabel = UILabel().then {
+      $0.text = emoji
+      $0.font = .systemFont(ofSize: 18)
+    }
     let titleLabel = UILabel().then {
       $0.text = title
-      $0.font = .systemFont(ofSize: Metric.labelFontSize, weight: .bold)
+      $0.font = .systemFont(ofSize: 17, weight: .semibold)
+      $0.textColor = .label
     }
+
+    headerView.flex.direction(.row).alignItems(.center).define { flex in
+      flex.addItem(emojiLabel)
+      flex.addItem(titleLabel).marginLeft(6)
+    }
+
     container.flex.direction(.column).define { flex in
-      flex.addItem(titleLabel).marginBottom(12)
+      flex.addItem(headerView).marginBottom(12)
       flex.addItem().direction(.row).wrap(.wrap).define { flex in
         for tag in tags {
-          let tagButton = UIButton(type: .system).then {
-            $0.setTitle(tag, for: .normal)
-            $0.titleLabel?.font = .systemFont(ofSize: 14)
-            $0.backgroundColor = .systemGray6
-            $0.setTitleColor(.label, for: .normal)
-            $0.layer.cornerRadius = 8
-            $0.layer.borderWidth = 0.7
-            $0.layer.borderColor = UIColor.systemGray4.cgColor
-            $0.contentEdgeInsets = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
-            $0.isUserInteractionEnabled = false
-          }
-          flex.addItem(tagButton).marginRight(8).marginBottom(8)
+          let tagView = self.makeModernTag(text: tag)
+          flex.addItem(tagView).marginRight(8).marginBottom(8)
         }
       }
     }
+    return container
+  }
+
+  private func makeModernTag(text: String) -> UIView {
+    let container = UIView()
+
+    let label = UILabel().then {
+      $0.text = text
+      $0.font = .systemFont(ofSize: 14, weight: .medium)
+      $0.textColor = .gray
+    }
+
+    container.backgroundColor = UIColor.systemGray.withAlphaComponent(0.1)
+    container.layer.cornerRadius = 10
+    container.layer.borderWidth = 1
+    container.layer.borderColor = UIColor.systemGray.withAlphaComponent(0.3).cgColor
+
+    container.flex
+      .padding(8, 14, 8, 14)
+      .define { flex in
+        flex.addItem(label)
+      }
+
     return container
   }
 }
