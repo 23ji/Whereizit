@@ -343,7 +343,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 49288AA42D19450C00FF1E50 /* Build configuration list for PBXProject "SmokingAreaOdi" */;
+			buildConfigurationList = 49288AA42D19450C00FF1E50 /* Build configuration list for PBXProject "Whereizit" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -572,7 +572,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "흡구오디";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_NSCameraUsageDescription = "사진을 촬영하기 위해 카메라 접근 권한이 필요합니다.";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "현재 위치를 기반으로 근처 흡연구역을 표시하기 위해 위치 접근 권한이 필요합니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "현재 위치를 기반으로 근처 구역들을 표시하기 위해 위치 접근 권한이 필요합니다.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "앨범에서 사진을 선택하기 위해 사진 보관함 접근 권한이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -585,7 +585,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.G32.SmokingAreaOdi;
+				PRODUCT_BUNDLE_IDENTIFIER = com.23G.Whereizit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -613,7 +613,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "흡구오디";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_NSCameraUsageDescription = "사진을 촬영하기 위해 카메라 접근 권한이 필요합니다.";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "현재 위치를 기반으로 근처 흡연구역을 표시하기 위해 위치 접근 권한이 필요합니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "현재 위치를 기반으로 근처 구역들을 표시하기 위해 위치 접근 권한이 필요합니다.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "앨범에서 사진을 선택하기 위해 사진 보관함 접근 권한이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -626,7 +626,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.G32.SmokingAreaOdi;
+				PRODUCT_BUNDLE_IDENTIFIER = com.23G.Whereizit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -642,7 +642,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		49288AA42D19450C00FF1E50 /* Build configuration list for PBXProject "SmokingAreaOdi" */ = {
+		49288AA42D19450C00FF1E50 /* Build configuration list for PBXProject "Whereizit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				49288ABB2D19450D00FF1E50 /* Debug */,
