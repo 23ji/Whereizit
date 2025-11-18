@@ -258,12 +258,20 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
         let editVC = MarkerInfoInputViewController()
         editVC.modalPresentationStyle = .formSheet
         editVC.isEditMode = true
+
+        // 기존 데이터 주입
         editVC.imageURL = data.imageURL
         editVC.markerLat = data.areaLat
         editVC.markerLng = data.areaLng
         editVC.selectedEnvironmentTags = data.selectedEnvironmentTags
         editVC.selectedTypeTags = data.selectedTypeTags
         editVC.selectedFacilityTags = data.selectedFacilityTags
+
+        // 중요: 카테고리 정보 주입 (detectCategory 이용)
+        if let category = self.detectCategory(from: data) {
+            editVC.initialCategory = category
+        }
+
         editVC.loadViewIfNeeded()
         editVC.nameTextField.text = data.name
         editVC.descriptionTextView.text = data.description

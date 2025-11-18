@@ -46,7 +46,7 @@ final class SignInViewController: UIViewController {
   }
   
   private let appNameLabel = UILabel().then {
-    $0.text = "흡구오디?"
+    $0.text = "어딨쥐?"
     $0.font = .systemFont(ofSize: 32, weight: .bold)
     $0.textColor = .black
     $0.textAlignment = .center

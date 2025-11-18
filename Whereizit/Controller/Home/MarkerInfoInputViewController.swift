@@ -52,6 +52,10 @@ final class MarkerInfoInputViewController: UIViewController {
   var selectedEnvironmentTags: [String] = []
   var selectedTypeTags: [String] = []
   var selectedFacilityTags: [String] = []
+
+  // 수정 모드 진입 시 초기 카테고리를 받기 위한 변수
+  var initialCategory: String?
+
   private var tagSectionContainer: UIView = UIView()
   private var categoryButtons: [UIButton] = []
 
@@ -154,6 +158,9 @@ final class MarkerInfoInputViewController: UIViewController {
     self.defineFlexContainer()
     self.bindAreaImageButton()
     self.bindSaveButton()
+
+    // 수정 모드일 때 초기 UI 상태 복원
+    self.setupEditModeUI()
   }
 
 
@@ -182,6 +189,31 @@ final class MarkerInfoInputViewController: UIViewController {
     self.view.addSubview(self.scrollView)
     self.scrollView.addSubview(self.contentView)
     self.mapView.addSubview(self.markerPinImageView)
+  }
+
+  // 수정 모드일 때 카테고리 및 태그 UI 자동 선택
+  private func setupEditModeUI() {
+    guard isEditMode, let category = initialCategory else { return }
+
+    // 1. 해당하는 카테고리 버튼을 찾아서 선택 처리
+    if let categoryBtn = self.categoryButtons.first(where: { $0.titleLabel?.text == category }) {
+        // 단순히 버튼만 누르는게 아니라 onCategorySelected 로직을 태워야 태그 섹션이 그려짐
+        // 기존 데이터가 초기화되지 않도록 주의하며 호출해야 하지만,
+        // onCategorySelected 내부에서 초기화를 수행하므로,
+        // 여기서는 로직을 약간 변형하여 호출하거나,
+        // onCategorySelected를 호출한 뒤 다시 태그 배열을 복구해야 함.
+
+        // 하지만 가장 깔끔한 방법은:
+        // 1) 버튼 UI 업데이트
+        // 2) selectedCategory 변수 세팅
+        // 3) updateTagSections 호출 (여기서 태그 버튼 그릴 때 배열 체크해서 그림)
+
+        categoryBtn.backgroundColor = .systemBlue
+        categoryBtn.setTitleColor(.white, for: .normal)
+        self.selectedCategory = category
+
+        self.updateTagSections(for: category)
+    }
   }
 
 
@@ -265,7 +297,7 @@ final class MarkerInfoInputViewController: UIViewController {
     return button
   }
 
-  // 카테고리 선택 시 호출
+  // 카테고리 선택 시 호출 (사용자 탭)
   private func onCategorySelected(_ button: UIButton, category: String) {
     // 이미 선택된 카테고리를 다시 클릭한 경우
     if self.selectedCategory == category {
@@ -295,7 +327,7 @@ final class MarkerInfoInputViewController: UIViewController {
     button.setTitleColor(.white, for: .normal)
     self.selectedCategory = category
 
-    // 선택된 태그 초기화
+    // 사용자 탭 시에는 선택된 태그 초기화 (수정 모드 초기 세팅때는 이 함수 안탐)
     self.selectedEnvironmentTags.removeAll()
     self.selectedTypeTags.removeAll()
     self.selectedFacilityTags.removeAll()
@@ -367,6 +399,23 @@ final class MarkerInfoInputViewController: UIViewController {
                 $0.sizeToFit()
               }
 
+              // 수정 모드: 이미 선택된 태그인지 확인하여 UI 업데이트
+              var isSelected = false
+              switch title {
+              case "환경":
+                  if self.selectedEnvironmentTags.contains(tag) { isSelected = true }
+              case "유형":
+                  if self.selectedTypeTags.contains(tag) { isSelected = true }
+              case "시설":
+                  if self.selectedFacilityTags.contains(tag) { isSelected = true }
+              default: break
+              }
+
+              if isSelected {
+                  tagButton.isSelected = true
+                  self.updateButtonAppearance(tagButton)
+              }
+
               tagButton.rx.tap.bind { [weak self] in
                 self?.onTapButton(tagButton, sectionTitle: title)
               }.disposed(by: disposeBag)
@@ -391,6 +440,8 @@ final class MarkerInfoInputViewController: UIViewController {
 
   private func updateButtonAppearance(_ button: UIButton) {
     button.backgroundColor = button.isSelected ? .gray : .systemGray6
+    // 선택되었을 때 텍스트 색상도 변경해주면 좋음 (선택: 흰색 / 미선택: 라벨색)
+    button.setTitleColor(button.isSelected ? .white : .label, for: .normal)
   }
 
   private func updateSelectedTags(_ button: UIButton, sectionTitle: String) {
