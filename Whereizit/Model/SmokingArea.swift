@@ -16,6 +16,7 @@ struct SmokingArea {
   var description: String
   var areaLat: Double
   var areaLng: Double
+  var category: String
   var selectedEnvironmentTags: [String]
   var selectedTypeTags: [String]
   var selectedFacilityTags: [String]
@@ -30,6 +31,7 @@ struct SmokingArea {
         "description": description,
         "areaLat": areaLat,
         "areaLng": areaLng,
+        "category": category,
         "environmentTags": selectedEnvironmentTags,
         "typeTags": selectedTypeTags,
         "facilityTags": selectedFacilityTags,

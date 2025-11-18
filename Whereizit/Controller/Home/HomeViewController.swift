@@ -144,6 +144,7 @@ final class HomeViewController: UIViewController {
         else { continue } // 데이터 파싱 실패 시 건너뜀
         
         let imageURL = data["imageURL"] as? String ?? ""
+        let category = data["category"] as? String ?? ""
         let selectedEnvironmentTags = (data["environmentTags"] as? [String]) ?? []
         let selectedTypeTags = (data["typeTags"] as? [String]) ?? []
         let selectedFacilityTags = (data["facilityTags"] as? [String]) ?? []
@@ -157,6 +158,7 @@ final class HomeViewController: UIViewController {
           description: description,
           areaLat: areaLat,
           areaLng: areaLng,
+          category: category,
           selectedEnvironmentTags: selectedEnvironmentTags,
           selectedTypeTags: selectedTypeTags,
           selectedFacilityTags: selectedFacilityTags,

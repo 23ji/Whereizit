@@ -523,6 +523,7 @@ final class MarkerInfoInputViewController: UIViewController {
       description: description,
       areaLat: lat,
       areaLng: lng,
+      category: category,
       selectedEnvironmentTags: self.selectedEnvironmentTags,
       selectedTypeTags: self.selectedTypeTags,
       selectedFacilityTags: self.selectedFacilityTags,

@@ -243,7 +243,7 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "확인", style: .destructive) { _ in // .default -> .destructive
           self?.db.collection("smokingAreas").document(documentID).delete { error in
             print(error == nil ? "문서 삭제 성공" : "문서 삭제 실패: \(error!.localizedDescription)")
-            self?.dismiss(animated: true)
+            
           }
         })
         self?.present(alert, animated: true)

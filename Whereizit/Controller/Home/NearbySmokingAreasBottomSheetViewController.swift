@@ -100,8 +100,9 @@ final class NearbySmokingAreasBottomSheetViewController: UIViewController {
         if let name = data["name"] as? String,
            let description = data["description"] as? String,
            let areaLat = data["areaLat"] as? Double,
-           let areaLng = data["areaLng"] as? Double {
-          
+           let areaLng = data["areaLng"] as? Double,
+           let category = data["category"] as? String {
+
           let imageURL = data["imageURL"] as? String
           let envTags = data["environmentTags"] as? [String] ?? []
           let typeTags = data["typeTags"] as? [String] ?? []
@@ -114,6 +115,7 @@ final class NearbySmokingAreasBottomSheetViewController: UIViewController {
               description: description,
               areaLat: areaLat,
               areaLng: areaLng,
+              category: category,
               selectedEnvironmentTags: envTags,
               selectedTypeTags: typeTags,
               selectedFacilityTags: facTags,
