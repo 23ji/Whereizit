@@ -17,8 +17,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" fixedFrame="YES" image="launchScreen_Wind" translatesAutoresizingMaskIntoConstraints="NO" id="fpV-8f-Fb9">
-                                <rect key="frame" x="-246" y="118" width="884" height="582"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" fixedFrame="YES" image="lunchScreen_Whereizit" translatesAutoresizingMaskIntoConstraints="NO" id="i99-RI-JWB">
+                                <rect key="frame" x="-81" y="95" width="555" height="571"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                         </subviews>
@@ -32,7 +32,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="launchScreen_Wind" width="2282" height="2282"/>
+        <image name="lunchScreen_Whereizit" width="2282" height="2282"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
