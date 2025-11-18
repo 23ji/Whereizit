@@ -45,7 +45,8 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
     "화장실": "🚻",
     "쓰레기통": "🗑️",
     "물": "💧",
-    "흡연구역": "🚬"
+    "흡연구역": "🚬",
+    "카테고리 없음": "❓" // 예외 처리용 아이콘
   ]
 
   // 카테고리별 색상 매핑
@@ -53,15 +54,17 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
     "화장실": UIColor.systemBlue.withAlphaComponent(0.15),
     "쓰레기통": UIColor.systemGreen.withAlphaComponent(0.15),
     "물": UIColor.systemCyan.withAlphaComponent(0.15),
-    "흡연구역": UIColor.systemOrange.withAlphaComponent(0.15)
+    "흡연구역": UIColor.systemOrange.withAlphaComponent(0.15),
+    "카테고리 없음": UIColor.systemGray.withAlphaComponent(0.15)
   ]
 
-  // 카테고리별 텍스트 색상 매핑 (makeSmallCategoryBadge에서 사용)
+  // 카테고리별 텍스트 색상 매핑
   private let categoryTextColors: [String: UIColor] = [
     "화장실": .systemBlue,
     "쓰레기통": .systemGreen,
     "물": .systemCyan,
-    "흡연구역": .systemOrange
+    "흡연구역": .systemOrange,
+    "카테고리 없음": .systemGray
   ]
 
   private let areaImageView = UIImageView().then {
@@ -202,16 +205,19 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
       self.tagSections.forEach { $0.removeFromSuperview() }
       self.tagSections.removeAll()
 
-      // 카테고리 배지 추가 (이름 위 컨테이너에)
-      if let category = self.detectCategory(from: data) {
-        let badge = self.makeSmallCategoryBadge(category: category)
-        self.categoryBadge = badge
-        self.categoryBadgeContainer.flex.addItem(badge).marginBottom(6)
-        self.categoryBadgeContainer.isHidden = false
+      let categoryToDisplay: String
+      if !data.category.isEmpty {
+          categoryToDisplay = data.category
       } else {
-        self.categoryBadgeContainer.isHidden = true
+          categoryToDisplay = "카테고리 없음"
       }
-      self.categoryBadgeContainer.flex.markDirty() // 컨테이너 레이아웃 갱신
+
+      // 카테고리 배지 생성
+      let badge = self.makeSmallCategoryBadge(category: categoryToDisplay)
+      self.categoryBadge = badge
+      self.categoryBadgeContainer.flex.addItem(badge).marginBottom(6)
+      self.categoryBadgeContainer.isHidden = false
+      self.categoryBadgeContainer.flex.markDirty()
 
 
       let envSection = self.makeTagSection(title: "환경", tags: data.selectedEnvironmentTags, emoji: "📌")
@@ -243,7 +249,6 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "확인", style: .destructive) { _ in // .default -> .destructive
           self?.db.collection("smokingAreas").document(documentID).delete { error in
             print(error == nil ? "문서 삭제 성공" : "문서 삭제 실패: \(error!.localizedDescription)")
-            
           }
         })
         self?.present(alert, animated: true)
@@ -267,9 +272,10 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
         editVC.selectedTypeTags = data.selectedTypeTags
         editVC.selectedFacilityTags = data.selectedFacilityTags
 
-        // 중요: 카테고리 정보 주입 (detectCategory 이용)
-        if let category = self.detectCategory(from: data) {
-            editVC.initialCategory = category
+        if !data.category.isEmpty {
+            editVC.initialCategory = data.category
+        } else {
+            editVC.initialCategory = nil
         }
 
         editVC.loadViewIfNeeded()
@@ -366,36 +372,6 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
     self.areaImageView.kf.setImage(with: url)
   }
 
-  // 카테고리 감지 (태그 기반)
-  private func detectCategory(from data: SmokingArea) -> String? {
-    let allTags = data.selectedEnvironmentTags + data.selectedTypeTags + data.selectedFacilityTags
-
-    // 흡연구역 특화 태그
-    let smokingTags = ["실내", "실외", "밀폐형", "개방형", "흡연 구역", "별도 전자담배 구역", "의자", "라이터"]
-    if !allTags.filter({ smokingTags.contains($0) }).isEmpty {
-      return "흡연구역"
-    }
-
-    // 화장실 특화 태그
-    let toiletTags = ["남녀 구분", "남녀 공용", "휴지", "비데"]
-    if !allTags.filter({ toiletTags.contains($0) }).isEmpty {
-      return "화장실"
-    }
-
-    // 쓰레기통 특화 태그
-    let trashTags = ["일반 쓰레기", "재활용 쓰레기", "분리수거"]
-    if !allTags.filter({ trashTags.contains($0) }).isEmpty {
-      return "쓰레기통"
-    }
-
-    // 물 특화 태그
-    let waterTags = ["정수기", "음수대", "약수터", "온수", "얼음"]
-    if !allTags.filter({ waterTags.contains($0) }).isEmpty {
-      return "물"
-    }
-
-    return nil
-  }
 
   // 작은 카테고리 배지 생성
   private func makeSmallCategoryBadge(category: String) -> UIView {
