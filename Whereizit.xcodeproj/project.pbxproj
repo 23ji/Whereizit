@@ -570,7 +570,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = Z4QCD3KW2W;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Whereizit/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "어딨쥐?";
@@ -611,7 +611,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = Z4QCD3KW2W;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Whereizit/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "어딨쥐?";
