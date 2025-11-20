@@ -15,77 +15,59 @@ enum LoginType {
   case signIn
 }
 
-
 final class LoginButton: UIButton {
-  
-  init(type: LoginType) {
-    super.init(frame: .zero)
-    self.setupButton(type: type)
-  }
-  
-  required init?(coder: NSCoder) {
-    fatalError("버튼 생성 오류")
-  }
-  
+
   private func setupButton(type: LoginType) {
+
     var configuration = UIButton.Configuration.plain()
     configuration.imagePadding = 12
     configuration.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 14, bottom: 0, trailing: 14)
-    
-    self.layer.cornerRadius = 5
-    self.layer.masksToBounds = true
-    
-    switch type {
-      
-    case .login:
-      configuration.title = "로그인"
-      configuration.baseForegroundColor = .white
-      self.backgroundColor = .darkGray
 
-    case .google:
-      configuration.image = UIImage(named: "googleLoginButton")
-      configuration.title = "Google로 시작하기"
-      configuration.baseForegroundColor = .black
-      self.backgroundColor = .white
+    let title: String = switch type {
+    case .login: "로그인"
+    case .google: "Google로 시작하기"
+    case .kakao: "카카오로 시작하기"
+    case .apple: "Apple로 시작하기"
+    case .signIn: "이메일로 시작하기"
+    }
+
+    let imageName: String? = switch type {
+    case .google: "googleLoginButton"
+    case .kakao: "kakaoLoginButton"
+    default: nil
+    }
+
+    let bgColor: UIColor = switch type {
+    case .login: .darkGray
+    case .google: .white
+    case .kakao: UIColor(hexCode: "FEE500")
+    case .apple: .black
+    case .signIn: .lightGray
+    }
+
+    let titleColor: UIColor = if type == .login || type == .signIn {
+      .white
+    } else {
+      .black
+    }
+
+    configuration.title = title
+    configuration.baseForegroundColor = titleColor
+
+    if let imageName {
+      configuration.image = UIImage(named: imageName)
+    }
+
+    self.backgroundColor = bgColor
+
+    if type == .google {
       self.layer.borderWidth = 0.5
       self.layer.borderColor = UIColor.gray.cgColor
-      
-    case .kakao:
-      configuration.image = UIImage(named: "kakaoLoginButton")
-      configuration.title = "카카오로 시작하기"
-      configuration.baseForegroundColor = .black
-      self.backgroundColor = UIColor(hexCode: "FEE500")
-      
-    case .apple:
-      configuration.title = "apple로 시작하기"
-      
-    case .signIn:
-      configuration.title = "이메일로 시작하기"
-      configuration.baseForegroundColor = .white
-      self.backgroundColor = .lightGray
     }
-    self.configuration = configuration
-  }
-}
 
-//COlor로 옮기기
-extension UIColor {
-  
-  convenience init(hexCode: String, alpha: CGFloat = 1.0) {
-    var hexFormatted: String = hexCode.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).uppercased()
-    
-    if hexFormatted.hasPrefix("#") {
-      hexFormatted = String(hexFormatted.dropFirst())
-    }
-    
-    assert(hexFormatted.count == 6, "Invalid hex code used.")
-    
-    var rgbValue: UInt64 = 0
-    Scanner(string: hexFormatted).scanHexInt64(&rgbValue)
-    
-    self.init(red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
-              green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
-              blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
-              alpha: alpha)
+    self.layer.cornerRadius = 5
+    self.layer.masksToBounds = true
+
+    self.configuration = configuration
   }
 }
