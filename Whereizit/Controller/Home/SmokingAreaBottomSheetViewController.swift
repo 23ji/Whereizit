@@ -266,6 +266,8 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
         editVC.modalPresentationStyle = .formSheet
         editVC.isEditMode = true
 
+        // TODO: 상태를 밖에서 이런 식으로 설정하지 않고, 필요한 데이터를 넘겨주고 안에서 세팅하기
+        // TODO: 의존이 강하게 된다
         // 기존 데이터 주입
         editVC.imageURL = data.imageURL
         editVC.markerLat = data.areaLat
