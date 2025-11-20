@@ -240,8 +240,8 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
     //삭제 버튼
     self.deleteButton.rx.tap
       .subscribe(onNext: { [weak self] in
-        guard let data = self?.currentData,
-              let documentID = data.documentID else { return }
+        guard let data = self?.currentData else { return }
+        guard let documentID = data.documentID else { return }
 
         let alert = UIAlertController(title: "삭제", message: "등록한 구역을 삭제하시겠습니까?", preferredStyle: .alert)
 
@@ -259,7 +259,9 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
     // 수정 버튼
     self.editButton.rx.tap
       .subscribe(onNext: { [weak self] in
-        guard let self = self, let data = self.currentData else { return }
+        guard let self = self else { return }
+        guard let data = self.currentData else { return }
+
         let editVC = MarkerInfoInputViewController()
         editVC.modalPresentationStyle = .formSheet
         editVC.isEditMode = true
@@ -291,7 +293,8 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
     // 🚨 신고하기 버튼 액션
     self.reportButton.rx.tap
       .subscribe(onNext: { [weak self] in
-        guard let self = self, let data = self.currentData else { return }
+        guard let self = self else { return }
+        guard let data = self.currentData else { return }
 
         let reportReasons = [
           "잘못된 위치",
@@ -368,7 +371,9 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
 
 
   private func loadImage(from urlString: String?) {
-    guard let urlString = urlString, let url = URL(string: urlString) else { return }
+    guard let urlString = urlString else { return }
+    guard let url = URL(string: urlString) else { return }
+
     self.areaImageView.kf.setImage(with: url)
   }
 
