@@ -323,73 +323,73 @@ final class LoginViewController: UIViewController {
   }
   
   private func setupLayout() {
-    self.contentContainer.flex.direction(.column).alignItems(.center).paddingHorizontal(Metric.horizontalPadding).define { flex in
+    self.contentContainer.flex.direction(.column).alignItems(.center).paddingHorizontal(Metric.horizontalPadding).define {
       // Logo Section
-      flex.addItem(self.logoContainer)
+      $0.addItem(self.logoContainer)
         .width(Metric.logoSize)
         .height(Metric.logoSize)
         .marginTop(30)
-      
-      flex.addItem(self.appNameLabel)
+
+      $0.addItem(self.appNameLabel)
         .marginTop(16)
-      
-      flex.addItem(self.subtitleLabel)
+
+      $0.addItem(self.subtitleLabel)
         .marginTop(8)
         .marginHorizontal(Metric.horizontalPadding)
-      
+
       // Email Input
-      flex.addItem(self.emailContainer)
+      $0.addItem(self.emailContainer)
         .width(100%)
         .height(Metric.inputHeight)
         .marginTop(40)
         .marginHorizontal(Metric.horizontalPadding)
-      
+
       // Password Input
-      flex.addItem(self.passwordContainer)
+      $0.addItem(self.passwordContainer)
         .width(100%)
         .height(Metric.inputHeight)
         .marginTop(16)
         .marginHorizontal(Metric.horizontalPadding)
-      
+
       // Login Button
-      flex.addItem(self.loginButton)
+      $0.addItem(self.loginButton)
         .width(100%)
         .height(Metric.buttonHeight)
         .marginTop(24)
         .marginHorizontal(Metric.horizontalPadding)
-      
+
       // Divider
-      flex.addItem(self.dividerContainer)
+      $0.addItem(self.dividerContainer)
         .width(100%)
         .height(20)
         .marginTop(32)
         .marginHorizontal(Metric.horizontalPadding)
-      
+
       // Social Buttons
-      flex.addItem(self.appleButton)
-          .width(100%)
-          .height(Metric.buttonHeight)
-          .marginTop(12)
-          .marginHorizontal(Metric.horizontalPadding)
-      
-      flex.addItem(self.googleButton)
+      $0.addItem(self.appleButton)
+        .width(100%)
+        .height(Metric.buttonHeight)
+        .marginTop(12)
+        .marginHorizontal(Metric.horizontalPadding)
+
+      $0.addItem(self.googleButton)
         .width(100%)
         .height(Metric.buttonHeight)
         .marginTop(24)
         .marginHorizontal(Metric.horizontalPadding)
-      
-//      flex.addItem(self.kakaoButton)
-//        .width(100%)
-//        .height(Metric.buttonHeight)
-//        .marginTop(12)
-//        .marginHorizontal(Metric.horizontalPadding)
-      
+
+      //      $0.addItem(self.kakaoButton)
+      //        .width(100%)
+      //        .height(Metric.buttonHeight)
+      //        .marginTop(12)
+      //        .marginHorizontal(Metric.horizontalPadding)
+
       // Sign Up Button
-      flex.addItem(self.signUpButton)
+      $0.addItem(self.signUpButton)
         .marginTop(24)
-      
+
       // Skip Button
-      flex.addItem(self.skipButton)
+      $0.addItem(self.skipButton)
         .marginTop(10)
         .marginBottom(40)
     }
