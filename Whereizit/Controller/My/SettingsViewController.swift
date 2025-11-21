@@ -180,7 +180,7 @@ final class SettingsViewController: UIViewController {
   }
   
   
-  private func showToast(message: String, duration: TimeInterval = 2.0) {
+  private func showToast(message: String, duration: TimeInterval = 3.0) {
     let toastLabel = UILabel().then {
       $0.backgroundColor = UIColor.black.withAlphaComponent(0.7)
       $0.textColor = .white

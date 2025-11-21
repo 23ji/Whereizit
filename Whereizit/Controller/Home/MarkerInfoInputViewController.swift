@@ -191,22 +191,12 @@ final class MarkerInfoInputViewController: UIViewController {
     self.mapView.addSubview(self.markerPinImageView)
   }
 
-  // 수정 모드일 때 카테고리 및 태그 UI 자동 선택
+
   private func setupEditModeUI() {
-    guard isEditMode, let category = initialCategory else { return }
+    guard isEditMode else { return }
+    guard let category = initialCategory else { return }
 
-    // 1. 해당하는 카테고리 버튼을 찾아서 선택 처리
     if let categoryBtn = self.categoryButtons.first(where: { $0.titleLabel?.text == category }) {
-        // 단순히 버튼만 누르는게 아니라 onCategorySelected 로직을 태워야 태그 섹션이 그려짐
-        // 기존 데이터가 초기화되지 않도록 주의하며 호출해야 하지만,
-        // onCategorySelected 내부에서 초기화를 수행하므로,
-        // 여기서는 로직을 약간 변형하여 호출하거나,
-        // onCategorySelected를 호출한 뒤 다시 태그 배열을 복구해야 함.
-
-        // 하지만 가장 깔끔한 방법은:
-        // 1) 버튼 UI 업데이트
-        // 2) selectedCategory 변수 세팅
-        // 3) updateTagSections 호출 (여기서 태그 버튼 그릴 때 배열 체크해서 그림)
 
         categoryBtn.backgroundColor = .systemBlue
         categoryBtn.setTitleColor(.white, for: .normal)
@@ -589,7 +579,7 @@ extension MarkerInfoInputViewController: UIImagePickerControllerDelegate, UINavi
     let alert = UIAlertController(title: nil, message: "이미지 업로드 중...", preferredStyle: .alert)
     present(alert, animated: true)
 
-    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
       alert.dismiss(animated: true)
     }
 
