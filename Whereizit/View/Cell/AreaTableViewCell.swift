@@ -1,5 +1,5 @@
 //
-//  SmokingAreaTableViewCell.swift
+//  AreaTableViewCell.swift
 //  Whereizit
 //
 //  Created by 23ji on 10/3/25.
@@ -15,7 +15,7 @@ import UIKit
 import CoreLocation
 
 
-final class SmokingAreaTableViewCell: UITableViewCell {
+final class AreaTableViewCell: UITableViewCell {
 
   // TODO: Mark 구분하기
   private let areaImageView = UIImageView().then {
@@ -81,7 +81,7 @@ final class SmokingAreaTableViewCell: UITableViewCell {
   }
   
   
-  func configure(with area: SmokingArea, currentLocation: CLLocation?) {
+  func configure(with area: Area, currentLocation: CLLocation?) {
     self.titleLabel.text = area.name
     self.loadImage(from: area.imageURL)
     

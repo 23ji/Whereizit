@@ -486,7 +486,7 @@ final class MarkerInfoInputViewController: UIViewController {
         guard let self = self else { return }
 
         // 저장 가능한 경우에만 화면 닫기
-        if self.saveSmokingAreaInfo() {
+        if self.saveAreaInfo() {
           self.view.window?.rootViewController?.dismiss(animated: true)
         }
       })
@@ -494,7 +494,7 @@ final class MarkerInfoInputViewController: UIViewController {
   }
 
 
-  private func saveSmokingAreaInfo() -> Bool {
+  private func saveAreaInfo() -> Bool {
     guard
       let name = self.nameTextField.text, !name.isEmpty,
       let description = self.descriptionTextView.text, !description.isEmpty,
@@ -516,7 +516,7 @@ final class MarkerInfoInputViewController: UIViewController {
     let safeLng = String(format: "%.9f", lng)
     let documentID = "\(safeLat)_\(safeLng)"
 
-    let smokingArea = SmokingArea(
+    let area = Area(
       documentID: documentID,
       imageURL: finalImageURL,
       name: name,
@@ -538,7 +538,7 @@ final class MarkerInfoInputViewController: UIViewController {
         print(error)
       }
 
-      docRef.setData(smokingArea.asDictionary)
+      docRef.setData(area.asDictionary)
     }
     return true
   }

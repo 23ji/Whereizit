@@ -1,5 +1,5 @@
 //
-//  MySmokingAreasViewController.swift
+//  MyAreasViewController.swift
 //  Whereizit
 //
 //  Created by 이상지 on 10/20/25.
@@ -14,7 +14,7 @@ import Then
 import CoreLocation
 import UIKit
 
-final class MySmokingAreasViewController: UIViewController {
+final class MyAreasViewController: UIViewController {
   
   let user = Auth.auth().currentUser
   
@@ -35,7 +35,7 @@ final class MySmokingAreasViewController: UIViewController {
   
   let db = Firestore.firestore()
   
-  private var smokingAreas: [SmokingArea] = []
+  private var areas: [Area] = []
   
   private var areaName: String = ""
   
@@ -44,12 +44,12 @@ final class MySmokingAreasViewController: UIViewController {
     super.viewDidLoad()
     self.navigationItem.title = "내가 추가한 구역 목록"
     self.view.backgroundColor = .white
-    self.fetchSmokingAreas()
+    self.fetchAreas()
     
     self.tableView.delegate = self
     self.tableView.dataSource = self
     
-    self.tableView.register(SmokingAreaTableViewCell.self, forCellReuseIdentifier: "SmokingAreaCell")
+    self.tableView.register(AreaTableViewCell.self, forCellReuseIdentifier: "AreaCell")
     self.tableView.rowHeight = UITableView.automaticDimension
     self.tableView.estimatedRowHeight = 120
     
@@ -79,7 +79,7 @@ final class MySmokingAreasViewController: UIViewController {
       }
   }
   
-  private func fetchSmokingAreas() {
+  private func fetchAreas() {
     guard let userEmail = self.user?.email else { return }
     
     db.collection("smokingAreas")
@@ -87,7 +87,7 @@ final class MySmokingAreasViewController: UIViewController {
       .addSnapshotListener { [weak self] snapshot, error in
         guard let self = self, let snapshot = snapshot else { return }
         
-        var newAreas: [SmokingArea] = []
+        var newAreas: [Area] = []
         
         for doc in snapshot.documents {
           let data = doc.data()
@@ -104,7 +104,7 @@ final class MySmokingAreasViewController: UIViewController {
             let facTags = data["facilityTags"] as? [String] ?? []
             let timestamp = data["uploadDate"] as? Timestamp ?? Timestamp(date: Date())
             
-            let area = SmokingArea(
+            let area = Area(
               documentID: doc.documentID,
               imageURL: imageURL,
               name: name,
@@ -132,24 +132,24 @@ final class MySmokingAreasViewController: UIViewController {
           }
         }
         
-        self.smokingAreas = newAreas
+        self.areas = newAreas
         self.tableView.reloadData()
       }
   }
 }
 
 
-extension MySmokingAreasViewController: UITableViewDelegate, UITableViewDataSource {
+extension MyAreasViewController: UITableViewDelegate, UITableViewDataSource {
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return smokingAreas.count
+    return areas.count
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    guard let cell = tableView.dequeueReusableCell(withIdentifier: "SmokingAreaCell", for: indexPath)
-            as? SmokingAreaTableViewCell else { return UITableViewCell() }
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: "AreaCell", for: indexPath)
+            as? AreaTableViewCell else { return UITableViewCell() }
     
-    let area = smokingAreas[indexPath.row]
-    
+    let area = areas[indexPath.row]
+
     // area 데이터 cell의 configure에 넘겨주기
     cell.configure(with: area, currentLocation: currentLocation)
     
@@ -159,10 +159,10 @@ extension MySmokingAreasViewController: UITableViewDelegate, UITableViewDataSour
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
     
-    let area = smokingAreas[indexPath.row]
-    
+    let area = areas[indexPath.row]
+
     // BottomSheet 띄우기
-    let bottomSheetVC = SmokingAreaBottomSheetViewController()
+    let bottomSheetVC = areaBottomSheetViewController()
     bottomSheetVC.configure(with: area)
     bottomSheetVC.modalPresentationStyle = .pageSheet
     
@@ -177,13 +177,13 @@ extension MySmokingAreasViewController: UITableViewDelegate, UITableViewDataSour
 }
 
 
-extension MySmokingAreasViewController: CLLocationManagerDelegate {
+extension MyAreasViewController: CLLocationManagerDelegate {
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
     self.currentLocation = locations.last
     
     // 거리 기준 정렬
     if let currentLocation = self.currentLocation {
-      self.smokingAreas.sort { a, b in
+      self.areas.sort { a, b in
         let locA = CLLocation(latitude: a.areaLat, longitude: a.areaLng)
         let locB = CLLocation(latitude: b.areaLat, longitude: b.areaLng)
         return currentLocation.distance(from: locA) < currentLocation.distance(from: locB)

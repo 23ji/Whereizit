@@ -1,5 +1,5 @@
 //
-//  SmokingAreaBottomSheetViewController.swift
+//  areaBottomSheetViewController.swift
 //  Whereizit
 //
 //  Created by 23ji on 8/31/25.
@@ -23,7 +23,7 @@ import RxSwift
 import UIKit
 
 
-final class SmokingAreaBottomSheetViewController: UIViewController {
+final class areaBottomSheetViewController: UIViewController {
 
   private enum Metric {
     static let horizontalMargin: CGFloat = 20
@@ -35,7 +35,7 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
 
   // MARK: Components
 
-  private var currentData: SmokingArea?
+  private var currentData: Area?
   private let db = Firestore.firestore()
   private let disposeBag = DisposeBag()
   private let rootFlexContainer = UIView()
@@ -185,7 +185,7 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
 
   // MARK: Public Method
 
-  public func configure(with data: SmokingArea) {
+  public func configure(with data: Area) {
     self.currentData = data
 
     DispatchQueue.main.async {
@@ -340,7 +340,7 @@ final class SmokingAreaBottomSheetViewController: UIViewController {
   }
 
 
-  private func submitReport(data: SmokingArea, reason: String) {
+  private func submitReport(data: Area, reason: String) {
     db.collection("reports").addDocument(data: [
       "reportedAreaID": data.documentID ?? "unknown",
       "reportedName": data.name,

@@ -1,5 +1,5 @@
 //
-//  SmokingArea.swift
+//  Area.swift
 //  Whereizit
 //
 //  Created by 이상지 on 8/29/25.
@@ -9,7 +9,7 @@ import FirebaseFirestore
 
 import Foundation
 
-struct SmokingArea {
+struct Area {
   var documentID: String?
   var imageURL: String?
   var name: String

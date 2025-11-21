@@ -58,13 +58,13 @@ final class HomeViewController: UIViewController {
   var nearbyPanel: FloatingPanelController!
   var tappedPanel: FloatingPanelController!
   
-  var nearBySmokingAreasBottomSheetVC = NearbySmokingAreasBottomSheetViewController()
-  var smokingAreaBottomSheetVC = SmokingAreaBottomSheetViewController()
-  
+  var nearByAreasBottomSheetVC = NearbyAreasBottomSheetViewController()
+  var areaBottomSheetVC = areaBottomSheetViewController()
+
   
   // MARK: Rx
   
-  private let markerTapped = PublishSubject<SmokingArea>()
+  private let markerTapped = PublishSubject<Area>()
   private let disposeBag = DisposeBag()
   
   
@@ -76,7 +76,7 @@ final class HomeViewController: UIViewController {
     self.addSubviews()
     self.makeConstraints()
     self.setLocationManager()
-    self.observeSmokingAreas()
+    self.observeAreas()
     self.setupPanels()
     self.bind()
     
@@ -126,7 +126,7 @@ final class HomeViewController: UIViewController {
     self.areaMarkers.removeAll()
   }
   
-  private func observeSmokingAreas() {
+  private func observeAreas() {
     // [FIX] snapshot.documentChanges를 사용하여 효율적으로 마커를 관리합니다.
     db.collection("smokingAreas").addSnapshotListener { [weak self] snapshot, error in
       guard let self = self, let snapshot = snapshot else { return }
@@ -151,7 +151,7 @@ final class HomeViewController: UIViewController {
         let uploadTimestamp = data["uploadDate"] as? Timestamp ?? Timestamp(date: Date())
         let uploadUser = data["uploadUser"] as? String ?? ""
         
-        let areaData = SmokingArea(
+        let areaData = Area(
           documentID: documentID,
           imageURL: imageURL,
           name: name,
@@ -219,10 +219,10 @@ final class HomeViewController: UIViewController {
     self.markerTapped
       .subscribe(onNext: { [weak self] areaData in
         guard let self = self else { return }
-        self.smokingAreaBottomSheetVC.configure(with: areaData)
+        self.areaBottomSheetVC.configure(with: areaData)
         self.tappedPanel.move(to: .half, animated: true)
         self.nearbyPanel.move(to: .hidden, animated: true)
-        self.moveCameraToSmokingArea(lat: areaData.areaLat, lng: areaData.areaLng)
+        self.moveCameraToArea(lat: areaData.areaLat, lng: areaData.areaLng)
       })
       .disposed(by: disposeBag)
     
@@ -281,18 +281,18 @@ extension HomeViewController: FloatingPanelControllerDelegate {
     self.nearbyPanel = FloatingPanelController()
     self.nearbyPanel.surfaceView.layer.cornerRadius = 15
     self.nearbyPanel.surfaceView.layer.masksToBounds = true
-    self.nearbyPanel.set(contentViewController: nearBySmokingAreasBottomSheetVC)
+    self.nearbyPanel.set(contentViewController: nearByAreasBottomSheetVC)
     self.nearbyPanel.addPanel(toParent: self)
     self.nearbyPanel.move(to: .tip, animated: false)
     
-    self.nearBySmokingAreasBottomSheetVC.delegate = self
+    self.nearByAreasBottomSheetVC.delegate = self
     
     // Tapped 패널
     self.tappedPanel = FloatingPanelController()
     self.tappedPanel.delegate = self
     self.tappedPanel.surfaceView.layer.cornerRadius = 15
     self.tappedPanel.surfaceView.layer.masksToBounds = true
-    self.tappedPanel.set(contentViewController: smokingAreaBottomSheetVC)
+    self.tappedPanel.set(contentViewController: areaBottomSheetVC)
     self.tappedPanel.addPanel(toParent: self)
     self.tappedPanel.move(to: .hidden, animated: false)
   }
@@ -321,18 +321,18 @@ extension HomeViewController: NMFMapViewTouchDelegate {
 }
 
 
-extension HomeViewController: NearbySmokingAreasDelegate {
-  func moveCameraToSmokingArea(lat: Double, lng: Double) {
+extension HomeViewController: NearbyAreasDelegate {
+  func moveCameraToArea(lat: Double, lng: Double) {
     let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: lat, lng: lng))
     cameraUpdate.animation = .easeIn
     self.mapView.mapView.moveCamera(cameraUpdate)
   }
   
   
-  func showSmokingAreaBottomSheet(areaData: SmokingArea) {
-    self.smokingAreaBottomSheetVC.configure(with: areaData)
+  func showAreaBottomSheet(areaData: Area) {
+    self.areaBottomSheetVC.configure(with: areaData)
     self.tappedPanel.move(to: .half, animated: true)
     self.nearbyPanel.move(to: .hidden, animated: true)
-    print("showSmokingAreaBottomSheet 동작")
+    print("showAreaBottomSheet 동작")
   }
 }

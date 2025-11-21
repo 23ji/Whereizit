@@ -67,7 +67,7 @@ final class MyPageViewController: UIViewController {
   
   // MARK: Buttons
   
-  private let mySmokingAreasButton = UIButton().then {
+  private let myAreasButton = UIButton().then {
     $0.setTitle("내가 등록한 구역", for: .normal)
     $0.setTitleColor(.white, for: .normal)
     $0.backgroundColor = .systemGreen
@@ -177,7 +177,7 @@ final class MyPageViewController: UIViewController {
             .alignSelf(.center)
           
           $0.addItem().direction(.column).marginTop(Metric.topMarginButtonsStack).define { flex in
-            flex.addItem(self.mySmokingAreasButton)
+            flex.addItem(self.myAreasButton)
               .height(Metric.buttonHeight)
               .marginBottom(Metric.buttonMarginBottom)
             
@@ -224,10 +224,10 @@ final class MyPageViewController: UIViewController {
   }
   
   private func bindActions() {
-    self.mySmokingAreasButton.rx.tap
+    self.myAreasButton.rx.tap
       .subscribe(onNext: { [weak self] in
-        let mySmokingAreasVC = MySmokingAreasViewController()
-        self?.navigationController?.pushViewController(mySmokingAreasVC, animated: true)
+        let myAreasVC = MyAreasViewController()
+        self?.navigationController?.pushViewController(myAreasVC, animated: true)
       })
       .disposed(by: disposeBag)
     

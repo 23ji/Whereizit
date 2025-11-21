@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		490221A12E67DBBF0069DDEC /* SmokingArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490221A02E67DBBF0069DDEC /* SmokingArea.swift */; };
-		49031DFF2EA5D9EE004F5857 /* MySmokingAreasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49031DFE2EA5D9EE004F5857 /* MySmokingAreasViewController.swift */; };
+		490221A12E67DBBF0069DDEC /* Area.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490221A02E67DBBF0069DDEC /* Area.swift */; };
+		49031DFF2EA5D9EE004F5857 /* MyAreasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49031DFE2EA5D9EE004F5857 /* MyAreasViewController.swift */; };
 		49031E062EAF482B004F5857 /* RxGesture in Frameworks */ = {isa = PBXBuildFile; productRef = 49031E052EAF482B004F5857 /* RxGesture */; };
 		49031E082EAF4E11004F5857 /* FullImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49031E072EAF4E11004F5857 /* FullImageViewController.swift */; };
 		49031E0B2EAF4E82004F5857 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 49031E0A2EAF4E82004F5857 /* SDWebImage */; };
@@ -24,7 +24,7 @@
 		4969371D2E793BA3008B0FCD /* KakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 4969371C2E793BA3008B0FCD /* KakaoSDK */; };
 		498B448F2E7A53E800FF06B6 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498B448E2E7A53E800FF06B6 /* MainTabBarController.swift */; };
 		498B44912E7A82F900FF06B6 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498B44902E7A82F900FF06B6 /* MyPageViewController.swift */; };
-		498ECFA32E77F32C00B9EABC /* NearbySmokingAreasBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498ECFA22E77F32C00B9EABC /* NearbySmokingAreasBottomSheetViewController.swift */; };
+		498ECFA32E77F32C00B9EABC /* NearbyAreasBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498ECFA22E77F32C00B9EABC /* NearbyAreasBottomSheetViewController.swift */; };
 		49E0FF452ECC415500A0B97F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 49E0FF442ECC415500A0B97F /* GoogleService-Info.plist */; };
 		49E629602E27756C00751E26 /* MarkerPositionSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E6295F2E27756C00751E26 /* MarkerPositionSelectorViewController.swift */; };
 		49E629652E2F866000751E26 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 49E629642E2F866000751E26 /* SnapKit */; };
@@ -44,7 +44,7 @@
 		9FA27D2F2E82152100D36B6C /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 9FA27D2E2E82152100D36B6C /* GoogleSignInSwift */; };
 		9FA6B1792E64473E00A94571 /* areaBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA6B1782E64473E00A94571 /* areaBottomSheetViewController.swift */; };
 		9FA9DE722E65DB93004D71A7 /* PanModal in Frameworks */ = {isa = PBXBuildFile; productRef = 9FA9DE712E65DB93004D71A7 /* PanModal */; };
-		9FAB5F9A2E90F9E600A7EE33 /* SmokingAreaTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0EB9282E8FA15C0091976A /* SmokingAreaTableViewCell.swift */; };
+		9FAB5F9A2E90F9E600A7EE33 /* AreaTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0EB9282E8FA15C0091976A /* AreaTableViewCell.swift */; };
 		9FB2BC072E79783500C3B4F3 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB2BC062E79783500C3B4F3 /* LoginViewController.swift */; };
 		9FB2BC0A2E7980A800C3B4F3 /* RxKakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 9FB2BC092E7980A800C3B4F3 /* RxKakaoSDK */; };
 		9FB65AC22E7B7D4E00F788BF /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB65AC12E7B7D4E00F788BF /* SignInViewController.swift */; };
@@ -59,8 +59,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		490221A02E67DBBF0069DDEC /* SmokingArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokingArea.swift; sourceTree = "<group>"; };
-		49031DFE2EA5D9EE004F5857 /* MySmokingAreasViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySmokingAreasViewController.swift; sourceTree = "<group>"; };
+		490221A02E67DBBF0069DDEC /* Area.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Area.swift; sourceTree = "<group>"; };
+		49031DFE2EA5D9EE004F5857 /* MyAreasViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAreasViewController.swift; sourceTree = "<group>"; };
 		49031E072EAF4E11004F5857 /* FullImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullImageViewController.swift; sourceTree = "<group>"; };
 		49031E102EB08A0B004F5857 /* PrivacyPolicyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyViewController.swift; sourceTree = "<group>"; };
 		49031E122EB09A67004F5857 /* Whereizit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Whereizit.entitlements; sourceTree = "<group>"; };
@@ -72,11 +72,11 @@
 		49288ABA2D19450D00FF1E50 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		498B448E2E7A53E800FF06B6 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		498B44902E7A82F900FF06B6 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
-		498ECFA22E77F32C00B9EABC /* NearbySmokingAreasBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbySmokingAreasBottomSheetViewController.swift; sourceTree = "<group>"; };
+		498ECFA22E77F32C00B9EABC /* NearbyAreasBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbyAreasBottomSheetViewController.swift; sourceTree = "<group>"; };
 		49E0FF442ECC415500A0B97F /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		49E6295F2E27756C00751E26 /* MarkerPositionSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerPositionSelectorViewController.swift; sourceTree = "<group>"; };
 		71E8D5BE6D6F3B97EE6F1699 /* Pods_Whereizit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Whereizit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9F0EB9282E8FA15C0091976A /* SmokingAreaTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokingAreaTableViewCell.swift; sourceTree = "<group>"; };
+		9F0EB9282E8FA15C0091976A /* AreaTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaTableViewCell.swift; sourceTree = "<group>"; };
 		9F6207772EC0365D0045D08C /* AppStarter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStarter.swift; sourceTree = "<group>"; };
 		9F62077A2EC039110045D08C /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		9F62077C2EC047E90045D08C /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
@@ -181,7 +181,7 @@
 			isa = PBXGroup;
 			children = (
 				9FA6B1782E64473E00A94571 /* areaBottomSheetViewController.swift */,
-				498ECFA22E77F32C00B9EABC /* NearbySmokingAreasBottomSheetViewController.swift */,
+				498ECFA22E77F32C00B9EABC /* NearbyAreasBottomSheetViewController.swift */,
 				A77C88BE2E2528A8002D725E /* HomeViewController.swift */,
 				49E6295F2E27756C00751E26 /* MarkerPositionSelectorViewController.swift */,
 				A7990CBD2E288E5100B3D3CE /* MarkerInfoInputViewController.swift */,
@@ -195,7 +195,7 @@
 				498B44902E7A82F900FF06B6 /* MyPageViewController.swift */,
 				9FE2378B2EAF8B5500B19283 /* SettingsViewController.swift */,
 				49031E102EB08A0B004F5857 /* PrivacyPolicyViewController.swift */,
-				49031DFE2EA5D9EE004F5857 /* MySmokingAreasViewController.swift */,
+				49031DFE2EA5D9EE004F5857 /* MyAreasViewController.swift */,
 			);
 			path = My;
 			sourceTree = "<group>";
@@ -210,7 +210,7 @@
 		9F6207742EC035DE0045D08C /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				9F0EB9282E8FA15C0091976A /* SmokingAreaTableViewCell.swift */,
+				9F0EB9282E8FA15C0091976A /* AreaTableViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -256,7 +256,7 @@
 		A774711D2D58D8ED006F2F0D /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				490221A02E67DBBF0069DDEC /* SmokingArea.swift */,
+				490221A02E67DBBF0069DDEC /* Area.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -404,19 +404,19 @@
 				49288AAD2D19450C00FF1E50 /* AppDelegate.swift in Sources */,
 				49288AAF2D19450C00FF1E50 /* SceneDelegate.swift in Sources */,
 				9FE2378C2EAF8B5500B19283 /* SettingsViewController.swift in Sources */,
-				9FAB5F9A2E90F9E600A7EE33 /* SmokingAreaTableViewCell.swift in Sources */,
-				490221A12E67DBBF0069DDEC /* SmokingArea.swift in Sources */,
+				9FAB5F9A2E90F9E600A7EE33 /* AreaTableViewCell.swift in Sources */,
+				490221A12E67DBBF0069DDEC /* Area.swift in Sources */,
 				498B448F2E7A53E800FF06B6 /* MainTabBarController.swift in Sources */,
 				A7990CBE2E288E5200B3D3CE /* MarkerInfoInputViewController.swift in Sources */,
 				9FB65AC22E7B7D4E00F788BF /* SignInViewController.swift in Sources */,
-				498ECFA32E77F32C00B9EABC /* NearbySmokingAreasBottomSheetViewController.swift in Sources */,
+				498ECFA32E77F32C00B9EABC /* NearbyAreasBottomSheetViewController.swift in Sources */,
 				498B44912E7A82F900FF06B6 /* MyPageViewController.swift in Sources */,
 				9F62077B2EC039110045D08C /* Color.swift in Sources */,
 				9F62077D2EC047E90045D08C /* Constant.swift in Sources */,
 				9FA6B1792E64473E00A94571 /* areaBottomSheetViewController.swift in Sources */,
 				49031E082EAF4E11004F5857 /* FullImageViewController.swift in Sources */,
 				49031E112EB08A0B004F5857 /* PrivacyPolicyViewController.swift in Sources */,
-				49031DFF2EA5D9EE004F5857 /* MySmokingAreasViewController.swift in Sources */,
+				49031DFF2EA5D9EE004F5857 /* MyAreasViewController.swift in Sources */,
 				9F6207782EC0365D0045D08C /* AppStarter.swift in Sources */,
 				9FDBC1FC2E867BA2009924E8 /* LoginButton.swift in Sources */,
 			);

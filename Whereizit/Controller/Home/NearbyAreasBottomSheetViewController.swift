@@ -1,5 +1,5 @@
 //
-//  NearbySmokingAreasBottomSheetViewController.swift
+//  NearbyAreasBottomSheetViewController.swift
 //  Whereizit
 //
 //  Created by 이상지 on 9/15/25.
@@ -15,16 +15,16 @@ import CoreLocation
 import UIKit
 
 
-protocol NearbySmokingAreasDelegate: AnyObject {
-  func moveCameraToSmokingArea(lat: Double, lng: Double)
+protocol NearbyAreasDelegate: AnyObject {
+  func moveCameraToArea(lat: Double, lng: Double)
   
-  func showSmokingAreaBottomSheet(areaData: SmokingArea)
+  func showAreaBottomSheet(areaData: Area)
 }
 
 
-final class NearbySmokingAreasBottomSheetViewController: UIViewController {
+final class NearbyAreasBottomSheetViewController: UIViewController {
   
-  weak var delegate: NearbySmokingAreasDelegate?
+  weak var delegate: NearbyAreasDelegate?
   
   let user = Auth.auth().currentUser
   
@@ -45,20 +45,20 @@ final class NearbySmokingAreasBottomSheetViewController: UIViewController {
   
   let db = Firestore.firestore()
   
-  private var smokingAreas: [SmokingArea] = []
-  
+  private var areas: [Area] = []
+
   private var areaName: String = ""
   
   
   override func viewDidLoad() {
     super.viewDidLoad()
     self.view.backgroundColor = .white
-    self.fetchSmokingAreas()
+    self.fetchAreas()
     
     self.tableView.delegate = self
     self.tableView.dataSource = self
     
-    self.tableView.register(SmokingAreaTableViewCell.self, forCellReuseIdentifier: "SmokingAreaCell")
+    self.tableView.register(AreaTableViewCell.self, forCellReuseIdentifier: "AreaCell")
     self.tableView.rowHeight = UITableView.automaticDimension
     self.tableView.estimatedRowHeight = 120
     
@@ -88,11 +88,11 @@ final class NearbySmokingAreasBottomSheetViewController: UIViewController {
       }
   }
   
-  private func fetchSmokingAreas() {
+  private func fetchAreas() {
     db.collection("smokingAreas").addSnapshotListener { [weak self] snapshot, error in
       guard let self = self, let snapshot = snapshot else { return }
       
-      var newAreas: [SmokingArea] = []
+      var newAreas: [Area] = []
       
       for doc in snapshot.documents {
         let data = doc.data()
@@ -109,7 +109,7 @@ final class NearbySmokingAreasBottomSheetViewController: UIViewController {
           let facTags = data["facilityTags"] as? [String] ?? []
           let timestamp = data["uploadDate"] as? Timestamp ?? Timestamp(date: Date())
 
-          let area = SmokingArea(
+          let area = Area(
               imageURL: imageURL,
               name: name,
               description: description,
@@ -136,24 +136,24 @@ final class NearbySmokingAreasBottomSheetViewController: UIViewController {
         }
       }
       
-      self.smokingAreas = newAreas
+      self.areas = newAreas
       self.tableView.reloadData()
     }
   }
 }
 
 
-extension NearbySmokingAreasBottomSheetViewController: UITableViewDelegate, UITableViewDataSource {
+extension NearbyAreasBottomSheetViewController: UITableViewDelegate, UITableViewDataSource {
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return smokingAreas.count
+    return areas.count
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    guard let cell = tableView.dequeueReusableCell(withIdentifier: "SmokingAreaCell", for: indexPath)
-            as? SmokingAreaTableViewCell else { return UITableViewCell() }
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: "AreaCell", for: indexPath)
+            as? AreaTableViewCell else { return UITableViewCell() }
     
-    let area = smokingAreas[indexPath.row]
-    
+    let area = areas[indexPath.row]
+
     // area 데이터 cell의 configure에 넘겨주기
     cell.configure(with: area, currentLocation: self.currentLocation)
     
@@ -161,22 +161,22 @@ extension NearbySmokingAreasBottomSheetViewController: UITableViewDelegate, UITa
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    let area = smokingAreas[indexPath.row]
-    delegate?.moveCameraToSmokingArea(lat: area.areaLat, lng: area.areaLng)
-    delegate?.showSmokingAreaBottomSheet(areaData: area)
+    let area = areas[indexPath.row]
+    delegate?.moveCameraToArea(lat: area.areaLat, lng: area.areaLng)
+    delegate?.showAreaBottomSheet(areaData: area)
     
     tableView.deselectRow(at: indexPath, animated: true)
   }
 }
 
 
-extension NearbySmokingAreasBottomSheetViewController: CLLocationManagerDelegate {
+extension NearbyAreasBottomSheetViewController: CLLocationManagerDelegate {
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
       self.currentLocation = locations.last
       
       // 거리 기준 정렬
       if let currentLocation = self.currentLocation {
-          self.smokingAreas.sort { a, b in
+          self.areas.sort { a, b in
               let locA = CLLocation(latitude: a.areaLat, longitude: a.areaLng)
               let locB = CLLocation(latitude: b.areaLat, longitude: b.areaLng)
               return currentLocation.distance(from: locA) < currentLocation.distance(from: locB)
