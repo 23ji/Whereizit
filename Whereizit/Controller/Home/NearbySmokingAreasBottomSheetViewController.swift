@@ -1,6 +1,6 @@
 //
 //  NearbySmokingAreasBottomSheetViewController.swift
-//  SmokingAreaOdi
+//  Whereizit
 //
 //  Created by 이상지 on 9/15/25.
 //

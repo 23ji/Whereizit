@@ -1,6 +1,6 @@
 //
 //  PrivacyPolicyViewController.swift
-//  SmokingAreaOdi
+//  Whereizit
 //
 //  Created by 이상지 on 10/28/25.
 //

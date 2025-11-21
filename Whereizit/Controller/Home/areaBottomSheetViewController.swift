@@ -1,6 +1,6 @@
 //
 //  SmokingAreaBottomSheetViewController.swift
-//  SmokingAreaOdi
+//  Whereizit
 //
 //  Created by 23ji on 8/31/25.
 //

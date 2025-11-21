@@ -1,6 +1,6 @@
 //
 //  SmokingArea.swift
-//  SmokingAreaOdi
+//  Whereizit
 //
 //  Created by 이상지 on 8/29/25.
 //

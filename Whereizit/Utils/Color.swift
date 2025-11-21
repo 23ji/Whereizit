@@ -1,6 +1,6 @@
 //
 //  Color.swift
-//  SmokingAreaOdi
+//  Whereizit
 //
 //  Created by 23ji on 11/9/25.
 //

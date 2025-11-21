@@ -1,6 +1,6 @@
 //
 //  LoginButton.swift
-//  SmokingAreaOdi
+//  Whereizit
 //
 //  Created by 23ji on 9/26/25.
 //

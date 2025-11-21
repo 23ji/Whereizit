@@ -1,6 +1,6 @@
 //
 //  FullImageViewController.swift
-//  SmokingAreaOdi
+//  Whereizit
 //
 //  Created by 이상지 on 10/27/25.
 //

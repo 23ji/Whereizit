@@ -1,6 +1,6 @@
 //
 //  SmokingAreaTableViewCell.swift
-//  SmokingAreaOdi
+//  Whereizit
 //
 //  Created by 23ji on 10/3/25.
 //

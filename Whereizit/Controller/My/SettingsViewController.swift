@@ -1,6 +1,6 @@
 //
 //  SettingsViewController.swift
-//  SmokingAreaOdi
+//  Whereizit
 //
 //  Created by 23ji on 10/27/25.
 //

@@ -1,6 +1,6 @@
 //
 //  LoginViewController.swift
-//  SmokingAreaOdi
+//  Whereizit
 //
 //  Created by 23ji on 9/16/25.
 //
