@@ -169,6 +169,10 @@ final class HomeViewController: UIViewController {
         switch change.type {
         case .added:
           let areaMarker = NMFMarker()
+          switch areaData.category {
+          case "화장실": areaMarker.iconImage = NMFOverlayImage(name: "marker_Pin_Wind")
+          default: areaMarker.iconImage = NMFOverlayImage(name: "marker_Pin_Wind")
+          }
           areaMarker.iconImage = NMFOverlayImage(name: "marker_Pin_Wind")
           areaMarker.position = NMGLatLng(lat: areaData.areaLat, lng: areaData.areaLng)
           

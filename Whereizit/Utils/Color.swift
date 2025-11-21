@@ -9,6 +9,11 @@ import UIKit
 
 extension UIColor {
 
+  static let smokingColor = UIColor(named: "smokingColor")
+  static let trashColor = UIColor(named: "trashColor")
+  static let toiletColor = UIColor(named: "toiletColor")
+  static let waterColor = UIColor(named: "waterColor")
+
   convenience init(hexCode: String, alpha: CGFloat = 1.0) {
     var hexFormatted: String = hexCode.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).uppercased()
 
