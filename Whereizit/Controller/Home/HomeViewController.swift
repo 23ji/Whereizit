@@ -12,6 +12,7 @@ import RxSwift
 import RxCocoa
 
 import CoreLocation
+import FirebaseAuth
 import FirebaseCore
 import FirebaseFirestore
 import FirebaseStorage
@@ -81,6 +82,8 @@ final class HomeViewController: UIViewController {
     self.bind()
     
     self.mapView.mapView.touchDelegate = self
+
+    self.addButtonVisibility()
   }
   
   
@@ -127,7 +130,6 @@ final class HomeViewController: UIViewController {
   }
   
   private func observeAreas() {
-    // [FIX] snapshot.documentChanges를 사용하여 효율적으로 마커를 관리합니다.
     db.collection("smokingAreas").addSnapshotListener { [weak self] snapshot, error in
       guard let self = self, let snapshot = snapshot else { return }
       
@@ -246,6 +248,11 @@ final class HomeViewController: UIViewController {
         self?.present(markerPositionSeletorVC, animated: true)
       })
       .disposed(by: self.disposeBag)
+  }
+
+  private func addButtonVisibility() {
+      let isLoggedIn = Auth.auth().currentUser != nil
+      self.addButton.isHidden = !isLoggedIn
   }
 }
 
