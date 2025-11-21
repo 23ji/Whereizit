@@ -51,20 +51,20 @@ final class areaBottomSheetViewController: UIViewController {
 
   // 카테고리별 색상 매핑
   private let categoryColors: [String: UIColor] = [
-    "화장실": UIColor.systemBlue.withAlphaComponent(0.15),
-    "쓰레기통": UIColor.systemGreen.withAlphaComponent(0.15),
+    "화장실": UIColor.systemPurple.withAlphaComponent(0.15),
+    "쓰레기통": UIColor.systemGray.withAlphaComponent(0.15),
     "물": UIColor.systemCyan.withAlphaComponent(0.15),
     "흡연구역": UIColor.systemOrange.withAlphaComponent(0.15),
-    "카테고리 없음": UIColor.systemGray.withAlphaComponent(0.15)
+    "카테고리 없음": UIColor.systemGreen.withAlphaComponent(0.15)
   ]
 
   // 카테고리별 텍스트 색상 매핑
   private let categoryTextColors: [String: UIColor] = [
-    "화장실": .systemBlue,
-    "쓰레기통": .systemGreen,
-    "물": .systemCyan,
-    "흡연구역": .systemOrange,
-    "카테고리 없음": .systemGray
+    "화장실": .toilet,
+    "쓰레기통": .trash,
+    "물": .water,
+    "흡연구역": .smoking,
+    "카테고리 없음": .systemGreen
   ]
 
   private let areaImageView = UIImageView().then {
