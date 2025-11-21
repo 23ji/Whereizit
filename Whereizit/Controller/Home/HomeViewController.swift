@@ -169,14 +169,13 @@ final class HomeViewController: UIViewController {
         switch change.type {
         case .added:
           let areaMarker = NMFMarker()
-          switch areaData.category {
-          case "흡연구역": areaMarker.iconImage = NMFOverlayImage(name: "smokingMarker")
-          case "화장실": areaMarker.iconImage = NMFOverlayImage(name: "toiletMarker")
-          case "쓰레기통": areaMarker.iconImage = NMFOverlayImage(name: "trashMarker")
-          case "물": areaMarker.iconImage = NMFOverlayImage(name: "waterMarker")
-          default: areaMarker.iconImage = NMFOverlayImage(name: "marker_Pin_Wind")
+          areaMarker.iconImage = switch areaData.category {
+          case "흡연구역": NMFOverlayImage(name: "smokingMarker")
+          case "화장실": NMFOverlayImage(name: "toiletMarker")
+          case "쓰레기통": NMFOverlayImage(name: "trashMarker")
+          case "물": NMFOverlayImage(name: "waterMarker")
+          default: NMFOverlayImage(name: "marker_Pin_Wind")
           }
-          //areaMarker.iconImage = NMFOverlayImage(name: "marker_Pin_Wind")
           areaMarker.position = NMGLatLng(lat: areaData.areaLat, lng: areaData.areaLng)
           
           areaMarker.touchHandler = { [weak self] (overlay: NMFOverlay) -> Bool in
@@ -193,7 +192,13 @@ final class HomeViewController: UIViewController {
             self.areaMarkers.removeValue(forKey: documentID) // 딕셔너리에서 제거
             
             let areaMarker = NMFMarker()
-            areaMarker.iconImage = NMFOverlayImage(name: "marker_Pin_Wind")
+            areaMarker.iconImage = switch areaData.category {
+            case "흡연구역": NMFOverlayImage(name: "smokingMarker")
+            case "화장실": NMFOverlayImage(name: "toiletMarker")
+            case "쓰레기통": NMFOverlayImage(name: "trashMarker")
+            case "물": NMFOverlayImage(name: "waterMarker")
+            default: NMFOverlayImage(name: "marker_Pin_Wind")
+            }
             areaMarker.position = NMGLatLng(lat: areaData.areaLat, lng: areaData.areaLng)
             
             areaMarker.touchHandler = { [weak self] (overlay: NMFOverlay) -> Bool in
