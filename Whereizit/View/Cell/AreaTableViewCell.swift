@@ -17,7 +17,6 @@ import CoreLocation
 
 final class AreaTableViewCell: UITableViewCell {
 
-  // TODO: Mark 구분하기
   private let areaImageView = UIImageView().then {
     $0.image = UIImage(named: "defaultImage")
     $0.layer.borderWidth = 0.5
