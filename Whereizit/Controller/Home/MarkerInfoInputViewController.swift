@@ -146,6 +146,20 @@ final class MarkerInfoInputViewController: UIViewController {
     $0.backgroundColor = .systemBlue
     $0.setTitleColor(.white, for: .normal)
     $0.layer.cornerRadius = 8
+    $0.isUserInteractionEnabled = true
+    $0.isEnabled = true
+  }
+
+  var isSaveButtonEnabled: Bool = true {
+    didSet {
+      guard self.isSaveButtonEnabled != oldValue else { return }
+
+      self.saveButton.isUserInteractionEnabled = self.isSaveButtonEnabled
+      self.saveButton.isEnabled = self.isSaveButtonEnabled
+
+      let backgroundColor: UIColor = self.isSaveButtonEnabled ? .systemBlue : .gray
+      self.saveButton.backgroundColor = backgroundColor
+    }
   }
 
 
@@ -475,6 +489,10 @@ final class MarkerInfoInputViewController: UIViewController {
       onNext: { [weak self] in
         guard let self = self else { return }
 
+        if self.isSaveButtonEnabled == false {
+          //토스트 띄우기
+        }
+
         // 저장 가능한 경우에만 화면 닫기
         if self.saveAreaInfo() {
           self.view.window?.rootViewController?.dismiss(animated: true)
@@ -562,11 +580,15 @@ extension MarkerInfoInputViewController: UIImagePickerControllerDelegate, UINavi
   }
 
   func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-    picker.dismiss(animated: true, completion: nil)
     if let image = info[.originalImage] as? UIImage {
       self.areaImage.setImage(image, for: .normal)
       self.uploadImage(image)
     }
+
+    self.isSaveButtonEnabled = false
+
+    picker.dismiss(animated: true, completion: nil)
+
   }
 
   func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -592,7 +614,7 @@ extension MarkerInfoInputViewController: UIImagePickerControllerDelegate, UINavi
         print("이미지 업로드 실패", error)
         return
       }
-      imageRef.downloadURL { url, _ in
+      imageRef.downloadURL { [weak self] url, error in
         if let error = error {
           print("다운로드 URL 가져오기 실패: \(error.localizedDescription)")
           return
@@ -602,6 +624,9 @@ extension MarkerInfoInputViewController: UIImagePickerControllerDelegate, UINavi
           print("다운로드 URL이 nil입니다")
           return
         }
+
+        self?.isSaveButtonEnabled = true
+
         self?.capturedImageUrl = downloadURL.absoluteString
         print("업로드 완료 : ", self?.capturedImageUrl ?? "nil")
 
@@ -613,6 +638,7 @@ extension MarkerInfoInputViewController: UIImagePickerControllerDelegate, UINavi
         }
       }
     }
+
   }
 
   private func deleteOldImage(urlString: String) {
