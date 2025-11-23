@@ -60,7 +60,7 @@ final class HomeViewController: UIViewController {
   var tappedPanel: FloatingPanelController!
   
   var nearByAreasBottomSheetVC = NearbyAreasBottomSheetViewController()
-  var areaBottomSheetVC = areaBottomSheetViewController()
+  var areaBottomSheetVC = AreaBottomSheetViewController()
 
   
   // MARK: Rx

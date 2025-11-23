@@ -162,7 +162,7 @@ extension MyAreasViewController: UITableViewDelegate, UITableViewDataSource {
     let area = areas[indexPath.row]
 
     // BottomSheet 띄우기
-    let bottomSheetVC = areaBottomSheetViewController()
+    let bottomSheetVC = AreaBottomSheetViewController()
     bottomSheetVC.configure(with: area)
     bottomSheetVC.modalPresentationStyle = .pageSheet
     
