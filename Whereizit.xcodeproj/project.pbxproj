@@ -42,7 +42,7 @@
 		9F9F78012E66EF3B00148859 /* FloatingPanel in Frameworks */ = {isa = PBXBuildFile; productRef = 9F9F78002E66EF3B00148859 /* FloatingPanel */; };
 		9FA27D2D2E82152100D36B6C /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 9FA27D2C2E82152100D36B6C /* GoogleSignIn */; };
 		9FA27D2F2E82152100D36B6C /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 9FA27D2E2E82152100D36B6C /* GoogleSignInSwift */; };
-		9FA6B1792E64473E00A94571 /* areaBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA6B1782E64473E00A94571 /* areaBottomSheetViewController.swift */; };
+		9FA6B1792E64473E00A94571 /* AreaBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA6B1782E64473E00A94571 /* AreaBottomSheetViewController.swift */; };
 		9FA9DE722E65DB93004D71A7 /* PanModal in Frameworks */ = {isa = PBXBuildFile; productRef = 9FA9DE712E65DB93004D71A7 /* PanModal */; };
 		9FAB5F9A2E90F9E600A7EE33 /* AreaTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0EB9282E8FA15C0091976A /* AreaTableViewCell.swift */; };
 		9FB2BC072E79783500C3B4F3 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB2BC062E79783500C3B4F3 /* LoginViewController.swift */; };
@@ -80,7 +80,7 @@
 		9F6207772EC0365D0045D08C /* AppStarter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStarter.swift; sourceTree = "<group>"; };
 		9F62077A2EC039110045D08C /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		9F62077C2EC047E90045D08C /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
-		9FA6B1782E64473E00A94571 /* areaBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = areaBottomSheetViewController.swift; sourceTree = "<group>"; };
+		9FA6B1782E64473E00A94571 /* AreaBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaBottomSheetViewController.swift; sourceTree = "<group>"; };
 		9FB2BC052E79777D00C3B4F3 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		9FB2BC062E79783500C3B4F3 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		9FB65AC12E7B7D4E00F788BF /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
@@ -180,7 +180,7 @@
 		9F6207712EC035650045D08C /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				9FA6B1782E64473E00A94571 /* areaBottomSheetViewController.swift */,
+				9FA6B1782E64473E00A94571 /* AreaBottomSheetViewController.swift */,
 				498ECFA22E77F32C00B9EABC /* NearbyAreasBottomSheetViewController.swift */,
 				A77C88BE2E2528A8002D725E /* HomeViewController.swift */,
 				49E6295F2E27756C00751E26 /* MarkerPositionSelectorViewController.swift */,
@@ -413,7 +413,7 @@
 				498B44912E7A82F900FF06B6 /* MyPageViewController.swift in Sources */,
 				9F62077B2EC039110045D08C /* Color.swift in Sources */,
 				9F62077D2EC047E90045D08C /* Constant.swift in Sources */,
-				9FA6B1792E64473E00A94571 /* areaBottomSheetViewController.swift in Sources */,
+				9FA6B1792E64473E00A94571 /* AreaBottomSheetViewController.swift in Sources */,
 				49031E082EAF4E11004F5857 /* FullImageViewController.swift in Sources */,
 				49031E112EB08A0B004F5857 /* PrivacyPolicyViewController.swift in Sources */,
 				49031DFF2EA5D9EE004F5857 /* MyAreasViewController.swift in Sources */,
