@@ -1,5 +1,5 @@
 //
-//  areaBottomSheetViewController.swift
+//  AreaBottomSheetViewController.swift
 //  Whereizit
 //
 //  Created by 23ji on 8/31/25.
@@ -23,7 +23,7 @@ import RxSwift
 import UIKit
 
 
-final class areaBottomSheetViewController: UIViewController {
+final class AreaBottomSheetViewController: UIViewController {
 
   private enum Metric {
     static let horizontalMargin: CGFloat = 20
@@ -35,7 +35,7 @@ final class areaBottomSheetViewController: UIViewController {
 
   // MARK: Components
 
-  private var currentData: Area?
+  private var areaData: Area?
   private let db = Firestore.firestore()
   private let disposeBag = DisposeBag()
   private let rootFlexContainer = UIView()
@@ -186,7 +186,7 @@ final class areaBottomSheetViewController: UIViewController {
   // MARK: Public Method
 
   public func configure(with data: Area) {
-    self.currentData = data
+    self.areaData = data
 
     DispatchQueue.main.async {
       self.nameLabel.text = data.name
@@ -240,7 +240,7 @@ final class areaBottomSheetViewController: UIViewController {
     //삭제 버튼
     self.deleteButton.rx.tap
       .subscribe(onNext: { [weak self] in
-        guard let data = self?.currentData else { return }
+        guard let data = self?.areaData else { return }
         guard let documentID = data.documentID else { return }
 
         let alert = UIAlertController(title: "삭제", message: "등록한 구역을 삭제하시겠습니까?", preferredStyle: .alert)
@@ -260,7 +260,7 @@ final class areaBottomSheetViewController: UIViewController {
     self.editButton.rx.tap
       .subscribe(onNext: { [weak self] in
         guard let self = self else { return }
-        guard let data = self.currentData else { return }
+        guard let data = self.areaData else { return }
 
         let editVC = MarkerInfoInputViewController()
         editVC.modalPresentationStyle = .formSheet
@@ -296,7 +296,7 @@ final class areaBottomSheetViewController: UIViewController {
     self.reportButton.rx.tap
       .subscribe(onNext: { [weak self] in
         guard let self = self else { return }
-        guard let data = self.currentData else { return }
+        guard let data = self.areaData else { return }
 
         let reportReasons = [
           "잘못된 위치",
