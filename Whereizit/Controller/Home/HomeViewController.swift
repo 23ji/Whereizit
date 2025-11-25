@@ -31,8 +31,19 @@ final class HomeViewController: UIViewController {
   // MARK: Constant
   
   private enum Metric {
+    // Layout
     static let addButtonTrailing: CGFloat = 24
     static let addButtonBottom: CGFloat = 180
+    
+    // Map
+    static let mapZoomLevel: Double = 16.0
+    static let mapBottomInsetCorrection: CGFloat = 10 // 탭바 높이에서 뺄 보정값
+    
+    // Floating Panel
+    static let panelCornerRadius: CGFloat = 15.0
+    
+    // Shadow
+    static let shadowOpacity: Float = 0.1
   }
   
   
@@ -41,7 +52,7 @@ final class HomeViewController: UIViewController {
   private let mapView = NMFNaverMapView()
   private let addButton = UIButton().then {
     $0.setImage(UIImage(named: "plusButton"), for: .normal)
-    $0.layer.shadowOpacity = 0.1
+    $0.layer.shadowOpacity = Metric.shadowOpacity
   }
   
   
@@ -93,7 +104,7 @@ final class HomeViewController: UIViewController {
       self.mapView.mapView.contentInset = UIEdgeInsets(
         top: 0,
         left: 0,
-        bottom: tabBarHeight - 10, // TODO: Metric
+        bottom: tabBarHeight - Metric.mapBottomInsetCorrection,
         right: 0
       )
     }
@@ -103,7 +114,7 @@ final class HomeViewController: UIViewController {
   // MARK: Setup
   
   private func configureMapView() {
-    self.mapView.mapView.zoomLevel = 16.0
+    self.mapView.mapView.zoomLevel = Metric.mapZoomLevel
     self.mapView.showLocationButton = true
   }
   
@@ -298,7 +309,7 @@ extension HomeViewController: FloatingPanelControllerDelegate {
   func setupPanels() {
     // Nearby 패널
     self.nearbyPanel = FloatingPanelController()
-    self.nearbyPanel.surfaceView.layer.cornerRadius = 15
+    self.nearbyPanel.surfaceView.layer.cornerRadius = Metric.panelCornerRadius
     self.nearbyPanel.surfaceView.layer.masksToBounds = true
     self.nearbyPanel.set(contentViewController: nearByAreasBottomSheetVC)
     self.nearbyPanel.addPanel(toParent: self)
@@ -309,7 +320,7 @@ extension HomeViewController: FloatingPanelControllerDelegate {
     // Tapped 패널
     self.tappedPanel = FloatingPanelController()
     self.tappedPanel.delegate = self
-    self.tappedPanel.surfaceView.layer.cornerRadius = 15
+    self.tappedPanel.surfaceView.layer.cornerRadius = Metric.panelCornerRadius
     self.tappedPanel.surfaceView.layer.masksToBounds = true
     self.tappedPanel.set(contentViewController: areaBottomSheetVC)
     self.tappedPanel.addPanel(toParent: self)
