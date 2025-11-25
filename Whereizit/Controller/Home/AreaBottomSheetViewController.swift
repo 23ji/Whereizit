@@ -262,35 +262,14 @@ final class AreaBottomSheetViewController: UIViewController {
         guard let self = self else { return }
         guard let data = self.areaData else { return }
 
-        let editVC = MarkerInfoInputViewController()
+        let editVC = MarkerInfoInputViewController(editTarget: data)
+        
         editVC.modalPresentationStyle = .formSheet
-        editVC.isEditMode = true
-
-        // TODO: 상태를 밖에서 이런 식으로 설정하지 않고, 필요한 데이터를 넘겨주고 안에서 세팅하기
-        // TODO: 의존이 강하게 된다
-        // 기존 데이터 주입
-        editVC.imageURL = data.imageURL
-        editVC.markerLat = data.areaLat
-        editVC.markerLng = data.areaLng
-        editVC.selectedEnvironmentTags = data.selectedEnvironmentTags
-        editVC.selectedTypeTags = data.selectedTypeTags
-        editVC.selectedFacilityTags = data.selectedFacilityTags
-
-        if !data.category.isEmpty {
-            editVC.initialCategory = data.category
-        } else {
-            editVC.initialCategory = nil
-        }
-
-        editVC.loadViewIfNeeded()
-        editVC.nameTextField.text = data.name
-        editVC.descriptionTextView.text = data.description
-        if let url = URL(string: data.imageURL ?? "") {
-          editVC.areaImage.kf.setImage(with: url, for: .normal)
-        }
+        
         self.present(editVC, animated: true)
       })
       .disposed(by: disposeBag)
+    
 
     // 🚨 신고하기 버튼 액션
     self.reportButton.rx.tap

@@ -55,6 +55,8 @@ final class MarkerInfoInputViewController: UIViewController {
 
   // 수정 모드 진입 시 초기 카테고리를 받기 위한 변수
   var initialCategory: String?
+  
+  private var editTarget: Area?
 
   private var tagSectionContainer: UIView = UIView()
   private var categoryButtons: [UIButton] = []
@@ -162,6 +164,14 @@ final class MarkerInfoInputViewController: UIViewController {
     }
   }
 
+  init(editTarget: Area? = nil){
+    self.editTarget = editTarget
+    super.init(nibName: nil, bundle: nil)
+  }
+  
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
 
   // MARK: Lifecycle
 
@@ -173,8 +183,10 @@ final class MarkerInfoInputViewController: UIViewController {
     self.bindAreaImageButton()
     self.bindSaveButton()
 
-    // 수정 모드일 때 초기 UI 상태 복원
-    self.setupEditModeUI()
+    if let editTarget = self.editTarget {
+      self.configureEditMode(with: editTarget)
+      self.setupEditModeUI()
+    }
   }
 
 
@@ -203,21 +215,6 @@ final class MarkerInfoInputViewController: UIViewController {
     self.view.addSubview(self.scrollView)
     self.scrollView.addSubview(self.contentView)
     self.mapView.addSubview(self.markerPinImageView)
-  }
-
-
-  private func setupEditModeUI() {
-    guard isEditMode else { return }
-    guard let category = initialCategory else { return }
-
-    if let categoryBtn = self.categoryButtons.first(where: { $0.titleLabel?.text == category }) {
-
-        categoryBtn.backgroundColor = .systemBlue
-        categoryBtn.setTitleColor(.white, for: .normal)
-        self.selectedCategory = category
-
-        self.updateTagSections(for: category)
-    }
   }
 
 
@@ -356,15 +353,15 @@ final class MarkerInfoInputViewController: UIViewController {
 
     self.tagSectionContainer.flex
       .direction(.column)
-      .define { flex in
+      .define {
         if let environmentTags = tagData["환경"] {
-          flex.addItem(self.makeTagSection(title: "환경", tags: environmentTags))
+          $0.addItem(self.makeTagSection(title: "환경", tags: environmentTags))
         }
         if let typeTags = tagData["유형"] {
-          flex.addItem(self.makeTagSection(title: "유형", tags: typeTags))
+          $0.addItem(self.makeTagSection(title: "유형", tags: typeTags))
         }
         if let facilityTags = tagData["시설"] {
-          flex.addItem(self.makeTagSection(title: "시설", tags: facilityTags))
+          $0.addItem(self.makeTagSection(title: "시설", tags: facilityTags))
         }
       }
 
@@ -549,6 +546,44 @@ final class MarkerInfoInputViewController: UIViewController {
       docRef.setData(area.asDictionary)
     }
     return true
+  }
+  
+  private func configureEditMode(with data: Area) {
+    self.isEditMode = true
+    self.imageURL = data.imageURL
+    self.markerLat = data.areaLat
+    self.markerLng = data.areaLng
+    self.selectedEnvironmentTags = data.selectedEnvironmentTags
+    self.selectedTypeTags = data.selectedTypeTags
+    self.selectedFacilityTags = data.selectedFacilityTags
+
+    if !data.category.isEmpty {
+        self.initialCategory = data.category
+    } else {
+        self.initialCategory = nil
+    }
+
+    self.loadViewIfNeeded()
+    self.nameTextField.text = data.name
+    self.descriptionTextView.text = data.description
+    if let url = URL(string: data.imageURL ?? "") {
+      self.areaImage.kf.setImage(with: url, for: .normal)
+    }
+  }
+  
+  
+  private func setupEditModeUI() {
+    guard isEditMode else { return }
+    guard let category = initialCategory else { return }
+    
+    if let categoryBtn = self.categoryButtons.first(where: { $0.titleLabel?.text == category }) {
+      
+      categoryBtn.backgroundColor = .systemBlue
+      categoryBtn.setTitleColor(.white, for: .normal)
+      self.selectedCategory = category
+      
+      self.updateTagSections(for: category)
+    }
   }
 }
 
