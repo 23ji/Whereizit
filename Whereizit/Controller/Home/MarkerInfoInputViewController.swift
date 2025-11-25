@@ -24,6 +24,13 @@ import UIKit
 
 final class MarkerInfoInputViewController: UIViewController {
 
+  
+  enum InputMode {
+    case new(lat: Double, lng: Double)
+    case edit(area: Area)
+  }
+  
+  
   // MARK: Constant
 
   private enum Metric {
@@ -57,6 +64,7 @@ final class MarkerInfoInputViewController: UIViewController {
   var initialCategory: String?
   
   private var editTarget: Area?
+  private let inputMode: InputMode
 
   private var tagSectionContainer: UIView = UIView()
   private var categoryButtons: [UIButton] = []
@@ -164,8 +172,8 @@ final class MarkerInfoInputViewController: UIViewController {
     }
   }
 
-  init(editTarget: Area? = nil){
-    self.editTarget = editTarget
+  init(mode: InputMode) {
+    self.inputMode = mode
     super.init(nibName: nil, bundle: nil)
   }
   
@@ -183,10 +191,7 @@ final class MarkerInfoInputViewController: UIViewController {
     self.bindAreaImageButton()
     self.bindSaveButton()
 
-    if let editTarget = self.editTarget {
-      self.configureEditMode(with: editTarget)
-      self.setupEditModeUI()
-    }
+    self.setupData(by: inputMode)
   }
 
 
@@ -548,26 +553,37 @@ final class MarkerInfoInputViewController: UIViewController {
     return true
   }
   
-  private func configureEditMode(with data: Area) {
-    self.isEditMode = true
-    self.imageURL = data.imageURL
-    self.markerLat = data.areaLat
-    self.markerLng = data.areaLng
-    self.selectedEnvironmentTags = data.selectedEnvironmentTags
-    self.selectedTypeTags = data.selectedTypeTags
-    self.selectedFacilityTags = data.selectedFacilityTags
-
-    if !data.category.isEmpty {
-        self.initialCategory = data.category
-    } else {
+  
+  private func setupData(by mode: InputMode) {
+    switch mode {
+    case let .new(lat, lng):
+      self.isEditMode = false
+      self.markerLat = lat
+      self.markerLng = lng
+      
+    case let .edit(area):
+      self.isEditMode = true
+      self.imageURL = area.imageURL
+      self.markerLat = area.areaLat
+      self.markerLng = area.areaLng
+      self.selectedEnvironmentTags = area.selectedEnvironmentTags
+      self.selectedTypeTags = area.selectedTypeTags
+      self.selectedFacilityTags = area.selectedFacilityTags
+      
+      if !area.category.isEmpty {
+        self.initialCategory = area.category
+      } else {
         self.initialCategory = nil
-    }
-
-    self.loadViewIfNeeded()
-    self.nameTextField.text = data.name
-    self.descriptionTextView.text = data.description
-    if let url = URL(string: data.imageURL ?? "") {
-      self.areaImage.kf.setImage(with: url, for: .normal)
+      }
+      
+      self.loadViewIfNeeded()
+      self.nameTextField.text = area.name
+      self.descriptionTextView.text = area.description
+      if let url = URL(string: area.imageURL ?? "") {
+        self.areaImage.kf.setImage(with: url, for: .normal)
+      }
+      
+      self.setupEditModeUI()
     }
   }
   

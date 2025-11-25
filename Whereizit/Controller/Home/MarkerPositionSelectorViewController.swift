@@ -142,11 +142,16 @@ final class MarkerPositionSelectorViewController: UIViewController {
   private func bindActions() {
     self.nextButton.rx.tap
       .subscribe(onNext: { [weak self] in
-        let markerInfoInputVC = MarkerInfoInputViewController()
-        // TODO: 상태 직접 건들이지 않기
-        markerInfoInputVC.markerLat = self?.mapView.mapView.cameraPosition.target.lat
-        markerInfoInputVC.markerLng = self?.mapView.mapView.cameraPosition.target.lng
-        self?.present(markerInfoInputVC, animated: true)
+        guard let self else { return }
+        
+        let target = self.mapView.mapView.cameraPosition.target
+        
+        let lat = target.lat
+        let lng = target.lng
+        
+        let markerInfoInputVC = MarkerInfoInputViewController(mode: .new(lat: lat, lng: lng))
+        
+        self.present(markerInfoInputVC, animated: true)
       })
       .disposed(by: self.disposeBag)
   }
