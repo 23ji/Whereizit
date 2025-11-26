@@ -150,6 +150,7 @@
 		49288AAB2D19450C00FF1E50 /* Whereizit */ = {
 			isa = PBXGroup;
 			children = (
+				9F3093292ED70F4E00D115DB /* Service */,
 				9F6207792EC038F50045D08C /* Utils */,
 				49031E122EB09A67004F5857 /* Whereizit.entitlements */,
 				A774711D2D58D8ED006F2F0D /* Model */,
@@ -166,6 +167,13 @@
 			children = (
 			);
 			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		9F3093292ED70F4E00D115DB /* Service */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 		9F6207702EC035590045D08C /* Login */ = {
