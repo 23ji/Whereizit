@@ -141,7 +141,7 @@ final class HomeViewController: UIViewController {
   }
   
   private func observeAreas() {
-    db.collection("smokingAreas").addSnapshotListener { [weak self] snapshot, error in
+    db.collection(Constant.Firestore.Collection.smokingAreas).addSnapshotListener { [weak self] snapshot, error in
       guard let self = self, let snapshot = snapshot else { return }
       
       for change in snapshot.documentChanges {
@@ -150,20 +150,20 @@ final class HomeViewController: UIViewController {
         let documentID = doc.documentID
         
         // Document Data 파싱
-        guard let name = data["name"] as? String,
-              let description = data["description"] as? String,
-              let areaLat = data["areaLat"] as? Double,
-              let areaLng = data["areaLng"] as? Double
+        guard let name = data[Constant.Firestore.Field.name] as? String,
+              let description = data[Constant.Firestore.Field.description] as? String,
+              let areaLat = data[Constant.Firestore.Field.areaLat] as? Double,
+              let areaLng = data[Constant.Firestore.Field.areaLng] as? Double
         else { continue } // 데이터 파싱 실패 시 건너뜀
-        
-        let imageURL = data["imageURL"] as? String ?? ""
-        let category = data["category"] as? String ?? ""
-        let selectedEnvironmentTags = (data["environmentTags"] as? [String]) ?? []
-        let selectedTypeTags = (data["typeTags"] as? [String]) ?? []
-        let selectedFacilityTags = (data["facilityTags"] as? [String]) ?? []
-        let uploadTimestamp = data["uploadDate"] as? Timestamp ?? Timestamp(date: Date())
-        let uploadUser = data["uploadUser"] as? String ?? ""
-        
+
+        let imageURL = data[Constant.Firestore.Field.imageURL] as? String ?? ""
+        let category = data[Constant.Firestore.Field.category] as? String ?? ""
+        let selectedEnvironmentTags = (data[Constant.Firestore.Field.environmentTags] as? [String]) ?? []
+        let selectedTypeTags = (data[Constant.Firestore.Field.typeTags] as? [String]) ?? []
+        let selectedFacilityTags = (data[Constant.Firestore.Field.facilityTags] as? [String]) ?? []
+        let uploadTimestamp = data[Constant.Firestore.Field.uploadDate] as? Timestamp ?? Timestamp(date: Date())
+        let uploadUser = data[Constant.Firestore.Field.uploadUser] as? String ?? ""
+
         let areaData = Area(
           documentID: documentID,
           imageURL: imageURL,

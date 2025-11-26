@@ -207,9 +207,9 @@ final class AreaBottomSheetViewController: UIViewController {
 
       let categoryToDisplay: String
       if !data.category.isEmpty {
-          categoryToDisplay = data.category
+        categoryToDisplay = data.category
       } else {
-          categoryToDisplay = "카테고리 없음"
+        categoryToDisplay = "카테고리 없음"
       }
 
       // 카테고리 배지 생성
@@ -247,7 +247,7 @@ final class AreaBottomSheetViewController: UIViewController {
 
         alert.addAction(UIAlertAction(title: "취소", style: .default))
         alert.addAction(UIAlertAction(title: "확인", style: .destructive) { _ in // .default -> .destructive
-          self?.db.collection("smokingAreas").document(documentID).delete { error in
+          self?.db.collection(Constant.Firestore.Collection.smokingAreas).document(documentID).delete { error in
             print(error == nil ? "문서 삭제 성공" : "문서 삭제 실패: \(error!.localizedDescription)")
           }
         })
@@ -263,13 +263,13 @@ final class AreaBottomSheetViewController: UIViewController {
         guard let data = self.areaData else { return }
 
         let editVC = MarkerInfoInputViewController(mode: .edit(area: data))
-        
+
         editVC.modalPresentationStyle = .formSheet
-        
+
         self.present(editVC, animated: true)
       })
       .disposed(by: disposeBag)
-    
+
 
     // 🚨 신고하기 버튼 액션
     self.reportButton.rx.tap
@@ -320,12 +320,12 @@ final class AreaBottomSheetViewController: UIViewController {
 
 
   private func submitReport(data: Area, reason: String) {
-    db.collection("reports").addDocument(data: [
-      "reportedAreaID": data.documentID ?? "unknown",
-      "reportedName": data.name,
-      "reportedBy": Auth.auth().currentUser?.email ?? "unknown",
-      "reason": reason.isEmpty ? "기타" : reason,
-      "timestamp": Timestamp()
+    db.collection(Constant.Firestore.Collection.reports).addDocument(data: [
+      Constant.Firestore.ReportField.reportedAreaID: data.documentID ?? "unknown",
+      Constant.Firestore.ReportField.reportedName: data.name,
+      Constant.Firestore.ReportField.reportedBy: Auth.auth().currentUser?.email ?? "unknown",
+      Constant.Firestore.ReportField.reason: reason.isEmpty ? "기타" : reason,
+      Constant.Firestore.ReportField.timestamp: Timestamp()
     ]) { error in
       let message = (error == nil)
       ? "신고가 접수되었습니다. 검토 후 조치하겠습니다."

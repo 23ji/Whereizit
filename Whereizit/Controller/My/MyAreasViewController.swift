@@ -82,8 +82,8 @@ final class MyAreasViewController: UIViewController {
   private func fetchAreas() {
     guard let userEmail = self.user?.email else { return }
     
-    db.collection("smokingAreas")
-      .whereField("uploadUser", isEqualTo: userEmail)
+    db.collection(Constant.Firestore.Collection.smokingAreas)
+      .whereField(Constant.Firestore.Field.uploadUser, isEqualTo: userEmail)
       .addSnapshotListener { [weak self] snapshot, error in
         guard let self = self, let snapshot = snapshot else { return }
         
@@ -92,18 +92,18 @@ final class MyAreasViewController: UIViewController {
         for doc in snapshot.documents {
           let data = doc.data()
           
-          if let name = data["name"] as? String,
-             let description = data["description"] as? String,
-             let areaLat = data["areaLat"] as? Double,
-             let areaLng = data["areaLng"] as? Double,
-             let category = data["category"] as? String {
+          if let name = data[Constant.Firestore.Field.name] as? String,
+             let description = data[Constant.Firestore.Field.description] as? String,
+             let areaLat = data[Constant.Firestore.Field.areaLat] as? Double,
+             let areaLng = data[Constant.Firestore.Field.areaLng] as? Double,
+             let category = data[Constant.Firestore.Field.category] as? String {
 
-            let imageURL = data["imageURL"] as? String
-            let envTags = data["environmentTags"] as? [String] ?? []
-            let typeTags = data["typeTags"] as? [String] ?? []
-            let facTags = data["facilityTags"] as? [String] ?? []
-            let timestamp = data["uploadDate"] as? Timestamp ?? Timestamp(date: Date())
-            
+            let imageURL = data[Constant.Firestore.Field.imageURL] as? String
+            let envTags = data[Constant.Firestore.Field.environmentTags] as? [String] ?? []
+            let typeTags = data[Constant.Firestore.Field.typeTags] as? [String] ?? []
+            let facTags = data[Constant.Firestore.Field.facilityTags] as? [String] ?? []
+            let timestamp = data[Constant.Firestore.Field.uploadDate] as? Timestamp ?? Timestamp(date: Date())
+
             let area = Area(
               documentID: doc.documentID,
               imageURL: imageURL,

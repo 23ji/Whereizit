@@ -24,19 +24,19 @@ struct Area {
   var uploadDate: Timestamp
   
   var asDictionary: [String: Any] {
-      return [
-        "documentID" : documentID,
-        "imageURL": imageURL,
-        "name": name,
-        "description": description,
-        "areaLat": areaLat,
-        "areaLng": areaLng,
-        "category": category,
-        "environmentTags": selectedEnvironmentTags,
-        "typeTags": selectedTypeTags,
-        "facilityTags": selectedFacilityTags,
-        "uploadUser": uploadUser,
-        "uploadDate": uploadDate
+    return [
+      Constant.Firestore.Field.documentID : documentID,
+      Constant.Firestore.Field.imageURL: imageURL,
+      Constant.Firestore.Field.name: name,
+      Constant.Firestore.Field.description: description,
+      Constant.Firestore.Field.areaLat: areaLat,
+      Constant.Firestore.Field.areaLng: areaLng,
+      Constant.Firestore.Field.category: category,
+      Constant.Firestore.Field.environmentTags: selectedEnvironmentTags,
+      Constant.Firestore.Field.typeTags: selectedTypeTags,
+      Constant.Firestore.Field.facilityTags: selectedFacilityTags,
+      Constant.Firestore.Field.uploadUser: uploadUser,
+      Constant.Firestore.Field.uploadDate: uploadDate
       ]
     }
 }
