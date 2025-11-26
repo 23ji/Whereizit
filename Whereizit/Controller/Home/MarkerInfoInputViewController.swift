@@ -75,8 +75,6 @@ final class MarkerInfoInputViewController: UIViewController {
   var isEditMode: Bool = false
   var existingDocumentID: String?
 
-  private let db = Firestore.firestore()
-
   let disposeBag = DisposeBag()
 
 
@@ -541,15 +539,13 @@ final class MarkerInfoInputViewController: UIViewController {
       uploadDate: currentTime
     )
 
-    let docRef = db.collection("smokingAreas").document(documentID)
-
-    docRef.getDocument { snapshot, error in
-      if let error = error {
-        print(error)
-      }
-
-      docRef.setData(area.asDictionary)
-    }
+    AreaRepository.shared.addArea(area: area)
+      .subscribe(onNext: {
+        print("마커 저장 성공")
+      }, onError: { error in
+        print("마커 저장 실패: \(error.localizedDescription)")
+      })
+      .disposed(by: disposeBag)
     return true
   }
   
