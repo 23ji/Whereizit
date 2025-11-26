@@ -13,7 +13,7 @@ final class AreaRepository {
   static let shared = AreaRepository()
   private let db = Firestore.firestore()
 
-  private let collectionPath = "smokingArea"
+  private let collectionPath = "smokingAreas"
 
   func addArea(area: Area) -> Observable<Void> {
     return Observable.create { [weak self] observer in
