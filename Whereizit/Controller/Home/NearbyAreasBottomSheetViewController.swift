@@ -95,35 +95,13 @@ final class NearbyAreasBottomSheetViewController: UIViewController {
       var newAreas: [Area] = []
       
       for doc in snapshot.documents {
-        let data = doc.data()
-        
-        if let name = data[Constant.Firestore.Field.name] as? String,
-           let description = data[Constant.Firestore.Field.description] as? String,
-           let areaLat = data[Constant.Firestore.Field.areaLat] as? Double,
-           let areaLng = data[Constant.Firestore.Field.areaLng] as? Double,
-           let category = data[Constant.Firestore.Field.category] as? String {
-
-          let imageURL = data[Constant.Firestore.Field.imageURL] as? String
-          let envTags = data[Constant.Firestore.Field.environmentTags] as? [String] ?? []
-          let typeTags = data[Constant.Firestore.Field.typeTags] as? [String] ?? []
-          let facTags = data[Constant.Firestore.Field.facilityTags] as? [String] ?? []
-          let timestamp = data[Constant.Firestore.Field.uploadDate] as? Timestamp ?? Timestamp(date: Date())
-
-          let area = Area(
-              imageURL: imageURL,
-              name: name,
-              description: description,
-              areaLat: areaLat,
-              areaLng: areaLng,
-              category: category,
-              selectedEnvironmentTags: envTags,
-              selectedTypeTags: typeTags,
-              selectedFacilityTags: facTags,
-              uploadUser: self.user?.email ?? "",
-              uploadDate: timestamp
-          )
-
-          newAreas.append(area)
+        for doc in snapshot.documents {
+          do {
+            let area = try doc.data(as: Area.self)
+            newAreas.append(area)
+          } catch {
+            print("데이터 파싱 실패")
+          }
         }
       }
       
