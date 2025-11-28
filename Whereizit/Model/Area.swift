@@ -9,8 +9,8 @@ import FirebaseFirestore
 
 import Foundation
 
-struct Area {
-  var documentID: String?
+struct Area: Codable {
+  @DocumentID var documentID: String?
   var imageURL: String?
   var name: String
   var description: String
@@ -23,20 +23,18 @@ struct Area {
   var uploadUser: String
   var uploadDate: Timestamp
   
-  var asDictionary: [String: Any] {
-    return [
-      Constant.Firestore.Field.documentID : documentID,
-      Constant.Firestore.Field.imageURL: imageURL,
-      Constant.Firestore.Field.name: name,
-      Constant.Firestore.Field.description: description,
-      Constant.Firestore.Field.areaLat: areaLat,
-      Constant.Firestore.Field.areaLng: areaLng,
-      Constant.Firestore.Field.category: category,
-      Constant.Firestore.Field.environmentTags: selectedEnvironmentTags,
-      Constant.Firestore.Field.typeTags: selectedTypeTags,
-      Constant.Firestore.Field.facilityTags: selectedFacilityTags,
-      Constant.Firestore.Field.uploadUser: uploadUser,
-      Constant.Firestore.Field.uploadDate: uploadDate
-      ]
-    }
+  enum CodingKeys: String, CodingKey {
+    case documentID
+    case imageURL
+    case name
+    case description
+    case areaLat
+    case areaLng
+    case category
+    case selectedEnvironmentTags = "environmentTags"
+    case selectedTypeTags = "typeTags"
+    case selectedFacilityTags = "facilityTags"
+    case uploadUser
+    case uploadDate
+  }
 }
