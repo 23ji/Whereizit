@@ -145,39 +145,9 @@ final class HomeViewController: UIViewController {
       guard let self = self, let snapshot = snapshot else { return }
       
       for change in snapshot.documentChanges {
-        let doc = change.document
-        let data = doc.data()
-        let documentID = doc.documentID
+        guard let areaData = try? change.document.data(as: Area.self) else { continue }
         
-        // Document Data 파싱
-        guard let name = data[Constant.Firestore.Field.name] as? String,
-              let description = data[Constant.Firestore.Field.description] as? String,
-              let areaLat = data[Constant.Firestore.Field.areaLat] as? Double,
-              let areaLng = data[Constant.Firestore.Field.areaLng] as? Double
-        else { continue } // 데이터 파싱 실패 시 건너뜀
-
-        let imageURL = data[Constant.Firestore.Field.imageURL] as? String ?? ""
-        let category = data[Constant.Firestore.Field.category] as? String ?? ""
-        let selectedEnvironmentTags = (data[Constant.Firestore.Field.environmentTags] as? [String]) ?? []
-        let selectedTypeTags = (data[Constant.Firestore.Field.typeTags] as? [String]) ?? []
-        let selectedFacilityTags = (data[Constant.Firestore.Field.facilityTags] as? [String]) ?? []
-        let uploadTimestamp = data[Constant.Firestore.Field.uploadDate] as? Timestamp ?? Timestamp(date: Date())
-        let uploadUser = data[Constant.Firestore.Field.uploadUser] as? String ?? ""
-
-        let areaData = Area(
-          documentID: documentID,
-          imageURL: imageURL,
-          name: name,
-          description: description,
-          areaLat: areaLat,
-          areaLng: areaLng,
-          category: category,
-          selectedEnvironmentTags: selectedEnvironmentTags,
-          selectedTypeTags: selectedTypeTags,
-          selectedFacilityTags: selectedFacilityTags,
-          uploadUser: uploadUser,
-          uploadDate: uploadTimestamp
-        )
+        let documentID = change.document.documentID
         
         switch change.type {
         case .added:
