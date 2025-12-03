@@ -40,6 +40,7 @@
 		9F933E892E484A62001699AA /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 9F933E882E484A62001699AA /* RxCocoa */; };
 		9F933E8B2E484A62001699AA /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 9F933E8A2E484A62001699AA /* RxRelay */; };
 		9F933E8D2E484A62001699AA /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 9F933E8C2E484A62001699AA /* RxSwift */; };
+		9F93E97B2EE0FC2D006B2C09 /* MarkerInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F93E97A2EE0FC2D006B2C09 /* MarkerInfoViewModel.swift */; };
 		9F9F78012E66EF3B00148859 /* FloatingPanel in Frameworks */ = {isa = PBXBuildFile; productRef = 9F9F78002E66EF3B00148859 /* FloatingPanel */; };
 		9FA27D2D2E82152100D36B6C /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 9FA27D2C2E82152100D36B6C /* GoogleSignIn */; };
 		9FA27D2F2E82152100D36B6C /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 9FA27D2E2E82152100D36B6C /* GoogleSignInSwift */; };
@@ -82,6 +83,7 @@
 		9F6207772EC0365D0045D08C /* AppStarter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStarter.swift; sourceTree = "<group>"; };
 		9F62077A2EC039110045D08C /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		9F62077C2EC047E90045D08C /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		9F93E97A2EE0FC2D006B2C09 /* MarkerInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerInfoViewModel.swift; sourceTree = "<group>"; };
 		9FA6B1782E64473E00A94571 /* AreaBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaBottomSheetViewController.swift; sourceTree = "<group>"; };
 		9FB2BC052E79777D00C3B4F3 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		9FB2BC062E79783500C3B4F3 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 		49288AAB2D19450C00FF1E50 /* Whereizit */ = {
 			isa = PBXGroup;
 			children = (
+				9F93E9792EE0FC12006B2C09 /* ViewModel */,
 				9F3093292ED70F4E00D115DB /* Service */,
 				9F6207792EC038F50045D08C /* Utils */,
 				49031E122EB09A67004F5857 /* Whereizit.entitlements */,
@@ -252,6 +255,14 @@
 				9F62077A2EC039110045D08C /* Color.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		9F93E9792EE0FC12006B2C09 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				9F93E97A2EE0FC2D006B2C09 /* MarkerInfoViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		9FF116032E9602E20076A359 /* View */ = {
@@ -430,6 +441,7 @@
 				49031DFF2EA5D9EE004F5857 /* MyAreasViewController.swift in Sources */,
 				9F6207782EC0365D0045D08C /* AppStarter.swift in Sources */,
 				9F30932B2ED710B100D115DB /* AreaRepository.swift in Sources */,
+				9F93E97B2EE0FC2D006B2C09 /* MarkerInfoViewModel.swift in Sources */,
 				9FDBC1FC2E867BA2009924E8 /* LoginButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
