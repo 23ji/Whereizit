@@ -179,7 +179,6 @@ final class AreaBottomSheetViewController: UIViewController {
       $0.centerX.equalToSuperview()
       $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(10)
     }
-    self.reportButton.pin.center().bottom(view.pin.safeArea.bottom + 10)
   }
 
 
