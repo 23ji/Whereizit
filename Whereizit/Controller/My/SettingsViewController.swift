@@ -205,14 +205,14 @@ final class SettingsViewController: UIViewController {
     }
     
     self.view.addSubview(toastLabel)
-    toastLabel.translatesAutoresizingMaskIntoConstraints = false
-    NSLayoutConstraint.activate([
-      toastLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-      toastLabel.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -50),
-      toastLabel.widthAnchor.constraint(lessThanOrEqualTo: self.view.widthAnchor, multiplier: 0.8),
-      toastLabel.heightAnchor.constraint(equalToConstant: 40)
-    ])
-    
+
+    toastLabel.snp.makeConstraints {
+      $0.centerX.equalToSuperview()
+      $0.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-50)
+      $0.width.lessThanOrEqualTo(self.view).multipliedBy(0.8)
+      $0.height.equalTo(40)
+    }
+
     UIView.animate(withDuration: 0.5, animations: {
       toastLabel.alpha = 1.0
     }) { _ in
