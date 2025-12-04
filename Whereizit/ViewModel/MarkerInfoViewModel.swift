@@ -85,6 +85,44 @@ final class MarkerInfoViewModel {
       updateTagViews: .empty(),
       isSaveEnabled: .just(true),
       saveResult: .empty(),
-      errorMessage: .empty())
+      errorMessage: .empty()
+    )
+
+    input.categorySelection
+      .subscribe(onNext: { [weak self] category in
+        guard let self = self else { return }
+
+        let current = self.categoryRelay.value
+        let next = (current == category) ? nil : category
+        self.categoryRelay.accept(next)
+
+        self.selectedEnvTags.accept([])
+        self.selectedFacTags.accept([])
+        self.selectedTypeTags.accept([])
+      })
+      .disposed(by: self.disposeBag)
+
+    input.tagSelection
+      .subscribe(onNext: {[weak self] (section, tag) in
+        guard let self = self else { return }
+
+        switch section {
+        case "환경": self.toggleTag(tag, in: self.selectedEnvTags)
+        case "유형": self.toggleTag(tag, in: self.selectedTypeTags)
+        case "시설": self.toggleTag(tag, in: self.selectedFacTags)
+        default: break
+        }
+      })
+  }
+
+
+  private func toggleTag(_ tag: String, in relay: BehaviorRelay<Set<String>>) {
+    var current = relay.value
+    if current.contains(tag) {
+      current.remove(tag)
+    } else {
+      current.insert(tag)
+    }
+    relay.accept(current)
   }
 }
