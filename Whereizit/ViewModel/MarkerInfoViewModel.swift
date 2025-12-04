@@ -6,6 +6,7 @@
 //
 
 import FirebaseAuth
+import FirebaseCore
 import FirebaseStorage
 
 import RxSwift
@@ -113,6 +114,75 @@ final class MarkerInfoViewModel {
         default: break
         }
       })
+
+    let initialData = Observable.just(self.mode)
+      .map { mode -> Area? in
+        if case let .edit(area) = mode { return area }
+        return nil
+      }
+      .asDriver(onErrorJustReturn: nil)
+
+    let updateTagViews = self.categoryRelay
+      .compactMap { $0 }
+      .asDriver(onErrorJustReturn: "")
+
+    let isSaveEnabled = Observable.combineLatest(
+      self.nameRelay, self.descriptionRelay, self.categoryRelay
+    ).map { name, desc, cat in
+      return !name.isEmpty && !desc.isEmpty && cat != nil
+    }.asDriver(onErrorJustReturn: false)
+
+
+    let saveResult = PublishRelay<Bool>()
+    let errorMessage = PublishRelay<String>()
+
+
+    input.saveTap
+      .withLatestFrom(isSaveEnabled)
+      .filter { $0 }
+      .withLatestFrom(Observable.combineLatest(
+        self.nameRelay, self.descriptionRelay, self.categoryRelay, self.imageURLRelay, self.selectedEnvTags, self.selectedFacTags, self.selectedTypeTags
+      ))
+      .flatMapLatest { [weak self] (name, desc, cat, imgUrl, envTags, typeTags, facTags) -> Observable<Void> in
+        guard let self = self else { return .empty() }
+        guard let category = cat else { return .empty() }
+
+        let (lat, lng, docID, uploader) = self.getMetaData()
+
+        let area = Area(
+          documentID: docID,
+          imageURL: imgUrl,
+          name: name,
+          description: desc,
+          areaLat: lat,
+          areaLng: lng,
+          category: category,
+          selectedEnvironmentTags: Array(envTags),
+          selectedTypeTags: Array(typeTags),
+          selectedFacilityTags: Array(facTags),
+          uploadUser: uploader,
+          uploadDate: Timestamp(date: Date())
+        )
+
+        return AreaRepository.shared.addArea(area: area)
+          .do(onError: { error in
+            errorMessage.accept(error.localizedDescription)
+            saveResult.accept(false)
+            }, onCompleted: {
+              saveResult.accept(true)
+            })
+          .catch{ _ in .empty()}
+      }
+      .subscribe()
+      .disposed(by: self.disposeBag)
+
+    return Output(
+      initialData: initialData,
+      updateTagViews: updateTagViews,
+      isSaveEnabled: isSaveEnabled,
+      saveResult: saveResult.asSignal(),
+      errorMessage: errorMessage.asSignal()
+    )
   }
 
 
@@ -124,5 +194,19 @@ final class MarkerInfoViewModel {
       current.insert(tag)
     }
     relay.accept(current)
+  }
+
+
+  private func getMetaData() -> (Double, Double, String?, String) {
+    let userEmail = Auth.auth().currentUser?.email ?? ""
+
+    switch self.mode {
+    case .new(let lat, let lng):
+      let id = "\(String(format: "%.9f", lat))_\(String(format: "%.9f", lng))"
+      return (lat, lng, id, userEmail)
+
+    case .edit(let area):
+      return (area.areaLat, area.areaLng, area.documentID, area.uploadUser)
+    }
   }
 }
