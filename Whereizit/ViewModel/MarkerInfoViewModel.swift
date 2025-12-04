@@ -18,7 +18,7 @@ final class MarkerInfoViewModel {
   struct Input {
     let nameText: Observable<String>
     let descriptionText: Observable<String>
-    let cateforySelection: Observable<String>
+    let categorySelection: Observable<String>
     let tagSelection: Observable<(String, String)>
     let imageURL: Observable<String?>
     let saveTap: Observable<Void>
@@ -35,7 +35,8 @@ final class MarkerInfoViewModel {
 
   // MARK: Properties
 
-  private let disposrBag = DisposeBag()
+  private let disposeBag = DisposeBag()
+
   private let mode: MarkerInfoInputViewController.InputMode
 
   private let nameRelay = BehaviorRelay<String>(value: "")
@@ -61,5 +62,29 @@ final class MarkerInfoViewModel {
       selectedTypeTags.accept(Set(area.selectedTypeTags))
       selectedFacTags.accept(Set(area.selectedFacilityTags))
     }
+  }
+
+
+  // MARK: Transform
+
+  func transform(input: Input) -> Output {
+    input.nameText
+      .bind(to: self.nameRelay)
+      .disposed(by: self.disposeBag)
+
+    input.descriptionText
+      .bind(to: self.descriptionRelay)
+      .disposed(by: self.disposeBag)
+
+    input.imageURL
+      .bind(to: self.imageURLRelay)
+      .disposed(by: self.disposeBag)
+
+    return Output(
+      initialData: .empty(),
+      updateTagViews: .empty(),
+      isSaveEnabled: .just(true),
+      saveResult: .empty(),
+      errorMessage: .empty())
   }
 }
