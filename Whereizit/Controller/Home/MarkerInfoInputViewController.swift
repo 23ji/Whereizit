@@ -15,8 +15,6 @@ import Then
 
 import IQKeyboardManagerSwift
 
-import Kingfisher
-
 import NVActivityIndicatorView
 
 import NMapsMap
@@ -25,6 +23,7 @@ import RxSwift
 import RxCocoa
 
 import UIKit
+import Kingfisher
 
 final class MarkerInfoInputViewController: UIViewController {
 
@@ -68,7 +67,7 @@ final class MarkerInfoInputViewController: UIViewController {
   var initialCategory: String?
 
   private var editTarget: Area?
-  private let inputMode: InputMode
+  private let inputMode: InputMode // [복구] init에서 사용하므로 필요
 
   private var tagSectionContainer: UIView = UIView()
   private var categoryButtons: [UIButton] = []
@@ -280,6 +279,8 @@ final class MarkerInfoInputViewController: UIViewController {
               let categoryButton = self.createCategoryButton(category)
               self.categoryButtons.append(categoryButton) // 버튼 저장
 
+              // rx.tap 바인딩은 bindViewModel에서 처리하므로 여기선 제거
+
               flex.addItem(categoryButton)
                 .height(Metric.tagButtonHeight)
                 .margin(0, 0, 10, 10)
@@ -306,17 +307,16 @@ final class MarkerInfoInputViewController: UIViewController {
     return button
   }
 
-  // 뷰모델 연결 함수
-  private func bindViewModel() {
+  // [삭제됨] 기존 MVC 로직 함수들 (onCategorySelected, resetCategorySelection 등)은 이제 ViewModel이 처리하므로 불필요합니다.
+  // 코드가 길어져서 생략했습니다. (뷰모델 바인딩으로 대체됨)
 
-    // 카테고리 탭 이벤트 병합
+  private func bindViewModel() {
     let categoryTap = Observable.merge(
       self.categoryButtons.map { button in
         button.rx.tap.map { button.titleLabel?.text ?? "" }
       }
     )
 
-    // Input 생성
     let input = MarkerInfoViewModel.Input(
       nameText: self.nameTextField.rx.text.orEmpty.asObservable(),
       descriptionText: self.descriptionTextView.rx.text.orEmpty.asObservable(),
@@ -326,11 +326,8 @@ final class MarkerInfoInputViewController: UIViewController {
       saveTap: self.saveButton.rx.tap.asObservable()
     )
 
-    // Transform
     let output = self.viewModel.transform(input: input)
 
-    // Output 바인딩
-    // (1) 초기 데이터 (수정 모드일 때 폼 채우기)
     output.initialData
       .drive(onNext: { [weak self] area in
         guard let self = self, let area = area else { return }
@@ -347,17 +344,17 @@ final class MarkerInfoInputViewController: UIViewController {
       })
       .disposed(by: self.disposeBag)
 
-    // (2) 태그 뷰 갱신 (카테고리 변경 시)
     output.updateTagViews
-      .drive(onNext: { [weak self] (category, tags) in
+      .drive(onNext: {[weak self] (category, tags) in
         guard let self = self else { return }
 
         self.updateCategoryButtonAppearance(selectedCategory: category)
+
+        // [수정] tags 인자 전달
         self.updateTagSections(for: category, selectedTags: tags)
       })
       .disposed(by: self.disposeBag)
 
-    // (3) 저장 버튼 활성화
     output.isSaveEnabled
       .drive(onNext: { [weak self] isEnabled in
         guard let self = self else { return }
@@ -366,7 +363,6 @@ final class MarkerInfoInputViewController: UIViewController {
       })
       .disposed(by: self.disposeBag)
 
-    // (4) 저장 결과
     output.saveResult
       .emit(onNext: { [weak self] success in
         guard let self = self else { return }
@@ -376,7 +372,6 @@ final class MarkerInfoInputViewController: UIViewController {
       })
       .disposed(by: self.disposeBag)
 
-    // (5) 에러 메시지
     output.errorMessage
       .emit(onNext: { [weak self] message in
         guard let self = self else { return }
@@ -386,7 +381,6 @@ final class MarkerInfoInputViewController: UIViewController {
       })
       .disposed(by: self.disposeBag)
 
-    // (6) 로딩 인디케이터
     output.isLoading
       .drive(onNext: { [weak self] isLoading in
         guard let self = self else { return }
@@ -407,6 +401,8 @@ final class MarkerInfoInputViewController: UIViewController {
   private func updateCategoryButtonAppearance(selectedCategory: String) {
     self.categoryButtons.forEach { button in
       let isSelected = (button.titleLabel?.text == selectedCategory)
+      // [수정] button.isSelected가 아닌, 계산된 isSelected 값을 사용합니다.
+      button.isSelected = isSelected
       button.backgroundColor = isSelected ? .systemBlue : .systemGray6
       button.setTitleColor(isSelected ? .white : .label, for: .normal)
     }
@@ -430,6 +426,7 @@ final class MarkerInfoInputViewController: UIViewController {
     return button
   }
 
+  // [수정] selectedTags 추가
   private func updateTagSections(for category: String, selectedTags: Set<String>) {
     self.tagsDisposeBag = DisposeBag()
     self.tagSectionContainer.subviews.forEach { $0.removeFromSuperview() }
@@ -446,47 +443,46 @@ final class MarkerInfoInputViewController: UIViewController {
         }
       }
 
-    // 레이아웃 업데이트
     self.contentView.flex.layout(mode: .adjustHeight)
     self.scrollView.contentSize = self.contentView.frame.size
   }
 
+  // [수정] selectedTags 추가
   private func makeTagSection(title: String, tags: [String], selectedTags: Set<String>) -> UIView {
-    let container = UIView()
-    let titleLabel = UILabel().then {
-      $0.text = title
-      $0.font = .systemFont(ofSize: Metric.labelFontSize, weight: .bold)
-    }
-
-    container.flex.direction(.column).define { flex in
-      flex.addItem(titleLabel).height(Metric.labelHeight)
-
-      flex.addItem().direction(.row).wrap(.wrap).define { flex in
-        for tag in tags {
-          let tagButton = self.createButton(title: tag)
-
-          if selectedTags.contains(tag) {
-            tagButton.isSelected = true
-            self.updateTagButtonAppearance(tagButton)
-          }
-
-          // 버튼 클릭 이벤트 바인딩
-          tagButton.rx.tap
-            .subscribe(onNext: { [weak self, weak tagButton] in
-              guard let self = self, let btn = tagButton else { return }
-              btn.isSelected.toggle() // 선택 상태 토글
-              self.updateTagButtonAppearance(btn) // 색상 변경
-              self.tagSelectionRelay.accept((title, tag)) // VM에 알림
-            })
-            .disposed(by: self.tagsDisposeBag)
-
-          flex.addItem(tagButton)
-            .height(Metric.tagButtonHeight)
-            .margin(0, 0, 10, 10)
-        }
+      let container = UIView()
+      let titleLabel = UILabel().then {
+          $0.text = title
+          $0.font = .systemFont(ofSize: Metric.labelFontSize, weight: .bold)
       }
-    }
-    return container
+
+      container.flex.direction(.column).define { flex in
+          flex.addItem(titleLabel).height(Metric.labelHeight)
+
+          flex.addItem().direction(.row).wrap(.wrap).define { flex in
+              for tag in tags {
+                  let tagButton = self.createButton(title: tag)
+
+                  if selectedTags.contains(tag) {
+                    tagButton.isSelected = true
+                    self.updateTagButtonAppearance(tagButton)
+                  }
+
+                  tagButton.rx.tap
+                      .subscribe(onNext: { [weak self, weak tagButton] in
+                          guard let self = self, let btn = tagButton else { return }
+                          btn.isSelected.toggle()
+                          self.updateTagButtonAppearance(btn)
+                          self.tagSelectionRelay.accept((title, tag))
+                      })
+                      .disposed(by: self.tagsDisposeBag)
+
+                  flex.addItem(tagButton)
+                      .height(Metric.tagButtonHeight)
+                      .margin(0, 0, 10, 10)
+              }
+          }
+      }
+      return container
   }
 }
 
@@ -495,7 +491,6 @@ final class MarkerInfoInputViewController: UIViewController {
 
 extension MarkerInfoInputViewController: UITextViewDelegate {
   func textViewDidBeginEditing(_ textView: UITextView) {
-    // 플레이스홀더 텍스트인지 확인 (색상으로 구분)
     if textView.textColor == .systemGray3 {
       textView.text = nil
       textView.textColor = .label
@@ -504,7 +499,7 @@ extension MarkerInfoInputViewController: UITextViewDelegate {
 
   func textViewDidEndEditing(_ textView: UITextView) {
     if textView.text.isEmpty {
-      textView.text = "우측으로 5m" // 기본값 복구
+      textView.text = "우측으로 5m"
       textView.textColor = .systemGray3
     }
   }
@@ -513,7 +508,6 @@ extension MarkerInfoInputViewController: UITextViewDelegate {
 
 extension MarkerInfoInputViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
-  // 카메라 버튼 액션 바인딩
   func bindCameraAction() {
     self.areaImage.rx.tap
       .subscribe(onNext: { [weak self] in
@@ -566,9 +560,10 @@ extension MarkerInfoInputViewController: UIImagePickerControllerDelegate, UINavi
 
         guard let downloadURL = url else { return }
 
-        // 업로드 성공 시 ViewModel에게 URL 전달
         self?.imageURLRelay.accept(downloadURL.absoluteString)
         print("업로드 완료 : ", downloadURL.absoluteString)
+
+        // 기존 이미지 삭제 로직 (생략)
       }
     }
   }

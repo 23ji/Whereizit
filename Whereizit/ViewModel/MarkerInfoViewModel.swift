@@ -122,9 +122,14 @@ final class MarkerInfoViewModel {
       }
 
     let updateTagViews = Observable.combineLatest(
-      categoryRelay.compactMap{ $0 },
+      categoryRelay,       // [핵심] compactMap 삭제! (nil도 흘려보냄)
       currentSelectedTags
     )
+      .map { category, tags -> (String, Set<String>) in
+        // 카테고리가 nil이면 -> 빈 문자열("")을 보내서 UI를 초기화시킴
+        guard let category = category else { return ("", []) }
+        return (category, tags)
+      }
       .asDriver(onErrorJustReturn: ("", []))
 
     let isSaveEnabled = Observable.combineLatest(
