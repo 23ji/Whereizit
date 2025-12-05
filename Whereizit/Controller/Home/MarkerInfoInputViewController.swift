@@ -709,6 +709,21 @@ extension MarkerInfoInputViewController: UIImagePickerControllerDelegate, UINavi
   }
 
   private func bindViewModel() {
-    print("뷰모델 연결 완료")
+    let categoryTap = Observable.merge(
+      self.categoryButtons.map { button in
+        button.rx.tap.map { button.titleLabel?.text ?? "" }
+      }
+    )
+
+    let input = MarkerInfoViewModel.Input(
+      nameText: self.nameTextField.rx.text.orEmpty.asObservable(),
+      descriptionText: self.descriptionTextView.rx.text.orEmpty.asObservable(),
+      categorySelection: categoryTap,
+      tagSelection: self.tagSelectionRelay.asObservable(),
+      imageURL: self.imageURLRelay.asObservable(),
+      saveTap: self.saveButton.rx.tap.asObservable()
+    )
+
+    let output = self.viewModel.transform(input: input)
   }
 }

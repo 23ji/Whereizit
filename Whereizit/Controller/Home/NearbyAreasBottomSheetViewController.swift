@@ -100,7 +100,7 @@ final class NearbyAreasBottomSheetViewController: UIViewController {
             let area = try doc.data(as: Area.self)
             newAreas.append(area)
           } catch {
-            print("데이터 파싱 실패")
+            print("Nearby 데이터 파싱 실패")
           }
         }
       }
