@@ -726,4 +726,31 @@ extension MarkerInfoInputViewController: UIImagePickerControllerDelegate, UINavi
 
     let output = self.viewModel.transform(input: input)
   }
+
+
+  private func updateCategoryButtonAppearance(selectedCategory: String) {
+    self.categoryButtons.forEach { button in
+      let isSelected = (button.titleLabel?.text == selectedCategory)
+      button.backgroundColor = isSelected ? .systemBlue : .systemGray6
+      button.setTitleColor(isSelected ? .white : .label, for: .normal)
+    }
+  }
+
+  private func updateTagButtonAppearance(_ button: UIButton) {
+    button.backgroundColor = button.isSelected ? .gray : .systemGray6
+    button.setTitleColor(button.isSelected ? .white : .label, for: .normal)
+  }
+
+  private func createButton(title: String) -> UIButton {
+    let button = UIButton()
+    button.setTitle(title, for: .normal)
+    button.titleLabel?.font = .systemFont(ofSize: 14)
+    button.backgroundColor = .systemGray6
+    button.setTitleColor(.label, for: .normal)
+    button.layer.cornerRadius = 15
+    button.layer.borderWidth = 0.7
+    button.layer.borderColor = UIColor.systemGray4.cgColor
+    button.contentEdgeInsets = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
+    return button
+  }
 }
