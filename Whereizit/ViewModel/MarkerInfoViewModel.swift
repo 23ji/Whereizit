@@ -27,7 +27,7 @@ final class MarkerInfoViewModel {
 
   struct Output {
     let initialData: Driver<Area?>
-    let updateTagViews: Driver<String>
+    let updateTagViews: Driver<(String, Set<String>)>
     let isSaveEnabled: Driver<Bool>
     let saveResult: Signal<Bool>
     let errorMessage: Signal<String>
@@ -84,15 +84,6 @@ final class MarkerInfoViewModel {
       .bind(to: self.imageURLRelay)
       .disposed(by: self.disposeBag)
 
-    return Output(
-      initialData: .empty(),
-      updateTagViews: .empty(),
-      isSaveEnabled: .just(true),
-      saveResult: .empty(),
-      errorMessage: .empty(),
-      isLoading: activityIndicator.asSharedSequence()
-    )
-
     input.categorySelection
       .subscribe(onNext: { [weak self] category in
         guard let self = self else { return }
@@ -126,9 +117,15 @@ final class MarkerInfoViewModel {
       }
       .asDriver(onErrorJustReturn: nil)
 
-    let updateTagViews = self.categoryRelay
-      .compactMap { $0 }
-      .asDriver(onErrorJustReturn: "")
+    let currentSelectedTags = Observable.combineLatest(selectedEnvTags, selectedFacTags, selectedTypeTags)
+      .map { $0.union($1).union($2) // Set 3개 집합
+      }
+
+    let updateTagViews = Observable.combineLatest(
+      categoryRelay.compactMap{ $0 },
+      currentSelectedTags
+    )
+      .asDriver(onErrorJustReturn: ("", []))
 
     let isSaveEnabled = Observable.combineLatest(
       self.nameRelay, self.descriptionRelay, self.categoryRelay
