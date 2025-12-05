@@ -15,6 +15,8 @@ import Then
 
 import IQKeyboardManagerSwift
 
+import NVActivityIndicatorView
+
 import NMapsMap
 
 import RxSwift
@@ -64,7 +66,6 @@ final class MarkerInfoInputViewController: UIViewController {
   var initialCategory: String?
   
   private var editTarget: Area?
-  private let inputMode: InputMode
 
   private var tagSectionContainer: UIView = UIView()
   private var categoryButtons: [UIButton] = []
@@ -76,6 +77,13 @@ final class MarkerInfoInputViewController: UIViewController {
   var existingDocumentID: String?
 
   let disposeBag = DisposeBag()
+
+  private var tagsDisposeBag = DisposeBag() // 동적 태그 변화 이벤트를 처리할 Bag
+
+  private let viewModel: MarkerInfoViewModel
+
+  private let imageURLRelay = PublishRelay<String?>() // 이미지 업로드 시 URL을 넘기는 통로
+  private let tagSelectionRelay = PublishRelay<(String, String)>()
 
 
   // MARK: UI
@@ -137,6 +145,13 @@ final class MarkerInfoInputViewController: UIViewController {
     $0.isEnabled = true
   }
 
+  private let loadingIndicator = NVActivityIndicatorView(
+    frame: .zero,
+    type: .ballPulseSync,
+    color: .systemGreen,
+    padding: 0
+  )
+
   var isSaveButtonEnabled: Bool = true {
     didSet {
       guard self.isSaveButtonEnabled != oldValue else { return }
@@ -150,7 +165,7 @@ final class MarkerInfoInputViewController: UIViewController {
   }
 
   init(mode: InputMode) {
-    self.inputMode = mode
+    self.viewModel = MarkerInfoViewModel(mode: mode)
     super.init(nibName: nil, bundle: nil)
   }
   
@@ -165,10 +180,13 @@ final class MarkerInfoInputViewController: UIViewController {
     self.configureUI()
     self.addSubView()
     self.defineFlexContainer()
-    self.bindAreaImageButton()
-    self.bindSaveButton()
+    //self.bindAreaImageButton()
+    //self.bindSaveButton()
 
-    self.setupData(by: inputMode)
+    //self.setupData(by: inputMode)
+
+    self.bindViewModel()
+    //self.bindAreaImageButton()
   }
 
 
@@ -195,6 +213,13 @@ final class MarkerInfoInputViewController: UIViewController {
 
   private func addSubView() {
     self.view.addSubview(self.scrollView)
+    self.view.addSubview(self.loadingIndicator)
+
+    self.loadingIndicator.snp.makeConstraints { make in
+      make.center.equalToSuperview()
+      make.width.height.equalTo(50)
+    }
+
     self.scrollView.addSubview(self.contentView)
     self.mapView.addSubview(self.markerPinImageView)
   }
@@ -453,32 +478,32 @@ final class MarkerInfoInputViewController: UIViewController {
 
 
   // 카메라 버튼 탭
-  private func bindAreaImageButton() {
-    self.areaImage.rx.tap.subscribe(
-      onNext: { [weak self] in
-        print("카메라 버튼 눌림")
-        self?.openCamera()
-      })
-    .disposed(by: disposeBag)
-  }
+//  private func bindAreaImageButton() {
+//    self.areaImage.rx.tap.subscribe(
+//      onNext: { [weak self] in
+//        print("카메라 버튼 눌림")
+//        self?.openCamera()
+//      })
+//    .disposed(by: disposeBag)
+//  }
 
   // 저장 버튼 탭
-  private func bindSaveButton() {
-    self.saveButton.rx.tap.subscribe(
-      onNext: { [weak self] in
-        guard let self = self else { return }
-
-        if self.isSaveButtonEnabled == false {
-          //토스트 띄우기
-        }
-
-        // 저장 가능한 경우에만 화면 닫기
-        if self.saveAreaInfo() {
-          self.view.window?.rootViewController?.dismiss(animated: true)
-        }
-      })
-    .disposed(by: self.disposeBag)
-  }
+//  private func bindSaveButton() {
+//    self.saveButton.rx.tap.subscribe(
+//      onNext: { [weak self] in
+//        guard let self = self else { return }
+//
+//        if self.isSaveButtonEnabled == false {
+//          //토스트 띄우기
+//        }
+//
+//        // 저장 가능한 경우에만 화면 닫기
+//        if self.saveAreaInfo() {
+//          self.view.window?.rootViewController?.dismiss(animated: true)
+//        }
+//      })
+//    .disposed(by: self.disposeBag)
+//  }
 
 
   private func saveAreaInfo() -> Bool {
@@ -529,38 +554,38 @@ final class MarkerInfoInputViewController: UIViewController {
   }
   
   
-  private func setupData(by mode: InputMode) {
-    switch mode {
-    case let .new(lat, lng):
-      self.isEditMode = false
-      self.markerLat = lat
-      self.markerLng = lng
-      
-    case let .edit(area):
-      self.isEditMode = true
-      self.imageURL = area.imageURL
-      self.markerLat = area.areaLat
-      self.markerLng = area.areaLng
-      self.selectedEnvironmentTags = area.selectedEnvironmentTags
-      self.selectedTypeTags = area.selectedTypeTags
-      self.selectedFacilityTags = area.selectedFacilityTags
-      
-      if !area.category.isEmpty {
-        self.initialCategory = area.category
-      } else {
-        self.initialCategory = nil
-      }
-      
-      self.loadViewIfNeeded()
-      self.nameTextField.text = area.name
-      self.descriptionTextView.text = area.description
-      if let url = URL(string: area.imageURL ?? "") {
-        self.areaImage.kf.setImage(with: url, for: .normal)
-      }
-      
-      self.setupEditModeUI()
-    }
-  }
+//  private func setupData(by mode: InputMode) {
+//    switch mode {
+//    case let .new(lat, lng):
+//      self.isEditMode = false
+//      self.markerLat = lat
+//      self.markerLng = lng
+//      
+//    case let .edit(area):
+//      self.isEditMode = true
+//      self.imageURL = area.imageURL
+//      self.markerLat = area.areaLat
+//      self.markerLng = area.areaLng
+//      self.selectedEnvironmentTags = area.selectedEnvironmentTags
+//      self.selectedTypeTags = area.selectedTypeTags
+//      self.selectedFacilityTags = area.selectedFacilityTags
+//      
+//      if !area.category.isEmpty {
+//        self.initialCategory = area.category
+//      } else {
+//        self.initialCategory = nil
+//      }
+//      
+//      self.loadViewIfNeeded()
+//      self.nameTextField.text = area.name
+//      self.descriptionTextView.text = area.description
+//      if let url = URL(string: area.imageURL ?? "") {
+//        self.areaImage.kf.setImage(with: url, for: .normal)
+//      }
+//      
+//      self.setupEditModeUI()
+//    }
+//  }
   
   
   private func setupEditModeUI() {
@@ -681,5 +706,9 @@ extension MarkerInfoInputViewController: UIImagePickerControllerDelegate, UINavi
         print("기존 이미지 삭제 성공: \(urlString)")
       }
     }
+  }
+
+  private func bindViewModel() {
+    print("뷰모델 연결 완료")
   }
 }

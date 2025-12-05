@@ -31,6 +31,7 @@ final class MarkerInfoViewModel {
     let isSaveEnabled: Driver<Bool>
     let saveResult: Signal<Bool>
     let errorMessage: Signal<String>
+    let isLoading: Driver<Bool>
   }
 
 
@@ -49,6 +50,8 @@ final class MarkerInfoViewModel {
   private var selectedEnvTags = BehaviorRelay<Set<String>>(value: [])
   private var selectedTypeTags = BehaviorRelay<Set<String>>(value: [])
   private var selectedFacTags = BehaviorRelay<Set<String>>(value: [])
+
+  private var activityIndicator = ActivityIndicator()
 
   init(mode: MarkerInfoInputViewController.InputMode) {
     self.mode = mode
@@ -86,7 +89,8 @@ final class MarkerInfoViewModel {
       updateTagViews: .empty(),
       isSaveEnabled: .just(true),
       saveResult: .empty(),
-      errorMessage: .empty()
+      errorMessage: .empty(),
+      isLoading: activityIndicator.asSharedSequence()
     )
 
     input.categorySelection
@@ -165,6 +169,7 @@ final class MarkerInfoViewModel {
         )
 
         return AreaRepository.shared.addArea(area: area)
+          .trackActivity(self.activityIndicator)
           .do(onError: { error in
             errorMessage.accept(error.localizedDescription)
             saveResult.accept(false)
@@ -181,7 +186,8 @@ final class MarkerInfoViewModel {
       updateTagViews: updateTagViews,
       isSaveEnabled: isSaveEnabled,
       saveResult: saveResult.asSignal(),
-      errorMessage: errorMessage.asSignal()
+      errorMessage: errorMessage.asSignal(),
+      isLoading: activityIndicator.asSharedSequence()
     )
   }
 
