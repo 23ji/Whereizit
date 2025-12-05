@@ -90,21 +90,22 @@ final class NearbyAreasBottomSheetViewController: UIViewController {
   
   private func fetchAreas() {
     db.collection(Constant.Firestore.Collection.smokingAreas).addSnapshotListener { [weak self] snapshot, error in
-      guard let self = self, let snapshot = snapshot else { return }
-      
+      guard let self = self, let snapshot = snapshot else {
+        print("스냅샷 에러: \(error?.localizedDescription ?? "Unknown error")")
+        return
+      }
+
       var newAreas: [Area] = []
-      
+
       for doc in snapshot.documents {
-        for doc in snapshot.documents {
-          do {
-            let area = try doc.data(as: Area.self)
-            newAreas.append(area)
-          } catch {
-            print("Nearby 데이터 파싱 실패")
-          }
+        do {
+          let area = try doc.data(as: Area.self)
+          newAreas.append(area)
+        } catch {
+          print("⚠️ 데이터 파싱 실패 (ID: \(doc.documentID)): \(error)")
         }
       }
-      
+
       // 현재 위치가 있으면 거리 기준으로 정렬
       if let currentLocation = self.currentLocation {
         newAreas.sort { a, b in
@@ -113,7 +114,7 @@ final class NearbyAreasBottomSheetViewController: UIViewController {
           return currentLocation.distance(from: locA) < currentLocation.distance(from: locB)
         }
       }
-      
+
       self.areas = newAreas
       self.tableView.reloadData()
     }
