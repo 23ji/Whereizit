@@ -23,6 +23,7 @@ final class MarkerInfoViewModel {
     let tagSelection: Observable<(String, String)>
     let imageURL: Observable<String?>
     let saveTap: Observable<Void>
+    let uploadImage: Observable<Bool>
   }
 
   struct Output {
@@ -31,7 +32,7 @@ final class MarkerInfoViewModel {
     let isSaveEnabled: Driver<Bool>
     let saveResult: Signal<Bool>
     let errorMessage: Signal<String>
-    let isLoading: Driver<Bool>
+    let isUploadingImage: Driver<Bool>
   }
 
 
@@ -51,10 +52,14 @@ final class MarkerInfoViewModel {
   private var selectedTypeTags = BehaviorRelay<Set<String>>(value: [])
   private var selectedFacTags = BehaviorRelay<Set<String>>(value: [])
 
-  private var activityIndicator = ActivityIndicator()
+  private let areaRepository: AreaRepository
 
-  init(mode: MarkerInfoInputViewController.InputMode) {
+  init(
+    mode: MarkerInfoInputViewController.InputMode,
+    areaRepository: AreaRepository = AreaRepository()
+  ) {
     self.mode = mode
+    self.areaRepository = areaRepository
 
     if case let .edit(area) = mode {
       nameRelay.accept(area.name)
@@ -72,6 +77,85 @@ final class MarkerInfoViewModel {
   // MARK: Transform
 
   func transform(input: Input) -> Output {
+    self.setIuput(input)
+
+    let initialData = Observable.just(self.mode)
+      .map { mode -> Area? in
+        if case let .edit(area) = mode { return area }
+        return nil
+      }
+      .asDriver(onErrorJustReturn: nil)
+
+    let isSaveEnabled = Observable.combineLatest(
+      self.nameRelay,
+      self.descriptionRelay,
+      self.categoryRelay
+    )
+    .map { name, desc, cat in
+      return !name.isEmpty && !desc.isEmpty && cat != nil
+    }
+    .asDriver(onErrorJustReturn: false)
+
+
+    let saveResult = PublishRelay<Bool>()
+    let errorMessage = PublishRelay<String>()
+
+    input.saveTap
+      .withLatestFrom(isSaveEnabled)
+      .filter { $0 }
+      .withLatestFrom(Observable.combineLatest(
+        self.nameRelay,
+        self.descriptionRelay,
+        self.categoryRelay,
+        self.imageURLRelay,
+        self.selectedEnvTags,
+        self.selectedFacTags,
+        self.selectedTypeTags
+      ))
+      .flatMapLatest { [weak self] (name, desc, cat, imgUrl, envTags, typeTags, facTags) -> Observable<Void> in
+        guard let self = self else { return .empty() }
+        guard let category = cat else { return .empty() }
+
+        let (lat, lng, docID, uploader) = self.getMetaData()
+
+        let area = Area(
+          documentID: docID,
+          imageURL: imgUrl,
+          name: name,
+          description: desc,
+          areaLat: lat,
+          areaLng: lng,
+          category: category,
+          selectedEnvironmentTags: Array(envTags),
+          selectedTypeTags: Array(typeTags),
+          selectedFacilityTags: Array(facTags),
+          uploadUser: uploader,
+          uploadDate: Timestamp(date: Date())
+        )
+
+        return self.areaRepository.addArea(area: area)
+          .do(onError: { error in
+            errorMessage.accept(error.localizedDescription)
+            saveResult.accept(false)
+            }, onCompleted: {
+              saveResult.accept(true)
+            })
+          .catch{ _ in .empty()}
+      }
+      .subscribe()
+      .disposed(by: self.disposeBag)
+
+    return Output(
+      initialData: initialData,
+      updateTagViews: self.updateTagViews(),
+      isSaveEnabled: isSaveEnabled,
+      saveResult: saveResult.asSignal(),
+      errorMessage: errorMessage.asSignal(),
+      isUploadingImage: input.uploadImage.asDriver(onErrorDriveWith: .empty())
+    )
+  }
+
+  private func setIuput(_ input: Input) {
     input.nameText
       .bind(to: self.nameRelay)
       .disposed(by: self.disposeBag)
@@ -98,6 +182,14 @@ final class MarkerInfoViewModel {
       })
       .disposed(by: self.disposeBag)
 
+    let isUploadingImage = PublishRelay<Bool>()
+
+    input.uploadImage
+      .subscribe(onNext: { isUploading in
+        isUploadingImage.accept(isUploading)
+      })
+      .disposed(by: self.disposeBag)
+
     input.tagSelection
       .subscribe(onNext: {[weak self] (section, tag) in
         guard let self = self else { return }
@@ -109,90 +201,31 @@ final class MarkerInfoViewModel {
         default: break
         }
       })
+      .disposed(by: self.disposeBag)
+  }
 
-    let initialData = Observable.just(self.mode)
-      .map { mode -> Area? in
-        if case let .edit(area) = mode { return area }
-        return nil
-      }
-      .asDriver(onErrorJustReturn: nil)
-
-    let currentSelectedTags = Observable.combineLatest(selectedEnvTags, selectedFacTags, selectedTypeTags)
+  private func updateTagViews() -> Driver<(String, Set<String>)> {
+    let currentSelectedTags = Observable.combineLatest(
+      self.selectedEnvTags,
+      self.selectedFacTags,
+      self.selectedTypeTags
+    )
       .map { $0.union($1).union($2) // Set 3개 집합
       }
 
     let updateTagViews = Observable.combineLatest(
-      categoryRelay,       // [핵심] compactMap 삭제! (nil도 흘려보냄)
+      self.categoryRelay,
       currentSelectedTags
     )
-      .map { category, tags -> (String, Set<String>) in
-        // 카테고리가 nil이면 -> 빈 문자열("")을 보내서 UI를 초기화시킴
-        guard let category = category else { return ("", []) }
-        return (category, tags)
-      }
-      .asDriver(onErrorJustReturn: ("", []))
+    .map { category, tags -> (String, Set<String>) in
+      // 카테고리가 nil이면 -> 빈 문자열("")을 보내서 UI를 초기화시킴
+      guard let category = category else { return ("", []) }
+      return (category, tags)
+    }
+    .asDriver(onErrorJustReturn: ("", []))
 
-    let isSaveEnabled = Observable.combineLatest(
-      self.nameRelay, self.descriptionRelay, self.categoryRelay
-    ).map { name, desc, cat in
-      return !name.isEmpty && !desc.isEmpty && cat != nil
-    }.asDriver(onErrorJustReturn: false)
-
-
-    let saveResult = PublishRelay<Bool>()
-    let errorMessage = PublishRelay<String>()
-
-
-    input.saveTap
-      .withLatestFrom(isSaveEnabled)
-      .filter { $0 }
-      .withLatestFrom(Observable.combineLatest(
-        self.nameRelay, self.descriptionRelay, self.categoryRelay, self.imageURLRelay, self.selectedEnvTags, self.selectedFacTags, self.selectedTypeTags
-      ))
-      .flatMapLatest { [weak self] (name, desc, cat, imgUrl, envTags, typeTags, facTags) -> Observable<Void> in
-        guard let self = self else { return .empty() }
-        guard let category = cat else { return .empty() }
-
-        let (lat, lng, docID, uploader) = self.getMetaData()
-
-        let area = Area(
-          documentID: docID,
-          imageURL: imgUrl,
-          name: name,
-          description: desc,
-          areaLat: lat,
-          areaLng: lng,
-          category: category,
-          selectedEnvironmentTags: Array(envTags),
-          selectedTypeTags: Array(typeTags),
-          selectedFacilityTags: Array(facTags),
-          uploadUser: uploader,
-          uploadDate: Timestamp(date: Date())
-        )
-
-        return AreaRepository.shared.addArea(area: area)
-          .trackActivity(self.activityIndicator)
-          .do(onError: { error in
-            errorMessage.accept(error.localizedDescription)
-            saveResult.accept(false)
-            }, onCompleted: {
-              saveResult.accept(true)
-            })
-          .catch{ _ in .empty()}
-      }
-      .subscribe()
-      .disposed(by: self.disposeBag)
-
-    return Output(
-      initialData: initialData,
-      updateTagViews: updateTagViews,
-      isSaveEnabled: isSaveEnabled,
-      saveResult: saveResult.asSignal(),
-      errorMessage: errorMessage.asSignal(),
-      isLoading: activityIndicator.asSharedSequence()
-    )
+    return updateTagViews
   }
-
 
   private func toggleTag(_ tag: String, in relay: BehaviorRelay<Set<String>>) {
     var current = relay.value

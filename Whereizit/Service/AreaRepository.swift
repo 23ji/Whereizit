@@ -10,7 +10,6 @@ import FirebaseFirestore
 import FirebaseStorage
 
 final class AreaRepository {
-  static let shared = AreaRepository()
   private let db = Firestore.firestore()
 
   private let collectionPath = Constant.Firestore.Collection.smokingAreas
