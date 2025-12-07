@@ -87,6 +87,8 @@ final class MarkerInfoInputViewController: UIViewController {
   private let imageURLRelay = PublishRelay<String?>() // 이미지 업로드 시 URL을 넘기는 통로
   private let tagSelectionRelay = PublishRelay<(String, String)>()
 
+  private let uploadImage  = PublishRelay<Bool>()
+
 
   // MARK: UI
 
@@ -323,10 +325,24 @@ final class MarkerInfoInputViewController: UIViewController {
       categorySelection: categoryTap,
       tagSelection: self.tagSelectionRelay.asObservable(),
       imageURL: self.imageURLRelay.asObservable(),
-      saveTap: self.saveButton.rx.tap.asObservable()
+      saveTap: self.saveButton.rx.tap.asObservable(),
+      uploadImage:  self.uploadImage.asObservable()
     )
 
     let output = self.viewModel.transform(input: input)
+
+    output.isUploadingImage
+      .drive(onNext: { [weak self] isLoading in
+        guard let self = self else { return }
+        if isLoading {
+          self.loadingIndicator.startAnimating()
+          self.view.isUserInteractionEnabled = false
+        } else {
+          self.loadingIndicator.stopAnimating()
+          self.view.isUserInteractionEnabled = true
+        }
+      })
+      .disposed(by: self.disposeBag)
 
     output.initialData
       .drive(onNext: { [weak self] area in
@@ -378,19 +394,6 @@ final class MarkerInfoInputViewController: UIViewController {
         let alert = UIAlertController(title: "오류", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "확인", style: .default))
         self.present(alert, animated: true)
-      })
-      .disposed(by: self.disposeBag)
-
-    output.isLoading
-      .drive(onNext: { [weak self] isLoading in
-        guard let self = self else { return }
-        if isLoading {
-          self.loadingIndicator.startAnimating()
-          self.view.isUserInteractionEnabled = false
-        } else {
-          self.loadingIndicator.stopAnimating()
-          self.view.isUserInteractionEnabled = true
-        }
       })
       .disposed(by: self.disposeBag)
   }
@@ -538,6 +541,8 @@ extension MarkerInfoInputViewController: UIImagePickerControllerDelegate, UINavi
   func uploadImage(_ image: UIImage) {
     guard let imageData = image.jpegData(compressionQuality: 0.8) else { return }
 
+    self.uploadImage.accept(true)
+    
     let alert = UIAlertController(title: nil, message: "이미지 업로드 중...", preferredStyle: .alert)
     present(alert, animated: true)
 
@@ -563,6 +568,7 @@ extension MarkerInfoInputViewController: UIImagePickerControllerDelegate, UINavi
         self?.imageURLRelay.accept(downloadURL.absoluteString)
         print("업로드 완료 : ", downloadURL.absoluteString)
 
+        self?.uploadImage.accept(false)
         // 기존 이미지 삭제 로직 (생략)
       }
     }
