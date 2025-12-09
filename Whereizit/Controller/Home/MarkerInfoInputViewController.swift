@@ -67,7 +67,7 @@ final class MarkerInfoInputViewController: UIViewController {
   var initialCategory: String?
 
   private var editTarget: Area?
-  private let inputMode: InputMode // [복구] init에서 사용하므로 필요
+  private let inputMode: InputMode
 
   private var tagSectionContainer: UIView = UIView()
   private var categoryButtons: [UIButton] = []
@@ -80,7 +80,7 @@ final class MarkerInfoInputViewController: UIViewController {
 
   let disposeBag = DisposeBag()
 
-  private var tagsDisposeBag = DisposeBag() // 동적 태그 변화 이벤트를 처리할 Bag
+  private var tagsDisposeBag = DisposeBag()
 
   private let viewModel: MarkerInfoViewModel
 
@@ -309,8 +309,6 @@ final class MarkerInfoInputViewController: UIViewController {
     return button
   }
 
-  // [삭제됨] 기존 MVC 로직 함수들 (onCategorySelected, resetCategorySelection 등)은 이제 ViewModel이 처리하므로 불필요합니다.
-  // 코드가 길어져서 생략했습니다. (뷰모델 바인딩으로 대체됨)
 
   private func bindViewModel() {
     let categoryTap = Observable.merge(
@@ -366,7 +364,6 @@ final class MarkerInfoInputViewController: UIViewController {
 
         self.updateCategoryButtonAppearance(selectedCategory: category)
 
-        // [수정] tags 인자 전달
         self.updateTagSections(for: category, selectedTags: tags)
       })
       .disposed(by: self.disposeBag)
@@ -450,7 +447,7 @@ final class MarkerInfoInputViewController: UIViewController {
     self.scrollView.contentSize = self.contentView.frame.size
   }
 
-  // [수정] selectedTags 추가
+
   private func makeTagSection(title: String, tags: [String], selectedTags: Set<String>) -> UIView {
       let container = UIView()
       let titleLabel = UILabel().then {
@@ -569,7 +566,6 @@ extension MarkerInfoInputViewController: UIImagePickerControllerDelegate, UINavi
         print("업로드 완료 : ", downloadURL.absoluteString)
 
         self?.uploadImage.accept(false)
-        // 기존 이미지 삭제 로직 (생략)
       }
     }
   }
