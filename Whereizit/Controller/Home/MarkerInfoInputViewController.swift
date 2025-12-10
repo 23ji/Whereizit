@@ -15,25 +15,22 @@ import Then
 
 import IQKeyboardManagerSwift
 
-import NVActivityIndicatorView
-
 import NMapsMap
 
 import RxSwift
 import RxCocoa
 
 import UIKit
-import Kingfisher
 
 final class MarkerInfoInputViewController: UIViewController {
 
-
+  
   enum InputMode {
     case new(lat: Double, lng: Double)
     case edit(area: Area)
   }
-
-
+  
+  
   // MARK: Constant
 
   private enum Metric {
@@ -65,7 +62,7 @@ final class MarkerInfoInputViewController: UIViewController {
 
   // 수정 모드 진입 시 초기 카테고리를 받기 위한 변수
   var initialCategory: String?
-
+  
   private var editTarget: Area?
   private let inputMode: InputMode
 
@@ -78,16 +75,9 @@ final class MarkerInfoInputViewController: UIViewController {
   var isEditMode: Bool = false
   var existingDocumentID: String?
 
+  private let db = Firestore.firestore()
+
   let disposeBag = DisposeBag()
-
-  private var tagsDisposeBag = DisposeBag()
-
-  private let viewModel: MarkerInfoViewModel
-
-  private let imageURLRelay = PublishRelay<String?>() // 이미지 업로드 시 URL을 넘기는 통로
-  private let tagSelectionRelay = PublishRelay<(String, String)>()
-
-  private let uploadImage  = PublishRelay<Bool>()
 
 
   // MARK: UI
@@ -104,7 +94,6 @@ final class MarkerInfoInputViewController: UIViewController {
     $0.layer.borderColor = UIColor.systemGray4.cgColor
     $0.layer.cornerRadius = 5
     $0.layer.masksToBounds = true
-    $0.imageView?.contentMode = .scaleAspectFill
   }
 
   // 구역 이름
@@ -134,10 +123,31 @@ final class MarkerInfoInputViewController: UIViewController {
   }
 
   // 카테고리 태그
-  private let categoryTags = Constant.AppData.categories
+  private let categoryTags = ["화장실", "쓰레기통", "물", "흡연구역"]
 
   // 카테고리별 태그 정의
-  private let categoryTagsMap = Constant.AppData.categoryTagsMap
+  private let categoryTagsMap: [String: [String: [String]]] = [
+    "화장실": [
+      "환경": ["남녀 구분", "남녀 공용"],
+      "유형": ["건물", "식당", "술집", "카페"],
+      "시설": ["휴지", "비데"]
+    ],
+    "쓰레기통": [
+      "환경": ["일반 쓰레기", "재활용 쓰레기"],
+      "유형": ["실외", "실내"],
+      "시설": ["분리수거"]
+    ],
+    "물": [
+      "환경": ["실내", "실외"],
+      "유형": ["정수기", "음수대", "약수터"],
+      "시설": ["온수", "얼음"]
+    ],
+    "흡연구역": [
+      "환경": ["실내", "실외", "밀폐형", "개방형"],
+      "유형": ["흡연 구역", "카페", "술집", "식당", "노래방", "보드게임 카페", "당구장", "피시방"],
+      "시설": ["별도 전자담배 구역", "의자", "라이터"]
+    ]
+  ]
 
   // 저장 버튼
   let saveButton = UIButton(type: .system).then {
@@ -149,13 +159,6 @@ final class MarkerInfoInputViewController: UIViewController {
     $0.isUserInteractionEnabled = true
     $0.isEnabled = true
   }
-
-  private let loadingIndicator = NVActivityIndicatorView(
-    frame: .zero,
-    type: .ballPulseSync,
-    color: .systemGreen,
-    padding: 0
-  )
 
   var isSaveButtonEnabled: Bool = true {
     didSet {
@@ -171,10 +174,9 @@ final class MarkerInfoInputViewController: UIViewController {
 
   init(mode: InputMode) {
     self.inputMode = mode
-    self.viewModel = MarkerInfoViewModel(mode: mode)
     super.init(nibName: nil, bundle: nil)
   }
-
+  
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -186,13 +188,10 @@ final class MarkerInfoInputViewController: UIViewController {
     self.configureUI()
     self.addSubView()
     self.defineFlexContainer()
-    //self.bindAreaImageButton()
-    //self.bindSaveButton()
+    self.bindAreaImageButton()
+    self.bindSaveButton()
 
-    //self.setupData(by: inputMode)
-
-    self.bindViewModel()
-    self.bindCameraAction()
+    self.setupData(by: inputMode)
   }
 
 
@@ -219,13 +218,6 @@ final class MarkerInfoInputViewController: UIViewController {
 
   private func addSubView() {
     self.view.addSubview(self.scrollView)
-    self.view.addSubview(self.loadingIndicator)
-
-    self.loadingIndicator.snp.makeConstraints { make in
-      make.center.equalToSuperview()
-      make.width.height.equalTo(50)
-    }
-
     self.scrollView.addSubview(self.contentView)
     self.mapView.addSubview(self.markerPinImageView)
   }
@@ -281,7 +273,9 @@ final class MarkerInfoInputViewController: UIViewController {
               let categoryButton = self.createCategoryButton(category)
               self.categoryButtons.append(categoryButton) // 버튼 저장
 
-              // rx.tap 바인딩은 bindViewModel에서 처리하므로 여기선 제거
+              categoryButton.rx.tap.bind { [weak self] in
+                self?.onCategorySelected(categoryButton, category: category)
+              }.disposed(by: disposeBag)
 
               flex.addItem(categoryButton)
                 .height(Metric.tagButtonHeight)
@@ -309,180 +303,303 @@ final class MarkerInfoInputViewController: UIViewController {
     return button
   }
 
+  // 카테고리 선택 시 호출 (사용자 탭)
+  private func onCategorySelected(_ button: UIButton, category: String) {
+    // 이미 선택된 카테고리를 다시 클릭한 경우
+    if self.selectedCategory == category {
+      // 선택 해제
+      button.backgroundColor = .systemGray6
+      button.setTitleColor(.label, for: .normal)
+      self.selectedCategory = nil
 
-  private func bindViewModel() {
-    let categoryTap = Observable.merge(
-      self.categoryButtons.map { button in
-        button.rx.tap.map { button.titleLabel?.text ?? "" }
-      }
-    )
+      // 선택된 태그 초기화
+      self.selectedEnvironmentTags.removeAll()
+      self.selectedTypeTags.removeAll()
+      self.selectedFacilityTags.removeAll()
 
-    let input = MarkerInfoViewModel.Input(
-      nameText: self.nameTextField.rx.text.orEmpty.asObservable(),
-      descriptionText: self.descriptionTextView.rx.text.orEmpty.asObservable(),
-      categorySelection: categoryTap,
-      tagSelection: self.tagSelectionRelay.asObservable(),
-      imageURL: self.imageURLRelay.asObservable(),
-      saveTap: self.saveButton.rx.tap.asObservable(),
-      uploadImage:  self.uploadImage.asObservable()
-    )
+      // 태그 섹션 제거
+      self.tagSectionContainer.subviews.forEach { $0.removeFromSuperview() }
+      self.contentView.flex.layout(mode: .adjustHeight)
+      self.scrollView.contentSize = self.contentView.frame.size
 
-    let output = self.viewModel.transform(input: input)
+      return
+    }
 
-    output.isUploadingImage
-      .drive(onNext: { [weak self] isLoading in
-        guard let self = self else { return }
-        if isLoading {
-          self.loadingIndicator.startAnimating()
-          self.view.isUserInteractionEnabled = false
-        } else {
-          self.loadingIndicator.stopAnimating()
-          self.view.isUserInteractionEnabled = true
-        }
-      })
-      .disposed(by: self.disposeBag)
+    // 이전 선택 초기화
+    self.resetCategorySelection()
 
-    output.initialData
-      .drive(onNext: { [weak self] area in
-        guard let self = self, let area = area else { return }
+    // 현재 선택 업데이트
+    button.backgroundColor = .systemBlue
+    button.setTitleColor(.white, for: .normal)
+    self.selectedCategory = category
 
-        self.nameTextField.text = area.name
-        self.descriptionTextView.text = area.description
-        self.descriptionTextView.textColor = .label
+    // 사용자 탭 시에는 선택된 태그 초기화 (수정 모드 초기 세팅때는 이 함수 안탐)
+    self.selectedEnvironmentTags.removeAll()
+    self.selectedTypeTags.removeAll()
+    self.selectedFacilityTags.removeAll()
 
-        if let urlString = area.imageURL, let url = URL(string: urlString) {
-          self.areaImage.kf.setImage(with: url, for: .normal)
-        }
-
-        self.updateCategoryButtonAppearance(selectedCategory: area.category)
-      })
-      .disposed(by: self.disposeBag)
-
-    output.updateTagViews
-      .drive(onNext: {[weak self] (category, tags) in
-        guard let self = self else { return }
-
-        self.updateCategoryButtonAppearance(selectedCategory: category)
-
-        self.updateTagSections(for: category, selectedTags: tags)
-      })
-      .disposed(by: self.disposeBag)
-
-    output.isSaveEnabled
-      .drive(onNext: { [weak self] isEnabled in
-        guard let self = self else { return }
-        self.saveButton.isEnabled = isEnabled
-        self.saveButton.backgroundColor = isEnabled ? .systemBlue : .systemGray
-      })
-      .disposed(by: self.disposeBag)
-
-    output.saveResult
-      .emit(onNext: { [weak self] success in
-        guard let self = self else { return }
-        if success {
-          self.dismiss(animated: true)
-        }
-      })
-      .disposed(by: self.disposeBag)
-
-    output.errorMessage
-      .emit(onNext: { [weak self] message in
-        guard let self = self else { return }
-        let alert = UIAlertController(title: "오류", message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "확인", style: .default))
-        self.present(alert, animated: true)
-      })
-      .disposed(by: self.disposeBag)
+    // 태그 섹션 업데이트
+    self.updateTagSections(for: category)
   }
 
-
-  // MARK: UI Helpers
-
-  private func updateCategoryButtonAppearance(selectedCategory: String) {
+  // 카테고리 선택 초기화
+  private func resetCategorySelection() {
     self.categoryButtons.forEach { button in
-      let isSelected = (button.titleLabel?.text == selectedCategory)
-      // [수정] button.isSelected가 아닌, 계산된 isSelected 값을 사용합니다.
-      button.isSelected = isSelected
-      button.backgroundColor = isSelected ? .systemBlue : .systemGray6
-      button.setTitleColor(isSelected ? .white : .label, for: .normal)
+      button.backgroundColor = .systemGray6
+      button.setTitleColor(.label, for: .normal)
     }
   }
 
-  private func updateTagButtonAppearance(_ button: UIButton) {
-    button.backgroundColor = button.isSelected ? .gray : .systemGray6
-    button.setTitleColor(button.isSelected ? .white : .label, for: .normal)
-  }
-
-  private func createButton(title: String) -> UIButton {
-    let button = UIButton()
-    button.setTitle(title, for: .normal)
-    button.titleLabel?.font = .systemFont(ofSize: 14)
-    button.backgroundColor = .systemGray6
-    button.setTitleColor(.label, for: .normal)
-    button.layer.cornerRadius = 15
-    button.layer.borderWidth = 0.7
-    button.layer.borderColor = UIColor.systemGray4.cgColor
-    button.contentEdgeInsets = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
-    return button
-  }
-
-  // [수정] selectedTags 추가
-  private func updateTagSections(for category: String, selectedTags: Set<String>) {
-    self.tagsDisposeBag = DisposeBag()
+  // 선택된 카테고리에 맞는 태그 섹션 표시
+  private func updateTagSections(for category: String) {
     self.tagSectionContainer.subviews.forEach { $0.removeFromSuperview() }
 
     guard let tagData = self.categoryTagsMap[category] else { return }
 
     self.tagSectionContainer.flex
       .direction(.column)
-      .define { flex in
-        ["환경", "유형", "시설"].forEach { sectionTitle in
-          if let tags = tagData[sectionTitle] {
-            flex.addItem(self.makeTagSection(title: sectionTitle, tags: tags, selectedTags: selectedTags))
-          }
+      .define {
+        if let environmentTags = tagData["환경"] {
+          $0.addItem(self.makeTagSection(title: "환경", tags: environmentTags))
+        }
+        if let typeTags = tagData["유형"] {
+          $0.addItem(self.makeTagSection(title: "유형", tags: typeTags))
+        }
+        if let facilityTags = tagData["시설"] {
+          $0.addItem(self.makeTagSection(title: "시설", tags: facilityTags))
         }
       }
 
+    // 레이아웃 업데이트
     self.contentView.flex.layout(mode: .adjustHeight)
     self.scrollView.contentSize = self.contentView.frame.size
   }
 
+  private func makeTagSection(title: String, tags: [String]) -> UIView {
+    let container = UIView()
 
-  private func makeTagSection(title: String, tags: [String], selectedTags: Set<String>) -> UIView {
-      let container = UIView()
-      let titleLabel = UILabel().then {
-          $0.text = title
-          $0.font = .systemFont(ofSize: Metric.labelFontSize, weight: .bold)
-      }
+    let titleLabel = UILabel().then {
+      $0.text = title
+      $0.font = .systemFont(ofSize: Metric.labelFontSize, weight: .bold)
+    }
 
-      container.flex.direction(.column).define { flex in
-          flex.addItem(titleLabel).height(Metric.labelHeight)
+    container.flex
+      .direction(.column)
+      .define {
+        $0.addItem(titleLabel).height(Metric.labelHeight)
 
-          flex.addItem().direction(.row).wrap(.wrap).define { flex in
-              for tag in tags {
-                  let tagButton = self.createButton(title: tag)
-
-                  if selectedTags.contains(tag) {
-                    tagButton.isSelected = true
-                    self.updateTagButtonAppearance(tagButton)
-                  }
-
-                  tagButton.rx.tap
-                      .subscribe(onNext: { [weak self, weak tagButton] in
-                          guard let self = self, let btn = tagButton else { return }
-                          btn.isSelected.toggle()
-                          self.updateTagButtonAppearance(btn)
-                          self.tagSelectionRelay.accept((title, tag))
-                      })
-                      .disposed(by: self.tagsDisposeBag)
-
-                  flex.addItem(tagButton)
-                      .height(Metric.tagButtonHeight)
-                      .margin(0, 0, 10, 10)
+        $0.addItem()
+          .direction(.row)
+          .wrap(.wrap)
+          .define { flex in
+            for tag in tags {
+              let tagButton = UIButton().then {
+                $0.setTitle(tag, for: .normal)
+                $0.titleLabel?.font = .systemFont(ofSize: 14)
+                $0.backgroundColor = .systemGray6
+                $0.setTitleColor(.label, for: .normal)
+                $0.layer.cornerRadius = 15
+                $0.layer.borderWidth = 0.7
+                $0.layer.borderColor = UIColor.systemGray4.cgColor
+                $0.contentEdgeInsets = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
+                $0.sizeToFit()
               }
+
+              // 수정 모드: 이미 선택된 태그인지 확인하여 UI 업데이트
+              var isSelected = false
+              switch title {
+              case "환경":
+                  if self.selectedEnvironmentTags.contains(tag) { isSelected = true }
+              case "유형":
+                  if self.selectedTypeTags.contains(tag) { isSelected = true }
+              case "시설":
+                  if self.selectedFacilityTags.contains(tag) { isSelected = true }
+              default: break
+              }
+
+              if isSelected {
+                  tagButton.isSelected = true
+                  self.updateButtonAppearance(tagButton)
+              }
+
+              tagButton.rx.tap.bind { [weak self] in
+                self?.onTapButton(tagButton, sectionTitle: title)
+              }.disposed(by: disposeBag)
+
+              flex.addItem(tagButton)
+                .height(Metric.tagButtonHeight)
+                .margin(0, 0, 10, 10)
+            }
           }
       }
-      return container
+    return container
+  }
+
+
+  // MARK: Button Actions
+
+  private func onTapButton(_ sender: UIButton, sectionTitle: String) {
+    sender.isSelected.toggle()
+    self.updateButtonAppearance(sender)
+    self.updateSelectedTags(sender, sectionTitle: sectionTitle)
+  }
+
+  private func updateButtonAppearance(_ button: UIButton) {
+    button.backgroundColor = button.isSelected ? .gray : .systemGray6
+    // 선택되었을 때 텍스트 색상도 변경해주면 좋음 (선택: 흰색 / 미선택: 라벨색)
+    button.setTitleColor(button.isSelected ? .white : .label, for: .normal)
+  }
+
+  private func updateSelectedTags(_ button: UIButton, sectionTitle: String) {
+    guard let title = button.titleLabel?.text else { return }
+
+    switch sectionTitle {
+    case "환경":
+      self.updateTag(title: "환경", array: &self.selectedEnvironmentTags, buttonTitle: title)
+    case "유형":
+      self.updateTag(title: "유형", array: &self.selectedTypeTags, buttonTitle: title)
+    case "시설":
+      self.updateTag(title: "시설", array: &self.selectedFacilityTags, buttonTitle: title)
+    default:
+      break
+    }
+  }
+
+  private func updateTag(title: String, array: inout [String], buttonTitle: String) {
+    if array.contains(buttonTitle) {
+      array = array.filter { $0 != buttonTitle }
+    } else {
+      array.append(buttonTitle)
+    }
+    print(title, array)
+  }
+
+
+  // 카메라 버튼 탭
+  private func bindAreaImageButton() {
+    self.areaImage.rx.tap.subscribe(
+      onNext: { [weak self] in
+        print("카메라 버튼 눌림")
+        self?.openCamera()
+      })
+    .disposed(by: disposeBag)
+  }
+
+  // 저장 버튼 탭
+  private func bindSaveButton() {
+    self.saveButton.rx.tap.subscribe(
+      onNext: { [weak self] in
+        guard let self = self else { return }
+
+        if self.isSaveButtonEnabled == false {
+          //토스트 띄우기
+        }
+
+        // 저장 가능한 경우에만 화면 닫기
+        if self.saveAreaInfo() {
+          self.view.window?.rootViewController?.dismiss(animated: true)
+        }
+      })
+    .disposed(by: self.disposeBag)
+  }
+
+
+  private func saveAreaInfo() -> Bool {
+    guard
+      let name = self.nameTextField.text, !name.isEmpty,
+      let description = self.descriptionTextView.text, !description.isEmpty,
+      let lat = self.markerLat,
+      let lng = self.markerLng,
+      let category = self.selectedCategory
+    else {
+      let alert = UIAlertController(title: "입력 오류", message: "이름, 설명, 카테고리는 필수 입력 항목입니다.", preferredStyle: .alert)
+      alert.addAction(UIAlertAction(title: "확인", style: .default))
+      self.present(alert, animated: true)
+      return false
+    }
+
+    let finalImageURL = self.capturedImageUrl ?? self.imageURL
+
+    let currentTime = Timestamp(date: Date())
+
+    let safeLat = String(format: "%.9f", lat)
+    let safeLng = String(format: "%.9f", lng)
+    let documentID = "\(safeLat)_\(safeLng)"
+
+    let area = Area(
+      documentID: documentID,
+      imageURL: finalImageURL,
+      name: name,
+      description: description,
+      areaLat: lat,
+      areaLng: lng,
+      category: category,
+      selectedEnvironmentTags: self.selectedEnvironmentTags,
+      selectedTypeTags: self.selectedTypeTags,
+      selectedFacilityTags: self.selectedFacilityTags,
+      uploadUser: self.user?.email ?? "",
+      uploadDate: currentTime
+    )
+
+    let docRef = db.collection("smokingAreas").document(documentID)
+
+    docRef.getDocument { snapshot, error in
+      if let error = error {
+        print(error)
+      }
+
+      docRef.setData(area.asDictionary)
+    }
+    return true
+  }
+  
+  
+  private func setupData(by mode: InputMode) {
+    switch mode {
+    case let .new(lat, lng):
+      self.isEditMode = false
+      self.markerLat = lat
+      self.markerLng = lng
+      
+    case let .edit(area):
+      self.isEditMode = true
+      self.imageURL = area.imageURL
+      self.markerLat = area.areaLat
+      self.markerLng = area.areaLng
+      self.selectedEnvironmentTags = area.selectedEnvironmentTags
+      self.selectedTypeTags = area.selectedTypeTags
+      self.selectedFacilityTags = area.selectedFacilityTags
+      
+      if !area.category.isEmpty {
+        self.initialCategory = area.category
+      } else {
+        self.initialCategory = nil
+      }
+      
+      self.loadViewIfNeeded()
+      self.nameTextField.text = area.name
+      self.descriptionTextView.text = area.description
+      if let url = URL(string: area.imageURL ?? "") {
+        self.areaImage.kf.setImage(with: url, for: .normal)
+      }
+      
+      self.setupEditModeUI()
+    }
+  }
+  
+  
+  private func setupEditModeUI() {
+    guard isEditMode else { return }
+    guard let category = initialCategory else { return }
+    
+    if let categoryBtn = self.categoryButtons.first(where: { $0.titleLabel?.text == category }) {
+      
+      categoryBtn.backgroundColor = .systemBlue
+      categoryBtn.setTitleColor(.white, for: .normal)
+      self.selectedCategory = category
+      
+      self.updateTagSections(for: category)
+    }
   }
 }
 
@@ -491,30 +608,20 @@ final class MarkerInfoInputViewController: UIViewController {
 
 extension MarkerInfoInputViewController: UITextViewDelegate {
   func textViewDidBeginEditing(_ textView: UITextView) {
-    if textView.textColor == .systemGray3 {
-      textView.text = nil
-      textView.textColor = .label
-    }
+    self.descriptionTextView.text = nil
+    self.descriptionTextView.textColor = .label
   }
 
   func textViewDidEndEditing(_ textView: UITextView) {
     if textView.text.isEmpty {
-      textView.text = "우측으로 5m"
-      textView.textColor = .systemGray3
+      self.descriptionTextView.text = "우측으로 5m"
+      self.descriptionTextView.textColor = .systemGray3
     }
   }
 }
 
 
 extension MarkerInfoInputViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-
-  func bindCameraAction() {
-    self.areaImage.rx.tap
-      .subscribe(onNext: { [weak self] in
-        self?.openCamera()
-      })
-      .disposed(by: self.disposeBag)
-  }
 
   func openCamera() {
     let camera = UIImagePickerController()
@@ -528,7 +635,11 @@ extension MarkerInfoInputViewController: UIImagePickerControllerDelegate, UINavi
       self.areaImage.setImage(image, for: .normal)
       self.uploadImage(image)
     }
+
+    self.isSaveButtonEnabled = false
+
     picker.dismiss(animated: true, completion: nil)
+
   }
 
   func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -538,18 +649,18 @@ extension MarkerInfoInputViewController: UIImagePickerControllerDelegate, UINavi
   func uploadImage(_ image: UIImage) {
     guard let imageData = image.jpegData(compressionQuality: 0.8) else { return }
 
-    self.uploadImage.accept(true)
-    
     let alert = UIAlertController(title: nil, message: "이미지 업로드 중...", preferredStyle: .alert)
     present(alert, animated: true)
 
+    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+      alert.dismiss(animated: true)
+    }
+
     let storageRef = Storage.storage().reference()
-    let fileName = "\(Constant.Storage.folderName)/\(UUID().uuidString).jpg"
+    let fileName = "smokingAreas/\(UUID().uuidString).jpg"
     let imageRef = storageRef.child(fileName)
 
     imageRef.putData(imageData, metadata: nil) { [weak self] _, error in
-      alert.dismiss(animated: true)
-
       if let error = error {
         print("이미지 업로드 실패", error)
         return
@@ -560,12 +671,39 @@ extension MarkerInfoInputViewController: UIImagePickerControllerDelegate, UINavi
           return
         }
 
-        guard let downloadURL = url else { return }
+        guard let downloadURL = url else {
+          print("다운로드 URL이 nil입니다")
+          return
+        }
 
-        self?.imageURLRelay.accept(downloadURL.absoluteString)
-        print("업로드 완료 : ", downloadURL.absoluteString)
+        self?.isSaveButtonEnabled = true
 
-        self?.uploadImage.accept(false)
+        self?.capturedImageUrl = downloadURL.absoluteString
+        print("업로드 완료 : ", self?.capturedImageUrl ?? "nil")
+
+        if ((self?.isEditMode) != nil),
+           let oldImageURL = self?.imageURL,
+           !oldImageURL.isEmpty,
+           oldImageURL != downloadURL.absoluteString {
+          self?.deleteOldImage(urlString: oldImageURL)
+        }
+      }
+    }
+
+  }
+
+  private func deleteOldImage(urlString: String) {
+    guard let url = URL(string: urlString) else {
+      print("잘못된 이미지 URL")
+      return
+    }
+
+    let storageRef = Storage.storage().reference(forURL: urlString)
+    storageRef.delete { error in
+      if let error = error {
+        print("기존 이미지 삭제 실패: \(error.localizedDescription)")
+      } else {
+        print("기존 이미지 삭제 성공: \(urlString)")
       }
     }
   }
