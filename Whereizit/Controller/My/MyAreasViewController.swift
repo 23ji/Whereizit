@@ -82,19 +82,44 @@ final class MyAreasViewController: UIViewController {
   private func fetchAreas() {
     guard let userEmail = self.user?.email else { return }
     
-    db.collection(Constant.Firestore.Collection.smokingAreas)
-      .whereField(Constant.Firestore.Field.uploadUser, isEqualTo: userEmail)
+    db.collection("smokingAreas")
+      .whereField("uploadUser", isEqualTo: userEmail)
       .addSnapshotListener { [weak self] snapshot, error in
         guard let self = self, let snapshot = snapshot else { return }
         
         var newAreas: [Area] = []
         
         for doc in snapshot.documents {
-          do {
-            let area = try doc.data(as: Area.self)
+          let data = doc.data()
+          
+          if let name = data["name"] as? String,
+             let description = data["description"] as? String,
+             let areaLat = data["areaLat"] as? Double,
+             let areaLng = data["areaLng"] as? Double,
+             let category = data["category"] as? String {
+
+            let imageURL = data["imageURL"] as? String
+            let envTags = data["environmentTags"] as? [String] ?? []
+            let typeTags = data["typeTags"] as? [String] ?? []
+            let facTags = data["facilityTags"] as? [String] ?? []
+            let timestamp = data["uploadDate"] as? Timestamp ?? Timestamp(date: Date())
+            
+            let area = Area(
+              documentID: doc.documentID,
+              imageURL: imageURL,
+              name: name,
+              description: description,
+              areaLat: areaLat,
+              areaLng: areaLng,
+              category: category,
+              selectedEnvironmentTags: envTags,
+              selectedTypeTags: typeTags,
+              selectedFacilityTags: facTags,
+              uploadUser: self.user?.email ?? "",
+              uploadDate: timestamp
+            )
+            
             newAreas.append(area)
-          } catch {
-            print("MyArea 데이터 파싱 실패")
           }
         }
         

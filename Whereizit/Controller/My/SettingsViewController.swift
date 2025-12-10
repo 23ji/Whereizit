@@ -5,18 +5,14 @@
 //  Created by 23ji on 10/27/25.
 //
 
+import UIKit
 import FirebaseAuth
 import FirebaseStorage
-
+import RxSwift
+import PhotosUI
 import FlexLayout
 import PinLayout
 import Then
-
-import PhotosUI
-
-import RxSwift
-
-import UIKit
 
 final class SettingsViewController: UIViewController {
   
@@ -92,9 +88,7 @@ final class SettingsViewController: UIViewController {
     $0.layer.shadowOpacity = 0.3
   }
   
-  
-  // MARK:  Lifecycle
-  
+  // MARK: - Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
     self.view.backgroundColor = .white
@@ -111,9 +105,7 @@ final class SettingsViewController: UIViewController {
     self.profileImageView.layer.cornerRadius = self.profileImageView.frame.width / 2
   }
   
-  
-  // MARK:  Layout
-  
+  // MARK: - Layout
   private func layout() {
     self.rootContainer.flex.direction(.column).alignItems(.center).padding(20).define { flex in
       
@@ -148,9 +140,7 @@ final class SettingsViewController: UIViewController {
     }
   }
   
-  
-  // MARK:  Load User Data
-  
+  // MARK: - Load User Data
   private func loadUserProfile() {
     if let user = Auth.auth().currentUser {
       self.nicknameTextField.text = user.displayName
@@ -160,9 +150,7 @@ final class SettingsViewController: UIViewController {
     }
   }
   
-  
-  // MARK:  Actions
-  
+  // MARK: - Actions
   private func bindActions() {
     self.changePhotoButton.rx.tap
       .subscribe(onNext: { [weak self] in
@@ -205,14 +193,14 @@ final class SettingsViewController: UIViewController {
     }
     
     self.view.addSubview(toastLabel)
-
-    toastLabel.snp.makeConstraints {
-      $0.centerX.equalToSuperview()
-      $0.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-50)
-      $0.width.lessThanOrEqualTo(self.view).multipliedBy(0.8)
-      $0.height.equalTo(40)
-    }
-
+    toastLabel.translatesAutoresizingMaskIntoConstraints = false
+    NSLayoutConstraint.activate([
+      toastLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+      toastLabel.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -50),
+      toastLabel.widthAnchor.constraint(lessThanOrEqualTo: self.view.widthAnchor, multiplier: 0.8),
+      toastLabel.heightAnchor.constraint(equalToConstant: 40)
+    ])
+    
     UIView.animate(withDuration: 0.5, animations: {
       toastLabel.alpha = 1.0
     }) { _ in

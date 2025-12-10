@@ -141,13 +141,43 @@ final class HomeViewController: UIViewController {
   }
   
   private func observeAreas() {
-    db.collection(Constant.Firestore.Collection.smokingAreas).addSnapshotListener { [weak self] snapshot, error in
+    db.collection("smokingAreas").addSnapshotListener { [weak self] snapshot, error in
       guard let self = self, let snapshot = snapshot else { return }
       
       for change in snapshot.documentChanges {
-        guard let areaData = try? change.document.data(as: Area.self) else { continue }
+        let doc = change.document
+        let data = doc.data()
+        let documentID = doc.documentID
         
-        let documentID = change.document.documentID
+        // Document Data 파싱
+        guard let name = data["name"] as? String,
+              let description = data["description"] as? String,
+              let areaLat = data["areaLat"] as? Double,
+              let areaLng = data["areaLng"] as? Double
+        else { continue } // 데이터 파싱 실패 시 건너뜀
+        
+        let imageURL = data["imageURL"] as? String ?? ""
+        let category = data["category"] as? String ?? ""
+        let selectedEnvironmentTags = (data["environmentTags"] as? [String]) ?? []
+        let selectedTypeTags = (data["typeTags"] as? [String]) ?? []
+        let selectedFacilityTags = (data["facilityTags"] as? [String]) ?? []
+        let uploadTimestamp = data["uploadDate"] as? Timestamp ?? Timestamp(date: Date())
+        let uploadUser = data["uploadUser"] as? String ?? ""
+        
+        let areaData = Area(
+          documentID: documentID,
+          imageURL: imageURL,
+          name: name,
+          description: description,
+          areaLat: areaLat,
+          areaLng: areaLng,
+          category: category,
+          selectedEnvironmentTags: selectedEnvironmentTags,
+          selectedTypeTags: selectedTypeTags,
+          selectedFacilityTags: selectedFacilityTags,
+          uploadUser: uploadUser,
+          uploadDate: uploadTimestamp
+        )
         
         switch change.type {
         case .added:
