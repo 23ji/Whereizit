@@ -14,6 +14,7 @@
 		49031E0B2EAF4E82004F5857 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 49031E0A2EAF4E82004F5857 /* SDWebImage */; };
 		49031E0D2EAF4E82004F5857 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 49031E0C2EAF4E82004F5857 /* SDWebImageMapKit */; };
 		49031E112EB08A0B004F5857 /* PrivacyPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49031E102EB08A0B004F5857 /* PrivacyPolicyViewController.swift */; };
+		49064B382EEBD725003088F2 /* MarkerInfoInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49064B372EEBD725003088F2 /* MarkerInfoInputViewModel.swift */; };
 		49168A702E448E77002C5F69 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 49168A6F2E448E77002C5F69 /* FirebaseAuth */; };
 		49168A722E448E77002C5F69 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 49168A712E448E77002C5F69 /* FirebaseCore */; };
 		49168A742E448E77002C5F69 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 49168A732E448E77002C5F69 /* FirebaseFirestore */; };
@@ -64,6 +65,7 @@
 		49031E072EAF4E11004F5857 /* FullImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullImageViewController.swift; sourceTree = "<group>"; };
 		49031E102EB08A0B004F5857 /* PrivacyPolicyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyViewController.swift; sourceTree = "<group>"; };
 		49031E122EB09A67004F5857 /* Whereizit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Whereizit.entitlements; sourceTree = "<group>"; };
+		49064B372EEBD725003088F2 /* MarkerInfoInputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerInfoInputViewModel.swift; sourceTree = "<group>"; };
 		49288AA92D19450C00FF1E50 /* Whereizit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Whereizit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		49288AAC2D19450C00FF1E50 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		49288AAE2D19450C00FF1E50 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -126,6 +128,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		49064B362EEBD6FD003088F2 /* Viewmodel */ = {
+			isa = PBXGroup;
+			children = (
+				49064B372EEBD725003088F2 /* MarkerInfoInputViewModel.swift */,
+			);
+			path = Viewmodel;
+			sourceTree = "<group>";
+		};
 		49288AA02D19450C00FF1E50 = {
 			isa = PBXGroup;
 			children = (
@@ -150,6 +160,7 @@
 		49288AAB2D19450C00FF1E50 /* Whereizit */ = {
 			isa = PBXGroup;
 			children = (
+				49064B362EEBD6FD003088F2 /* Viewmodel */,
 				9F6207792EC038F50045D08C /* Utils */,
 				49031E122EB09A67004F5857 /* Whereizit.entitlements */,
 				A774711D2D58D8ED006F2F0D /* Model */,
@@ -407,6 +418,7 @@
 				9FAB5F9A2E90F9E600A7EE33 /* AreaTableViewCell.swift in Sources */,
 				490221A12E67DBBF0069DDEC /* Area.swift in Sources */,
 				498B448F2E7A53E800FF06B6 /* MainTabBarController.swift in Sources */,
+				49064B382EEBD725003088F2 /* MarkerInfoInputViewModel.swift in Sources */,
 				A7990CBE2E288E5200B3D3CE /* MarkerInfoInputViewController.swift in Sources */,
 				9FB65AC22E7B7D4E00F788BF /* SignInViewController.swift in Sources */,
 				498ECFA32E77F32C00B9EABC /* NearbyAreasBottomSheetViewController.swift in Sources */,
