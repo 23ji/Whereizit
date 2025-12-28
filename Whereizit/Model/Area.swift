@@ -8,7 +8,7 @@
 import FirebaseFirestore
 
 import Foundation
-
+// 🛠️ Firebase Firestore 문서 구조와 매핑되는 Area 구조체를 정의
 struct Area {
   var documentID: String?
   var imageURL: String?

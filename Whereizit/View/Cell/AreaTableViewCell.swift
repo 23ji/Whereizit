@@ -83,6 +83,8 @@ final class AreaTableViewCell: UITableViewCell {
   func configure(with area: Area, currentLocation: CLLocation?) {
     self.titleLabel.text = area.name
     self.loadImage(from: area.imageURL)
+
+    // 🛠️ 거리 계산 로직
     
     if let currentLocation = currentLocation {
       let areaLocation = CLLocation(latitude: area.areaLat, longitude: area.areaLng)

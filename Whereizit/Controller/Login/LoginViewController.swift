@@ -277,7 +277,7 @@ final class LoginViewController: UIViewController {
   
   
   // MARK:  Setup
-  
+
   private func addSubviews() {
     self.view.addSubview(self.scrollView)
     self.scrollView.addSubview(self.contentContainer)
@@ -321,7 +321,8 @@ final class LoginViewController: UIViewController {
     self.contentContainer.addSubview(self.signUpButton)
     self.contentContainer.addSubview(self.skipButton)
   }
-  
+
+  // 🛠️ UI 레이아웃
   private func setupLayout() {
     self.contentContainer.flex.direction(.column).alignItems(.center).paddingHorizontal(Metric.horizontalPadding).define {
       // Logo Section
@@ -534,7 +535,8 @@ final class LoginViewController: UIViewController {
   
   
   // MARK:  Keyboard Handling
-  
+
+  // 🛠️ 키보드 처리
   private func setupKeyboardHandling() {
     let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
     self.view.addGestureRecognizer(tapGesture)
@@ -609,7 +611,7 @@ final class LoginViewController: UIViewController {
   
   
   // MARK:  Login Methods
-  
+  // 🛠️ 로그인 처리
   private func login() {
     guard let email = self.emailTextField.text, !email.isEmpty else {
       self.showAlert(message: "이메일을 입력해주세요.")

@@ -81,7 +81,7 @@ final class MyAreasViewController: UIViewController {
   
   private func fetchAreas() {
     guard let userEmail = self.user?.email else { return }
-    
+    // 🛠️ Firebase에서 데이터 불러오기
     db.collection("smokingAreas")
       .whereField("uploadUser", isEqualTo: userEmail)
       .addSnapshotListener { [weak self] snapshot, error in
@@ -122,7 +122,7 @@ final class MyAreasViewController: UIViewController {
             newAreas.append(area)
           }
         }
-        
+        // 🛠️ 거리순으로 정렬
         // 현재 위치가 있으면 거리 기준으로 정렬
         if let currentLocation = self.currentLocation {
           newAreas.sort { a, b in
