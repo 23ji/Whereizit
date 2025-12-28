@@ -119,6 +119,7 @@ final class HomeViewController: UIViewController {
   }
   
   private func addSubviews() {
+    // 🛠️ 지도 표시
     self.view.addSubview(self.mapView)
     self.view.addSubview(self.addButton)
   }
@@ -133,7 +134,8 @@ final class HomeViewController: UIViewController {
   }
   
   // MARK: Area Marker
-  
+
+  // 🛠️ 마커 지우기
   // 기존 마커 전체를 제거하는 함수 (선택적으로 사용)
   private func clearMarkers() {
     self.areaMarkers.values.forEach { $0.mapView = nil }
@@ -141,6 +143,7 @@ final class HomeViewController: UIViewController {
   }
   
   private func observeAreas() {
+    // 🛠️ 데이터 실시간 감지
     db.collection("smokingAreas").addSnapshotListener { [weak self] snapshot, error in
       guard let self = self, let snapshot = snapshot else { return }
       
@@ -180,6 +183,7 @@ final class HomeViewController: UIViewController {
         )
         
         switch change.type {
+          // 🛠️ 마커 생성
         case .added:
           let areaMarker = NMFMarker()
           areaMarker.iconImage = switch areaData.category {
@@ -198,7 +202,8 @@ final class HomeViewController: UIViewController {
           
           areaMarker.mapView = self.mapView.mapView
           self.areaMarkers[documentID] = areaMarker
-          
+
+          // 🛠️ 데이터 수정
         case .modified:
           if let existingMarker = self.areaMarkers[documentID] {
             existingMarker.mapView = nil // 지도에서 제거
@@ -225,7 +230,8 @@ final class HomeViewController: UIViewController {
             self.tappedPanel.move(to: .hidden, animated: true)
             self.nearbyPanel.move(to: .tip, animated: true)
           }
-          
+
+          // 🛠️ 마커 삭제
         case .removed:
           if let existingMarker = self.areaMarkers[documentID] {
             existingMarker.mapView = nil // 지도에서 제거
@@ -241,6 +247,7 @@ final class HomeViewController: UIViewController {
   
   
   private func bind() {
+    // 🛠️ 마커 터치 이벤트 처리
     self.markerTapped
       .subscribe(onNext: { [weak self] areaData in
         guard let self = self else { return }
@@ -250,7 +257,8 @@ final class HomeViewController: UIViewController {
         self.moveCameraToArea(lat: areaData.areaLat, lng: areaData.areaLng)
       })
       .disposed(by: disposeBag)
-    
+
+    // 🛠️ 추가 버튼 이벤트 처리
     self.addButton.rx.tap
       .asDriver()
       .drive(onNext : { [weak self] in
@@ -305,7 +313,7 @@ extension HomeViewController: CLLocationManagerDelegate {
 // MARK: FloatingPanel
 
 extension HomeViewController: FloatingPanelControllerDelegate {
-  
+  // 🛠️ Floating Panel 제어
   func setupPanels() {
     // Nearby 패널
     self.nearbyPanel = FloatingPanelController()

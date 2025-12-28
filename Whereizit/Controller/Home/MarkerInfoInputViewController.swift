@@ -303,6 +303,7 @@ final class MarkerInfoInputViewController: UIViewController {
     return button
   }
 
+  // 🛠️ UI 업데이트 로직
   // 카테고리 선택 시 호출 (사용자 탭)
   private func onCategorySelected(_ button: UIButton, category: String) {
     // 이미 선택된 카테고리를 다시 클릭한 경우

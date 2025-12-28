@@ -181,7 +181,8 @@ final class SignInViewController: UIViewController {
     self.contentContainer.addSubview(self.signUpButton)
     self.contentContainer.addSubview(self.loginButton)
   }
-  
+
+  // 🛠️ UI 레이아웃
   private func setupLayout() {
     self.contentContainer.flex.direction(.column).alignItems(.center).paddingHorizontal(Metric.horizontalPadding).define {
       $0.addItem(self.logoContainer)
@@ -294,7 +295,8 @@ final class SignInViewController: UIViewController {
     let imageName = self.passwordTextField.isSecureTextEntry ? "eye.slash.fill" : "eye.fill"
     self.passwordToggleButton.setImage(UIImage(systemName: imageName), for: .normal)
   }
-  
+
+  // 🛠️ 회원가입 처리
   private func signUp() {
     guard let email = self.emailTextField.text, !email.isEmpty,
           let password = self.passwordTextField.text, !password.isEmpty else { return }
