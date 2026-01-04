@@ -165,7 +165,6 @@
 				49031E122EB09A67004F5857 /* Whereizit.entitlements */,
 				A774711D2D58D8ED006F2F0D /* Model */,
 				9FF116032E9602E20076A359 /* View */,
-				A774711F2D58D917006F2F0D /* Controller */,
 				49288ABA2D19450D00FF1E50 /* Info.plist */,
 				49E0FF442ECC415500A0B97F /* GoogleService-Info.plist */,
 			);
@@ -257,6 +256,7 @@
 		9FF116032E9602E20076A359 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				A774711F2D58D917006F2F0D /* Controller */,
 				9F6207742EC035DE0045D08C /* Cell */,
 				9F6207732EC035D50045D08C /* View */,
 				9FDBC1FB2E867BA2009924E8 /* LoginButton.swift */,

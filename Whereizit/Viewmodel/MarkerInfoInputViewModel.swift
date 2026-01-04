@@ -7,22 +7,31 @@
 
 import Foundation
 import RxRelay
+import RxSwift
 import RxCocoa
 
 final class MarkerInfoInputViewModel {
   struct Input { // View -> ViewModel
-    let name: BehaviorRelay<String> // BehaviorRelay : 초기값을 가지며 항상 최신값을 유지
-    let description: BehaviorRelay<String>
-    let selectedCategory: BehaviorRelay<String?>
-    let environmentTags: BehaviorRelay<[String]>
-    let typeTags: BehaviorRelay<[String]>
-    let facilityTags: BehaviorRelay<[String]>
-    let saveTapped: PublishRelay<Void> // PublishRelay : 구독 이후 이벤트만 처리하며 종료되지 않음
+    let saveData: Observable<AreaInput> // 구역 정보를 담은 데이터 스트림
   }
   
   struct Output { // ViewModel -> View
-    let isSaveEnabled: Driver<Bool>
-    let tagsForSection: Driver<[String: [String]]>
-    let saveResult: PublishRelay<Bool>
+    let dismiss: Observable<String>
+  }
+
+  init() {
+
+  }
+
+//  func transform(input: Input) -> Output {
+//    
+//  }
+
+  struct AreaInput {
+    let name: String?
+    let description: String?
+    let lat: Double?
+    let lng: Double?
+    let category: String?
   }
 }
