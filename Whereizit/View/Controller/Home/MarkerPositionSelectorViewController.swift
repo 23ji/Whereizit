@@ -149,7 +149,7 @@ final class MarkerPositionSelectorViewController: UIViewController {
         let lat = target.lat
         let lng = target.lng
         
-        let markerInfoInputVC = MarkerInfoInputViewController(mode: .new(lat: lat, lng: lng))
+        let markerInfoInputVC = MarkerInfoInputViewController(mode: .new(lat: lat, lng: lng), viewModel: .init())
         
         self.present(markerInfoInputVC, animated: true)
       })

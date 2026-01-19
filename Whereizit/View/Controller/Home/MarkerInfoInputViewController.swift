@@ -195,6 +195,8 @@ final class MarkerInfoInputViewController: UIViewController {
     self.bindSaveButton()
 
     self.setupData(by: inputMode)
+
+    self.bindViewModel()
   }
 
 
@@ -209,6 +211,10 @@ final class MarkerInfoInputViewController: UIViewController {
           category: self.selectedCategory
         )
     }
+
+    let viewModelInput = MarkerInfoInputViewModel.Input(saveData: saveData)
+
+    let output = self.viewModel.transform(input: viewModelInput)
   }
 
 

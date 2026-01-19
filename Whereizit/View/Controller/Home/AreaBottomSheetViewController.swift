@@ -262,8 +262,8 @@ final class AreaBottomSheetViewController: UIViewController {
         guard let self = self else { return }
         guard let data = self.areaData else { return }
 
-        let editVC = MarkerInfoInputViewController(mode: .edit(area: data))
-        
+        let editVC = MarkerInfoInputViewController(mode: .edit(area: data), viewModel: .init())
+
         editVC.modalPresentationStyle = .formSheet
         
         self.present(editVC, animated: true)

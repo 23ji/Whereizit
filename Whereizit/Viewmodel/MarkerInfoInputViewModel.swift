@@ -16,16 +16,16 @@ final class MarkerInfoInputViewModel {
   }
   
   struct Output { // ViewModel -> View
-    let dismiss: Observable<String> // 성공 여부 알림
+    //let dismiss: Observable<String> // 성공 여부 알림
   }
 
   init() {
 
   }
 
-//  func transform(input: Input) -> Output {
-//    
-//  }
+  func transform(input: Input) -> Output {
+    .init()
+  }
 
   struct AreaInput {
     let name: String?
