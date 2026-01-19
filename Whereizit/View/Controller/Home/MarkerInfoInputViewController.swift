@@ -79,6 +79,8 @@ final class MarkerInfoInputViewController: UIViewController {
 
   let disposeBag = DisposeBag()
 
+  let viewModel: MarkerInfoInputViewModel // 뷰모델을 프로퍼티로 가짐
+
 
   // MARK: UI
 
@@ -172,8 +174,9 @@ final class MarkerInfoInputViewController: UIViewController {
     }
   }
 
-  init(mode: InputMode) {
+  init(mode: InputMode, viewModel: MarkerInfoInputViewModel) {
     self.inputMode = mode
+    self.viewModel = viewModel
     super.init(nibName: nil, bundle: nil)
   }
   
@@ -192,6 +195,20 @@ final class MarkerInfoInputViewController: UIViewController {
     self.bindSaveButton()
 
     self.setupData(by: inputMode)
+  }
+
+
+  private func bindViewModel() {
+    let saveData = self.saveButton.rx.tap
+      .map { _ -> MarkerInfoInputViewModel.AreaInput in
+        return MarkerInfoInputViewModel.AreaInput(
+          name: self.nameTextField.text,
+          description: self.descriptionTextView.text,
+          lat: self.markerLat,
+          lng: self.markerLng,
+          category: self.selectedCategory
+        )
+    }
   }
 
 

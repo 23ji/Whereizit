@@ -16,7 +16,7 @@ final class MarkerInfoInputViewModel {
   }
   
   struct Output { // ViewModel -> View
-    let dismiss: Observable<String>
+    let dismiss: Observable<String> // 성공 여부 알림
   }
 
   init() {
