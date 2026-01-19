@@ -208,7 +208,8 @@ final class MarkerInfoInputViewController: UIViewController {
           description: self.descriptionTextView.text,
           lat: self.markerLat,
           lng: self.markerLng,
-          category: self.selectedCategory
+          category: self.selectedCategory,
+          finalImageURL: self.capturedImageUrl ?? self.imageURL
         )
     }
 

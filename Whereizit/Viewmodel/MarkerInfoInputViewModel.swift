@@ -33,5 +33,20 @@ final class MarkerInfoInputViewModel {
     let lat: Double?
     let lng: Double?
     let category: String?
+    let finalImageURL: String?
+  }
+
+
+  private func saveAreaData(areaInput: AreaInput) {
+    guard
+      let name = areaInput.name,
+      let description = areaInput.description,
+      let lat = areaInput.lat,
+      let lng = areaInput.lng,
+      let category = areaInput.category,
+      let finalImageURL = areaInput.finalImageURL
+    else {
+      return
+    }
   }
 }
