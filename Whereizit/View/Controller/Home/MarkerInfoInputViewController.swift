@@ -218,7 +218,7 @@ final class MarkerInfoInputViewController: UIViewController {
     let output = self.viewModel.transform(input: viewModelInput)
 
     output.saveResult
-      .observe(on: MainScheduler.instance)
+      .observe(on: MainScheduler.instance) //이후부터 하는 작업은 메인 스레드에서 (UI 작업이기 때문에)
       .subscribe(onNext: { [weak self] isSuccess in
         if isSuccess {
           self?.view.window?.rootViewController?.dismiss(animated: true)

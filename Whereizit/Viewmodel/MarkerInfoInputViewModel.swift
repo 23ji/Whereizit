@@ -35,7 +35,7 @@ final class MarkerInfoInputViewModel {
   }
 
   struct Output { // ViewModel -> View
-    let saveResult: PublishRelay<Bool>
+    let saveResult: PublishRelay<Bool> // ?
   }
 
   private var initialImageURL: String?
