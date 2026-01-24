@@ -6,26 +6,16 @@
 //
 
 import Foundation
+
+import FirebaseFirestore
+import FirebaseStorage
+
 import RxRelay
 import RxSwift
 import RxCocoa
+import FirebaseAuth
 
 final class MarkerInfoInputViewModel {
-  struct Input { // View -> ViewModel
-    let saveData: Observable<AreaInput> // 구역 정보를 담은 데이터 스트림
-  }
-  
-  struct Output { // ViewModel -> View
-    //let dismiss: Observable<String> // 성공 여부 알림
-  }
-
-  init() {
-
-  }
-
-  func transform(input: Input) -> Output {
-    .init()
-  }
 
   struct AreaInput {
     let name: String?
@@ -34,19 +24,82 @@ final class MarkerInfoInputViewModel {
     let lng: Double?
     let category: String?
     let finalImageURL: String?
+    let environmentTags: [String]
+    let typeTags: [String]
+    let facilityTags: [String]
   }
 
 
-  private func saveAreaData(areaInput: AreaInput) {
+  struct Input { // View -> ViewModel
+    let saveData: Observable<AreaInput> // 구역 정보를 담은 데이터 스트림
+  }
+
+  struct Output { // ViewModel -> View
+    let saveResult: PublishRelay<Bool>
+  }
+
+  private var initialImageURL: String?
+  private let disposeBag = DisposeBag()
+  private let db = Firestore.firestore()
+
+
+  init(initialImageURL: String? = nil) {
+    self.initialImageURL = initialImageURL
+  }
+
+
+  func transform(input: Input) -> Output {
+    let saveResult = PublishRelay<Bool>()
+
+    input.saveData
+      .subscribe(onNext: { [weak self] areaInput in
+        self?.saveAreaData(areaInput: areaInput, resultRelay: saveResult)
+      })
+      .disposed(by: self.disposeBag)
+    
+    return Output(saveResult: saveResult)
+  }
+
+
+  private func saveAreaData(areaInput: AreaInput, resultRelay: PublishRelay<Bool>) {
     guard
-      let name = areaInput.name,
-      let description = areaInput.description,
+      let name = areaInput.name, !name.isEmpty,
+      let description = areaInput.description, !description.isEmpty,
       let lat = areaInput.lat,
       let lng = areaInput.lng,
-      let category = areaInput.category,
-      let finalImageURL = areaInput.finalImageURL
+      let category = areaInput.category
     else {
+      resultRelay.accept(false)
+      // TODO: 필수 입력 안하면 알림
       return
+    }
+
+    let finalImageURL = areaInput.finalImageURL ?? self.initialImageURL
+
+    let currentTime = Timestamp(date: Date())
+    let userEmail = Auth.auth().currentUser?.email ?? "Unknown"
+
+    let safeLat = String(format: "%.9f", lat)
+    let safeLng = String(format: "%.9f", lng)
+    let documentID = "\(safeLat)_\(safeLng)"
+
+    let area = Area(
+      documentID: documentID,
+      imageURL: finalImageURL,
+      name: name,
+      description: description,
+      areaLat: lat,
+      areaLng: lng,
+      category: category,
+      selectedEnvironmentTags: areaInput.environmentTags,
+      selectedTypeTags: areaInput.typeTags,
+      selectedFacilityTags: areaInput.facilityTags,
+      uploadUser: userEmail,
+      uploadDate: currentTime
+    )
+
+    db.collection("smokingAreas").document(documentID).setData(area.asDictionary) { error in
+      resultRelay.accept(error == nil)
     }
   }
 }

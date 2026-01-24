@@ -8,7 +8,6 @@
 import FirebaseAuth
 import FirebaseCore
 import FirebaseStorage
-import FirebaseFirestore
 
 import FlexLayout
 import Then
@@ -74,8 +73,6 @@ final class MarkerInfoInputViewController: UIViewController {
 
   var isEditMode: Bool = false
   var existingDocumentID: String?
-
-  private let db = Firestore.firestore()
 
   let disposeBag = DisposeBag()
 
@@ -192,7 +189,6 @@ final class MarkerInfoInputViewController: UIViewController {
     self.addSubView()
     self.defineFlexContainer()
     self.bindAreaImageButton()
-    self.bindSaveButton()
 
     self.setupData(by: inputMode)
 
@@ -201,21 +197,36 @@ final class MarkerInfoInputViewController: UIViewController {
 
 
   private func bindViewModel() {
+
     let saveData = self.saveButton.rx.tap
-      .map { _ -> MarkerInfoInputViewModel.AreaInput in
+      .map { [weak self] _ -> MarkerInfoInputViewModel.AreaInput in
         return MarkerInfoInputViewModel.AreaInput(
-          name: self.nameTextField.text,
-          description: self.descriptionTextView.text,
-          lat: self.markerLat,
-          lng: self.markerLng,
-          category: self.selectedCategory,
-          finalImageURL: self.capturedImageUrl ?? self.imageURL
+          name: self?.nameTextField.text,
+          description: self?.descriptionTextView.text,
+          lat: self?.markerLat,
+          lng: self?.markerLng,
+          category: self?.selectedCategory,
+          finalImageURL: self?.capturedImageUrl ?? self?.imageURL,
+          environmentTags: self?.selectedEnvironmentTags ?? [],
+          typeTags: self?.selectedTypeTags ?? [],
+          facilityTags: self?.selectedFacilityTags ?? []
         )
     }
 
     let viewModelInput = MarkerInfoInputViewModel.Input(saveData: saveData)
 
     let output = self.viewModel.transform(input: viewModelInput)
+
+    output.saveResult
+      .observe(on: MainScheduler.instance)
+      .subscribe(onNext: { [weak self] isSuccess in
+        if isSuccess {
+          self?.view.window?.rootViewController?.dismiss(animated: true)
+        } else {
+          print("저장 실패")
+        }
+      })
+      .disposed(by: self.disposeBag)
   }
 
 
@@ -508,74 +519,6 @@ final class MarkerInfoInputViewController: UIViewController {
         self?.openCamera()
       })
     .disposed(by: disposeBag)
-  }
-
-  // 저장 버튼 탭
-  private func bindSaveButton() {
-    self.saveButton.rx.tap.subscribe(
-      onNext: { [weak self] in
-        guard let self = self else { return }
-
-        if self.isSaveButtonEnabled == false {
-          //토스트 띄우기
-        }
-
-        // 저장 가능한 경우에만 화면 닫기
-        if self.saveAreaInfo() {
-          self.view.window?.rootViewController?.dismiss(animated: true)
-        }
-      })
-    .disposed(by: self.disposeBag)
-  }
-
-
-  private func saveAreaInfo() -> Bool {
-    guard
-      let name = self.nameTextField.text, !name.isEmpty,
-      let description = self.descriptionTextView.text, !description.isEmpty,
-      let lat = self.markerLat,
-      let lng = self.markerLng,
-      let category = self.selectedCategory
-    else {
-      let alert = UIAlertController(title: "입력 오류", message: "이름, 설명, 카테고리는 필수 입력 항목입니다.", preferredStyle: .alert)
-      alert.addAction(UIAlertAction(title: "확인", style: .default))
-      self.present(alert, animated: true)
-      return false
-    }
-
-    let finalImageURL = self.capturedImageUrl ?? self.imageURL
-
-    let currentTime = Timestamp(date: Date())
-
-    let safeLat = String(format: "%.9f", lat)
-    let safeLng = String(format: "%.9f", lng)
-    let documentID = "\(safeLat)_\(safeLng)"
-
-    let area = Area(
-      documentID: documentID,
-      imageURL: finalImageURL,
-      name: name,
-      description: description,
-      areaLat: lat,
-      areaLng: lng,
-      category: category,
-      selectedEnvironmentTags: self.selectedEnvironmentTags,
-      selectedTypeTags: self.selectedTypeTags,
-      selectedFacilityTags: self.selectedFacilityTags,
-      uploadUser: self.user?.email ?? "",
-      uploadDate: currentTime
-    )
-
-    let docRef = db.collection("smokingAreas").document(documentID)
-
-    docRef.getDocument { snapshot, error in
-      if let error = error {
-        print(error)
-      }
-
-      docRef.setData(area.asDictionary)
-    }
-    return true
   }
   
   
