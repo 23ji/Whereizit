@@ -59,7 +59,13 @@ final class MarkerInfoInputViewModel {
         self?.saveAreaData(areaInput: areaInput, resultRelay: saveResult)
       })
       .disposed(by: self.disposeBag)
-    
+
+    input.savePhoto
+      .subscribe(onNext: { [weak self] data in
+        self?.savePhoto(imageData: data)
+      })
+      .disposed(by: self.disposeBag)
+
     return Output(saveResult: saveResult)
   }
 
@@ -112,6 +118,7 @@ final class MarkerInfoInputViewModel {
     let fileName = "smokingAreas/\(UUID().uuidString).jpg"
     let imageRef = storageRef.child(fileName)
 
+    print("연결됨@@@@@@@@@@@@@@@@@@@@@@@@22")
     imageRef.putData(imageData, metadata: nil) { [weak self] _, error in
       if let error = error {
         print("이미지 업로드 실패", error)
