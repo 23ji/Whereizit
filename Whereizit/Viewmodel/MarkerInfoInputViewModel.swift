@@ -74,6 +74,7 @@ final class MarkerInfoInputViewModel {
     guard
       let name = areaInput.name, !name.isEmpty,
       let description = areaInput.description, !description.isEmpty,
+          description != "우측으로 5m",
       let lat = areaInput.lat,
       let lng = areaInput.lng,
       let category = areaInput.category
