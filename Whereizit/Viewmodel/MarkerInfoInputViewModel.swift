@@ -135,9 +135,6 @@ final class MarkerInfoInputViewModel {
           return
         }
 
-        // self?.isSaveButtonEnabled = true => Output으로 처리
-
-//        self?.capturedImageUrl = downloadURL.absoluteString => Output으로 처리
 //        print("업로드 완료 : ", self?.capturedImageUrl ?? "nil")
 
 //        if ((self?.isEditMode) != nil),

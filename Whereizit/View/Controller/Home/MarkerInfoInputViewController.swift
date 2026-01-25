@@ -160,17 +160,6 @@ final class MarkerInfoInputViewController: UIViewController {
     $0.isEnabled = true
   }
 
-  var isSaveButtonEnabled: Bool = true {
-    didSet {
-      guard self.isSaveButtonEnabled != oldValue else { return }
-
-      self.saveButton.isUserInteractionEnabled = self.isSaveButtonEnabled
-      self.saveButton.isEnabled = self.isSaveButtonEnabled
-
-      let backgroundColor: UIColor = self.isSaveButtonEnabled ? .systemBlue : .gray
-      self.saveButton.backgroundColor = backgroundColor
-    }
-  }
 
   init(mode: InputMode, viewModel: MarkerInfoInputViewModel) {
     self.inputMode = mode
@@ -613,8 +602,6 @@ extension MarkerInfoInputViewController: UIImagePickerControllerDelegate, UINavi
       self.areaImage.setImage(image, for: .normal)
       self.uploadImage(image)
     }
-
-    self.isSaveButtonEnabled = false
 
     picker.dismiss(animated: true, completion: nil)
 
