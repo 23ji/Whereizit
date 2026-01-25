@@ -23,13 +23,13 @@ import UIKit
 
 final class MarkerInfoInputViewController: UIViewController {
 
-  
+
   enum InputMode {
     case new(lat: Double, lng: Double)
     case edit(area: Area)
   }
-  
-  
+
+
   // MARK: Constant
 
   private enum Metric {
@@ -61,7 +61,7 @@ final class MarkerInfoInputViewController: UIViewController {
 
   // 수정 모드 진입 시 초기 카테고리를 받기 위한 변수
   var initialCategory: String?
-  
+
   private var editTarget: Area?
   private let inputMode: InputMode
 
@@ -177,7 +177,7 @@ final class MarkerInfoInputViewController: UIViewController {
     self.viewModel = viewModel
     super.init(nibName: nil, bundle: nil)
   }
-  
+
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -212,7 +212,7 @@ final class MarkerInfoInputViewController: UIViewController {
           typeTags: self?.selectedTypeTags ?? [],
           facilityTags: self?.selectedFacilityTags ?? []
         )
-    }
+      }
 
     let viewModelInput = MarkerInfoInputViewModel.Input(
       saveData: saveData,
@@ -221,7 +221,7 @@ final class MarkerInfoInputViewController: UIViewController {
 
     self.savePhoto
       .subscribe(onNext: { data in
-          print(data)
+        print(data)
       })
       .disposed(by: self.disposeBag)
 
@@ -455,17 +455,17 @@ final class MarkerInfoInputViewController: UIViewController {
               var isSelected = false
               switch title {
               case "환경":
-                  if self.selectedEnvironmentTags.contains(tag) { isSelected = true }
+                if self.selectedEnvironmentTags.contains(tag) { isSelected = true }
               case "유형":
-                  if self.selectedTypeTags.contains(tag) { isSelected = true }
+                if self.selectedTypeTags.contains(tag) { isSelected = true }
               case "시설":
-                  if self.selectedFacilityTags.contains(tag) { isSelected = true }
+                if self.selectedFacilityTags.contains(tag) { isSelected = true }
               default: break
               }
 
               if isSelected {
-                  tagButton.isSelected = true
-                  self.updateButtonAppearance(tagButton)
+                tagButton.isSelected = true
+                self.updateButtonAppearance(tagButton)
               }
 
               tagButton.rx.tap.bind { [weak self] in
@@ -530,15 +530,15 @@ final class MarkerInfoInputViewController: UIViewController {
       })
     .disposed(by: disposeBag)
   }
-  
-  
+
+
   private func setupData(by mode: InputMode) {
     switch mode {
     case let .new(lat, lng):
       self.isEditMode = false
       self.markerLat = lat
       self.markerLng = lng
-      
+
     case let .edit(area):
       self.isEditMode = true
       self.imageURL = area.imageURL
@@ -547,35 +547,35 @@ final class MarkerInfoInputViewController: UIViewController {
       self.selectedEnvironmentTags = area.selectedEnvironmentTags
       self.selectedTypeTags = area.selectedTypeTags
       self.selectedFacilityTags = area.selectedFacilityTags
-      
+
       if !area.category.isEmpty {
         self.initialCategory = area.category
       } else {
         self.initialCategory = nil
       }
-      
+
       self.loadViewIfNeeded()
       self.nameTextField.text = area.name
       self.descriptionTextView.text = area.description
       if let url = URL(string: area.imageURL ?? "") {
         self.areaImage.kf.setImage(with: url, for: .normal)
       }
-      
+
       self.setupEditModeUI()
     }
   }
-  
-  
+
+
   private func setupEditModeUI() {
     guard isEditMode else { return }
     guard let category = initialCategory else { return }
-    
+
     if let categoryBtn = self.categoryButtons.first(where: { $0.titleLabel?.text == category }) {
-      
+
       categoryBtn.backgroundColor = .systemBlue
       categoryBtn.setTitleColor(.white, for: .normal)
       self.selectedCategory = category
-      
+
       self.updateTagSections(for: category)
     }
   }
@@ -635,56 +635,54 @@ extension MarkerInfoInputViewController: UIImagePickerControllerDelegate, UINavi
     }
 
     self.savePhoto.accept(imageData)
+    //
+    //    let storageRef = Storage.storage().reference()
+    //    let fileName = "smokingAreas/\(UUID().uuidString).jpg"
+    //    let imageRef = storageRef.child(fileName)
+    //
+    //    imageRef.putData(imageData, metadata: nil) { [weak self] _, error in
+    //      if let error = error {
+    //        print("이미지 업로드 실패", error)
+    //        return
+    //      }
+    //      imageRef.downloadURL { [weak self] url, error in
+    //        if let error = error {
+    //          print("다운로드 URL 가져오기 실패: \(error.localizedDescription)")
+    //          return
+    //        }
+    //
+    //        guard let downloadURL = url else {
+    //          print("다운로드 URL이 nil입니다")
+    //          return
+    //        }
+    //
+    //        self?.isSaveButtonEnabled = true
+    //
+    //        self?.capturedImageUrl = downloadURL.absoluteString
+    //        print("업로드 완료 : ", self?.capturedImageUrl ?? "nil")
+    //
+    //        if ((self?.isEditMode) != nil),
+    //           let oldImageURL = self?.imageURL,
+    //           !oldImageURL.isEmpty,
+    //           oldImageURL != downloadURL.absoluteString {
+    //          self?.deleteOldImage(urlString: oldImageURL)
+    //        }
+    //      }
+  }
+}
 
-    let storageRef = Storage.storage().reference()
-    let fileName = "smokingAreas/\(UUID().uuidString).jpg"
-    let imageRef = storageRef.child(fileName)
-
-    imageRef.putData(imageData, metadata: nil) { [weak self] _, error in
-      if let error = error {
-        print("이미지 업로드 실패", error)
-        return
-      }
-      imageRef.downloadURL { [weak self] url, error in
-        if let error = error {
-          print("다운로드 URL 가져오기 실패: \(error.localizedDescription)")
-          return
-        }
-
-        guard let downloadURL = url else {
-          print("다운로드 URL이 nil입니다")
-          return
-        }
-
-        self?.isSaveButtonEnabled = true
-
-        self?.capturedImageUrl = downloadURL.absoluteString
-        print("업로드 완료 : ", self?.capturedImageUrl ?? "nil")
-
-        if ((self?.isEditMode) != nil),
-           let oldImageURL = self?.imageURL,
-           !oldImageURL.isEmpty,
-           oldImageURL != downloadURL.absoluteString {
-          self?.deleteOldImage(urlString: oldImageURL)
-        }
-      }
-    }
-
+private func deleteOldImage(urlString: String) {
+  guard let url = URL(string: urlString) else {
+    print("잘못된 이미지 URL")
+    return
   }
 
-  private func deleteOldImage(urlString: String) {
-    guard let url = URL(string: urlString) else {
-      print("잘못된 이미지 URL")
-      return
-    }
-
-    let storageRef = Storage.storage().reference(forURL: urlString)
-    storageRef.delete { error in
-      if let error = error {
-        print("기존 이미지 삭제 실패: \(error.localizedDescription)")
-      } else {
-        print("기존 이미지 삭제 성공: \(urlString)")
-      }
+  let storageRef = Storage.storage().reference(forURL: urlString)
+  storageRef.delete { error in
+    if let error = error {
+      print("기존 이미지 삭제 실패: \(error.localizedDescription)")
+    } else {
+      print("기존 이미지 삭제 성공: \(urlString)")
     }
   }
 }
