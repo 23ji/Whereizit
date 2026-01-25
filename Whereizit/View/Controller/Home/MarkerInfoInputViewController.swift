@@ -77,6 +77,7 @@ final class MarkerInfoInputViewController: UIViewController {
   let disposeBag = DisposeBag()
 
   let viewModel: MarkerInfoInputViewModel // 뷰모델을 프로퍼티로 가짐
+  let savePhoto = PublishRelay<Data>()
 
 
   // MARK: UI
@@ -213,7 +214,16 @@ final class MarkerInfoInputViewController: UIViewController {
         )
     }
 
-    let viewModelInput = MarkerInfoInputViewModel.Input(saveData: saveData)
+    let viewModelInput = MarkerInfoInputViewModel.Input(
+      saveData: saveData,
+      savePhoto: self.savePhoto.asObservable()
+    )
+
+    self.savePhoto
+      .subscribe(onNext: { data in
+          print(data)
+      })
+      .disposed(by: self.disposeBag)
 
     let output = self.viewModel.transform(input: viewModelInput)
 
@@ -623,6 +633,8 @@ extension MarkerInfoInputViewController: UIImagePickerControllerDelegate, UINavi
     DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
       alert.dismiss(animated: true)
     }
+
+    self.savePhoto.accept(imageData)
 
     let storageRef = Storage.storage().reference()
     let fileName = "smokingAreas/\(UUID().uuidString).jpg"
