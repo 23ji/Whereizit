@@ -223,6 +223,10 @@ final class MarkerInfoInputViewController: UIViewController {
           self?.view.window?.rootViewController?.dismiss(animated: true)
         } else {
           print("저장 실패")
+          let alert = UIAlertController(title: "알림", message: "이름/설명 입력과 카테고리 선택은 필수입니다.", preferredStyle: .alert)
+          alert.addAction(UIAlertAction(title: "확인", style: .default) { _ in
+          })
+          self?.present(alert, animated: true, completion: nil)
         }
       })
       .disposed(by: self.disposeBag)
