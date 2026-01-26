@@ -80,7 +80,6 @@ final class MarkerInfoInputViewModel {
       let category = areaInput.category
     else {
       resultRelay.accept(false)
-      // TODO: 필수 입력 안하면 알림
       return
     }
 
