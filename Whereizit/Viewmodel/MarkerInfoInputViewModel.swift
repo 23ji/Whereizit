@@ -33,10 +33,18 @@ final class MarkerInfoInputViewModel {
   struct Input { // View -> ViewModel
     let saveData: Observable<AreaInput> // 구역 정보를 담은 데이터 스트림
     let savePhoto: Observable<Data>
+
+    // 실시간 입력 이벤트 정의
+    let nameText: Observable<String>
+    let categorySelection: Observable<String>
+    let tagSelection: Observable<String>
   }
 
   struct Output { // ViewModel -> View
-    let saveResult: PublishRelay<Bool> // ?
+    let saveResult: PublishRelay<Bool>
+
+    let updateCategoryUI: Driver<String>
+    let saveButtonEnabled: Driver<Bool>
   }
 
   private var initialImageURL: String?
