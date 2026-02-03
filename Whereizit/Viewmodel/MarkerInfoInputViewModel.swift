@@ -74,7 +74,12 @@ final class MarkerInfoInputViewModel {
       })
       .disposed(by: self.disposeBag)
 
-    return Output(saveResult: saveResult)
+    // 임시값 넣어놓기
+    return Output(
+      saveResult: saveResult,
+      updateCategoryUI: .empty(),
+      saveButtonEnabled: .just(true)
+    )
   }
 
 
