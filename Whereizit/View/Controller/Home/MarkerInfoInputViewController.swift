@@ -283,7 +283,7 @@ final class MarkerInfoInputViewController: UIViewController {
           .direction(.row)
           .wrap(.wrap)
           .define { flex in
-            for category in MarkerInfoInputViewModel.categoryTags {
+            for category in self.viewModel.categoryTags {
               let categoryButton = self.createCategoryButton(category)
               self.categoryButtons.append(categoryButton) // 버튼 저장
 
@@ -369,7 +369,7 @@ final class MarkerInfoInputViewController: UIViewController {
   private func updateTagSections(for category: String) {
     self.tagSectionContainer.subviews.forEach { $0.removeFromSuperview() }
 
-    guard let tagData = MarkerInfoInputViewModel.categoryTagsMap[category] else { return }
+    guard let tagData = self.viewModel.categoryTagsMap[category] else { return }
 
     self.tagSectionContainer.flex
       .direction(.column)
