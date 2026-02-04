@@ -18,9 +18,9 @@ import FirebaseAuth
 final class MarkerInfoInputViewModel {
 
   // MARK: - Constant Data
-  static let categoryTags = ["화장실", "쓰레기통", "물", "흡연구역"]
+  let categoryTags = ["화장실", "쓰레기통", "물", "흡연구역"]
 
-  static let categoryTagsMap: [String: [String: [String]]] = [
+  let categoryTagsMap: [String: [String: [String]]] = [
     "화장실": [
       "환경": ["남녀 구분", "남녀 공용"],
       "유형": ["건물", "식당", "술집", "카페"],
