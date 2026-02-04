@@ -17,6 +17,32 @@ import FirebaseAuth
 
 final class MarkerInfoInputViewModel {
 
+  // MARK: - Constant Data
+  static let categoryTags = ["화장실", "쓰레기통", "물", "흡연구역"]
+
+  static let categoryTagsMap: [String: [String: [String]]] = [
+    "화장실": [
+      "환경": ["남녀 구분", "남녀 공용"],
+      "유형": ["건물", "식당", "술집", "카페"],
+      "시설": ["휴지", "비데"]
+    ],
+    "쓰레기통": [
+      "환경": ["일반 쓰레기", "재활용 쓰레기"],
+      "유형": ["실외", "실내"],
+      "시설": ["분리수거"]
+    ],
+    "물": [
+      "환경": ["실내", "실외"],
+      "유형": ["정수기", "음수대", "약수터"],
+      "시설": ["온수", "얼음"]
+    ],
+    "흡연구역": [
+      "환경": ["실내", "실외", "밀폐형", "개방형"],
+      "유형": ["흡연 구역", "카페", "술집", "식당", "노래방", "보드게임 카페", "당구장", "피시방"],
+      "시설": ["별도 전자담배 구역", "의자", "라이터"]
+    ]
+  ]
+
   struct AreaInput {
     let name: String?
     let description: String?
