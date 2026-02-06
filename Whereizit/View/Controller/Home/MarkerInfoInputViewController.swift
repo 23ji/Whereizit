@@ -69,7 +69,6 @@ final class MarkerInfoInputViewController: UIViewController {
   private var categoryButtons: [UIButton] = []
 
   private var capturedImageUrl: String?
-  private var selectedCategory: String?
 
   var isEditMode: Bool = false
   var existingDocumentID: String?
@@ -161,18 +160,26 @@ final class MarkerInfoInputViewController: UIViewController {
 
   private func bindViewModel() {
 
+    let currentState = Observable.combineLatest(
+      self.viewModel.selectedCategory.asObservable(),
+      self.viewModel.selectedEnvironmentTags.asObservable(),
+      self.viewModel.selectedTypeTags.asObservable(),
+      self.viewModel.selectedFacilityTags.asObservable()
+    )
+
     let saveData = self.saveButton.rx.tap
-      .map { [weak self] _ -> MarkerInfoInputViewModel.AreaInput in
+      .withLatestFrom(currentState)
+      .map { [weak self] (category, envTags, typeTags, facilityTags) -> MarkerInfoInputViewModel.AreaInput in
         return MarkerInfoInputViewModel.AreaInput(
           name: self?.nameTextField.text,
           description: self?.descriptionTextView.text,
           lat: self?.markerLat,
           lng: self?.markerLng,
-          category: self?.selectedCategory,
+          category: category,
           finalImageURL: self?.capturedImageUrl ?? self?.imageURL,
-          environmentTags: self?.selectedEnvironmentTags ?? [],
-          typeTags: self?.selectedTypeTags ?? [],
-          facilityTags: self?.selectedFacilityTags ?? []
+          environmentTags: envTags,
+          typeTags: typeTags,
+          facilityTags: facilityTags
         )
       }
 
@@ -184,13 +191,14 @@ final class MarkerInfoInputViewController: UIViewController {
       tagSelection: .empty()
     )
 
-    self.savePhoto
-      .subscribe(onNext: { data in
-        print(data)
+    let output = self.viewModel.transform(input: viewModelInput)
+
+    self.viewModel.selectedCategory
+      .asDriver(onErrorJustReturn: nil)
+      .drive(onNext: { [weak self] category in
+        self?.updateCategoryUI(category)
       })
       .disposed(by: self.disposeBag)
-
-    let output = self.viewModel.transform(input: viewModelInput)
 
     output.saveResult
       .observe(on: MainScheduler.instance) //이후부터 하는 작업은 메인 스레드에서 (UI 작업이기 때문에)
@@ -288,8 +296,8 @@ final class MarkerInfoInputViewController: UIViewController {
               self.categoryButtons.append(categoryButton) // 버튼 저장
 
               categoryButton.rx.tap.bind { [weak self] in
-                self?.onCategorySelected(categoryButton, category: category)
-              }.disposed(by: disposeBag)
+                self?.viewModel.updateCategory(category: category)
+              }.disposed(by: self.disposeBag)
 
               flex.addItem(categoryButton)
                 .height(Metric.tagButtonHeight)
@@ -317,45 +325,32 @@ final class MarkerInfoInputViewController: UIViewController {
     return button
   }
 
-  // 🛠️ UI 업데이트 로직
-  // 카테고리 선택 시 호출 (사용자 탭)
-  private func onCategorySelected(_ button: UIButton, category: String) {
-    // 이미 선택된 카테고리를 다시 클릭한 경우
-    if self.selectedCategory == category {
-      // 선택 해제
-      button.backgroundColor = .systemGray6
-      button.setTitleColor(.label, for: .normal)
-      self.selectedCategory = nil
 
-      // 선택된 태그 초기화
-      self.selectedEnvironmentTags.removeAll()
-      self.selectedTypeTags.removeAll()
-      self.selectedFacilityTags.removeAll()
+  private func updateCategoryUI(_ category: String?) {
+    // 1. 일단 모든 버튼 초기화 (회색으로)
+    self.resetCategorySelection()
 
+    // 2. 선택된 카테고리가 없으면(nil) -> 태그 섹션 지우고 끝
+    guard let category = category else {
       // 태그 섹션 제거
       self.tagSectionContainer.subviews.forEach { $0.removeFromSuperview() }
       self.contentView.flex.layout(mode: .adjustHeight)
       self.scrollView.contentSize = self.contentView.frame.size
-
       return
     }
 
-    // 이전 선택 초기화
-    self.resetCategorySelection()
+    // 3. 선택된 카테고리가 있으면 -> 그 버튼 찾아서 파란색 칠하기
+    if let categoryButton = self.categoryButtons.first(where: {
+      $0.titleLabel?.text == category
+    }) {
+      categoryButton.backgroundColor = .systemBlue
+      categoryButton.setTitleColor(.white, for: .normal)
+    }
 
-    // 현재 선택 업데이트
-    button.backgroundColor = .systemBlue
-    button.setTitleColor(.white, for: .normal)
-    self.selectedCategory = category
-
-    // 사용자 탭 시에는 선택된 태그 초기화 (수정 모드 초기 세팅때는 이 함수 안탐)
-    self.selectedEnvironmentTags.removeAll()
-    self.selectedTypeTags.removeAll()
-    self.selectedFacilityTags.removeAll()
-
-    // 태그 섹션 업데이트
+    // 4. 태그 섹션도 보여주기
     self.updateTagSections(for: category)
   }
+
 
   // 카테고리 선택 초기화
   private func resetCategorySelection() {
@@ -539,15 +534,8 @@ final class MarkerInfoInputViewController: UIViewController {
     guard isEditMode else { return }
     guard let category = initialCategory else { return }
 
-    if let categoryBtn = self.categoryButtons.first(where: { $0.titleLabel?.text == category }) {
-
-      categoryBtn.backgroundColor = .systemBlue
-      categoryBtn.setTitleColor(.white, for: .normal)
-      self.selectedCategory = category
-
-      self.updateTagSections(for: category)
+    self.viewModel.updateCategory(category: category)
     }
-  }
 }
 
 
