@@ -43,6 +43,12 @@ final class MarkerInfoInputViewModel {
     ]
   ]
 
+  let selectedCategory = BehaviorRelay<String?>(value: nil)
+
+  let selectedEnvironmentTags = BehaviorRelay<[String]>(value: [])
+  let selectedTypeTags = BehaviorRelay<[String]>(value: [])
+  let selectedFacilityTags = BehaviorRelay<[String]>(value: [])
+
   struct AreaInput {
     let name: String?
     let description: String?
@@ -106,6 +112,24 @@ final class MarkerInfoInputViewModel {
       updateCategoryUI: .empty(),
       saveButtonEnabled: .just(true)
     )
+  }
+
+
+  func updateCategory(category: String) {
+    if self.selectedCategory.value == category {
+      self.selectedCategory.accept(nil)
+
+      self.selectedEnvironmentTags.accept([])
+      self.selectedTypeTags.accept([])
+      self.selectedFacilityTags.accept([])
+    }
+    else {
+      self.selectedCategory.accept(category)
+
+      self.selectedEnvironmentTags.accept([])
+      self.selectedTypeTags.accept([])
+      self.selectedFacilityTags.accept([])
+    }
   }
 
 
