@@ -55,9 +55,6 @@ final class MarkerInfoInputViewController: UIViewController {
   var markerLat: Double?
   var markerLng: Double?
   var tagSelected: Bool = false
-  var selectedEnvironmentTags: [String] = []
-  var selectedTypeTags: [String] = []
-  var selectedFacilityTags: [String] = []
 
   // 수정 모드 진입 시 초기 카테고리를 받기 위한 변수
   var initialCategory: String?
@@ -419,11 +416,11 @@ final class MarkerInfoInputViewController: UIViewController {
               var isSelected = false
               switch title {
               case "환경":
-                if self.selectedEnvironmentTags.contains(tag) { isSelected = true }
+                if self.viewModel.selectedEnvironmentTags.value.contains(tag) { isSelected = true }
               case "유형":
-                if self.selectedTypeTags.contains(tag) { isSelected = true }
+                if self.viewModel.selectedTypeTags.value.contains(tag) { isSelected = true }
               case "시설":
-                if self.selectedFacilityTags.contains(tag) { isSelected = true }
+                if self.viewModel.selectedFacilityTags.value.contains(tag) { isSelected = true }
               default: break
               }
 
@@ -465,25 +462,27 @@ final class MarkerInfoInputViewController: UIViewController {
 
     switch sectionTitle {
     case "환경":
-      self.updateTag(title: "환경", array: &self.selectedEnvironmentTags, buttonTitle: title)
+      self.updateTag(relay: self.viewModel.selectedEnvironmentTags, buttonTitle: title)
     case "유형":
-      self.updateTag(title: "유형", array: &self.selectedTypeTags, buttonTitle: title)
+      self.updateTag(relay: self.viewModel.selectedTypeTags, buttonTitle: title)
     case "시설":
-      self.updateTag(title: "시설", array: &self.selectedFacilityTags, buttonTitle: title)
+      self.updateTag(relay: self.viewModel.selectedFacilityTags, buttonTitle: title)
     default:
       break
     }
   }
 
-  private func updateTag(title: String, array: inout [String], buttonTitle: String) {
-    if array.contains(buttonTitle) {
-      array = array.filter { $0 != buttonTitle }
-    } else {
-      array.append(buttonTitle)
-    }
-    print(title, array)
-  }
+  private func updateTag(relay: BehaviorRelay<[String]>, buttonTitle: String) {
+    var currentTags = relay.value
 
+    if currentTags.contains(buttonTitle) {
+      currentTags = currentTags.filter { $0 != buttonTitle }
+    } else {
+      currentTags.append(buttonTitle)
+    }
+
+    relay.accept(currentTags)
+  }
 
   // 카메라 버튼 탭
   private func bindAreaImageButton() {
@@ -508,9 +507,6 @@ final class MarkerInfoInputViewController: UIViewController {
       self.imageURL = area.imageURL
       self.markerLat = area.areaLat
       self.markerLng = area.areaLng
-      self.selectedEnvironmentTags = area.selectedEnvironmentTags
-      self.selectedTypeTags = area.selectedTypeTags
-      self.selectedFacilityTags = area.selectedFacilityTags
 
       if !area.category.isEmpty {
         self.initialCategory = area.category
@@ -526,6 +522,10 @@ final class MarkerInfoInputViewController: UIViewController {
       }
 
       self.setupEditModeUI()
+
+      self.viewModel.selectedEnvironmentTags.accept(area.selectedEnvironmentTags)
+      self.viewModel.selectedTypeTags.accept(area.selectedTypeTags)
+      self.viewModel.selectedFacilityTags.accept(area.selectedFacilityTags)
     }
   }
 
