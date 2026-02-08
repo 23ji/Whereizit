@@ -56,9 +56,6 @@ final class MarkerInfoInputViewController: UIViewController {
   var markerLng: Double?
   var tagSelected: Bool = false
 
-  // 수정 모드 진입 시 초기 카테고리를 받기 위한 변수
-  var initialCategory: String?
-
   private var editTarget: Area?
   private let inputMode: InputMode
 
@@ -509,9 +506,7 @@ final class MarkerInfoInputViewController: UIViewController {
       self.markerLng = area.areaLng
 
       if !area.category.isEmpty {
-        self.initialCategory = area.category
-      } else {
-        self.initialCategory = nil
+        self.viewModel.updateCategory(category: area.category)
       }
 
       self.loadViewIfNeeded()
@@ -521,21 +516,11 @@ final class MarkerInfoInputViewController: UIViewController {
         self.areaImage.kf.setImage(with: url, for: .normal)
       }
 
-      self.setupEditModeUI()
-
       self.viewModel.selectedEnvironmentTags.accept(area.selectedEnvironmentTags)
       self.viewModel.selectedTypeTags.accept(area.selectedTypeTags)
       self.viewModel.selectedFacilityTags.accept(area.selectedFacilityTags)
     }
   }
-
-
-  private func setupEditModeUI() {
-    guard isEditMode else { return }
-    guard let category = initialCategory else { return }
-
-    self.viewModel.updateCategory(category: category)
-    }
 }
 
 
