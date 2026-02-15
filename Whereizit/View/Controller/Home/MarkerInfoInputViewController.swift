@@ -40,29 +40,16 @@ final class MarkerInfoInputViewController: UIViewController {
     static let saveButtonHeight: CGFloat = 50
   }
 
-  lazy var user = Auth.auth().currentUser
-
 
   // MARK: Properties
-
-  var imageURL: String?
-  var markerLat: Double?
-  var markerLng: Double?
-  var tagSelected: Bool = false
-
-  private var editTarget: Area?
 
   private var tagSectionContainer: UIView = UIView()
   private var categoryButtons: [UIButton] = []
 
-  private var capturedImageUrl: String?
-
-  var isEditMode: Bool = false
-  var existingDocumentID: String?
-
   let disposeBag = DisposeBag()
 
   let viewModel: MarkerInfoInputViewModel // 뷰모델을 프로퍼티로 가짐
+
   let savePhoto = PublishRelay<Data>()
 
 
@@ -159,10 +146,10 @@ final class MarkerInfoInputViewController: UIViewController {
         return MarkerInfoInputViewModel.AreaInput(
           name: self?.nameTextField.text,
           description: self?.descriptionTextView.text,
-          lat: self?.markerLat,
-          lng: self?.markerLng,
+          lat: self?.viewModel.markerLat,
+          lng: self?.viewModel.markerLng,
           category: category,
-          finalImageURL: self?.capturedImageUrl ?? self?.imageURL,
+          finalImageURL: self?.viewModel.capturedImageUrl ?? self?.viewModel.imageUrl,
           environmentTags: envTags,
           typeTags: typeTags,
           facilityTags: facilityTags
@@ -487,15 +474,15 @@ final class MarkerInfoInputViewController: UIViewController {
   private func setupData(by mode: MarkerInfoInputViewModel.InputMode) {
     switch mode {
     case let .new(lat, lng):
-      self.isEditMode = false
-      self.markerLat = lat
-      self.markerLng = lng
+      self.viewModel.isEditMode = false
+      self.viewModel.markerLat = lat
+      self.viewModel.markerLng = lng
 
     case let .edit(area):
-      self.isEditMode = true
-      self.imageURL = area.imageURL
-      self.markerLat = area.areaLat
-      self.markerLng = area.areaLng
+      self.viewModel.isEditMode = true
+      self.viewModel.imageUrl = area.imageURL
+      self.viewModel.markerLat = area.areaLat
+      self.viewModel.markerLng = area.areaLng
 
       if !area.category.isEmpty {
         self.viewModel.updateCategory(category: area.category)

@@ -89,6 +89,13 @@ final class MarkerInfoInputViewModel {
   private var initialImageURL: String?
   var finalImageUrl: String?
   var imageUrl: String?
+  var capturedImageUrl: String?
+
+  var markerLat: Double?
+  var markerLng: Double?
+
+  var isEditMode: Bool = false
+
   private let disposeBag = DisposeBag()
   private let db = Firestore.firestore()
 
