@@ -22,13 +22,7 @@ import RxCocoa
 import UIKit
 
 final class MarkerInfoInputViewController: UIViewController {
-
-
-  enum InputMode {
-    case new(lat: Double, lng: Double)
-    case edit(area: Area)
-  }
-
+  // 뷰컨에는 UI 표시 / 사용자 인터렉션에 관한 내용만 남겨놓기
 
   // MARK: Constant
 
@@ -57,7 +51,6 @@ final class MarkerInfoInputViewController: UIViewController {
   var tagSelected: Bool = false
 
   private var editTarget: Area?
-  private let inputMode: InputMode
 
   private var tagSectionContainer: UIView = UIView()
   private var categoryButtons: [UIButton] = []
@@ -127,8 +120,7 @@ final class MarkerInfoInputViewController: UIViewController {
   }
 
 
-  init(mode: InputMode, viewModel: MarkerInfoInputViewModel) {
-    self.inputMode = mode
+  init(viewModel: MarkerInfoInputViewModel) {
     self.viewModel = viewModel
     super.init(nibName: nil, bundle: nil)
   }
@@ -146,7 +138,7 @@ final class MarkerInfoInputViewController: UIViewController {
     self.defineFlexContainer()
     self.bindAreaImageButton()
 
-    self.setupData(by: inputMode)
+    self.setupData(by: self.viewModel.mode)
 
     self.bindViewModel()
   }
@@ -492,7 +484,7 @@ final class MarkerInfoInputViewController: UIViewController {
   }
 
 
-  private func setupData(by mode: InputMode) {
+  private func setupData(by mode: MarkerInfoInputViewModel.InputMode) {
     switch mode {
     case let .new(lat, lng):
       self.isEditMode = false
