@@ -17,6 +17,13 @@ import FirebaseAuth
 
 final class MarkerInfoInputViewModel {
 
+  enum InputMode {
+    case new(lat: Double, lng: Double)
+    case edit(area: Area)
+  }
+
+  var mode: InputMode
+
   // MARK: - Constant Data
   let categoryTags = ["화장실", "쓰레기통", "물", "흡연구역"]
 
@@ -86,7 +93,8 @@ final class MarkerInfoInputViewModel {
   private let db = Firestore.firestore()
 
 
-  init(initialImageURL: String? = nil) {
+  init(mode: InputMode, initialImageURL: String? = nil) {
+    self.mode = mode
     self.initialImageURL = initialImageURL
   }
 
