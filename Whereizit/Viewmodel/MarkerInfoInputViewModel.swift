@@ -70,11 +70,12 @@ final class MarkerInfoInputViewModel {
 
 
   struct Input { // View -> ViewModel
-    let saveData: Observable<AreaInput> // 구역 정보를 담은 데이터 스트림
+    let saveTap: Observable<Void>
     let savePhoto: Observable<Data>
 
     // 실시간 입력 이벤트 정의
     let nameText: Observable<String>
+    let descriptionText: Observable<String>
     let categorySelection: Observable<String>
     let tagSelection: Observable<String>
   }
@@ -109,9 +110,40 @@ final class MarkerInfoInputViewModel {
   func transform(input: Input) -> Output {
     let saveResult = PublishRelay<Bool>()
 
-    input.saveData
-      .subscribe(onNext: { [weak self] areaInput in
-        self?.saveAreaData(areaInput: areaInput, resultRelay: saveResult)
+    let currentState = Observable.combineLatest(
+      self.selectedCategory.asObservable(),
+      self.selectedEnvironmentTags.asObservable(),
+      self.selectedTypeTags.asObservable(),
+      self.selectedFacilityTags.asObservable()
+    )
+
+    let textState = Observable.combineLatest(
+      input.nameText,
+      input.descriptionText
+    )
+
+    input.saveTap
+      .withLatestFrom(Observable.combineLatest(currentState, textState))
+      .map { [weak self] (state, text) -> AreaInput in
+        let (category, environmentTags, typeTags, facilityTags) = state
+        let (name, description) = text
+        return AreaInput(
+          name: name,
+          description: description,
+          lat: self?.markerLat,
+          lng: self?.markerLng,
+          category: category,
+          finalImageURL: self?.capturedImageUrl ?? self?.imageUrl,
+          environmentTags: environmentTags,
+          typeTags: typeTags,
+          facilityTags: facilityTags
+        )
+      }
+      .subscribe(onNext: {[weak self] areaInput in
+        self?.saveAreaData(
+          areaInput: areaInput,
+          resultRelay: saveResult
+        )
       })
       .disposed(by: self.disposeBag)
 

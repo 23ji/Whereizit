@@ -133,33 +133,13 @@ final class MarkerInfoInputViewController: UIViewController {
 
   private func bindViewModel() {
 
-    let currentState = Observable.combineLatest(
-      self.viewModel.selectedCategory.asObservable(),
-      self.viewModel.selectedEnvironmentTags.asObservable(),
-      self.viewModel.selectedTypeTags.asObservable(),
-      self.viewModel.selectedFacilityTags.asObservable()
-    )
-
-    let saveData = self.saveButton.rx.tap
-      .withLatestFrom(currentState)
-      .map { [weak self] (category, envTags, typeTags, facilityTags) -> MarkerInfoInputViewModel.AreaInput in
-        return MarkerInfoInputViewModel.AreaInput(
-          name: self?.nameTextField.text,
-          description: self?.descriptionTextView.text,
-          lat: self?.viewModel.markerLat,
-          lng: self?.viewModel.markerLng,
-          category: category,
-          finalImageURL: self?.viewModel.capturedImageUrl ?? self?.viewModel.imageUrl,
-          environmentTags: envTags,
-          typeTags: typeTags,
-          facilityTags: facilityTags
-        )
-      }
+    // TODO: 아래 부분 뷰모델로 옮기기
 
     let viewModelInput = MarkerInfoInputViewModel.Input(
-      saveData: saveData,
+      saveTap: self.saveButton.rx.tap.asObservable(),
       savePhoto: self.savePhoto.asObservable(),
       nameText: self.nameTextField.rx.text.orEmpty.asObservable(),
+      descriptionText: self.descriptionTextView.rx.text.orEmpty.asObservable(),
       categorySelection: .empty(),
       tagSelection: .empty()
     )
