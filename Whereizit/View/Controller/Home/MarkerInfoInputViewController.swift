@@ -5,9 +5,9 @@
 //  Created by 이상지 on 7/17/25.
 //
 
-import FirebaseAuth
-import FirebaseCore
-import FirebaseStorage
+//import FirebaseAuth
+//import FirebaseCore
+//import FirebaseStorage
 
 import FlexLayout
 import Then
@@ -125,50 +125,11 @@ final class MarkerInfoInputViewController: UIViewController {
     self.defineFlexContainer()
     self.bindAreaImageButton()
 
-    self.setupData(by: self.viewModel.mode)
-
     self.bindViewModel()
+
+    self.setupData(by: self.viewModel.mode)
   }
-
-
-  private func bindViewModel() {
-
-    // TODO: 아래 부분 뷰모델로 옮기기
-
-    let viewModelInput = MarkerInfoInputViewModel.Input(
-      saveTap: self.saveButton.rx.tap.asObservable(),
-      savePhoto: self.savePhoto.asObservable(),
-      nameText: self.nameTextField.rx.text.orEmpty.asObservable(),
-      descriptionText: self.descriptionTextView.rx.text.orEmpty.asObservable(),
-      categorySelection: .empty(),
-      tagSelection: .empty()
-    )
-
-    let output = self.viewModel.transform(input: viewModelInput)
-
-    self.viewModel.selectedCategory
-      .asDriver(onErrorJustReturn: nil)
-      .drive(onNext: { [weak self] category in
-        self?.updateCategoryUI(category)
-      })
-      .disposed(by: self.disposeBag)
-
-    output.saveResult
-      .observe(on: MainScheduler.instance) //이후부터 하는 작업은 메인 스레드에서 (UI 작업이기 때문에)
-      .subscribe(onNext: { [weak self] isSuccess in
-        if isSuccess {
-          self?.view.window?.rootViewController?.dismiss(animated: true)
-        } else {
-          print("저장 실패")
-          let alert = UIAlertController(title: "알림", message: "이름/설명 입력과 카테고리 선택은 필수입니다.", preferredStyle: .alert)
-          alert.addAction(UIAlertAction(title: "확인", style: .default) { _ in
-          })
-          self?.present(alert, animated: true, completion: nil)
-        }
-      })
-      .disposed(by: self.disposeBag)
-  }
-
+  
 
   // MARK: setup
 
@@ -449,6 +410,42 @@ final class MarkerInfoInputViewController: UIViewController {
       })
     .disposed(by: disposeBag)
   }
+  
+  
+  private func bindViewModel() {
+    let viewModelInput = MarkerInfoInputViewModel.Input(
+      saveTap: self.saveButton.rx.tap.asObservable(),
+      savePhoto: self.savePhoto.asObservable(),
+      nameText: self.nameTextField.rx.text.orEmpty.asObservable(),
+      descriptionText: self.descriptionTextView.rx.text.orEmpty.asObservable(),
+      categorySelection: .empty(),
+      tagSelection: .empty()
+    )
+
+    let output = self.viewModel.transform(input: viewModelInput)
+
+    self.viewModel.selectedCategory
+      .asDriver(onErrorJustReturn: nil)
+      .drive(onNext: { [weak self] category in
+        self?.updateCategoryUI(category)
+      })
+      .disposed(by: self.disposeBag)
+
+    output.saveResult
+      .observe(on: MainScheduler.instance) //이후부터 하는 작업은 메인 스레드에서 (UI 작업이기 때문에)
+      .subscribe(onNext: { [weak self] isSuccess in
+        if isSuccess {
+          self?.view.window?.rootViewController?.dismiss(animated: true)
+        } else {
+          print("저장 실패")
+          let alert = UIAlertController(title: "알림", message: "이름/설명 입력과 카테고리 선택은 필수입니다.", preferredStyle: .alert)
+          alert.addAction(UIAlertAction(title: "확인", style: .default) { _ in
+          })
+          self?.present(alert, animated: true, completion: nil)
+        }
+      })
+      .disposed(by: self.disposeBag)
+  }
 
 
   private func setupData(by mode: MarkerInfoInputViewModel.InputMode) {
@@ -534,54 +531,5 @@ extension MarkerInfoInputViewController: UIImagePickerControllerDelegate, UINavi
     }
 
     self.savePhoto.accept(imageData)
-    //
-    //    let storageRef = Storage.storage().reference()
-    //    let fileName = "smokingAreas/\(UUID().uuidString).jpg"
-    //    let imageRef = storageRef.child(fileName)
-    //
-    //    imageRef.putData(imageData, metadata: nil) { [weak self] _, error in
-    //      if let error = error {
-    //        print("이미지 업로드 실패", error)
-    //        return
-    //      }
-    //      imageRef.downloadURL { [weak self] url, error in
-    //        if let error = error {
-    //          print("다운로드 URL 가져오기 실패: \(error.localizedDescription)")
-    //          return
-    //        }
-    //
-    //        guard let downloadURL = url else {
-    //          print("다운로드 URL이 nil입니다")
-    //          return
-    //        }
-    //
-    //        self?.isSaveButtonEnabled = true
-    //
-    //        self?.capturedImageUrl = downloadURL.absoluteString
-    //        print("업로드 완료 : ", self?.capturedImageUrl ?? "nil")
-    //
-    //        if ((self?.isEditMode) != nil),
-    //           let oldImageURL = self?.imageURL,
-    //           !oldImageURL.isEmpty,
-    //           oldImageURL != downloadURL.absoluteString {
-    //          self?.deleteOldImage(urlString: oldImageURL)
-    //        }
-    //      }
-  }
-}
-
-private func deleteOldImage(urlString: String) {
-  guard let url = URL(string: urlString) else {
-    print("잘못된 이미지 URL")
-    return
-  }
-
-  let storageRef = Storage.storage().reference(forURL: urlString)
-  storageRef.delete { error in
-    if let error = error {
-      print("기존 이미지 삭제 실패: \(error.localizedDescription)")
-    } else {
-      print("기존 이미지 삭제 성공: \(urlString)")
-    }
   }
 }
