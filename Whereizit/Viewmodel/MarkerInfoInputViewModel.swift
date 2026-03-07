@@ -77,7 +77,7 @@ final class MarkerInfoInputViewModel {
     let nameText: Observable<String>
     let descriptionText: Observable<String>
     let categorySelection: Observable<String>
-    let tagSelection: Observable<String>
+    let tagSelection: Observable<(section: String, tag: String)>
   }
 
   struct Output { // ViewModel -> View
@@ -150,6 +150,34 @@ final class MarkerInfoInputViewModel {
     input.savePhoto
       .subscribe(onNext: { [weak self] data in
         self?.savePhoto(imageData: data)
+      })
+      .disposed(by: self.disposeBag)
+
+    input.tagSelection
+      .subscribe(onNext: { [weak self] selection in
+        guard let self = self else { return }
+        var targetRelay: BehaviorRelay<[String]>
+
+        switch selection.section {
+        case "환경":
+          targetRelay = self.selectedEnvironmentTags
+        case "유형":
+          targetRelay = self.selectedTypeTags
+        case "시설":
+          targetRelay = self.selectedFacilityTags
+        default:
+          return
+        }
+
+        var currentTags = targetRelay.value
+
+        if currentTags.contains(selection.tag) {
+          currentTags = currentTags.filter { $0 != selection.tag }
+        } else {
+          currentTags.append(selection.tag)
+        }
+
+        targetRelay.accept(currentTags)
       })
       .disposed(by: self.disposeBag)
 

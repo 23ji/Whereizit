@@ -45,6 +45,7 @@ final class MarkerInfoInputViewController: UIViewController {
 
   private var tagSectionContainer: UIView = UIView()
   private var categoryButtons: [UIButton] = []
+  private var tagSelectionRelay = PublishRelay<(section: String, tag: String)>()
 
   let disposeBag = DisposeBag()
 
@@ -365,7 +366,11 @@ final class MarkerInfoInputViewController: UIViewController {
   private func onTapButton(_ sender: UIButton, sectionTitle: String) {
     sender.isSelected.toggle()
     self.updateButtonAppearance(sender)
-    self.updateSelectedTags(sender, sectionTitle: sectionTitle)
+
+    guard let title = sender.titleLabel?.text else { return }
+
+    self.tagSelectionRelay.accept((section: sectionTitle, tag: title))
+
   }
 
   private func updateButtonAppearance(_ button: UIButton) {
@@ -374,20 +379,6 @@ final class MarkerInfoInputViewController: UIViewController {
     button.setTitleColor(button.isSelected ? .white : .label, for: .normal)
   }
 
-  private func updateSelectedTags(_ button: UIButton, sectionTitle: String) {
-    guard let title = button.titleLabel?.text else { return }
-
-    switch sectionTitle {
-    case "환경":
-      self.updateTag(relay: self.viewModel.selectedEnvironmentTags, buttonTitle: title)
-    case "유형":
-      self.updateTag(relay: self.viewModel.selectedTypeTags, buttonTitle: title)
-    case "시설":
-      self.updateTag(relay: self.viewModel.selectedFacilityTags, buttonTitle: title)
-    default:
-      break
-    }
-  }
 
   private func updateTag(relay: BehaviorRelay<[String]>, buttonTitle: String) {
     var currentTags = relay.value
@@ -419,7 +410,7 @@ final class MarkerInfoInputViewController: UIViewController {
       nameText: self.nameTextField.rx.text.orEmpty.asObservable(),
       descriptionText: self.descriptionTextView.rx.text.orEmpty.asObservable(),
       categorySelection: .empty(),
-      tagSelection: .empty()
+      tagSelection: self.tagSelectionRelay.asObservable()
     )
 
     let output = self.viewModel.transform(input: viewModelInput)
