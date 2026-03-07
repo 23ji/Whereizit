@@ -5,9 +5,9 @@
 //  Created by 이상지 on 7/17/25.
 //
 
-import FirebaseAuth
-import FirebaseCore
-import FirebaseStorage
+//import FirebaseAuth
+//import FirebaseCore
+//import FirebaseStorage
 
 import FlexLayout
 import Then
@@ -125,12 +125,11 @@ final class MarkerInfoInputViewController: UIViewController {
     self.defineFlexContainer()
     self.bindAreaImageButton()
 
-    self.setupData(by: self.viewModel.mode)
-
     self.bindViewModel()
 
     self.setupData(by: self.viewModel.mode)
   }
+  
 
   // MARK: setup
 
@@ -532,54 +531,5 @@ extension MarkerInfoInputViewController: UIImagePickerControllerDelegate, UINavi
     }
 
     self.savePhoto.accept(imageData)
-    //
-    //    let storageRef = Storage.storage().reference()
-    //    let fileName = "smokingAreas/\(UUID().uuidString).jpg"
-    //    let imageRef = storageRef.child(fileName)
-    //
-    //    imageRef.putData(imageData, metadata: nil) { [weak self] _, error in
-    //      if let error = error {
-    //        print("이미지 업로드 실패", error)
-    //        return
-    //      }
-    //      imageRef.downloadURL { [weak self] url, error in
-    //        if let error = error {
-    //          print("다운로드 URL 가져오기 실패: \(error.localizedDescription)")
-    //          return
-    //        }
-    //
-    //        guard let downloadURL = url else {
-    //          print("다운로드 URL이 nil입니다")
-    //          return
-    //        }
-    //
-    //        self?.isSaveButtonEnabled = true
-    //
-    //        self?.capturedImageUrl = downloadURL.absoluteString
-    //        print("업로드 완료 : ", self?.capturedImageUrl ?? "nil")
-    //
-    //        if ((self?.isEditMode) != nil),
-    //           let oldImageURL = self?.imageURL,
-    //           !oldImageURL.isEmpty,
-    //           oldImageURL != downloadURL.absoluteString {
-    //          self?.deleteOldImage(urlString: oldImageURL)
-    //        }
-    //      }
-  }
-}
-
-private func deleteOldImage(urlString: String) {
-  guard let url = URL(string: urlString) else {
-    print("잘못된 이미지 URL")
-    return
-  }
-
-  let storageRef = Storage.storage().reference(forURL: urlString)
-  storageRef.delete { error in
-    if let error = error {
-      print("기존 이미지 삭제 실패: \(error.localizedDescription)")
-    } else {
-      print("기존 이미지 삭제 성공: \(urlString)")
-    }
   }
 }
