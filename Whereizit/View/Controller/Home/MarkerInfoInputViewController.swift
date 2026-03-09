@@ -46,6 +46,7 @@ final class MarkerInfoInputViewController: UIViewController {
   private var tagSectionContainer: UIView = UIView()
   private var categoryButtons: [UIButton] = []
   private var tagSelectionRelay = PublishRelay<(section: String, tag: String)>()
+  private var categorySelectionRelay = PublishRelay<String>()
 
   let disposeBag = DisposeBag()
 
@@ -211,7 +212,7 @@ final class MarkerInfoInputViewController: UIViewController {
               self.categoryButtons.append(categoryButton) // 버튼 저장
 
               categoryButton.rx.tap.bind { [weak self] in
-                self?.viewModel.updateCategory(category: category)
+                self?.categorySelectionRelay.accept(category)
               }.disposed(by: self.disposeBag)
 
               flex.addItem(categoryButton)
@@ -409,7 +410,7 @@ final class MarkerInfoInputViewController: UIViewController {
       savePhoto: self.savePhoto.asObservable(),
       nameText: self.nameTextField.rx.text.orEmpty.asObservable(),
       descriptionText: self.descriptionTextView.rx.text.orEmpty.asObservable(),
-      categorySelection: .empty(),
+      categorySelection: self.categorySelectionRelay.asObservable(),
       tagSelection: self.tagSelectionRelay.asObservable()
     )
 
@@ -453,7 +454,7 @@ final class MarkerInfoInputViewController: UIViewController {
       self.viewModel.markerLng = area.areaLng
 
       if !area.category.isEmpty {
-        self.viewModel.updateCategory(category: area.category)
+        self.viewModel.handleCategorySelection(category: area.category)
       }
 
       self.loadViewIfNeeded()

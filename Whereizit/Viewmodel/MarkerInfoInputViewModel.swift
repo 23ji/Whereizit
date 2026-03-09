@@ -153,6 +153,12 @@ final class MarkerInfoInputViewModel {
       })
       .disposed(by: self.disposeBag)
 
+    input.categorySelection
+      .subscribe(onNext: { [weak self] category in
+        self?.handleCategorySelection(category: category)
+      })
+      .disposed(by: self.disposeBag)
+
     input.tagSelection
       .subscribe(onNext: { [weak self] selection in
         guard let self = self else { return }
@@ -189,8 +195,7 @@ final class MarkerInfoInputViewModel {
     )
   }
 
-
-  func updateCategory(category: String) {
+  func handleCategorySelection(category: String) {
     if self.selectedCategory.value == category {
       self.selectedCategory.accept(nil)
 
